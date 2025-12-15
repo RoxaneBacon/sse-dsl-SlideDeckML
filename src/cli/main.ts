@@ -2,7 +2,7 @@
 
 import { Command } from 'commander';
 import { createSlideDeckMLServices } from '../language/slide-deck-module.js';
-import { SlideDeck } from '../language/generated/ast.js';
+import { Presentation } from '../language/generated/ast.js';
 import { generateHTML } from '../generator/html-generator.js';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -71,10 +71,10 @@ async function compile(inputFile: string, outputFile: string): Promise<void> {
     }
 
     // Extract AST
-    const slideDeck = document.parseResult.value as SlideDeck;
+    const presentation = document.parseResult.value as Presentation;
 
     // Generate HTML
-    const html = generateHTML(slideDeck);
+    const html = generateHTML(presentation);
 
     // Write output file
     fs.writeFileSync(outputFile, html, 'utf-8');

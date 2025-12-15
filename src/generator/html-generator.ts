@@ -1,81 +1,105 @@
 import { AstNode } from 'langium';
+import { LineGenerator, MediaGenerator, Line, Media } from './blocks/index.js';
 
-interface Heading extends AstNode {
-    $type: 'Heading';
-    level: string;
-    text: string;
+/**
+ * Interface for Block AST node (union type)
+ */
+interface Block extends AstNode {
+    $type: 'Line' | 'Media' | 'LineHeading' | 'LineParagraph';
 }
 
-interface Paragraph extends AstNode {
-    $type: 'Paragraph';
-    text: string;
-}
-
+/**
+ * Interface for Slide AST node
+ */
 interface Slide extends AstNode {
     $type: 'Slide';
-    content: Array<Heading | Paragraph>;
+    blocks: Block[];
 }
 
-interface SlideDeck extends AstNode {
-    $type: 'SlideDeck';
+/**
+ * Interface for Header AST node
+ */
+interface Header extends AstNode {
+    $type: 'Header';
+    title?: string;
+    author?: string;
+}
+
+/**
+ * Interface for Presentation AST node
+ */
+interface Presentation extends AstNode {
+    $type: 'Presentation';
+    header?: Header;
     slides: Slide[];
 }
 
-export function generateHTML(slideDeck: SlideDeck): string {
-    const slidesHTML = slideDeck.slides
-        .map(slide => generateSlide(slide))
-        .join('\n');
+/**
+ * Main HTML generator for presentations
+ */
+export class HtmlGenerator {
+    private lineGenerator = new LineGenerator();
+    private mediaGenerator = new MediaGenerator();
 
-    return getHTMLTemplate(slidesHTML);
-}
+    /**
+     * Generates complete HTML for a presentation
+     */
+    generateHTML(presentation: Presentation): string {
+        const slidesHTML = presentation.slides
+            .map(slide => this.generateSlide(slide))
+            .join('\n');
 
-function generateSlide(slide: Slide): string {
-    const contentHTML = slide.content
-        .map(item => {
-            if (item.$type === 'Heading') {
-                return generateHeading(item as Heading);
-            } else if (item.$type === 'Paragraph') {
-                return generateParagraph(item as Paragraph);
-            }
-            return '';
-        })
-        .join('\n');
+        const title = presentation.header?.title;
+        const author = presentation.header?.author;
 
-    return `        <section>\n${contentHTML}\n        </section>`;
-}
+        return this.getHTMLTemplate(slidesHTML, title, author);
+    }
 
-function generateHeading(heading: Heading): string {
-    const level = heading.level.length; // # = 1, ## = 2, ### = 3
-    const text = escapeHtml(heading.text.trim());
-    return `            <h${level}>${text}</h${level}>`;
-}
+    /**
+     * Generates HTML for a single slide
+     */
+    private generateSlide(slide: Slide): string {
+        const blocksHTML = slide.blocks
+            .map(block => this.generateBlock(block))
+            .join('\n');
 
-function generateParagraph(paragraph: Paragraph): string {
-    const text = escapeHtml(paragraph.text.trim());
-    return `            <p>${text}</p>`;
-}
+        return `        <section>\n${blocksHTML}\n        </section>`;
+    }
 
-function escapeHtml(text: string): string {
-    return text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-}
+    /**
+     * Generates HTML for a single block
+     */
+    private generateBlock(block: Block): string {
+        // Check if it's a Line (LineHeading or LineParagraph)
+        if (block.$type === 'LineHeading' || block.$type === 'LineParagraph') {
+            return this.lineGenerator.generate(block as Line);
+        }
+        // Check if it's a Media
+        else if (block.$type === 'Media') {
+            return this.mediaGenerator.generate(block as Media);
+        }
 
-function getHTMLTemplate(slidesContent: string): string {
-    return `<!DOCTYPE html>
+        return '';
+    }
+
+    /**
+     * Generates the HTML template with reveal.js
+     */
+    private getHTMLTemplate(slidesContent: string, title?: string, author?: string): string {
+        const pageTitle = title ? this.extractQuotedString(title) : 'SlideDeckML Presentation';
+        const authorComment = author ? `<!-- Author: ${this.escapeHtml(this.extractQuotedString(author))} -->\n    ` : '';
+
+        return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SlideDeckML Presentation</title>
+    <title>${this.escapeHtml(pageTitle)}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css">
 </head>
 <body>
-    <div class="reveal">
+    ${authorComment}<div class="reveal">
         <div class="slides">
 ${slidesContent}
         </div>
@@ -90,4 +114,36 @@ ${slidesContent}
     </script>
 </body>
 </html>`;
+    }
+
+    /**
+     * Extracts content from a quoted string
+     */
+    private extractQuotedString(quotedStr: string): string {
+        if ((quotedStr.startsWith('"') && quotedStr.endsWith('"')) ||
+            (quotedStr.startsWith("'") && quotedStr.endsWith("'"))) {
+            return quotedStr.slice(1, -1);
+        }
+        return quotedStr;
+    }
+
+    /**
+     * Escapes HTML special characters
+     */
+    private escapeHtml(text: string): string {
+        return text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+}
+
+/**
+ * Helper function for backwards compatibility
+ */
+export function generateHTML(presentation: Presentation): string {
+    const generator = new HtmlGenerator();
+    return generator.generateHTML(presentation);
 }

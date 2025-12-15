@@ -1,23 +1,38 @@
 grammar SlideDeckML
 
-entry SlideDeck:
-    (slides+=Slide (SLIDE_SEPARATOR slides+=Slide)* SLIDE_SEPARATOR?)?;
+entry Presentation:
+    header=Header?
+    slides+=Slide*;
+
+Header:
+    'header' '{'
+        ('title' ':' title=STRING)?
+        ('author' ':' author=STRING)?
+    '}';
 
 Slide:
-    content+=Content+;
+    SLIDE_SEPARATOR
+    (blocks+=Block (NL+ blocks+=Block)*)?;
 
-Content:
-    Heading | Paragraph;
+Block:
+    LineHeading | Media | LineParagraph;
 
-Heading:
-    level=HEADING_MARKER text=TEXT_LINE;
+LineHeading:
+    level=HEADING_MARKER text=TEXT NL;
 
-Paragraph:
-    text=TEXT_LINE;
+LineParagraph:
+    text=TEXT NL;
 
-terminal HEADING_MARKER: '#' '#'? '#'?;
-terminal SLIDE_SEPARATOR: /===[\t ]*[\r\n]+/;
-terminal TEXT_LINE: /[^\r\n#][^\r\n]*[\r\n]+/;
+Media:
+    '![' alt=ALT ']' '(' url=STRING ')' NL;
 
-hidden terminal WS: /[\t ]+/;
-hidden terminal EMPTY_LINE: /[\r\n]/;
+terminal SLIDE_SEPARATOR: /===[\r\n]+/;
+terminal HEADING_MARKER: /#{1,3}[ \t]+/;
+terminal STRING: /"([^"\\]|\\.)*"|'([^'\\]|\\.)*'/;
+terminal NL: /\r?\n/;
+terminal ALT: /[^\]]+/;
+terminal TEXT: /[^\r\n]+/;
+
+hidden terminal WS: /[ \t]+/;
+hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;
+hidden terminal SL_COMMENT: /\/\/[^\r\n]*/;
