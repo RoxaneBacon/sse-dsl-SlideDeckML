@@ -1,0 +1,36 @@
+header {
+    title: "Welcome to SlideDeckML"
+    author: "SlideDeckML Team"
+}
+
+===
+
+# Welcome to SlideDeckML
+A modern DSL for creating presentations
+
+===
+
+## What is SlideDeckML?
+SlideDeckML is a domain-specific language
+It compiles to beautiful reveal.js presentations
+Write in a simple markdown-like syntax
+
+===
+
+### Key Features
+Easy to write and maintain
+Fast compilation
+Beautiful reveal.js output
+Support for images and media
+
+===
+
+## Media Support
+You can now include images in your slides!
+![Example Image]("https://via.placeholder.com/600x400?text=Example+Image")
+Images are automatically sized to fit your slides
+
+===
+
+# Thank You!
+Questions?

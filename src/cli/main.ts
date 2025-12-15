@@ -71,10 +71,10 @@ async function compile(inputFile: string, outputFile: string): Promise<void> {
     }
 
     // Extract AST
-    const slideDeck = document.parseResult.value as SlideDeck;
+    const presentation = document.parseResult.value as SlideDeck;
 
     // Generate HTML
-    const html = generateHTML(slideDeck);
+    const html = generateHTML(presentation);
 
     // Write output file
     fs.writeFileSync(outputFile, html, 'utf-8');
