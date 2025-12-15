@@ -1,0 +1,39 @@
+{
+  "name": "slidedeckml",
+  "version": "1.0.0",
+  "description": "A DSL for creating reveal.js slides from simplified markdown using Langium",
+  "type": "module",
+  "main": "./out/cli/main.js",
+  "bin": {
+    "slidedeckml": "./out/cli/main.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "langium:generate": "langium generate",
+    "langium:watch": "langium generate --watch",
+    "compile": "node ./out/cli/main.js"
+  },
+  "keywords": [
+    "langium",
+    "dsl",
+    "markdown",
+    "reveal.js",
+    "slides"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "langium": "^3.0.0",
+    "chevrotain": "^11.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "langium-cli": "^3.0.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

@@ -1,0 +1,21 @@
+# Welcome to SlideDeckML
+A simple DSL for creating presentations
+
+===
+
+## What is SlideDeckML?
+SlideDeckML is a domain-specific language
+It compiles to reveal.js presentations
+Just write in simple markdown syntax
+
+===
+
+### Key Features
+Easy to write
+Fast compilation
+Beautiful reveal.js output
+
+===
+
+# Thank You!
+Questions?
