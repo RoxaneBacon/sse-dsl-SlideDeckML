@@ -1,93 +1,61 @@
-import { AstNode } from 'langium';
+import {
+    SlideDeck,
+    Slide,
+    Block,
+    Line,
+    isHeading,
+    isParagraph,
+    isPointedList,
+    isOrderedList,
+    isQuote
+} from '../language/generated/ast.js';
+import { TemplateGenerator } from './template.js';
+import { ElementGenerator } from './element-generators.js';
+import { MediaGenerator } from './media-generators.js';
 
-interface Heading extends AstNode {
-    $type: 'Heading';
-    level: string;
-    text: string;
+export class HTMLGenerator {
+    static generateHTML(slideDeck: SlideDeck): string {
+        const slidesHTML = slideDeck.slides
+            .map(slide => this.generateSlide(slide))
+            .join('\n');
+
+        return TemplateGenerator.getHTMLTemplate(slidesHTML);
+    }
+
+    private static generateSlide(slide: Slide): string {
+        const contentHTML = slide.blocks
+            .map(block => this.generateBlock(block))
+            .join('\n');
+
+        return `        <section>\n${contentHTML}\n        </section>`;
+    }
+
+    private static generateBlock(block: Block): string {
+        let html = '';
+
+        if (block.lines.length > 0) {
+            html += block.lines.map(line => this.generateLine(line)).join('\n');
+        }
+
+        if (block.media.length > 0) {
+            html += block.media.map(media => MediaGenerator.generateMedia(media)).join('\n');
+        }
+
+        return html;
+    }
+
+    private static generateLine(line: Line): string {
+        if (isHeading(line)) return ElementGenerator.generateHeading(line);
+        if (isParagraph(line)) return ElementGenerator.generateParagraph(line);
+        if (isPointedList(line)) return ElementGenerator.generatePointedList(line);
+        if (isOrderedList(line)) return ElementGenerator.generateOrderedList(line);
+        if (isQuote(line)) return ElementGenerator.generateQuote(line);
+        return '';
+    }
 }
 
-interface Paragraph extends AstNode {
-    $type: 'Paragraph';
-    text: string;
-}
-
-interface Slide extends AstNode {
-    $type: 'Slide';
-    content: Array<Heading | Paragraph>;
-}
-
-interface SlideDeck extends AstNode {
-    $type: 'SlideDeck';
-    slides: Slide[];
-}
-
+// Keep backward compatibility by exporting the main function
 export function generateHTML(slideDeck: SlideDeck): string {
-    const slidesHTML = slideDeck.slides
-        .map(slide => generateSlide(slide))
-        .join('\n');
-
-    return getHTMLTemplate(slidesHTML);
+    return HTMLGenerator.generateHTML(slideDeck);
 }
 
-function generateSlide(slide: Slide): string {
-    const contentHTML = slide.content
-        .map(item => {
-            if (item.$type === 'Heading') {
-                return generateHeading(item as Heading);
-            } else if (item.$type === 'Paragraph') {
-                return generateParagraph(item as Paragraph);
-            }
-            return '';
-        })
-        .join('\n');
-
-    return `        <section>\n${contentHTML}\n        </section>`;
-}
-
-function generateHeading(heading: Heading): string {
-    const level = heading.level.length; // # = 1, ## = 2, ### = 3
-    const text = escapeHtml(heading.text.trim());
-    return `            <h${level}>${text}</h${level}>`;
-}
-
-function generateParagraph(paragraph: Paragraph): string {
-    const text = escapeHtml(paragraph.text.trim());
-    return `            <p>${text}</p>`;
-}
-
-function escapeHtml(text: string): string {
-    return text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-}
-
-function getHTMLTemplate(slidesContent: string): string {
-    return `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SlideDeckML Presentation</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css">
-</head>
-<body>
-    <div class="reveal">
-        <div class="slides">
-${slidesContent}
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
-    <script>
-        Reveal.initialize({
-            hash: true,
-            transition: 'slide',
-            backgroundTransition: 'fade'
-        });
-    </script>
-</body>
-</html>`;
-}

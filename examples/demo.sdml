@@ -1,21 +1,39 @@
-# Welcome to SlideDeckML
-A simple DSL for creating presentations
-
+# Main Presentation Starts Here
+This is a regular paragraph with some text
 ===
-
-## What is SlideDeckML?
-SlideDeckML is a domain-specific language
-It compiles to reveal.js presentations
-Just write in simple markdown syntax
-
+## Heading Level 2
+This slide demonstrates **bold text**, *italic text*, and __underlined text__ combined
 ===
-
-### Key Features
-Easy to write
-Fast compilation
-Beautiful reveal.js output
-
+### Heading Level 3
+- First bullet point
+- Second bullet point with **bold content**
+- Third bullet point with *italic content*
+- Fourth bullet point with __underlined content__
 ===
-
+# Ordered Lists
+1. First ordered item
+2. Second ordered item with **emphasis**
+3. Third ordered item with *styling*
+4. Fourth item with __underline__
+===
+## Blockquotes
+> This is a quote with regular text
+> Another quote with **bold words** and *italic words*
+===
+# Mixed Content Slide
+This is a paragraph
+- Bullet point one
+- Bullet point two
+1. Ordered item one
+2. Ordered item two
+> A meaningful quote
+===
+## Images
+![Image](https://via.placeholder.com/600x400)
+===
+## Videos
+![Video](https://www.w3schools.com/html/mov_bbb.mp4)
+===
 # Thank You!
 Questions?
+===
