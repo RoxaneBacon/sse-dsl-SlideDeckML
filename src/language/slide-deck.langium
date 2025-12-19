@@ -1,93 +1,63 @@
 grammar SlideDeckML
 
-entry SlideDeck:
-    (slides+=Slide (SLIDE_SEPARATOR slides+=Slide)* SLIDE_SEPARATOR?)?;
+entry Presentation:
+    (metadata=Metadata)?
+    (TEMPLATE_SEPARATOR? template=Template TEMPLATE_SEPARATOR?)?
+    (SLIDE_SEPARATOR? slides+=Slide (SLIDE_SEPARATOR slides+=Slide)* SLIDE_SEPARATOR?)?;
 
-Template:
-    index=INT
-    block=Block;
+Metadata:
+    '{' 'author' ':' author=STRING 'title' ':' title=STRING '}';
 
 Slide:
     blocks+=Block+;
 
+Template:
+    blocks+=Block+;
+
 Block:
-    (lines+=Line | media+=Media)+;
+    lines+=LineContent+;
 
-Line:
-    PointedList | OrderedList | Quote | Heading | Paragraph;
+LineContent:
+    Header | UnorderedList | OrderedList | Paragraph;
 
-TextSpan:
-    parts+=Inline+;
-
-Inline:
-      Bold
-    | Italic
-    | Underline
-    | PlainText;
-
-PlainText:
-    text=TEXT;
-
-Heading:
-    level=HEADING_MARKER text=INLINE_TEXT;
-
-PointedList:
-    items+=PointedListItem+;
-
-PointedListItem:
-    POINTED_LIST_ITEM text=INLINE_TEXT;
+UnorderedList:
+    items+=UnorderedListItem+;
 
 OrderedList:
     items+=OrderedListItem+;
 
-OrderedListItem:
-    ORDERED_LIST_ITEM text=INLINE_TEXT;
+Header:
+    level=HEADER_LEVEL text=PARAGRAPH_TEXT;
 
-Quote:
-    QUOTE_MARKER text=INLINE_TEXT;
+UnorderedListItem:
+    marker=LIST_MARKER text=PARAGRAPH_TEXT;
+
+OrderedListItem:
+    number=INT '.' text=PARAGRAPH_TEXT;
 
 Paragraph:
-    text=INLINE_TEXT;
-
-CharStyle:
-    Bold | Italic | Underline;
-
-Bold:
-    '**' content=BOLD_CONTENT '**';
-Italic:
-    '*' content=ITALIC_CONTENT '*';
-Underline:
-    '__' content=UNDERLINE_CONTENT '__';
-
-
-Media:
-    ImageBlock | VideoBlock;
-
-ImageBlock:
-    '![Image]' '(' url=URL ')';
-
-VideoBlock:
-    '![Video]' '(' url=URL ')';
-
-
-terminal HEADING_MARKER: '###' | '##' | '#';
-terminal POINTED_LIST_ITEM: /[\*\-\+][\t ]+/;
-terminal ORDERED_LIST_ITEM: /[0-9]+\.[\t ]+/;
-terminal QUOTE_MARKER: />[\t ]+/;
+    text=PARAGRAPH_TEXT;
 
 terminal SLIDE_SEPARATOR: /===[\t ]*\r?\n/;
-terminal TEMPLATE_SEPARATOR: /---[\t ]*\r?\n/;
+terminal TEMPLATE_SEPARATOR: /---[	 ]*\r?\n/;
+terminal HEADER_LEVEL: /###|##|#/;
 
-terminal BOLD_CONTENT: /[^*\r\n]+/;
-terminal ITALIC_CONTENT: /[^*\r\n]+/;
-terminal UNDERLINE_CONTENT: /[^_\r\n]+/;
-terminal INLINE_TEXT: /[^\r\n]+/;
-terminal URL: /[^\r\n\)]+/;
-terminal TEXT: /[^_\*\r\n]+/;
+terminal LIST_MARKER: /[\-\*\+]/;
 
+terminal PARAGRAPH_TEXT returns string:
+    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!===)(?!---)(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
 
+terminal STRING returns string:
+    /"(?:\\.|[^"\\])*"/;
 
-terminal INT: /[0-9]+/;
+terminal INT returns number:
+    /[0-9]+/;
 
-hidden terminal WS: /[\t ]+/;
-hidden terminal NL: /\r?\n/;
+hidden terminal NEWLINE:
+    /\r?\n/;
+
+hidden terminal WS:
+    /[ \t]+/;
+
+hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;
+hidden terminal SL_COMMENT: /\/\/[^\n\r]*/;

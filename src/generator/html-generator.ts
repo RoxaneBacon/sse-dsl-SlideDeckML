@@ -1,61 +1,66 @@
-import {
-    SlideDeck,
-    Slide,
-    Block,
-    Line,
-    isHeading,
-    isParagraph,
-    isPointedList,
-    isOrderedList,
-    isQuote
-} from '../language/generated/ast.js';
-import { TemplateGenerator } from './template.js';
-import { ElementGenerator } from './element-generators.js';
-import { MediaGenerator } from './media-generators.js';
+import { Block, Header, LineContent, UnorderedList, Presentation, Slide, Template, OrderedList, isHeader, isUnorderedList, isOrderedList, isParagraph } from "../language/generated/ast";
+import { ElementGenerator } from "./element-generator";
+import { TemplateGenerator } from "./template";
 
-export class HTMLGenerator {
-    static generateHTML(slideDeck: SlideDeck): string {
-        const slidesHTML = slideDeck.slides
-            .map(slide => this.generateSlide(slide))
-            .join('\n');
+export class HtmlGenerator {
+    templateGenerator = new TemplateGenerator();
+    elementGenerator = new ElementGenerator();
 
-        return TemplateGenerator.getHTMLTemplate(slidesHTML);
+    public generateHTML(presentation: Presentation): string {
+        if (presentation.metadata) this.templateGenerator.setMetadata(presentation.metadata);
+
+        // Generate template if it exists
+        let allSlidesHTML = '';
+        if (presentation.template) {
+            allSlidesHTML += this.generateSection(presentation.template) + '\n';
+        }
+
+        // Generate regular slides
+        const slidesHTML = presentation.slides.map(
+            (slide: Slide) => this.generateSection(slide))
+        .join("\n");
+
+        allSlidesHTML += slidesHTML;
+
+        return this.templateGenerator.getHTMLTemplate(allSlidesHTML);
     }
 
-    private static generateSlide(slide: Slide): string {
-        const contentHTML = slide.blocks
+
+    private generateSection(slideOrTemplate: Slide | Template): string {
+        const contentHTML = slideOrTemplate.blocks
             .map(block => this.generateBlock(block))
             .join('\n');
 
         return `        <section>\n${contentHTML}\n        </section>`;
     }
 
-    private static generateBlock(block: Block): string {
+    private generateBlock(block: Block): string {
         let html = '';
 
         if (block.lines.length > 0) {
             html += block.lines.map(line => this.generateLine(line)).join('\n');
         }
 
-        if (block.media.length > 0) {
-            html += block.media.map(media => MediaGenerator.generateMedia(media)).join('\n');
-        }
-
         return html;
     }
 
-    private static generateLine(line: Line): string {
-        if (isHeading(line)) return ElementGenerator.generateHeading(line);
-        if (isParagraph(line)) return ElementGenerator.generateParagraph(line);
-        if (isPointedList(line)) return ElementGenerator.generatePointedList(line);
-        if (isOrderedList(line)) return ElementGenerator.generateOrderedList(line);
-        if (isQuote(line)) return ElementGenerator.generateQuote(line);
+    /**
+     * Process for a single line, and found the type of element to generate
+     * @param line 
+     */
+    private generateLine(line: LineContent): string {
+        if (isHeader(line)) {
+            return this.elementGenerator.generateHeading(line);
+        }
+        if (isUnorderedList(line)) {
+            return this.elementGenerator.generatePointedList(line);
+        }
+        if (isOrderedList(line)) {
+            return this.elementGenerator.generateOrderedList(line);
+        }
+        if (isParagraph(line)) {
+            return this.elementGenerator.generateParagraph(line);
+        }
         return '';
     }
 }
-
-// Keep backward compatibility by exporting the main function
-export function generateHTML(slideDeck: SlideDeck): string {
-    return HTMLGenerator.generateHTML(slideDeck);
-}
-

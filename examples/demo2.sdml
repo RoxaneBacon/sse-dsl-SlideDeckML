@@ -1,0 +1,39 @@
+{
+    author: "User"
+    title: "Demo Presentation 2"
+}
+---
+# Template Title with **bold** and *italic*
+A template paragraph with __underline__, **bold**, *italic*, and plain text.
+- Template bullet one
+- Template bullet two
+- Template bullet three
+1. Template ordered item
+2. Another ordered item
+---
+
+# Slide One Heading
+This is a paragraph mixing **bold**, *italic*, and __underline__ text spans.
+
+- First pointed item
+- Second pointed item
+- Third pointed item
+
+1. First ordered item
+2. Second ordered item
+3. Third ordered item
+===
+## Slide Two Heading
+Another paragraph with plain text only.
+
+- Bullet with **bold**
+- Bullet with *italic*
+- Bullet with __underline__
+
+10. Ordered item with two digits
+11. Another ordered item
+
+===
+### Slide Three Heading
+Final paragraph combining **bold**, *italic*, __underline__, and plain text all together.
+===
