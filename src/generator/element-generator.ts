@@ -60,6 +60,56 @@ export class ElementGenerator {
             .join('\n');
         return `            <ol>\n${items}\n            </ol>`;
     }
+
+    /**
+     * Generate a quote element
+     * @param quote The quote AST node
+     * @returns The HTML string for the quote
+     */
+    public generateQuote(quote: any): string {
+        const text = quote.text;
+        return `            <blockquote>${this.textProcessor.processInlineText(text)}</blockquote>`;
+    }
+
+    /**
+     * Generate a media element (image or video)
+     * @param media The media AST node
+     * @returns The HTML string for the media
+     */
+    public generateMedia(media: any): string {
+        const content = media.content;
+        console.log('Media content:', JSON.stringify(content));
+        
+        // Parse the media line: ![alt](url)
+        const match = content.match(/!\[([^\]]+)\]\(([^\)]+)\)/);
+        if (!match) return '';
+        
+        const alt = match[1];
+        const url = match[2];
+        console.log('Alt:', alt, '| URL:', url);
+        
+        // Determine if it's a video based on file extension
+        const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
+        const isVideo = videoExtensions.some(ext => url.toLowerCase().endsWith(ext));
+        
+        if (isVideo) {
+            return `            <video controls>\n                <source src="${url}" type="video/${this.getVideoType(url)}">\n                ${alt}\n            </video>`;
+        } else {
+            return `            <img src="${url}" alt="${alt}">`;
+        }
+    }
+
+    /**
+     * Get video MIME type from file extension
+     * @param url The video URL
+     * @returns The MIME type
+     */
+    private getVideoType(url: string): string {
+        if (url.toLowerCase().endsWith('.webm')) return 'webm';
+        if (url.toLowerCase().endsWith('.ogg')) return 'ogg';
+        if (url.toLowerCase().endsWith('.mov')) return 'quicktime';
+        return 'mp4'; // default
+    }
 }
 
 /**

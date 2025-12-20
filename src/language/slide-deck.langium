@@ -18,7 +18,7 @@ Block:
     lines+=LineContent+;
 
 LineContent:
-    Header | UnorderedList | OrderedList | Paragraph;
+    Header | UnorderedList | OrderedList | Quote | Media | Paragraph;
 
 UnorderedList:
     items+=UnorderedListItem+;
@@ -38,6 +38,15 @@ OrderedListItem:
 Paragraph:
     text=PARAGRAPH_TEXT;
 
+Quote:
+    marker='>' text=PARAGRAPH_TEXT;
+
+Media:
+    content=MEDIA_LINE;
+
+terminal MEDIA_LINE returns string:
+    /!\[[^\]]+\]\([^\)]+\)/;
+
 terminal SLIDE_SEPARATOR: /===[\t ]*\r?\n/;
 terminal TEMPLATE_SEPARATOR: /---[	 ]*\r?\n/;
 terminal HEADER_LEVEL: /###|##|#/;
@@ -45,7 +54,7 @@ terminal HEADER_LEVEL: /###|##|#/;
 terminal LIST_MARKER: /[\-\*\+]/;
 
 terminal PARAGRAPH_TEXT returns string:
-    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!===)(?!---)(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
+    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!===)(?!---)(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
 
 terminal STRING returns string:
     /"(?:\\.|[^"\\])*"/;

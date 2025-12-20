@@ -18,6 +18,8 @@ class SlideDeckMLTokenBuilder extends DefaultTokenBuilder {
             paragraphToken.LONGER_ALT = tokens.filter((t: any) => 
                 t.name === 'HEADER_LEVEL' ||
                 t.name === 'LIST_MARKER' ||
+                t.name === '>' ||
+                t.name === 'MEDIA_LINE' ||
                 t.name === 'SLIDE_SEPARATOR' ||
                 t.name === 'TEMPLATE_SEPARATOR' ||
                 // Include keyword tokens for metadata

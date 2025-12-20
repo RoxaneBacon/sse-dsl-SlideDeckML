@@ -1,4 +1,4 @@
-import { Block, Header, LineContent, UnorderedList, Presentation, Slide, Template, OrderedList, isHeader, isUnorderedList, isOrderedList, isParagraph } from "../language/generated/ast";
+import { Block, Header, LineContent, UnorderedList, Presentation, Slide, Template, OrderedList, Quote, Media, isHeader, isUnorderedList, isOrderedList, isParagraph, isQuote, isMedia } from "../language/generated/ast";
 import { ElementGenerator } from "./element-generator";
 import { TemplateGenerator } from "./template";
 
@@ -57,6 +57,12 @@ export class HtmlGenerator {
         }
         if (isOrderedList(line)) {
             return this.elementGenerator.generateOrderedList(line);
+        }
+        if (isQuote(line)) {
+            return this.elementGenerator.generateQuote(line);
+        }
+        if (isMedia(line)) {
+            return this.elementGenerator.generateMedia(line);
         }
         if (isParagraph(line)) {
             return this.elementGenerator.generateParagraph(line);
