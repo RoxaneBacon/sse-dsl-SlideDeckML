@@ -1,0 +1,57 @@
+{
+    author: "SlideDeckML Team"
+    title: "Code Blocks Demo"
+}
+===
+# Code Blocks in SlideDeckML
+
+Syntax highlighting powered by Reveal.js and highlight.js
+
+===
+## Simple JavaScript
+
+```javascript
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+```
+
+===
+## Python with Line Numbers
+
+```python ['lines:1,2-3']
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n-1)
+```
+
+===
+## TypeScript with Custom Start
+
+```typescript ['start:10']
+interface User {
+    id: number;
+    name: string;
+    email: string;
+}
+```
+
+===
+## Java with Step Highlighting
+
+```java ['lines:1-2|3-4']
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+```
+
+===
+## Plain Code Block
+
+```
+This is plain text without
+any syntax highlighting
+```

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="SlideDeckML Team">
+    <meta name="title" content="Code Blocks Demo">
+    <title>Code Blocks Demo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+        <section>
+            <h1>Code Blocks in SlideDeckML</h1>
+            <p>Syntax highlighting powered by Reveal.js and highlight.js</p>
+        </section>
+        <section>
+            <h2>Simple JavaScript</h2>
+            <pre><code class="language-javascript" data-trim data-noescape>function greet(name) {
+    return `Hello, ${name}!`;
+}
+</code></pre>
+        </section>
+        <section>
+            <h2>Python with Line Numbers</h2>
+            <pre><code class="language-python" data-trim data-noescape data-line-numbers="1,2-3">def factorial(n):
+    if n &lt;= 1:
+        return 1
+    return n * factorial(n-1)
+</code></pre>
+        </section>
+        <section>
+            <h2>TypeScript with Custom Start</h2>
+            <pre><code class="language-typescript" data-trim data-noescape data-ln-start-from="10">interface User {
+    id: number;
+    name: string;
+    email: string;
+}
+</code></pre>
+        </section>
+        <section>
+            <h2>Java with Step Highlighting</h2>
+            <pre><code class="language-java" data-trim data-noescape data-line-numbers="1-2|3-4">public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println(&quot;Hello, World!&quot;);
+    }
+}
+</code></pre>
+        </section>
+        <section>
+            <h2>Plain Code Block</h2>
+            <pre><code data-trim data-noescape>This is plain text without
+any syntax highlighting
+</code></pre>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            plugins: [ RevealHighlight ]
+        });
+    </script>
+</body>
+</html>

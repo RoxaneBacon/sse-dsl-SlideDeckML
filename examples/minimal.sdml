@@ -1,2 +1,32 @@
+{
+    author: "Baptiste Pellerin"
+    title: "Minimal Example v2.0"
+}
 ===
-# Test
+# Welcome v2.0 !
+## Agenda
+
+- Introduction
+- Goals
+
+1. First step
+2. Second step
+===
+# Introduction
+
+## Minimal _Example_ *v2.0* **ALERT**
+
+This is a minimal **SlideDeckML** *presentation* example _version_ 2.0 !
+
+### It shows how to **create** *slides* with headings, paragraphs, bullet points and numbered lists.
+
+- Bullet _point_ 1 with **formatting**
+- Bullet *point* 2 with _formatting_
+
+1. Numbered item 1 with **formatting**
+2. Numbered item 2 with _formatting_
+===
+# Conclusion
+
+Thank you for using _SlideDeckML_ **v2.0** !
+Feel free to explore more features and create stunning presentations.

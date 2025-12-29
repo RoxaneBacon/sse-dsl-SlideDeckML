@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Baptiste Pellerin">
+    <meta name="title" content="SlideDeckML Complete Feature Demo">
+    <title>SlideDeckML Complete Feature Demo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+        <section>
+            <h1>Welcome to SlideDeckML</h1>
+            <p>A <strong>powerful</strong> and <em>intuitive</em> DSL for creating <u>stunning</u> presentations</p>
+            <ul>
+                <li>Easy to write</li>
+                <li>Fast to compile</li>
+                <li>Beautiful results</li>
+            </ul>
+            <p style="color: blue; font-size: 24px">This template appears on every slide!</p>
+        </section>
+        <section>
+            <h1>Text Formatting Showcase</h1>
+            <p><strong>Bold text</strong> for emphasis</p>
+            <p><em>Italic text</em> for subtle emphasis</p>
+            <p><em>Alternative italic syntax</em></p>
+            <p><u>Underlined text</u> for important notes</p>
+            <p>You can <strong>combine <em>multiple</em> <u>formats</u></strong> together!</p>
+        </section>
+        <section>
+            <h2>Headers Demo</h2>
+            <h1>H1 Header - Main Title</h1>
+            <h2>H2 Header - Section Title</h2>
+            <h3>H3 Header - Subsection Title</h3>
+            <p>Regular paragraph text follows the headers naturally</p>
+        </section>
+        <section>
+            <h1>Lists Are Powerful</h1>
+            <h2>Unordered Lists</h2>
+            <ul>
+                <li>First item with dash</li>
+                <li>Second item with asterisk</li>
+                <li>Third item with plus sign</li>
+            </ul>
+            <h2>Ordered Lists</h2>
+            <ol>
+                <li>First step</li>
+                <li>Second step</li>
+                <li>Third step</li>
+            </ol>
+        </section>
+        <section>
+            <h2>Mixed Content Slide</h2>
+            <p>Here&#39;s a paragraph introducing the content below.</p>
+            <ol>
+                <li>Ordered item one</li>
+                <li>Ordered item two</li>
+            </ol>
+            <ul>
+                <li>Unordered bullet</li>
+                <li>Another bullet</li>
+            </ul>
+            <blockquote>This is a quote block for highlighting important information</blockquote>
+        </section>
+        <section>
+            <h1>Media Support</h1>
+            <h2>Images</h2>
+            <img src="https://via.placeholder.com/600x400/4CAF50/FFFFFF?text=SlideDeckML" alt="SlideDeckML Logo">
+            <h2>Videos</h2>
+            <video controls>
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                Demo Video
+            </video>
+        </section>
+        <section>
+            <h1>Styled Elements with CSS</h1>
+            <h1 style="color: red; background-color: yellow; padding: 20px; border-radius: 10px">This header has custom styling!</h1>
+            <p style="font-size: 28px; font-weight: bold; text-align: center">Centered and bold paragraph with custom font size</p>
+        </section>
+        <section>
+            <h1>Advanced Positioning</h1>
+            <p style="position: absolute; z-index: 2; left: 100px; top: 50px; background-color: rgba(255; 0: undefined; 0: undefined; 0.8)': undefined; color: white; padding: 20px">This element is absolutely positioned!</p>
+            <p style="position: absolute; z-index: 1; left: 200px; top: 150px; background-color: rgba(0; 0: undefined; 255: undefined; 0.8)': undefined; color: white; padding: 20px">This one is behind the first one</p>
+        </section>
+        <section>
+            <h1>Code Blocks with Syntax Highlighting</h1>
+            <h2>JavaScript Example</h2>
+            <pre><code class="language-javascript" data-trim data-noescape>function fibonacci(n) {
+    if (n &lt;= 1) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+const result = fibonacci(10);
+console.log(`Fibonacci(10) = ${result}`);
+</code></pre>
+        </section>
+        <section>
+            <h2>Python with Line Numbers</h2>
+            <pre><code class="language-python" data-trim data-noescape data-line-numbers="1,3-5">def greet(name):
+    message = f&quot;Hello, {name}!&quot;
+    print(message)
+    print(&quot;Welcome to SlideDeckML!&quot;)
+    return message
+
+greet(&quot;World&quot;)
+</code></pre>
+            <p>Lines 1, 3-5 are highlighted!</p>
+        </section>
+        <section>
+            <h2>TypeScript with Custom Line Start</h2>
+            <pre><code class="language-typescript" data-trim data-noescape data-line-numbers data-ln-start-from="42">interface Presentation {
+    title: string;
+    author: string;
+    slides: Slide[];
+}
+
+class SlideDeck implements Presentation {
+    constructor(
+        public title: string,
+        public author: string,
+        public slides: Slide[]
+    ) {}
+}
+</code></pre>
+            <p>Line numbering starts at 42!</p>
+        </section>
+        <section>
+            <h2>Java with Step-by-Step Highlighting</h2>
+            <pre><code class="language-java" data-trim data-noescape data-line-numbers="1-2|4-7|9-11">public class Calculator {
+    private int result;
+    
+    public int add(int a, int b) {
+        result = a + b;
+        return result;
+    }
+    
+    public int getResult() {
+        return result;
+    }
+}
+</code></pre>
+            <p>Click to reveal code progressively!</p>
+        </section>
+        <section>
+            <h1>Complex Styled Lists</h1>
+            <h2 style="background-color: lightblue; padding: 20px; border-left: 5px solid blue">Styled List Header</h2>
+            <ol>
+                <li>First important point</li>
+                <li>Second crucial detail</li>
+                <li>Third essential item</li>
+            </ol>
+        </section>
+        <section>
+            <h1>Quotes and Citations</h1>
+            <blockquote>The best way to predict the future is to invent it.</blockquote>
+            <p>Regular text after the quote.</p>
+            <blockquote>Code is poetry written for machines but read by humans.</blockquote>
+            <p>More regular text here.</p>
+        </section>
+        <section>
+            <h1>Combining Everything</h1>
+            <p><strong>Here&#39;s a paragraph</strong> with <em>mixed</em> <u>formatting</u>.</p>
+            <pre><code class="language-python" data-trim data-noescape data-line-numbers="2-3"># Calculate factorial
+def factorial(n):
+    return 1 if n &lt;= 1 else n * factorial(n-1)
+
+print(factorial(5))
+</code></pre>
+            <blockquote>Remember: Keep your code clean and your presentations cleaner!</blockquote>
+            <ul>
+                <li>Point one</li>
+                <li>Point two</li>
+            </ul>
+        </section>
+        <section>
+            <h1>Nested Styling Example</h1>
+            <h2 style="background: linear-gradient(135deg; #667eea 0%: undefined; #764ba2 100%)': undefined; color: white; padding: 30px; border-radius: 15px">Beautiful Gradient Background</h2>
+            <p>This entire section has a <strong>gradient background</strong> with <em>custom styling</em>!</p>
+            <ul>
+                <li>Works with lists</li>
+                <li>Works with formatting</li>
+                <li>Works with everything!</li>
+            </ul>
+        </section>
+        <section>
+            <h1>Multi-Language Code Showcase</h1>
+            <h2>HTML</h2>
+            <pre><code class="language-html" data-trim data-noescape>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;SlideDeckML&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+        </section>
+        <section>
+            <h2>CSS Styling</h2>
+            <pre><code class="language-css" data-trim data-noescape data-line-numbers="1,3-6">.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f0f0f0;
+}
+</code></pre>
+        </section>
+        <section>
+            <h2>JSON Configuration</h2>
+            <pre><code class="language-json" data-trim data-noescape>{
+  &quot;name&quot;: &quot;slidedeckml&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;A powerful DSL for presentations&quot;,
+  &quot;features&quot;: [
+    &quot;syntax-highlighting&quot;,
+    &quot;custom-styling&quot;,
+    &quot;media-support&quot;
+  ]
+}
+</code></pre>
+        </section>
+        <section>
+            <h1>Plain Text Code Block</h1>
+            <pre><code data-trim data-noescape>This is plain text without syntax highlighting
+Perfect for pseudo-code or simple text
+No language specification needed
+Just pure monospace goodness
+</code></pre>
+        </section>
+        <section>
+            <h1>Final Slide - Summary</h1>
+            <p><strong>What we covered:</strong></p>
+            <ol>
+                <li>Text formatting (<strong>bold</strong>, <em>italic</em>, <u>underline</u>)</li>
+                <li>Headers at all levels</li>
+                <li>Lists (ordered and unordered)</li>
+                <li>Quotes and citations</li>
+                <li>Images and videos</li>
+                <li>Custom CSS styling with :::</li>
+                <li>Absolute positioning (calque, margins)</li>
+                <li>Code blocks with syntax highlighting</li>
+                <li>Line numbers and custom start offsets</li>
+                <li>Progressive code highlighting</li>
+            </ol>
+            <blockquote>SlideDeckML: Making presentations beautiful, one slide at a time!</blockquote>
+            <p style="text-align: center; font-size: 32px; color: blue; margin-top: 50px"><strong>Thank You!</strong></p>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            plugins: [ RevealHighlight ]
+        });
+    </script>
+</body>
+</html>

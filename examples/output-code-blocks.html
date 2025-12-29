@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Test Author">
+    <meta name="title" content="Code Block Demo">
+    <title>Code Block Demo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+        <section>
+            <h1>Code Blocks in SlideDeckML</h1>
+            <p>Testing code block feature with syntax highlighting</p>
+        </section>
+        <section>
+            <h2>Simple Code Block</h2>
+            <pre><code class="language-javascript" data-trim data-noescape>function hello() {
+    console.log(&quot;Hello, World!&quot;);
+}
+</code></pre>
+        </section>
+        <section>
+            <h2>Python with Line Numbers</h2>
+            <pre><code class="language-python" data-trim data-noescape data-line-numbers="1,2-3">def fibonacci(n):
+    if n &lt;= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+</code></pre>
+        </section>
+        <section>
+            <h2>Java with Line Numbers and Start Offset</h2>
+            <pre><code class="language-java" data-trim data-noescape data-line-numbers="1-2|3-4" data-ln-start-from="7">public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println(&quot;Hello, World!&quot;);
+    }
+}
+</code></pre>
+        </section>
+        <section>
+            <h2>Code Block without Language</h2>
+            <pre><code data-trim data-noescape>This is plain text code
+No syntax highlighting
+Just monospace font
+</code></pre>
+        </section>
+        <section>
+            <h2>Multiple Languages</h2>
+            <pre><code class="language-typescript" data-trim data-noescape>interface User {
+    name: string;
+    age: number;
+}
+</code></pre>
+            <pre><code class="language-python" data-trim data-noescape>class User:
+    def __init__(self, name: str, age: int):
+        self.name = name
+        self.age = age
+</code></pre>
+        </section>
+        <section>
+            <h1>End of Demo</h1>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            plugins: [ RevealHighlight ]
+        });
+    </script>
+</body>
+</html>

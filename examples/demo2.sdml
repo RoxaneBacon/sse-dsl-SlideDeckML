@@ -1,0 +1,50 @@
+{
+    author: "User"
+    title: "Demo Presentation 2"
+}
+---
+# Template Title with **bold** and *italic*
+A template paragraph with __underline__, **bold**, *italic*, and plain text.
+- Template bullet one
+- Template bullet two
+- Template bullet three
+1. Template ordered item
+2. Another ordered item
+> Template quote text
+![Template Image with any text as a want it willbe yhe ALT of the image and video](template_image.png)
+![TemplateVideo](template_video.mp4)
+---
+
+# Slide One Heading
+This is a paragraph mixing **bold**, *italic*, and __underline__ text spans.
+
+- First pointed item
+- Second pointed item
+- Third pointed item
+
+1. First ordered item
+2. Second ordered item
+3. Third ordered item
+
+> This is a quoted line with *italic* text
+
+![AnImage](image1.png)
+![AVideo](video1.mp4)
+===
+## Slide Two Heading
+Another paragraph with plain text only.
+
+- Bullet with **bold**
+- Bullet with *italic*
+- Bullet with __underline__
+
+10. Ordered item with two digits
+11. Another ordered item
+
+> Another quote here
+
+![SecondImage](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pixelstalk.net%2Fwp-content%2Fuploads%2F2016%2F07%2F3840x2160-Images-Free-Download.jpg&f=1&nofb=1&ipt=b848861a1f0a93e859949fdf18bd273e08f654a263602dc4f965bd47b4349040)
+===
+### Slide Three Heading
+Final paragraph combining **bold**, *italic*, __underline__, and plain text all together.
+===
