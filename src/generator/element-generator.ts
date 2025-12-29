@@ -123,21 +123,21 @@ export class ElementGenerator {
             // Parse attributes - formats: 'lines:value' or 'lines:value' 'start:value'
             // Remove surrounding quotes and split by spaces to handle multiple attributes
             const attrParts = attributes.match(/'[^']+'/g) || [];
-            
+
             for (const part of attrParts) {
                 // Remove quotes and parse
                 const cleanPart = part.replace(/^'|'$/g, '');
-                
+
                 // Check for lines attribute
                 const linesMatch = cleanPart.match(/^lines:(.+)$/);
                 if (linesMatch) {
                     dataAttrs += ` data-line-numbers="${linesMatch[1]}"`;
                 }
-                
+
                 // Check for start attribute
                 const startMatch = cleanPart.match(/^start:(\d+)$/);
                 if (startMatch) {
-                    dataAttrs += ` data-ln-start-from="${startMatch[1]}"`;
+                    dataAttrs += ` data-line-numbers data-ln-start-from="${startMatch[1]}"`;
                 }
             }
         }
@@ -171,10 +171,10 @@ export class TextProcessor {
         let result = this.escapeHtml(text);
         // Process bold (**text**)
         result = this.processBold(result);
-        // Process italic (*text* or _text_)
-        result = this.processItalic(result);
         // Process underline (__text__)
         result = this.processUnderline(result);
+        // Process italic (*text* or _text_)
+        result = this.processItalic(result);
         return result;
     }
 
@@ -184,7 +184,8 @@ export class TextProcessor {
      * @returns The processed text
      */
     private processBold(text: string): string {
-        return text.replace(/\*\*([^*\r\n]+)\*\*/g, '<strong>$1</strong>');
+        // Match ** but not *** (which would be bold+italic)
+        return text.replace(/\*\*(?!\*)(.+?)(?<!\*)\*\*/g, '<strong>$1</strong>');
     }
 
     /**
@@ -194,10 +195,10 @@ export class TextProcessor {
      * @returns The processed text
      */
     private processItalic(text: string): string {
-        // Process *italic*
-        let result = text.replace(/\*([^*\r\n]+)\*/g, '<em>$1</em>');
-        // Process _italic_
-        result = result.replace(/_([^_\r\n]+)_/g, '<em>$1</em>');
+        // Process *italic* but not ** (bold) or <strong>*text*</strong>
+        let result = text.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
+        // Process _italic_ but not __ (underline)
+        result = result.replace(/(?<!_)_(?!_)(.+?)(?<!_)_(?!_)/g, '<em>$1</em>');
         return result;
     }
 
@@ -207,7 +208,7 @@ export class TextProcessor {
      * @returns The processed text
      */
     private processUnderline(text: string): string {
-        return text.replace(/__([^_\r\n]+)__/g, '<u>$1</u>');
+        return text.replace(/__(.+?)__/g, '<u>$1</u>');
     }
 
     /**
