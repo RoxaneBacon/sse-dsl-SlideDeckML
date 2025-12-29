@@ -18,7 +18,10 @@ Block:
     lines+=LineContent+;
 
 LineContent:
-    Header | UnorderedList | OrderedList | Quote | Media | Paragraph;
+    StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph;
+
+StyledElement:
+    STYLE_DELIMITER style=STYLE_ATTRS element=(Header | UnorderedList | OrderedList | Quote | Media | Paragraph) STYLE_DELIMITER;
 
 UnorderedList:
     items+=UnorderedListItem+;
@@ -47,6 +50,11 @@ Media:
 terminal MEDIA_LINE returns string:
     /!\[[^\]]+\]\([^\)]+\)/;
 
+terminal STYLE_ATTRS returns string:
+    /\{[^\}\r\n]+\}/;
+
+terminal STYLE_DELIMITER: /:::/;
+
 terminal SLIDE_SEPARATOR: /===[\t ]*\r?\n/;
 terminal TEMPLATE_SEPARATOR: /---[	 ]*\r?\n/;
 terminal HEADER_LEVEL: /###|##|#/;
@@ -54,7 +62,7 @@ terminal HEADER_LEVEL: /###|##|#/;
 terminal LIST_MARKER: /[\-\*\+]/;
 
 terminal PARAGRAPH_TEXT returns string:
-    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!===)(?!---)(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
+    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!===)(?!---)(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
 
 terminal STRING returns string:
     /"(?:\\.|[^"\\])*"/;

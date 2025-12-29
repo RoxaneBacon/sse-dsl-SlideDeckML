@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Style Demo">
+    <meta name="title" content="Presentation with Custom Styles">
+    <title>Presentation with Custom Styles</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+        <section>
+            <h1 style="color: #2c3e50; text-align: center">Welcome to Styled Presentation</h1>
+            <p>This is a normal paragraph without styling</p>
+            <p style="background-color: #f39c12; padding: 10px; border-radius: 5px">This is a styled paragraph with background</p>
+            <ul>
+                <li>Normal bullet one</li>
+                <li>Normal bullet two</li>
+            </ul>
+            <ul style="color: #e74c3c; font-size: 20px">
+                <li>Styled bullet one</li>
+                <li>Styled bullet two</li>
+            </ul>
+            <blockquote style="background: #ecf0f1; border-left: 4px solid #3498db; padding: 15px; font-style: italic">Important quote with styling</blockquote>
+            <img src="https://via.placeholder.com/400x300" alt="Normal Image">
+            <img src="https://via.placeholder.com/600x400" alt="Styled Image" style="width: 50%; border: 3px solid #9b59b6; border-radius: 10px">
+        </section>
+        <section>
+            <h2 style="color: #8e44ad; border-bottom: 3px solid #8e44ad; padding-bottom: 10px">Different Heading Style</h2>
+            <p style="font-size: 24px; color: #34495e; text-align: center">Centered large paragraph</p>
+            <ol style="list-style-type: square; color: #16a085">
+                <li>Styled ordered item one</li>
+                <li>Styled ordered item two</li>
+            </ol>
+        </section>
+        <section>
+            <h3 style="text-align: center; color: #c0392b">Final Slide</h3>
+            <p style="font-size: 48px; font-weight: bold; text-align: center; color: #2980b9">Thank you!</p>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            backgroundTransition: 'fade'
+        });
+    </script>
+</body>
+</html>

@@ -12,12 +12,12 @@ export class ElementGenerator {
      * @param heading The heading AST node
      * @returns The HTML string for the heading
      */
-    public generateHeading(heading: any): string {
+    public generateHeading(heading: any, style: string = ''): string {
         // Access level and text directly from the AST
         const level = heading.level.length;
         const text = heading.text;
         
-        return `            <h${level}>${this.textProcessor.processInlineText(text)}</h${level}>`;
+        return `            <h${level}${style}>${this.textProcessor.processInlineText(text)}</h${level}>`;
     }
 
     /**
@@ -25,8 +25,8 @@ export class ElementGenerator {
      * @param paragraph The paragraph AST node
      * @returns The HTML string for the paragraph
      */
-    public generateParagraph(paragraph: any): string {
-        return `            <p>${this.textProcessor.processInlineText(paragraph.text)}</p>`;
+    public generateParagraph(paragraph: any, style: string = ''): string {
+        return `            <p${style}>${this.textProcessor.processInlineText(paragraph.text)}</p>`;
     }
 
     /**
@@ -34,7 +34,7 @@ export class ElementGenerator {
      * @param list The pointed list AST node
      * @returns The HTML string for the pointed list
      */
-    public generatePointedList(list: any): string {
+    public generatePointedList(list: any, style: string = ''): string {
         const items = list.items
             .map((item: any) => {
                 // Access text directly from the AST
@@ -42,7 +42,7 @@ export class ElementGenerator {
                 return `                <li>${this.textProcessor.processInlineText(text)}</li>`;
             })
             .join('\n');
-        return `            <ul>\n${items}\n            </ul>`;
+        return `            <ul${style}>\n${items}\n            </ul>`;
     }
 
     /**
@@ -50,7 +50,7 @@ export class ElementGenerator {
      * @param list The ordered list AST node
      * @returns The HTML string for the ordered list
      */
-    public generateOrderedList(list: any): string {
+    public generateOrderedList(list: any, style: string = ''): string {
         const items = list.items
             .map((item: any) => {
                 // Access text directly from the AST
@@ -58,7 +58,7 @@ export class ElementGenerator {
                 return `                <li>${this.textProcessor.processInlineText(text)}</li>`;
             })
             .join('\n');
-        return `            <ol>\n${items}\n            </ol>`;
+        return `            <ol${style}>\n${items}\n            </ol>`;
     }
 
     /**
@@ -66,9 +66,9 @@ export class ElementGenerator {
      * @param quote The quote AST node
      * @returns The HTML string for the quote
      */
-    public generateQuote(quote: any): string {
+    public generateQuote(quote: any, style: string = ''): string {
         const text = quote.text;
-        return `            <blockquote>${this.textProcessor.processInlineText(text)}</blockquote>`;
+        return `            <blockquote${style}>${this.textProcessor.processInlineText(text)}</blockquote>`;
     }
 
     /**
@@ -76,9 +76,8 @@ export class ElementGenerator {
      * @param media The media AST node
      * @returns The HTML string for the media
      */
-    public generateMedia(media: any): string {
+    public generateMedia(media: any, style: string = ''): string {
         const content = media.content;
-        console.log('Media content:', JSON.stringify(content));
         
         // Parse the media line: ![alt](url)
         const match = content.match(/!\[([^\]]+)\]\(([^\)]+)\)/);
@@ -86,16 +85,15 @@ export class ElementGenerator {
         
         const alt = match[1];
         const url = match[2];
-        console.log('Alt:', alt, '| URL:', url);
         
         // Determine if it's a video based on file extension
         const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
         const isVideo = videoExtensions.some(ext => url.toLowerCase().endsWith(ext));
         
         if (isVideo) {
-            return `            <video controls>\n                <source src="${url}" type="video/${this.getVideoType(url)}">\n                ${alt}\n            </video>`;
+            return `            <video controls${style}>\n                <source src="${url}" type="video/${this.getVideoType(url)}">\n                ${alt}\n            </video>`;
         } else {
-            return `            <img src="${url}" alt="${alt}">`;
+            return `            <img src="${url}" alt="${alt}"${style}>`;
         }
     }
 

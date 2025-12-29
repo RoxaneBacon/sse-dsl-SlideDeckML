@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Absolute Positioning Demo">
+    <meta name="title" content="Simplified Styling with Keywords">
+    <title>Simplified Styling with Keywords</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+        <section>
+            <h1>Main Title</h1>
+            <p>This is a regular paragraph with no positioning</p>
+            <h1 style="position: absolute; z-index: 10; left: 100px; top: 50px; color: #e74c3c; font-size: 32px">Absolutely Positioned Title</h1>
+            <p style="position: absolute; z-index: 5; left: 150px; top: 200px; background: #3498db; color: white; padding: 20px; border-radius: 10px">Floating text box with absolute positioning</p>
+            <img src="https://via.placeholder.com/300x200" alt="Positioned Image" style="position: absolute; z-index: 1; left: 500px; top: 100px">
+            <ul style="position: absolute; left: 50px; top: 400px; font-size: 24px; color: #2ecc71">
+                <li>Absolutely positioned list</li>
+                <li>With custom styling</li>
+                <li>At specific coordinates</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Second Slide - Mixed Styles</h2>
+            <p>Normal content flows here</p>
+            <p style="position: absolute; z-index: 20; left: 300px; top: 150px; font-weight: bold; color: #8e44ad">Overlay text with highest z-index</p>
+            <p style="color: #34495e; text-align: center; font-size: 28px">Regular centered text (relative positioning)</p>
+            <blockquote style="position: absolute; z-index: 15; left: 400px; top: 300px; background: #f39c12; padding: 15px">Important note positioned absolutely</blockquote>
+        </section>
+        <section>
+            <h3 style="position: absolute; z-index: 100; left: 250px; top: 200px; text-align: center; color: #c0392b; font-size: 64px">Centered Overlay</h3>
+            <ol style="position: absolute; left: 200px; top: 400px; z-index: 99">
+                <li>Positioned numbered list</li>
+                <li>Using simplified keywords</li>
+                <li>With automatic absolute positioning</li>
+            </ol>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            slideNumber: true
+        });
+    </script>
+</body>
+</html>

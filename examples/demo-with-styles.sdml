@@ -1,0 +1,54 @@
+{
+    author: "Style Demo"
+    title: "Presentation with Custom Styles"
+}
+===
+::: {color: '#2c3e50', text-align: 'center'}
+# Welcome to Styled Presentation
+:::
+
+This is a normal paragraph without styling
+
+::: {background-color: '#f39c12', padding: '10px', border-radius: '5px'}
+This is a styled paragraph with background
+:::
+
+- Normal bullet one
+- Normal bullet two
+
+::: {color: '#e74c3c', font-size: '20px'}
+- Styled bullet one
+- Styled bullet two
+:::
+
+::: {background: '#ecf0f1', border-left: '4px solid #3498db', padding: '15px', font-style: 'italic'}
+> Important quote with styling
+:::
+
+![Normal Image](https://via.placeholder.com/400x300)
+
+::: {width: '50%', border: '3px solid #9b59b6', border-radius: '10px'}
+![Styled Image](https://via.placeholder.com/600x400)
+:::
+===
+::: {color: '#8e44ad', border-bottom: '3px solid #8e44ad', padding-bottom: '10px'}
+## Different Heading Style
+:::
+
+::: {font-size: '24px', color: '#34495e', text-align: 'center'}
+Centered large paragraph
+:::
+
+::: {list-style-type: 'square', color: '#16a085'}
+1. Styled ordered item one
+2. Styled ordered item two
+:::
+===
+::: {text-align: 'center', color: '#c0392b'}
+### Final Slide
+:::
+
+::: {font-size: '48px', font-weight: 'bold', text-align: 'center', color: '#2980b9'}
+Thank you!
+:::
+===
