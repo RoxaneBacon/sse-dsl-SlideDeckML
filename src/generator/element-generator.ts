@@ -97,6 +97,57 @@ export class ElementGenerator {
         }
     }
 
+        /**
+     * Generate a code block element
+     * @param codeBlock The code block AST node
+     * @returns The HTML string for the code block
+     */
+    public generateCodeBlock(codeBlock: any, style: string = ''): string {
+        const content = codeBlock.content;
+        
+        // Parse the code block: ```language [attributes] code ```
+        const match = content.match(/```([a-zA-Z][a-zA-Z0-9\-]*)?(?:\s*\[([^\]]*)\])?\s*[\r\n]([\s\S]*?)```/);
+        if (!match) return '';
+        
+        const language = match[1] || '';
+        const attributes = match[2] || '';
+        const code = match[3] || '';
+
+        // Build the class attribute
+        const languageClass = language ? ` class="language-${language}"` : '';
+
+        // Build data attributes for line numbers
+        let dataAttrs = ' data-trim data-noescape';
+        
+        if (attributes) {
+            // Parse attributes - formats: 'lines:value' or 'lines:value' 'start:value'
+            // Remove surrounding quotes and split by spaces to handle multiple attributes
+            const attrParts = attributes.match(/'[^']+'/g) || [];
+            
+            for (const part of attrParts) {
+                // Remove quotes and parse
+                const cleanPart = part.replace(/^'|'$/g, '');
+                
+                // Check for lines attribute
+                const linesMatch = cleanPart.match(/^lines:(.+)$/);
+                if (linesMatch) {
+                    dataAttrs += ` data-line-numbers="${linesMatch[1]}"`;
+                }
+                
+                // Check for start attribute
+                const startMatch = cleanPart.match(/^start:(\d+)$/);
+                if (startMatch) {
+                    dataAttrs += ` data-ln-start-from="${startMatch[1]}"`;
+                }
+            }
+        }
+
+        // Escape HTML in code content
+        const escapedCode = this.textProcessor.escapeHtml(code);
+
+        return `            <pre${style}><code${languageClass}${dataAttrs}>${escapedCode}</code></pre>`;
+    }
+
     /**
      * Get video MIME type from file extension
      * @param url The video URL
@@ -164,7 +215,7 @@ export class TextProcessor {
      * @param text The text to escape
      * @returns The escaped text
      */
-    private escapeHtml(text: string): string {
+    public escapeHtml(text: string): string {
         return text
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')

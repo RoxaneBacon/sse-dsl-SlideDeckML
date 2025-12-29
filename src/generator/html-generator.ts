@@ -1,4 +1,4 @@
-import { Block, Header, LineContent, UnorderedList, Presentation, Slide, Template, OrderedList, Quote, Media, StyledElement, isHeader, isUnorderedList, isOrderedList, isParagraph, isQuote, isMedia, isStyledElement } from "../language/generated/ast";
+import { Block, Header, LineContent, UnorderedList, Presentation, Slide, Template, OrderedList, Quote, Media, StyledElement, CodeBlock, isHeader, isUnorderedList, isOrderedList, isParagraph, isQuote, isMedia, isStyledElement, isCodeBlock } from "../language/generated/ast";
 import { ElementGenerator } from "./element-generator";
 import { TemplateGenerator } from "./template";
 
@@ -69,6 +69,9 @@ export class HtmlGenerator {
             if (isMedia(element)) {
                 return this.elementGenerator.generateMedia(element, style);
             }
+            if (isCodeBlock(element)) {
+                return this.elementGenerator.generateCodeBlock(element, style);
+            }
             if (isParagraph(element)) {
                 return this.elementGenerator.generateParagraph(element, style);
             }
@@ -89,6 +92,9 @@ export class HtmlGenerator {
         }
         if (isMedia(line)) {
             return this.elementGenerator.generateMedia(line);
+        }
+        if (isCodeBlock(line)) {
+            return this.elementGenerator.generateCodeBlock(line);
         }
         if (isParagraph(line)) {
             return this.elementGenerator.generateParagraph(line);

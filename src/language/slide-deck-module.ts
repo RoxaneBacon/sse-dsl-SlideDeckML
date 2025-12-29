@@ -20,11 +20,13 @@ class SlideDeckMLTokenBuilder extends DefaultTokenBuilder {
                 t.name === 'LIST_MARKER' ||
                 t.name === '>' ||
                 t.name === 'MEDIA_LINE' ||
+                t.name === 'CODE_BLOCK' ||
                 t.name === 'STYLE_DELIMITER' ||
+                t.name === 'STYLE_ATTRS' ||
                 t.name === 'SLIDE_SEPARATOR' ||
                 t.name === 'TEMPLATE_SEPARATOR' ||
-                // Include keyword tokens for metadata and style blocks
-                t.name === '{' || t.name === '}' || t.name === ':' || t.name === ',' ||
+                // Include keyword tokens for metadata
+                t.name === '{' || t.name === '}' || t.name === ':' ||
                 t.name === 'author' || t.name === 'title'
             );
         }
