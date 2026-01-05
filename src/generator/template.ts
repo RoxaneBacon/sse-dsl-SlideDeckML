@@ -36,7 +36,7 @@ export class TemplateGenerator {
     <style> ${this.css} </style>
 </head>
 <body>
-    ${this.logo ? `<header class="header-banner">
+    ${this.css ? `<header class="header-banner">
         <div class="header-author">${this.author}</div>
         <img src="${this.logo}" alt="Logo" class="header-logo">
     </header>` : ''}
