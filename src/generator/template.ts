@@ -31,15 +31,25 @@ export class TemplateGenerator {
     <meta name="title" content="${this.title}">
     <title>${this.title}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/${this.theme}.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/${
+        this.theme
+    }.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <style> ${this.css} </style>
 </head>
 <body>
-    ${this.css ? `<header class="header-banner">
+    ${
+        this.css
+            ? `<header class="header-banner">
         <div class="header-author">${this.author}</div>
-        <img src="${this.logo}" alt="Logo" class="header-logo">
-    </header>` : ''}
+        ${
+            this.logo
+                ? `<img src="${this.logo}" alt="Logo" class="header-logo">`
+                : ''
+        }
+    </header>`
+            : ''
+    }
     <div class="reveal">
         <div class="slides">
 ${slidesContent}
