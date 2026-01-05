@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { createSlideDeckMLServices } from '../language/slide-deck-module.js';
-import { SlideDeck } from '../language/generated/ast.js';
-import { generateHTML } from '../generator/html-generator.js';
 import * as fs from 'fs';
 import * as path from 'path';
-import { NodeFileSystem } from 'langium/node';
-import { URI } from 'langium';
+import type { Presentation } from '../language/generated/ast';
+import { HtmlGenerator } from '../generator/html-generator';
+import {createSlideDeckMlServices} from "../language/slide-deck-module";
+import {NodeFileSystem} from "langium/node";
+import {URI} from "vscode-uri";
 
 const program = new Command();
 
@@ -42,7 +42,7 @@ async function compile(inputFile: string, outputFile: string): Promise<void> {
     const content = fs.readFileSync(inputFile, 'utf-8');
 
     // Create Langium services
-    const services = createSlideDeckMLServices(NodeFileSystem).SlideDeckML;
+    const services = createSlideDeckMlServices(NodeFileSystem).SlideDeckMl;
 
     // Parse the document
     const document = services.shared.workspace.LangiumDocumentFactory.fromString(
@@ -51,7 +51,7 @@ async function compile(inputFile: string, outputFile: string): Promise<void> {
     );
 
     // Build the document (validate and link)
-    await services.shared.workspace.DocumentBuilder.build([document], { validation: true });
+    await services.shared.workspace.DocumentBuilder.build([document], { validationChecks: 'all' });
 
     // Check for parse errors
     if (document.parseResult.lexerErrors.length > 0) {
@@ -71,10 +71,11 @@ async function compile(inputFile: string, outputFile: string): Promise<void> {
     }
 
     // Extract AST
-    const presentation = document.parseResult.value as SlideDeck;
+    const presentation = document.parseResult.value as Presentation;
 
     // Generate HTML
-    const html = generateHTML(presentation);
+    const htmlGenerator = new HtmlGenerator();
+    const html = htmlGenerator.generateHTML(presentation);
 
     // Write output file
     fs.writeFileSync(outputFile, html, 'utf-8');

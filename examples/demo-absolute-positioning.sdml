@@ -1,0 +1,53 @@
+{
+    author: "Absolute Positioning Demo"
+    title: "Simplified Styling with Keywords"
+}
+===
+# Main Title
+
+This is a regular paragraph with no positioning
+
+::: {calque: 10, horizontal-margin: 100, vertical-margin: 50, color: '#e74c3c', font-size: '32px'}
+# Absolutely Positioned Title
+:::
+
+::: {calque: 5, horizontal-margin: 150, vertical-margin: 200, background: '#3498db', color: 'white', padding: '20px', border-radius: '10px'}
+Floating text box with absolute positioning
+:::
+
+::: {calque: 1, horizontal-margin: 500, vertical-margin: 100}
+![Positioned Image](https://via.placeholder.com/300x200)
+:::
+
+::: {horizontal-margin: 50, vertical-margin: 400, font-size: '24px', color: '#2ecc71'}
+- Absolutely positioned list
+- With custom styling
+- At specific coordinates
+:::
+===
+## Second Slide - Mixed Styles
+
+Normal content flows here
+
+::: {calque: 20, horizontal-margin: 300, vertical-margin: 150, font-weight: 'bold', color: '#8e44ad'}
+Overlay text with highest z-index
+:::
+
+::: {color: '#34495e', text-align: 'center', font-size: '28px'}
+Regular centered text (relative positioning)
+:::
+
+::: {calque: 15, horizontal-margin: 400, vertical-margin: 300, background: '#f39c12', padding: '15px'}
+> Important note positioned absolutely
+:::
+===
+::: {calque: 100, horizontal-margin: 250, vertical-margin: 200, text-align: 'center', color: '#c0392b', font-size: '64px'}
+### Centered Overlay
+:::
+
+::: {horizontal-margin: 200, vertical-margin: 400, calque: 99}
+1. Positioned numbered list
+2. Using simplified keywords
+3. With automatic absolute positioning
+:::
+===

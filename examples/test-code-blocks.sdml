@@ -1,0 +1,74 @@
+{
+    author: "Test Author"
+    title: "Code Block Demo"
+}
+===
+
+# Code Blocks in SlideDeckML
+
+Testing code block feature with syntax highlighting
+
+===
+
+## Simple Code Block
+
+```javascript
+function hello() {
+    console.log("Hello, World!");
+}
+```
+
+===
+
+## Python with Line Numbers
+
+```python ['lines:1,2-3']
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+```
+
+===
+
+## Java with Line Numbers and Start Offset
+
+```java ['lines:1-2|3-4' 'start:7']
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+```
+
+===
+
+## Code Block without Language
+
+```
+This is plain text code
+No syntax highlighting
+Just monospace font
+```
+
+===
+
+## Multiple Languages
+
+```typescript
+interface User {
+    name: string;
+    age: number;
+}
+```
+
+```python
+class User:
+    def __init__(self, name: str, age: int):
+        self.name = name
+        self.age = age
+```
+
+===
+
+# End of Demo

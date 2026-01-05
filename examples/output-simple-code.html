@@ -1,23 +1,11 @@
-import { Metadata } from "../language/generated/ast";
-
-export class TemplateGenerator {
-    private title: string = 'SlideDeckML Presentation'
-    private author: string = 'Unknown Author'
-
-    public setMetadata(metadata: Metadata): void {
-        // Access author and title directly from the metadata object
-        this.author = metadata.author.replace(/^"|"$/g, '');
-        this.title = metadata.title.replace(/^"|"$/g, '');
-    }
-    public getHTMLTemplate(slidesContent: string): string {
-        return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="${this.author}">
-    <meta name="title" content="${this.title}">
-    <title>${this.title}</title>
+    <meta name="author" content="Unknown Author">
+    <meta name="title" content="SlideDeckML Presentation">
+    <title>SlideDeckML Presentation</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
@@ -25,7 +13,21 @@ export class TemplateGenerator {
 <body>
     <div class="reveal">
         <div class="slides">
-${slidesContent}
+        <section>
+            <h1>Code Block Test</h1>
+            <pre><code class="language-javascript" data-trim data-noescape>function hello() {
+    console.log(&quot;Hello, World!&quot;);
+}
+</code></pre>
+        </section>
+        <section>
+            <h1>Python Example</h1>
+            <pre><code class="language-python" data-trim data-noescape>def fibonacci(n):
+    if n &lt;= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+</code></pre>
+        </section>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
@@ -39,7 +41,4 @@ ${slidesContent}
         });
     </script>
 </body>
-</html>`;
-    }
-}
-
+</html>
