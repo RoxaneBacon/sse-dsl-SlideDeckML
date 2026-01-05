@@ -3,6 +3,7 @@ import {
     LangiumServices, LangiumSharedServices, Module, PartialLangiumServices, DefaultTokenBuilder
 } from 'langium';
 import { SlideDeckMLGeneratedModule, SlideDeckMlGeneratedSharedModule } from './generated/module';
+import { SlideDeckMLCompletionProvider } from './slide-deck-completion-provider';
 
 /**
  * Custom TokenBuilder that prioritizes specific terminals
@@ -59,6 +60,9 @@ export const SlideDeckMLModule: Module<SlideDeckMlServices, PartialLangiumServic
     validation: {},
     parser: {
         TokenBuilder: () => new SlideDeckMLTokenBuilder()
+    },
+    lsp: {
+        CompletionProvider: (services) => new SlideDeckMLCompletionProvider(services)
     }
 };
 

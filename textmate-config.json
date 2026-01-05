@@ -1,0 +1,217 @@
+{
+  "name": "SlideDeckML",
+  "scopeName": "source.slidedeckml",
+  "fileTypes": ["sdml"],
+  "patterns": [
+    {
+      "name": "Slide Separator",
+      "pattern": "^===[ \\t]*$",
+      "scope": "keyword.control.separator.slide.slidedeckml"
+    },
+    {
+      "name": "Template Separator",
+      "pattern": "^---[ \\t]*$",
+      "scope": "keyword.control.separator.template.slidedeckml"
+    },
+    {
+      "name": "Header Level 1",
+      "pattern": "^(#)\\s+(.*)$",
+      "scope": "markup.heading.1.slidedeckml",
+      "captures": {
+        "1": "punctuation.definition.heading.slidedeckml",
+        "2": "entity.name.section.slidedeckml"
+      }
+    },
+    {
+      "name": "Header Level 2",
+      "pattern": "^(##)\\s+(.*)$",
+      "scope": "markup.heading.2.slidedeckml",
+      "captures": {
+        "1": "punctuation.definition.heading.slidedeckml",
+        "2": "entity.name.section.slidedeckml"
+      }
+    },
+    {
+      "name": "Header Level 3",
+      "pattern": "^(###)\\s+(.*)$",
+      "scope": "markup.heading.3.slidedeckml",
+      "captures": {
+        "1": "punctuation.definition.heading.slidedeckml",
+        "2": "entity.name.section.slidedeckml"
+      }
+    },
+    {
+      "name": "Unordered List",
+      "pattern": "^\\s*([-*+])\\s+(.*)$",
+      "scope": "markup.list.unnumbered.slidedeckml",
+      "captures": {
+        "1": "punctuation.definition.list.begin.slidedeckml"
+      }
+    },
+    {
+      "name": "Ordered List",
+      "pattern": "^\\s*(\\d+)\\.(\\s+)(.*)$",
+      "scope": "markup.list.numbered.slidedeckml",
+      "captures": {
+        "1": "constant.numeric.list.slidedeckml",
+        "2": "punctuation.definition.list.slidedeckml"
+      }
+    },
+    {
+      "name": "Quote",
+      "pattern": "^(>)\\s+(.*)$",
+      "scope": "markup.quote.slidedeckml",
+      "captures": {
+        "1": "punctuation.definition.quote.slidedeckml"
+      }
+    },
+    {
+      "name": "Media/Image",
+      "pattern": "(\\!\\[)([^\\]]+)(\\]\\()([^\\)]+)(\\))",
+      "scope": "meta.image.inline.slidedeckml",
+      "captures": {
+        "1": "punctuation.definition.image.begin.slidedeckml",
+        "2": "string.other.image.alt.slidedeckml",
+        "3": "punctuation.definition.image.middle.slidedeckml",
+        "4": "markup.underline.link.image.slidedeckml",
+        "5": "punctuation.definition.image.end.slidedeckml"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Code Block",
+      "begin": "^```([a-zA-Z0-9_\\-]*)",
+      "end": "^```",
+      "scope": "markup.fenced_code.block.slidedeckml",
+      "beginCaptures": {
+        "0": "punctuation.definition.code-block.begin.slidedeckml",
+        "1": "entity.name.tag.language.slidedeckml"
+      },
+      "endCaptures": {
+        "0": "punctuation.definition.code-block.end.slidedeckml"
+      },
+      "contentScope": "markup.raw.code.slidedeckml"
+    },
+    {
+      "name": "Style Block",
+      "begin": ":::",
+      "end": ":::",
+      "scope": "meta.style.slidedeckml",
+      "beginCaptures": {
+        "0": "punctuation.definition.style.begin.slidedeckml"
+      },
+      "endCaptures": {
+        "0": "punctuation.definition.style.end.slidedeckml"
+      }
+    },
+    {
+      "name": "Metadata",
+      "begin": "^\\{",
+      "end": "\\}",
+      "scope": "meta.metadata.slidedeckml",
+      "beginCaptures": {
+        "0": "punctuation.definition.metadata.begin.slidedeckml"
+      },
+      "endCaptures": {
+        "0": "punctuation.definition.metadata.end.slidedeckml"
+      },
+      "patterns": [
+        {
+          "name": "Metadata Keywords",
+          "pattern": "\\b(author|title)\\b",
+          "scope": "keyword.other.metadata.slidedeckml"
+        },
+        {
+          "name": "Key-Value Separator",
+          "pattern": ":",
+          "scope": "punctuation.separator.key-value.slidedeckml"
+        }
+      ]
+    },
+    {
+      "name": "Style Attributes",
+      "begin": "\\{",
+      "end": "\\}",
+      "scope": "meta.style-attributes.slidedeckml",
+      "beginCaptures": {
+        "0": "punctuation.definition.style-attributes.begin.slidedeckml"
+      },
+      "endCaptures": {
+        "0": "punctuation.definition.style-attributes.end.slidedeckml"
+      },
+      "patterns": [
+        {
+          "name": "Attribute Name",
+          "pattern": "[a-zA-Z-]+",
+          "scope": "entity.other.attribute-name.slidedeckml"
+        },
+        {
+          "name": "Color Value",
+          "pattern": "#[0-9a-fA-F]{3,8}\\b",
+          "scope": "constant.other.color.slidedeckml"
+        },
+        {
+          "name": "Numeric Value",
+          "pattern": "\\b\\d+(?:px|em|rem|%)?\\b",
+          "scope": "constant.numeric.slidedeckml"
+        }
+      ]
+    }
+  ],
+  "inlinePatterns": [
+    {
+      "name": "Bold",
+      "pattern": "(\\*\\*)([^*]+)(\\*\\*)",
+      "scope": "markup.bold.slidedeckml",
+      "captures": {
+        "1": "punctuation.definition.bold.begin.slidedeckml",
+        "2": "markup.bold.content.slidedeckml",
+        "3": "punctuation.definition.bold.end.slidedeckml"
+      }
+    },
+    {
+      "name": "Italic",
+      "pattern": "(\\*)([^*]+)(\\*)",
+      "scope": "markup.italic.slidedeckml",
+      "captures": {
+        "1": "punctuation.definition.italic.begin.slidedeckml",
+        "2": "markup.italic.content.slidedeckml",
+        "3": "punctuation.definition.italic.end.slidedeckml"
+      }
+    },
+    {
+      "name": "Inline Code",
+      "pattern": "(`)([^`]+)(`)",
+      "scope": "markup.inline.raw.slidedeckml",
+      "captures": {
+        "1": "punctuation.definition.raw.begin.slidedeckml",
+        "2": "markup.inline.raw.content.slidedeckml",
+        "3": "punctuation.definition.raw.end.slidedeckml"
+      }
+    }
+  ],
+  "comments": [
+    {
+      "name": "Block Comment",
+      "begin": "/\\*",
+      "end": "\\*/",
+      "scope": "comment.block.slidedeckml",
+      "beginCaptures": {
+        "0": "punctuation.definition.comment.begin.slidedeckml"
+      },
+      "endCaptures": {
+        "0": "punctuation.definition.comment.end.slidedeckml"
+      }
+    },
+    {
+      "name": "Line Comment",
+      "begin": "//",
+      "end": "$",
+      "scope": "comment.line.double-slash.slidedeckml",
+      "beginCaptures": {
+        "0": "punctuation.definition.comment.slidedeckml"
+      }
+    }
+  ]
+}

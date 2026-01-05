@@ -4,10 +4,7 @@
     {
       "id": "slidedeckml",
       "grammar": "src/language/slide-deck.langium",
-      "fileExtensions": [".sdml"],
-      "textMate": {
-        "out": "syntaxes/slidedeckml.tmLanguage.json"
-      }
+      "fileExtensions": [".sdml"]
     }
   ],
   "out": "src/language/generated"

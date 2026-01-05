@@ -1,0 +1,108 @@
+{
+    "comments": {
+        "lineComment": "//",
+        "blockComment": ["/*", "*/"]
+    },
+    
+    "brackets": [
+        ["{", "}"],
+        ["[", "]"],
+        ["(", ")"],
+        ["```", "```"]
+    ],
+    
+    "autoClosingPairs": [
+        { "open": "{", "close": "}" },
+        { "open": "[", "close": "]" },
+        { "open": "(", "close": ")" },
+        { "open": "\"", "close": "\"" },
+        { "open": "'", "close": "'" },
+        { "open": "```", "close": "```", "notIn": ["string", "comment"] },
+        { "open": ":::", "close": ":::", "notIn": ["string", "comment"] },
+        { "open": "![", "close": ")" }
+    ],
+    
+    "surroundingPairs": [
+        ["{", "}"],
+        ["[", "]"],
+        ["(", ")"],
+        ["\"", "\""],
+        ["'", "'"],
+        ["```", "```"],
+        [":::", ":::"]
+    ],
+    
+    "folding": {
+        "markers": {
+            "start": "^\\s*===\\s*$",
+            "end": "^\\s*===\\s*$"
+        },
+        "offSide": true
+    },
+    
+    "wordPattern": "(-?\\d*\\.\\d\\w*)|([^\\`\\~\\!\\@\\#\\%\\^\\&\\*\\(\\)\\=\\+\\[\\{\\]\\}\\\\\\|\\;\\:\\'\\\"\\,\\.\\<\\>\\/\\?\\s]+)",
+    
+    "indentationRules": {
+        "increaseIndentPattern": "^\\s*([-*+]|\\d+\\.)\\s+.*$",
+        "decreaseIndentPattern": "^\\s*$"
+    },
+    
+    "onEnterRules": [
+        {
+            "beforeText": "^\\s*([-*+])\\s+.*$",
+            "action": {
+                "indent": "none",
+                "appendText": "- "
+            }
+        },
+        {
+            "beforeText": "^\\s*(\\d+)\\. .*$",
+            "action": {
+                "indent": "none",
+                "appendText": "${1}. "
+            }
+        },
+        {
+            "beforeText": "^\\s*>\\s+.*$",
+            "action": {
+                "indent": "none",
+                "appendText": "> "
+            }
+        },
+        {
+            "beforeText": "^\\s*```[a-zA-Z0-9_\\-]*\\s*$",
+            "afterText": "^\\s*```\\s*$",
+            "action": {
+                "indent": "indent",
+                "appendText": ""
+            }
+        },
+        {
+            "beforeText": "^\\s*:::.*$",
+            "afterText": "^\\s*:::.*$",
+            "action": {
+                "indent": "indent"
+            }
+        },
+        {
+            "beforeText": "^===\\s*$",
+            "action": {
+                "indent": "outdent"
+            }
+        },
+        {
+            "beforeText": "^---\\s*$",
+            "action": {
+                "indent": "outdent"
+            }
+        },
+        {
+            "beforeText": "^\\s*\\{\\s*author\\s*:.*$",
+            "action": {
+                "indent": "indent"
+            },
+        }
+    ],
+    
+    "autoCloseBefore": ";:.,=}])>` \n\t",
+}

@@ -3,6 +3,39 @@
   "version": "1.0.0",
   "description": "A DSL for creating reveal.js slides from simplified markdown using Langium",
   "main": "./out/extension.js",
+  "engines": {
+    "vscode": "^1.56.0",
+    "node": ">=16.0.0"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "slidedeckml",
+        "aliases": [
+          "slidedeckml"
+        ],
+        "extensions": [
+          ".sdml"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "slidedeckml",
+        "scopeName": "source.slidedeckml",
+        "path": "./syntaxes/slidedeckml.tmLanguage.json"
+      }
+    ]
+  },
+  "activationEvents": [
+    "onLanguage:slidedeckml"
+  ],
+  "files": [
+    "bin",
+    "out",
+    "src"
+  ],
   "bin": {
     "slidedeckml": "./out/cli/main.js"
   },
@@ -11,7 +44,9 @@
     "watch": "tsc --watch",
     "langium:generate": "langium generate",
     "langium:watch": "langium generate --watch",
-    "compile": "node ./out/cli/main.js"
+    "compile": "node ./out/cli/main.js",
+    "generate:textmate": "node scripts/generate-textmate.js",
+    "generate:all": "npm run generate:textmate && npm run langium:generate && npm run build"
   },
   "keywords": [
     "langium",
@@ -37,8 +72,5 @@
     "@typescript-eslint/parser": "^5.28.0",
     "langium-cli": "~1.0.0",
     "typescript": "^5.3.3"
-  },
-  "engines": {
-    "node": ">=16.0.0"
   }
 }
