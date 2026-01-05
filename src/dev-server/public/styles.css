@@ -150,3 +150,40 @@ body {
 .monaco-editor {
     padding-top: 0 !important;
 }
+
+/* Notifications */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notification-success {
+    background: #4caf50;
+    color: white;
+}
+
+.notification-error {
+    background: #f44336;
+    color: white;
+}
+
+.notification-info {
+    background: #2196f3;
+    color: white;
+}

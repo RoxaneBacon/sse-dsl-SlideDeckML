@@ -43,7 +43,10 @@ export class DevServer {
 
         // Get initial content
         this.app.get('/api/initial-content', (req, res) => {
-            res.json({ content: this.initialContent });
+            res.json({
+                content: this.initialContent,
+                filePath: this.options.initialFile || null
+            });
         });
 
         // Compile endpoint
@@ -52,6 +55,35 @@ export class DevServer {
                 const { content, cursorLine } = req.body;
                 const result = await this.compiler.compile(content, cursorLine);
                 res.json(result);
+            } catch (error) {
+                res.status(500).json({
+                    error: error instanceof Error ? error.message : String(error)
+                });
+            }
+        });
+
+        // Save file endpoint
+        this.app.post('/api/save', (req, res) => {
+            try {
+                const { content, filePath } = req.body;
+
+                // Use the provided filePath or the initially loaded file
+                const targetPath = filePath || this.options.initialFile;
+
+                if (!targetPath) {
+                    return res.status(400).json({
+                        error: 'No file path specified. Cannot save without a file path.'
+                    });
+                }
+
+                // Write to file
+                fs.writeFileSync(targetPath, content, 'utf-8');
+
+                res.json({
+                    success: true,
+                    message: `File saved: ${path.basename(targetPath)}`,
+                    filePath: targetPath
+                });
             } catch (error) {
                 res.status(500).json({
                     error: error instanceof Error ? error.message : String(error)

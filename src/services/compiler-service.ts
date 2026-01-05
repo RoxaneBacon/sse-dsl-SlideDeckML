@@ -9,6 +9,7 @@ export interface CompilationResult {
     slideCount: number;
     error?: string;
     slideIndex?: number;
+    hasTemplate?: boolean;
 }
 
 export interface SlideMapping {
@@ -72,6 +73,7 @@ export class CompilerService {
 
             // Calculate slide count (template is not counted as a slide)
             const slideCount = presentation.slides.length;
+            const hasTemplate = !!presentation.template;
 
             // Determine which slide to display based on cursor position
             let slideIndex: number | undefined;
@@ -82,7 +84,8 @@ export class CompilerService {
             return {
                 html,
                 slideCount,
-                slideIndex
+                slideIndex,
+                hasTemplate
             };
 
         } catch (error) {
@@ -104,14 +107,19 @@ export class CompilerService {
         const lines = content.split('\n');
         const slideMappings = this.buildSlideMappings(lines);
 
+        console.log(`\nLooking for line ${lineNumber} in mappings:`);
+        console.log(JSON.stringify(slideMappings, null, 2));
+
         // Find which slide contains this line
         for (const mapping of slideMappings) {
             if (lineNumber >= mapping.startLine && lineNumber <= mapping.endLine) {
+                console.log(`Found! Line ${lineNumber} is in slide ${mapping.slideIndex} (lines ${mapping.startLine}-${mapping.endLine})`);
                 return mapping.slideIndex;
             }
         }
 
         // Default to first slide if not found
+        console.log(`Not found in any mapping, defaulting to slide 0`);
         return 0;
     }
 

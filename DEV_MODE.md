@@ -58,7 +58,9 @@ Glissez le séparateur central pour ajuster la taille des panneaux.
 
 ## Raccourcis
 
-- **Ctrl+S** / **Cmd+S** : Monaco Editor sauvegarde automatiquement en mémoire (déclenche la compilation)
+- **Ctrl+S** / **Cmd+S** : Sauvegarde le fichier .sdml (notification en haut à droite)
+  - ⚠️ Fonctionne uniquement si vous avez lancé avec un fichier : `npm run dev fichier.sdml`
+  - Sans fichier, affiche un message d'erreur
 
 ## Architecture technique
 

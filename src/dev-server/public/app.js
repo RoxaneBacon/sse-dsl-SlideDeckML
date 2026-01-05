@@ -12,7 +12,10 @@ class SlideDeckMLApp {
         this.compileTimeout = null;
         this.currentSlideIndex = 0;
         this.totalSlides = 0;
+        this.hasTemplate = false;
         this.isInitialized = false;
+        this.currentFilePath = null;
+        this.isSaving = false;
 
         this.init();
     }
@@ -21,6 +24,7 @@ class SlideDeckMLApp {
         await this.initMonaco();
         this.initWebSocket();
         this.initResizer();
+        this.initKeyboardShortcuts();
         await this.loadInitialContent();
     }
 
@@ -166,6 +170,13 @@ class SlideDeckMLApp {
             const response = await fetch('/api/initial-content');
             const data = await response.json();
             this.editor.setValue(data.content);
+            this.currentFilePath = data.filePath;
+
+            // Update title if we have a file path
+            if (this.currentFilePath) {
+                const fileName = this.currentFilePath.split('/').pop();
+                document.title = `${fileName} - SlideDeckML`;
+            }
 
             // Trigger initial compilation
             this.compile();
@@ -173,6 +184,82 @@ class SlideDeckMLApp {
             console.error('Failed to load initial content:', error);
             this.updateStatus('error', 'Failed to load');
         }
+    }
+
+    initKeyboardShortcuts() {
+        // Capture Ctrl+S / Cmd+S for saving
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                this.saveFile();
+            }
+        });
+    }
+
+    async saveFile() {
+        if (this.isSaving) return;
+
+        if (!this.currentFilePath) {
+            this.showNotification('No file path available. Start with: npm run dev <file>', 'error');
+            return;
+        }
+
+        this.isSaving = true;
+        this.updateStatus('compiling', 'Saving...');
+
+        try {
+            const content = this.editor.getValue();
+
+            const response = await fetch('/api/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content,
+                    filePath: this.currentFilePath
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                this.showNotification(result.message, 'success');
+                this.updateStatus('ready', 'Saved');
+
+                // Reset status back to "Ready" after 2 seconds
+                setTimeout(() => {
+                    this.updateStatus('ready', 'Ready');
+                }, 2000);
+            } else {
+                this.showNotification('Save failed: ' + result.error, 'error');
+                this.updateStatus('error', 'Save failed');
+            }
+        } catch (error) {
+            console.error('Save failed:', error);
+            this.showNotification('Save failed: ' + error.message, 'error');
+            this.updateStatus('error', 'Save failed');
+        } finally {
+            this.isSaving = false;
+        }
+    }
+
+    showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.textContent = message;
+
+        document.body.appendChild(notification);
+
+        // Trigger animation
+        setTimeout(() => notification.classList.add('show'), 10);
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
     }
 
     onEditorChange() {
@@ -210,16 +297,28 @@ class SlideDeckMLApp {
             return;
         }
 
+        console.log('Compilation result:', {
+            slideIndex: result.slideIndex,
+            slideCount: result.slideCount,
+            hasTemplate: result.hasTemplate
+        });
+
         // Hide error display
         this.errorDisplay.style.display = 'none';
 
-        // Update preview
-        this.updatePreview(result.html, result.slideIndex || 0);
-
         // Update slide count
         this.totalSlides = result.slideCount;
-        this.currentSlideIndex = result.slideIndex || 0;
-        this.updateSlideCount();
+        this.hasTemplate = result.hasTemplate || false;
+        this.currentSlideIndex = result.slideIndex !== undefined ? result.slideIndex : 0;
+
+        console.log('Setting currentSlideIndex to:', this.currentSlideIndex, 'hasTemplate:', this.hasTemplate);
+
+        // Calculate reveal.js slide index (add 1 if there's a template)
+        const revealSlideIndex = this.hasTemplate ? this.currentSlideIndex + 1 : this.currentSlideIndex;
+        console.log('Reveal.js slide index:', revealSlideIndex);
+
+        // Update preview (will update slide count after navigation)
+        this.updatePreview(result.html, revealSlideIndex);
 
         // Update status
         this.updateStatus('ready', 'Ready');
@@ -237,6 +336,8 @@ class SlideDeckMLApp {
     }
 
     updatePreview(html, slideIndex) {
+        console.log('updatePreview called with slideIndex:', slideIndex);
+
         // Update iframe content
         const iframeDoc = this.previewIframe.contentDocument || this.previewIframe.contentWindow.document;
         iframeDoc.open();
@@ -247,20 +348,40 @@ class SlideDeckMLApp {
         setTimeout(() => {
             const iframeWindow = this.previewIframe.contentWindow;
             if (iframeWindow && iframeWindow.Reveal) {
+                console.log('Reveal.js initialized, navigating to slide:', slideIndex);
+
+                // Remove old event listeners to prevent duplicates
+                iframeWindow.Reveal.off('slidechanged');
+
                 // Navigate to the specific slide
                 iframeWindow.Reveal.slide(slideIndex, 0);
 
-                // Listen to slide changes in the preview
+                // Get the actual current slide after navigation
+                const indices = iframeWindow.Reveal.getIndices();
+                console.log('Reveal.getIndices():', indices);
+
+                // Update the counter (subtract 1 if there's a template to get back to 0-based slide index)
+                const actualSlideIndex = this.hasTemplate ? indices.h - 1 : indices.h;
+                this.currentSlideIndex = Math.max(0, actualSlideIndex);
+                this.updateSlideCount();
+                console.log('Updated counter to slide:', this.currentSlideIndex + 1);
+
+                // Listen to slide changes in the preview (user navigation)
                 iframeWindow.Reveal.on('slidechanged', (event) => {
-                    this.currentSlideIndex = event.indexh;
+                    console.log('Slide changed event:', event.indexh);
+                    // Adjust for template
+                    const userSlideIndex = this.hasTemplate ? event.indexh - 1 : event.indexh;
+                    this.currentSlideIndex = Math.max(0, userSlideIndex);
                     this.updateSlideCount();
                 });
             }
-        }, 100);
+        }, 200);
     }
 
     updateSlideCount() {
-        this.slideCount.textContent = `Slide ${this.currentSlideIndex + 1} / ${this.totalSlides}`;
+        const displayText = `Slide ${this.currentSlideIndex + 1} / ${this.totalSlides}`;
+        console.log('updateSlideCount:', displayText);
+        this.slideCount.textContent = displayText;
     }
 
     updateStatus(type, text) {
