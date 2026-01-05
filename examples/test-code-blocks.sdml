@@ -22,7 +22,7 @@ function hello() {
 
 ## Python with Line Numbers
 
-```python ['lines:1,2-3']
+```python [lines:'1,2-3']
 def fibonacci(n):
     if n <= 1:
         return n
@@ -33,7 +33,7 @@ def fibonacci(n):
 
 ## Java with Line Numbers and Start Offset
 
-```java ['lines:1-2|3-4' 'start:7']
+```java [lines:'1-2|3-4' start:7]
 public class HelloWorld {
     public static void main(String[] args) {
         System.out.println("Hello, World!");

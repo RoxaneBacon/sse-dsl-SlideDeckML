@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="John Doe">
+    <meta name="title" content="Code Highlighting Demo">
+    <title>Code Highlighting Demo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+        <section>
+            <h1>Welcome</h1>
+            <p>This presentation demonstrates the new abstract code highlighting features.</p>
+        </section>
+        <section>
+            <h2>Line-by-Line Highlighting</h2>
+            <p>Shows each line progressively:</p>
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1|2|3|4">function greet(name) {
+    console.log(&#39;Hello &#39; + name);
+    return true;
+}
+</code></pre>
+        </section>
+        <section>
+            <h2>Block Highlighting</h2>
+            <p>Highlights blocks separated by empty lines:</p>
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1-3|5-7|9-11">function first() {
+    console.log(&#39;First function&#39;);
+}
+
+function second() {
+    console.log(&#39;Second function&#39;);
+}
+
+function third() {
+    console.log(&#39;Third function&#39;);
+}
+</code></pre>
+        </section>
+        <section>
+            <h2>Function Highlighting</h2>
+            <p>Detects and highlights functions individually:</p>
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1-3|5-7|9-12">function add(a, b) {
+    return a + b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function divide(a, b) {
+    if (b === 0) return null;
+    return a / b;
+}
+</code></pre>
+        </section>
+        <section>
+            <h2>Class Highlighting</h2>
+            <p>Highlights class definitions:</p>
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1-9|11-15">class Animal {
+    constructor(name) {
+        this.name = name;
+    }
+    
+    speak() {
+        console.log(this.name + &#39; makes a sound&#39;);
+    }
+}
+
+class Dog extends Animal {
+    speak() {
+        console.log(this.name + &#39; barks&#39;);
+    }
+}
+</code></pre>
+        </section>
+        <section>
+            <h2>All at Once</h2>
+            <p>Highlights everything immediately:</p>
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1-4">const x = 10;
+const y = 20;
+const sum = x + y;
+console.log(sum);
+</code></pre>
+        </section>
+        <section>
+            <h2>No Highlighting</h2>
+            <p>No progressive highlighting:</p>
+            <pre><code class="language-javascript" data-trim data-noescape>const x = 10;
+const y = 20;
+const sum = x + y;
+console.log(sum);
+</code></pre>
+        </section>
+        <section>
+            <h2>Reveal.js Compatible</h2>
+            <p>Still supports traditional reveal.js syntax:</p>
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1,3|2,4">const x = 10;
+const y = 20;
+const sum = x + y;
+console.log(sum);
+</code></pre>
+        </section>
+        <section>
+            <h2>Mixed Syntax</h2>
+            <p>Can combine highlight mode with start offset:</p>
+            <pre><code class="language-python" data-trim data-noescape data-line-numbers="1" data-ln-start-from="10">def calculate(x, y):
+    result = x + y
+    return result
+
+def process(data):
+    cleaned = data.strip()
+    return cleaned.upper()
+</code></pre>
+        </section>
+        <section>
+            <h2>Thank You!</h2>
+            <p>Try the new highlighting modes in your presentations!</p>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            plugins: [ RevealHighlight ]
+        });
+    </script>
+</body>
+</html>

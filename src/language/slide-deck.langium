@@ -51,7 +51,7 @@ Media:
     content=MEDIA_LINE;
 
 terminal CODE_BLOCK returns string:
-    /```[a-zA-Z0-9_\-]*(?:\s*\[[^\]]*\])?[\r\n]([\s\S]*?)```/;
+    /```[a-zA-Z0-9_\-]*(?:\s*\[(?:(?:highlight:\s*(?:block|function|class|line-by-line|all|none))|(?:lines:\s*["'][^"']+["'])|(?:start:\s*\d+)|\s)+\])?[\r\n]([\s\S]*?)```/;
 
 terminal MEDIA_LINE returns string:
     /!\[[^\]]+\]\([^\)]+\)/;

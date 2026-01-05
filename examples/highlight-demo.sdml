@@ -1,0 +1,149 @@
+{
+    author: "John Doe"
+    title: "Code Highlighting Demo"
+}
+
+---
+
+# Welcome
+
+This presentation demonstrates the new abstract code highlighting features.
+
+===
+
+## Line-by-Line Highlighting
+
+Shows each line progressively:
+
+```javascript [highlight:line-by-line]
+function greet(name) {
+    console.log('Hello ' + name);
+    return true;
+}
+```
+
+===
+
+## Block Highlighting
+
+Highlights blocks separated by empty lines:
+
+```javascript [highlight:block]
+function first() {
+    console.log('First function');
+}
+
+function second() {
+    console.log('Second function');
+}
+
+function third() {
+    console.log('Third function');
+}
+```
+
+===
+
+## Function Highlighting
+
+Detects and highlights functions individually:
+
+```javascript [highlight:function]
+function add(a, b) {
+    return a + b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function divide(a, b) {
+    if (b === 0) return null;
+    return a / b;
+}
+```
+
+===
+
+## Class Highlighting
+
+Highlights class definitions:
+
+```javascript [highlight:class]
+class Animal {
+    constructor(name) {
+        this.name = name;
+    }
+    
+    speak() {
+        console.log(this.name + ' makes a sound');
+    }
+}
+
+class Dog extends Animal {
+    speak() {
+        console.log(this.name + ' barks');
+    }
+}
+```
+
+===
+
+## All at Once
+
+Highlights everything immediately:
+
+```javascript [highlight:all]
+const x = 10;
+const y = 20;
+const sum = x + y;
+console.log(sum);
+```
+
+===
+
+## No Highlighting
+
+No progressive highlighting:
+
+```javascript [highlight:none]
+const x = 10;
+const y = 20;
+const sum = x + y;
+console.log(sum);
+```
+
+===
+
+## Reveal.js Compatible
+
+Still supports traditional reveal.js syntax:
+
+```javascript [lines:'1,3|2,4']
+const x = 10;
+const y = 20;
+const sum = x + y;
+console.log(sum);
+```
+
+===
+
+## Mixed Syntax
+
+Can combine highlight mode with start offset:
+
+```python [highlight:function start:10]
+def calculate(x, y):
+    result = x + y
+    return result
+
+def process(data):
+    cleaned = data.strip()
+    return cleaned.upper()
+```
+
+===
+
+## Thank You!
+
+Try the new highlighting modes in your presentations!

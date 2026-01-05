@@ -106,11 +106,11 @@ export class ElementGenerator {
         const content = codeBlock.content;
         
         // Parse the code block: ```language [attributes] code ```
-        const match = content.match(/```([a-zA-Z][a-zA-Z0-9\-]*)?(?:\s*\[([^\]]*)\])?\s*[\r\n]([\s\S]*?)```/);
+        const match = content.match(/```([a-zA-Z0-9_\-]*)?(?:\s*\[([^\]]*)\])?\s*[\r\n]([\s\S]*?)```/);
         if (!match) return '';
         
         const language = match[1] || '';
-        const attributes = match[2] || '';
+        const attributesStr = match[2] || '';
         const code = match[3] || '';
 
         // Build the class attribute
@@ -119,26 +119,26 @@ export class ElementGenerator {
         // Build data attributes for line numbers
         let dataAttrs = ' data-trim data-noescape';
         
-        if (attributes) {
-            // Parse attributes - formats: 'lines:value' or 'lines:value' 'start:value'
-            // Remove surrounding quotes and split by spaces to handle multiple attributes
-            const attrParts = attributes.match(/'[^']+'/g) || [];
-
-            for (const part of attrParts) {
-                // Remove quotes and parse
-                const cleanPart = part.replace(/^'|'$/g, '');
-
-                // Check for lines attribute
-                const linesMatch = cleanPart.match(/^lines:(.+)$/);
-                if (linesMatch) {
-                    dataAttrs += ` data-line-numbers="${linesMatch[1]}"`;
+        if (attributesStr) {
+            // Parse attributes - handle both new abstract syntax and reveal.js syntax
+            const attributes = this.parseCodeAttributes(attributesStr);
+            
+            // Handle abstract highlight modes
+            if (attributes.highlight) {
+                const highlightPattern = this.convertHighlightMode(attributes.highlight, code);
+                if (highlightPattern) {
+                    dataAttrs += ` data-line-numbers="${highlightPattern}"`;
                 }
-
-                // Check for start attribute
-                const startMatch = cleanPart.match(/^start:(\d+)$/);
-                if (startMatch) {
-                    dataAttrs += ` data-line-numbers data-ln-start-from="${startMatch[1]}"`;
-                }
+            }
+            
+            // Handle explicit line numbers (reveal.js style)
+            if (attributes.lines) {
+                dataAttrs += ` data-line-numbers="${attributes.lines}"`;
+            }
+            
+            // Handle start offset
+            if (attributes.start) {
+                dataAttrs += ` data-ln-start-from="${attributes.start}"`;
             }
         }
 
@@ -146,6 +146,177 @@ export class ElementGenerator {
         const escapedCode = this.textProcessor.escapeHtml(code);
 
         return `            <pre${style}><code${languageClass}${dataAttrs}>${escapedCode}</code></pre>`;
+    }
+
+    /**
+     * Parse code block attributes from string
+     * Supports both: highlight:block lines:'1-5' start:10
+     * @param attributesStr The attributes string from the code block
+     * @returns Parsed attributes object
+     */
+    private parseCodeAttributes(attributesStr: string): any {
+        const attrs: any = {};
+        
+        // Match highlight mode: highlight:mode
+        const highlightMatch = attributesStr.match(/highlight\s*:\s*([a-z\-]+)/);
+        if (highlightMatch) {
+            attrs.highlight = highlightMatch[1];
+        }
+        
+        // Match lines: lines:'...' or lines:"..."
+        const linesMatch = attributesStr.match(/lines\s*:\s*["']([^"']+)["']/);
+        if (linesMatch) {
+            attrs.lines = linesMatch[1];
+        }
+        
+        // Match start: start:number
+        const startMatch = attributesStr.match(/start\s*:\s*(\d+)/);
+        if (startMatch) {
+            attrs.start = startMatch[1];
+        }
+        
+        return attrs;
+    }
+
+    /**
+     * Convert abstract highlight mode to reveal.js line numbers pattern
+     * @param mode The highlight mode keyword
+     * @param code The code content
+     * @returns The reveal.js line numbers pattern
+     */
+    private convertHighlightMode(mode: string, code: string): string {
+        const lines = code.trim().split('\n');
+        const totalLines = lines.length;
+
+        switch (mode) {
+            case 'all':
+                return `1-${totalLines}`;
+            
+            case 'none':
+                return '';
+            
+            case 'line-by-line':
+                // Progressive highlighting: 1|2|3|4...
+                return Array.from({length: totalLines}, (_, i) => i + 1).join('|');
+            
+            case 'block':
+                // Highlight code blocks separated by empty lines
+                return this.detectBlocks(lines);
+            
+            case 'function':
+                // Detect function boundaries (heuristic)
+                return this.detectFunctions(lines);
+            
+            case 'class':
+                // Detect class boundaries (heuristic)
+                return this.detectClasses(lines);
+            
+            default:
+                return '';
+        }
+    }
+
+    /**
+     * Detect code blocks separated by empty lines
+     * @param lines Array of code lines
+     * @returns Reveal.js line pattern
+     */
+    private detectBlocks(lines: string[]): string {
+        const blocks: string[] = [];
+        let blockStart = 1;
+        let inBlock = false;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            
+            if (line.length > 0) {
+                if (!inBlock) {
+                    blockStart = i + 1;
+                    inBlock = true;
+                }
+            } else if (inBlock) {
+                // Empty line marks end of block
+                blocks.push(blockStart === i ? `${blockStart}` : `${blockStart}-${i}`);
+                inBlock = false;
+            }
+        }
+        
+        // Handle last block
+        if (inBlock) {
+            blocks.push(blockStart === lines.length ? `${blockStart}` : `${blockStart}-${lines.length}`);
+        }
+        
+        return blocks.join('|');
+    }
+
+    /**
+     * Detect function boundaries (simple heuristic)
+     * @param lines Array of code lines
+     * @returns Reveal.js line pattern
+     */
+    private detectFunctions(lines: string[]): string {
+        const functions: string[] = [];
+        let funcStart = -1;
+        let braceCount = 0;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            
+            // Detect function start (simple heuristic for common languages)
+            if (funcStart === -1 && (
+                /^(function|def|fn|func|public|private|protected|static)/.test(line) ||
+                /\bfunction\b/.test(line) ||
+                /^[a-zA-Z_][a-zA-Z0-9_]*\s*\(.*\)\s*\{/.test(line) ||
+                /^(async\s+)?[a-zA-Z_][a-zA-Z0-9_]*\s*\(.*\)\s*(=>|:)/.test(line)
+            )) {
+                funcStart = i + 1;
+            }
+            
+            if (funcStart !== -1) {
+                // Count braces to find function end
+                braceCount += (line.match(/\{/g) || []).length;
+                braceCount -= (line.match(/\}/g) || []).length;
+                
+                if (braceCount === 0 && /\}/.test(line)) {
+                    functions.push(funcStart === i + 1 ? `${funcStart}` : `${funcStart}-${i + 1}`);
+                    funcStart = -1;
+                }
+            }
+        }
+        
+        return functions.join('|') || '1';
+    }
+
+    /**
+     * Detect class boundaries (simple heuristic)
+     * @param lines Array of code lines
+     * @returns Reveal.js line pattern
+     */
+    private detectClasses(lines: string[]): string {
+        const classes: string[] = [];
+        let classStart = -1;
+        let braceCount = 0;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            
+            // Detect class start
+            if (classStart === -1 && /^(class|interface|struct|enum)\s+[a-zA-Z_]/.test(line)) {
+                classStart = i + 1;
+            }
+            
+            if (classStart !== -1) {
+                braceCount += (line.match(/\{/g) || []).length;
+                braceCount -= (line.match(/\}/g) || []).length;
+                
+                if (braceCount === 0 && /\}/.test(line)) {
+                    classes.push(classStart === i + 1 ? `${classStart}` : `${classStart}-${i + 1}`);
+                    classStart = -1;
+                }
+            }
+        }
+        
+        return classes.join('|') || '1';
     }
 
     /**
