@@ -1,5 +1,9 @@
 // SlideDeckML Live Preview Application
 
+// Configuration
+const COMPILE_DEBOUNCE_MS = 1000;  // Délai avant compilation après modification
+const CURSOR_DEBOUNCE_MS = 500;    // Délai avant compilation après mouvement du curseur
+
 class SlideDeckMLApp {
     constructor() {
         this.editor = null;
@@ -16,6 +20,7 @@ class SlideDeckMLApp {
         this.isInitialized = false;
         this.currentFilePath = null;
         this.isSaving = false;
+        this.revealInitialized = false;
 
         this.init();
     }
@@ -269,7 +274,7 @@ class SlideDeckMLApp {
 
         this.compileTimeout = setTimeout(() => {
             this.compile();
-        }, 500);
+        }, COMPILE_DEBOUNCE_MS);
     }
 
     onCursorChange() {
@@ -279,7 +284,7 @@ class SlideDeckMLApp {
             clearTimeout(this.compileTimeout);
             this.compileTimeout = setTimeout(() => {
                 this.compile();
-            }, 300);
+            }, CURSOR_DEBOUNCE_MS);
         }
     }
 
@@ -338,8 +343,20 @@ class SlideDeckMLApp {
     updatePreview(html, slideIndex) {
         console.log('updatePreview called with slideIndex:', slideIndex);
 
+        const iframeWindow = this.previewIframe.contentWindow;
+
+        // Clean up previous Reveal instance to prevent memory leaks
+        if (iframeWindow && iframeWindow.Reveal && this.revealInitialized) {
+            try {
+                console.log('Destroying previous Reveal instance');
+                iframeWindow.Reveal.destroy();
+            } catch (e) {
+                console.warn('Failed to destroy Reveal:', e);
+            }
+        }
+
         // Update iframe content
-        const iframeDoc = this.previewIframe.contentDocument || this.previewIframe.contentWindow.document;
+        const iframeDoc = this.previewIframe.contentDocument || iframeWindow.document;
         iframeDoc.open();
         iframeDoc.write(html);
         iframeDoc.close();
@@ -349,9 +366,7 @@ class SlideDeckMLApp {
             const iframeWindow = this.previewIframe.contentWindow;
             if (iframeWindow && iframeWindow.Reveal) {
                 console.log('Reveal.js initialized, navigating to slide:', slideIndex);
-
-                // Remove old event listeners to prevent duplicates
-                iframeWindow.Reveal.off('slidechanged');
+                this.revealInitialized = true;
 
                 // Navigate to the specific slide
                 iframeWindow.Reveal.slide(slideIndex, 0);
