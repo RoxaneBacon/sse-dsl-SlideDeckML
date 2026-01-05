@@ -107,19 +107,14 @@ export class CompilerService {
         const lines = content.split('\n');
         const slideMappings = this.buildSlideMappings(lines);
 
-        console.log(`\nLooking for line ${lineNumber} in mappings:`);
-        console.log(JSON.stringify(slideMappings, null, 2));
-
         // Find which slide contains this line
         for (const mapping of slideMappings) {
             if (lineNumber >= mapping.startLine && lineNumber <= mapping.endLine) {
-                console.log(`Found! Line ${lineNumber} is in slide ${mapping.slideIndex} (lines ${mapping.startLine}-${mapping.endLine})`);
                 return mapping.slideIndex;
             }
         }
 
         // Default to first slide if not found
-        console.log(`Not found in any mapping, defaulting to slide 0`);
         return 0;
     }
 

@@ -302,12 +302,6 @@ class SlideDeckMLApp {
             return;
         }
 
-        console.log('Compilation result:', {
-            slideIndex: result.slideIndex,
-            slideCount: result.slideCount,
-            hasTemplate: result.hasTemplate
-        });
-
         // Hide error display
         this.errorDisplay.style.display = 'none';
 
@@ -316,11 +310,8 @@ class SlideDeckMLApp {
         this.hasTemplate = result.hasTemplate || false;
         this.currentSlideIndex = result.slideIndex !== undefined ? result.slideIndex : 0;
 
-        console.log('Setting currentSlideIndex to:', this.currentSlideIndex, 'hasTemplate:', this.hasTemplate);
-
         // Calculate reveal.js slide index (add 1 if there's a template)
         const revealSlideIndex = this.hasTemplate ? this.currentSlideIndex + 1 : this.currentSlideIndex;
-        console.log('Reveal.js slide index:', revealSlideIndex);
 
         // Update preview (will update slide count after navigation)
         this.updatePreview(result.html, revealSlideIndex);
@@ -341,17 +332,14 @@ class SlideDeckMLApp {
     }
 
     updatePreview(html, slideIndex) {
-        console.log('updatePreview called with slideIndex:', slideIndex);
-
         const iframeWindow = this.previewIframe.contentWindow;
 
         // Clean up previous Reveal instance to prevent memory leaks
         if (iframeWindow && iframeWindow.Reveal && this.revealInitialized) {
             try {
-                console.log('Destroying previous Reveal instance');
                 iframeWindow.Reveal.destroy();
             } catch (e) {
-                console.warn('Failed to destroy Reveal:', e);
+                console.warn('Failed to destroy Reveal instance:', e);
             }
         }
 
@@ -365,7 +353,6 @@ class SlideDeckMLApp {
         setTimeout(() => {
             const iframeWindow = this.previewIframe.contentWindow;
             if (iframeWindow && iframeWindow.Reveal) {
-                console.log('Reveal.js initialized, navigating to slide:', slideIndex);
                 this.revealInitialized = true;
 
                 // Navigate to the specific slide
@@ -373,17 +360,14 @@ class SlideDeckMLApp {
 
                 // Get the actual current slide after navigation
                 const indices = iframeWindow.Reveal.getIndices();
-                console.log('Reveal.getIndices():', indices);
 
                 // Update the counter (subtract 1 if there's a template to get back to 0-based slide index)
                 const actualSlideIndex = this.hasTemplate ? indices.h - 1 : indices.h;
                 this.currentSlideIndex = Math.max(0, actualSlideIndex);
                 this.updateSlideCount();
-                console.log('Updated counter to slide:', this.currentSlideIndex + 1);
 
                 // Listen to slide changes in the preview (user navigation)
                 iframeWindow.Reveal.on('slidechanged', (event) => {
-                    console.log('Slide changed event:', event.indexh);
                     // Adjust for template
                     const userSlideIndex = this.hasTemplate ? event.indexh - 1 : event.indexh;
                     this.currentSlideIndex = Math.max(0, userSlideIndex);
@@ -394,9 +378,7 @@ class SlideDeckMLApp {
     }
 
     updateSlideCount() {
-        const displayText = `Slide ${this.currentSlideIndex + 1} / ${this.totalSlides}`;
-        console.log('updateSlideCount:', displayText);
-        this.slideCount.textContent = displayText;
+        this.slideCount.textContent = `Slide ${this.currentSlideIndex + 1} / ${this.totalSlides}`;
     }
 
     updateStatus(type, text) {
