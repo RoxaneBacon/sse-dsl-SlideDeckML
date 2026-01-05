@@ -3,6 +3,7 @@
 // Configuration
 const COMPILE_DEBOUNCE_MS = 1000;  // Délai avant compilation après modification
 const CURSOR_DEBOUNCE_MS = 500;    // Délai avant compilation après mouvement du curseur
+const DEBUG_MEMORY = true;         // Activer les logs de debug mémoire
 
 class SlideDeckMLApp {
     constructor() {
@@ -12,7 +13,9 @@ class SlideDeckMLApp {
         this.statusIndicator = document.getElementById('status-indicator');
         this.statusText = document.getElementById('status-text');
         this.slideCount = document.getElementById('slide-count');
-        this.errorDisplay = document.getElementById('error-display');
+        this.errorBanner = document.getElementById('error-banner');
+        this.errorDetails = document.getElementById('error-details');
+        this.errorToggle = document.getElementById('error-toggle');
         this.compileTimeout = null;
         this.currentSlideIndex = 0;
         this.totalSlides = 0;
@@ -21,8 +24,14 @@ class SlideDeckMLApp {
         this.currentFilePath = null;
         this.isSaving = false;
         this.revealInitialized = false;
+        this.compilationCount = 0;
 
         this.init();
+
+        // Monitor memory if enabled
+        if (DEBUG_MEMORY) {
+            this.startMemoryMonitoring();
+        }
     }
 
     async init() {
@@ -30,7 +39,16 @@ class SlideDeckMLApp {
         this.initWebSocket();
         this.initResizer();
         this.initKeyboardShortcuts();
+        this.initErrorToggle();
         await this.loadInitialContent();
+    }
+
+    initErrorToggle() {
+        this.errorToggle.addEventListener('click', () => {
+            const isVisible = this.errorDetails.style.display === 'block';
+            this.errorDetails.style.display = isVisible ? 'none' : 'block';
+            this.errorToggle.textContent = isVisible ? '▼ Show Details' : '▲ Hide Details';
+        });
     }
 
     async initMonaco() {
@@ -302,8 +320,8 @@ class SlideDeckMLApp {
             return;
         }
 
-        // Hide error display
-        this.errorDisplay.style.display = 'none';
+        // Hide error banner
+        this.errorBanner.style.display = 'none';
 
         // Update slide count
         this.totalSlides = result.slideCount;
@@ -327,31 +345,62 @@ class SlideDeckMLApp {
 
     handleCompilationError(error) {
         this.updateStatus('error', 'Error');
-        this.errorDisplay.textContent = error;
-        this.errorDisplay.style.display = 'block';
+
+        // Show error banner at top
+        this.errorDetails.textContent = error + '\n\n💡 Tip: Fix the errors and the preview will update automatically.';
+        this.errorBanner.style.display = 'block';
+
+        // Keep the details collapsed by default
+        this.errorDetails.style.display = 'none';
+        this.errorToggle.textContent = '▼ Show Details';
     }
 
     updatePreview(html, slideIndex) {
-        const iframeWindow = this.previewIframe.contentWindow;
+        this.compilationCount++;
 
-        // Clean up previous Reveal instance to prevent memory leaks
-        if (iframeWindow && iframeWindow.Reveal && this.revealInitialized) {
-            try {
-                iframeWindow.Reveal.destroy();
-            } catch (e) {
-                console.warn('Failed to destroy Reveal instance:', e);
-            }
+        if (DEBUG_MEMORY) {
+            console.log(`[Preview Update #${this.compilationCount}] Navigating to slide ${slideIndex}`);
         }
 
-        // Update iframe content
-        const iframeDoc = this.previewIframe.contentDocument || iframeWindow.document;
+        // Strategy: Replace the entire iframe to ensure clean slate
+        // This is more aggressive but prevents memory leaks
+        const oldIframe = this.previewIframe;
+        const newIframe = document.createElement('iframe');
+
+        // Copy attributes
+        newIframe.id = 'preview-iframe';
+        newIframe.sandbox = 'allow-scripts allow-same-origin allow-popups';
+
+        // Replace the iframe
+        oldIframe.parentNode.replaceChild(newIframe, oldIframe);
+        this.previewIframe = newIframe;
+
+        if (DEBUG_MEMORY) {
+            console.log('[Preview] Iframe replaced, writing HTML...');
+        }
+
+        // Write content to new iframe
+        const iframeDoc = newIframe.contentDocument || newIframe.contentWindow.document;
         iframeDoc.open();
         iframeDoc.write(html);
         iframeDoc.close();
 
-        // Wait for Reveal.js to initialize, then navigate to the slide
+        // Wait for Reveal.js to initialize with retry mechanism
+        this.waitForRevealAndNavigate(slideIndex, 0);
+
+        // Force garbage collection hint (not guaranteed but helps)
+        if (window.gc) {
+            setTimeout(() => window.gc(), 500);
+        }
+    }
+
+    waitForRevealAndNavigate(slideIndex, retryCount = 0) {
+        const maxRetries = 10;
+        const retryDelay = 100;
+
         setTimeout(() => {
             const iframeWindow = this.previewIframe.contentWindow;
+
             if (iframeWindow && iframeWindow.Reveal) {
                 this.revealInitialized = true;
 
@@ -373,8 +422,20 @@ class SlideDeckMLApp {
                     this.currentSlideIndex = Math.max(0, userSlideIndex);
                     this.updateSlideCount();
                 });
+
+                if (DEBUG_MEMORY) {
+                    console.log(`[Preview] Reveal.js initialized after ${retryCount} retries, navigated to slide ${slideIndex}`);
+                }
+            } else if (retryCount < maxRetries) {
+                // Retry
+                if (DEBUG_MEMORY && retryCount === 0) {
+                    console.log('[Preview] Reveal.js not ready, retrying...');
+                }
+                this.waitForRevealAndNavigate(slideIndex, retryCount + 1);
+            } else {
+                console.warn('[Preview] Reveal.js failed to initialize after max retries');
             }
-        }, 200);
+        }, retryDelay);
     }
 
     updateSlideCount() {
@@ -384,6 +445,18 @@ class SlideDeckMLApp {
     updateStatus(type, text) {
         this.statusIndicator.className = `status-dot ${type}`;
         this.statusText.textContent = text;
+    }
+
+    startMemoryMonitoring() {
+        // Log memory usage every 5 seconds
+        setInterval(() => {
+            if (performance.memory) {
+                const used = (performance.memory.usedJSHeapSize / 1048576).toFixed(2);
+                const total = (performance.memory.totalJSHeapSize / 1048576).toFixed(2);
+                const limit = (performance.memory.jsHeapSizeLimit / 1048576).toFixed(2);
+                console.log(`[Memory] Used: ${used} MB / Total: ${total} MB / Limit: ${limit} MB | Compilations: ${this.compilationCount}`);
+            }
+        }, 5000);
     }
 }
 
