@@ -123,39 +123,64 @@ export class CompilerService {
     private buildSlideMappings(lines: string[]): SlideMapping[] {
         const mappings: SlideMapping[] = [];
         let currentSlideIndex = 0;
-        let currentSlideStart = 0;
+        let currentSlideStart = -1;
+        let inMetadata = false;
         let inTemplate = false;
-        let afterMetadata = false;
+        let firstTemplateSeparator = -1;
 
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i].trim();
 
-            // Detect metadata block
-            if (line.startsWith('{') && i === 0) {
-                // Skip metadata
+            // Detect metadata block (starts with { at line 0)
+            if (i === 0 && line.startsWith('{')) {
+                inMetadata = true;
                 continue;
             }
 
-            if (line.startsWith('}') && !afterMetadata) {
-                afterMetadata = true;
+            // End of metadata
+            if (inMetadata && line.startsWith('}')) {
+                inMetadata = false;
+                continue;
+            }
+
+            // Skip lines inside metadata
+            if (inMetadata) {
                 continue;
             }
 
             // Detect template separator (---)
             if (line === '---') {
-                if (!inTemplate) {
+                if (firstTemplateSeparator === -1) {
+                    // First --- encountered - start of template
+                    firstTemplateSeparator = i;
                     inTemplate = true;
-                    currentSlideStart = i + 1;
                 } else {
-                    // End of template
+                    // Second --- encountered - end of template
                     inTemplate = false;
                 }
                 continue;
             }
 
+            // Detect first slide separator after template
+            // This means template had only one separator and ends here
+            if (inTemplate && line === '===') {
+                inTemplate = false;
+                // Don't process this === yet, it will be processed in next iteration
+            }
+
+            // Skip lines inside template
+            if (inTemplate) {
+                continue;
+            }
+
+            // Initialize slide start if not set
+            if (currentSlideStart === -1 && line !== '' && line !== '===') {
+                currentSlideStart = i;
+            }
+
             // Detect slide separator (===)
             if (line === '===') {
-                if (!inTemplate) {
+                if (currentSlideStart !== -1) {
                     // End current slide
                     mappings.push({
                         slideIndex: currentSlideIndex,
@@ -163,13 +188,13 @@ export class CompilerService {
                         endLine: i - 1
                     });
                     currentSlideIndex++;
-                    currentSlideStart = i + 1;
+                    currentSlideStart = -1; // Reset for next slide
                 }
             }
         }
 
-        // Add the last slide
-        if (!inTemplate && currentSlideStart < lines.length) {
+        // Add the last slide if there's content
+        if (currentSlideStart !== -1 && currentSlideStart < lines.length) {
             mappings.push({
                 slideIndex: currentSlideIndex,
                 startLine: currentSlideStart,
