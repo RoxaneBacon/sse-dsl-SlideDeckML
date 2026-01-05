@@ -5,19 +5,27 @@ import { TemplateGenerator } from "./template";
 export class HtmlGenerator {
     templateGenerator = new TemplateGenerator();
     elementGenerator = new ElementGenerator();
+    private currentSlideIndex = 0;
 
     public generateHTML(presentation: Presentation): string {
         if (presentation.metadata) this.templateGenerator.setMetadata(presentation.metadata);
 
+        // Reset slide index counter
+        this.currentSlideIndex = 0;
+
         // Generate template if it exists
         let allSlidesHTML = '';
         if (presentation.template) {
-            allSlidesHTML += this.generateSection(presentation.template) + '\n';
+            allSlidesHTML += this.generateSection(presentation.template, true) + '\n';
         }
 
-        // Generate regular slides
+        // Generate regular slides with index tracking
         const slidesHTML = presentation.slides.map(
-            (slide: Slide) => this.generateSection(slide))
+            (slide: Slide) => {
+                const html = this.generateSection(slide, false);
+                this.currentSlideIndex++;
+                return html;
+            })
         .join("\n");
 
         allSlidesHTML += slidesHTML;
@@ -26,12 +34,15 @@ export class HtmlGenerator {
     }
 
 
-    private generateSection(slideOrTemplate: Slide | Template): string {
+    private generateSection(slideOrTemplate: Slide | Template, isTemplate: boolean): string {
         const contentHTML = slideOrTemplate.blocks
             .map(block => this.generateBlock(block))
             .join('\n');
 
-        return `        <section>\n${contentHTML}\n        </section>`;
+        // Add data-slide-index attribute for regular slides (not template)
+        const dataAttribute = isTemplate ? '' : ` data-slide-index="${this.currentSlideIndex}"`;
+
+        return `        <section${dataAttribute}>\n${contentHTML}\n        </section>`;
     }
 
     private generateBlock(block: Block): string {

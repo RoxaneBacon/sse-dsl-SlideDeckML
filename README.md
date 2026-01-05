@@ -19,9 +19,27 @@ npm run build
 
 ## Usage
 
-### 1. Write your presentation
+### Development Mode (Live Preview)
 
-Create a `.sdml` file with your content:
+```bash
+npm run dev examples/demo.sdml
+```
+
+Opens a browser with split-screen editor and live preview. Changes are compiled automatically.
+
+```bash
+npm run dev examples/demo.sdml -- --port 3001  # Custom port
+npm run dev examples/demo.sdml -- --no-open    # Don't open browser
+npm run dev                                     # Start without file
+```
+
+See [DEV_MODE.md](DEV_MODE.md) for details.
+
+### Production Mode (Compile to HTML)
+
+#### 1. Write your presentation
+
+Create a `.sdml` file:
 
 ```
 # Welcome to My Presentation
@@ -31,7 +49,6 @@ This is the first slide
 
 ## Second Slide
 Some content here
-More content on the same slide
 
 ===
 
@@ -39,21 +56,13 @@ More content on the same slide
 Thank you!
 ```
 
-### 2. Compile to HTML
+#### 2. Compile to HTML
 
 ```bash
 npm run compile examples/demo.sdml -o output.html
 ```
 
-Or using the CLI directly:
-
-```bash
-node out/cli/main.js compile examples/demo.sdml -o output.html
-```
-
-### 3. Open in browser
-
-Simply open the generated HTML file in your web browser:
+#### 3. Open in browser
 
 ```bash
 open output.html
