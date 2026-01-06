@@ -132,7 +132,7 @@ console.log(`Fibonacci(10) = ${result}`);
 
 ## Python with Line Numbers
 
-```python ['lines:1,3-5']
+```python [lines:'1,3-5']
 def greet(name):
     message = f"Hello, {name}!"
     print(message)
@@ -148,7 +148,7 @@ Lines 1, 3-5 are highlighted!
 
 ## TypeScript with Custom Line Start
 
-```typescript ['start:42']
+```typescript [start:42]
 interface Presentation {
     title: string;
     author: string;
@@ -170,7 +170,7 @@ Line numbering starts at 42!
 
 ## Java with Step-by-Step Highlighting
 
-```java ['lines:1-2|4-7|9-11']
+```java [lines:'1-2|4-7|9-11']
 public class Calculator {
     private int result;
     
@@ -218,7 +218,7 @@ More regular text here.
 
 **Here's a paragraph** with *mixed* __formatting__.
 
-```python ['lines:2-3']
+```python [lines:'2-3']
 # Calculate factorial
 def factorial(n):
     return 1 if n <= 1 else n * factorial(n-1)
@@ -268,7 +268,7 @@ This entire section has a **gradient background** with *custom styling*!
 
 ## CSS Styling
 
-```css ['lines:1,3-6']
+```css [lines:'1,3-6']
 .container {
     display: flex;
     justify-content: center;
@@ -297,7 +297,7 @@ This entire section has a **gradient background** with *custom styling*!
 
 ===
 
-# Plain Text Code Block
+## Plain Text Code Block
 
 ```
 This is plain text without syntax highlighting

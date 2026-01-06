@@ -1,45 +1,16 @@
-import { Metadata } from '../language/generated/ast'
-
-export class TemplateGenerator {
-    private title: string = 'SlideDeckML Presentation'
-    private author: string = 'Unknown Author'
-    private css: string = ''
-    private logo: string = ''
-    private theme: string = 'white'
-
-    public setMetadata(metadata: Metadata): void {
-        // Access author and title directly from the metadata object
-        this.author = metadata.author.replace(/^"|"$/g, '')
-        this.title = metadata.title.replace(/^"|"$/g, '')
-        if (metadata.css) {
-            this.css = metadata.css.replace(/^"|"$/g, '')
-        }
-        if (metadata.logo) {
-            this.logo = metadata.logo.replace(/^"|"$/g, '')
-        }
-        if (metadata.theme) {
-            this.theme = metadata.theme.replace(/^"|"$/g, '')
-        }
-    }
-    public getHTMLTemplate(slidesContent: string): string {
-        return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="${this.author}">
-    <meta name="title" content="${this.title}">
-    <title>${this.title}</title>
+    <meta name="author" content="SlideDeckML Team">
+    <meta name="title" content="Welcome to SlideDeckML">
+    <title>Welcome to SlideDeckML</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/${
-        this.theme
-    }.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <style> 
         
-        ${this.css}
-   
         /* Synchronized fragments styling */
         .sync-container {
             position: relative;
@@ -74,44 +45,46 @@ export class TemplateGenerator {
     </style>
 </head>
 <body>
-    ${
-        this.css
-            ? `<header class="header-banner">
-        <div class="header-author">${this.author}</div>
-        ${
-            this.logo
-                ? `<img src="${this.logo}" alt="Logo" class="header-logo">`
-                : ''
-        }
-    </header>`
-            : ''
-    }
+    
     <div class="reveal">
         <div class="slides">
-${slidesContent}
+        <section data-slide-index="0">
+            <h1>Welcome to SlideDeckML</h1>
+            <p>A modern DSL for creating presentations</p>
+        </section>
+        <section data-slide-index="1">
+            <h2>What is SlideDeckML?</h2>
+            <p>SlideDeckML is a domain-specific language</p>
+            <p>It compiles to beautiful reveal.js presentations</p>
+            <p>Write in a simple markdown-like syntax</p>
+        </section>
+        <section data-slide-index="2">
+            <h3>Key Features</h3>
+            <p>Easy to write and maintain</p>
+            <p>Fast compilation</p>
+            <p>Beautiful reveal.js output</p>
+            <p>Support for images and media</p>
+        </section>
+        <section data-slide-index="3">
+            <h2>Media Support</h2>
+            <p>You can now include images in your slides!</p>
+            <img src=""https://via.placeholder.com/600x400?text=Example+Image"" alt="Example Image">
+            <p>Images are automatically sized to fit your slides</p>
+        </section>
+        <section data-slide-index="4">
+            <h1>Thank You!</h1>
+            <p>Questions?</p>
+        </section>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
     <script>
         Reveal.initialize({
             hash: true,
             transition: 'slide',
             backgroundTransition: 'fade',
             plugins: [ RevealHighlight ]
-        });
-
-        // Auto-render LaTeX when slides are ready
-        Reveal.on('ready', function() {
-            renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$$', right: '$$', display: true},
-                    {left: '$', right: '$', display: false}
-                ],
-                throwOnError: false
-            });
         });
 
         // Synchronized fragments handler
@@ -185,6 +158,4 @@ ${slidesContent}
         });
     </script>
 </body>
-</html>`
-    }
-}
+</html>
