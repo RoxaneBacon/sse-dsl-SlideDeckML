@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Demo Author">
+    <meta name="title" content="Synchronized Fragments Demo">
+    <title>Synchronized Fragments Demo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    <style>
+        /* Synchronized fragments styling */
+        .sync-container {
+            position: relative;
+            min-height: 50px;
+            font-size: 0.9em;
+        }
+        .sync-item {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .sync-item.active {
+            display: block;
+            opacity: 1;
+        }
+        .sync-item p {
+            margin: 0.3em 0;
+        }
+        .sync-item img {
+            max-width: 100%;
+            height: auto;
+        }
+        /* Keep mode: stack items vertically */
+        .sync-container[data-keep="true"] {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3em;
+        }
+        .sync-container[data-keep="true"] .sync-item {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+        <section>
+            <h3>Variable Evolution Demo</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start">
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1|2|3|4">let x = 0;
+x = x + 5;
+x = x * 2;
+console.log(x);
+</code></pre>
+            <div class="sync-container">
+                <div class="sync-item" data-sync-index="-1"><p>x = 0</p></div>
+                <div class="sync-item" data-sync-index="0"><p>x = 5</p></div>
+                <div class="sync-item" data-sync-index="1"><p>x = 10</p></div>
+                <div class="sync-item" data-sync-index="2"><p>Output: 10</p></div>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h3>Variable Evolution Demo (Keep Mode)</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start">
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1|2|3|4">let x = 0;
+x = x + 5;
+x = x * 2;
+console.log(x);
+</code></pre>
+            <div class="sync-container" data-keep="true">
+                <div class="sync-item" data-sync-index="-1"><p>x = 0</p></div>
+                <div class="sync-item" data-sync-index="0"><p>x = 5</p></div>
+                <div class="sync-item" data-sync-index="1"><p>x = 10</p></div>
+                <div class="sync-item" data-sync-index="2"><p>Output: 10</p></div>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h3>Image Evolution Demo</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start">
+            <pre><code class="language-python" data-trim data-noescape data-line-numbers="1|2|3">data = load_data()
+cleaned = process(data)
+result = analyze(cleaned)
+</code></pre>
+            <div class="sync-container">
+                <div class="sync-item" data-sync-index="-1"><img src="https://placehold.co/400x200/3498db/white?text=Raw+Data" alt="Raw Data" style="max-width: 100%; height: auto;" /></div>
+                <div class="sync-item" data-sync-index="0"><img src="https://placehold.co/400x200/2ecc71/white?text=Cleaned+Data" alt="Cleaned Data" style="max-width: 100%; height: auto;" /></div>
+                <div class="sync-item" data-sync-index="1"><img src="https://placehold.co/400x200/e74c3c/white?text=Results" alt="Analysis Results" style="max-width: 100%; height: auto;" /></div>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="2">
+            <h3>Mixed Content Demo</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start">
+            <pre><code class="language-java" data-trim data-noescape data-line-numbers="1|2|3|4">User user = new User(&quot;Alice&quot;);
+user.setAge(25);
+user.setRole(&quot;Admin&quot;);
+System.out.println(user);
+</code></pre>
+            <div class="sync-container">
+                <div class="sync-item" data-sync-index="-1"><p>User created: name=&quot;Alice&quot;</p></div>
+                <div class="sync-item" data-sync-index="0"><p>Updated: age=25</p></div>
+                <div class="sync-item" data-sync-index="1"><p>Updated: role=&quot;Admin&quot;  </p></div>
+                <div class="sync-item" data-sync-index="2"><img src="https://placehold.co/300x150/9b59b6/white?text=User+Object" alt="Final State" style="max-width: 100%; height: auto;" /></div>
+            </div>
+            </div>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            plugins: [ RevealHighlight ]
+        });
+
+        // Synchronized fragments handler
+        let currentFragmentIndex = -1;
+
+        Reveal.on('fragmentshown', event => {
+            currentFragmentIndex++;
+            updateSyncItems();
+        });
+
+        Reveal.on('fragmenthidden', event => {
+            currentFragmentIndex--;
+            updateSyncItems();
+        });
+
+        Reveal.on('slidechanged', event => {
+            // Detect the current fragment state by checking visible fragments
+            const currentSlide = Reveal.getCurrentSlide();
+            if (currentSlide) {
+                const fragments = currentSlide.querySelectorAll('.fragment');
+                let maxVisibleIndex = -1;
+                
+                fragments.forEach(fragment => {
+                    if (fragment.classList.contains('visible')) {
+                        const fragmentIndex = parseInt(fragment.getAttribute('data-fragment-index') || '0');
+                        maxVisibleIndex = Math.max(maxVisibleIndex, fragmentIndex);
+                    }
+                });
+                
+                currentFragmentIndex = maxVisibleIndex;
+            } else {
+                currentFragmentIndex = -1;
+            }
+            updateSyncItems();
+        });
+
+        function updateSyncItems() {
+            const currentSlide = Reveal.getCurrentSlide();
+            if (!currentSlide) return;
+
+            const syncContainers = currentSlide.querySelectorAll('.sync-container');
+            syncContainers.forEach(container => {
+                const keepMode = container.getAttribute('data-keep') === 'true';
+                const items = container.querySelectorAll('.sync-item');
+                
+                items.forEach(item => {
+                    const syncIndex = parseInt(item.getAttribute('data-sync-index') || '0');
+                    
+                    if (keepMode) {
+                        // In keep mode, show all items up to and including current index
+                        if (syncIndex <= currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    } else {
+                        // Default mode: show only the current item
+                        if (syncIndex === currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Initialize on load
+        Reveal.on('ready', () => {
+            updateSyncItems();
+        });
+    </script>
+</body>
+</html>

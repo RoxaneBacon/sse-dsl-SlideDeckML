@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Absolute Positioning Demo">
+    <meta name="title" content="Simplified Styling with Keywords">
+    <title>Simplified Styling with Keywords</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    <style>
+        /* Synchronized fragments styling */
+        .sync-container {
+            position: relative;
+            min-height: 50px;
+            font-size: 0.9em;
+        }
+        .sync-item {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .sync-item.active {
+            display: block;
+            opacity: 1;
+        }
+        .sync-item p {
+            margin: 0.3em 0;
+        }
+        .sync-item img {
+            max-width: 100%;
+            height: auto;
+        }
+        /* Keep mode: stack items vertically */
+        .sync-container[data-keep="true"] {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3em;
+        }
+        .sync-container[data-keep="true"] .sync-item {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+        <section data-slide-index="0">
+            <h1>Main Title</h1>
+            <p>This is a regular paragraph with no positioning</p>
+            <div style="position: absolute; z-index: 10; left: 100px; top: 50px; color: #e74c3c; font-size: 32px">
+            <h1>Absolutely Positioned Title</h1>
+            </div>
+            <div style="position: absolute; z-index: 5; left: 150px; top: 200px; background: #3498db; color: white; padding: 20px; border-radius: 10px">
+            <p>Floating text box with absolute positioning</p>
+            </div>
+            <div style="position: absolute; z-index: 1; left: 500px; top: 100px">
+            <img src="https://via.placeholder.com/300x200" alt="Positioned Image">
+            </div>
+            <div style="position: absolute; left: 50px; top: 400px; font-size: 24px; color: #2ecc71">
+            <ul>
+                <li>Absolutely positioned list</li>
+                <li>With custom styling</li>
+                <li>At specific coordinates</li>
+            </ul>
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h2>Second Slide - Mixed Styles</h2>
+            <p>Normal content flows here</p>
+            <div style="position: absolute; z-index: 20; left: 300px; top: 150px; font-weight: bold; color: #8e44ad">
+            <p>Overlay text with highest z-index</p>
+            </div>
+            <div style="color: #34495e; text-align: center; font-size: 28px">
+            <p>Regular centered text (relative positioning)</p>
+            </div>
+            <div style="position: absolute; z-index: 15; left: 400px; top: 300px; background: #f39c12; padding: 15px">
+            <blockquote>Important note positioned absolutely</blockquote>
+            </div>
+        </section>
+        <section data-slide-index="2">
+            <div style="position: absolute; z-index: 100; left: 250px; top: 200px; text-align: center; color: #c0392b; font-size: 64px">
+            <h3>Centered Overlay</h3>
+            </div>
+            <div style="position: absolute; left: 200px; top: 400px; z-index: 99">
+            <ol>
+                <li>Positioned numbered list</li>
+                <li>Using simplified keywords</li>
+                <li>With automatic absolute positioning</li>
+            </ol>
+            </div>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            plugins: [ RevealHighlight ]
+        });
+
+        // Synchronized fragments handler
+        let currentFragmentIndex = -1;
+
+        Reveal.on('fragmentshown', event => {
+            currentFragmentIndex++;
+            updateSyncItems();
+        });
+
+        Reveal.on('fragmenthidden', event => {
+            currentFragmentIndex--;
+            updateSyncItems();
+        });
+
+        Reveal.on('slidechanged', event => {
+            // Detect the current fragment state by checking visible fragments
+            const currentSlide = Reveal.getCurrentSlide();
+            if (currentSlide) {
+                const fragments = currentSlide.querySelectorAll('.fragment');
+                let maxVisibleIndex = -1;
+                
+                fragments.forEach(fragment => {
+                    if (fragment.classList.contains('visible')) {
+                        const fragmentIndex = parseInt(fragment.getAttribute('data-fragment-index') || '0');
+                        maxVisibleIndex = Math.max(maxVisibleIndex, fragmentIndex);
+                    }
+                });
+                
+                currentFragmentIndex = maxVisibleIndex;
+            } else {
+                currentFragmentIndex = -1;
+            }
+            updateSyncItems();
+        });
+
+        function updateSyncItems() {
+            const currentSlide = Reveal.getCurrentSlide();
+            if (!currentSlide) return;
+
+            const syncContainers = currentSlide.querySelectorAll('.sync-container');
+            syncContainers.forEach(container => {
+                const keepMode = container.getAttribute('data-keep') === 'true';
+                const items = container.querySelectorAll('.sync-item');
+                
+                items.forEach(item => {
+                    const syncIndex = parseInt(item.getAttribute('data-sync-index') || '0');
+                    
+                    if (keepMode) {
+                        // In keep mode, show all items up to and including current index
+                        if (syncIndex <= currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    } else {
+                        // Default mode: show only the current item
+                        if (syncIndex === currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Initialize on load
+        Reveal.on('ready', () => {
+            updateSyncItems();
+        });
+    </script>
+</body>
+</html>
