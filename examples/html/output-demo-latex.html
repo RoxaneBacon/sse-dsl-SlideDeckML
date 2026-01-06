@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Demo Author">
-    <meta name="title" content="Synchronized Fragments Demo">
-    <title>Synchronized Fragments Demo</title>
+    <meta name="author" content="SlideDeckML Team">
+    <meta name="title" content="LaTeX Mathematical Equations Demo">
+    <title>LaTeX Mathematical Equations Demo</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <style> 
@@ -51,67 +51,82 @@
     
     <div class="reveal">
         <div class="slides">
-        <section>
-            <h3>Variable Evolution Demo</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start">
-            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1|2|3|4">let x = 0;
-x = x + 5;
-x = x * 2;
-console.log(x);
-</code></pre>
-            <div class="sync-container">
-                <div class="sync-item" data-sync-index="-1"><p>x = 0</p></div>
-                <div class="sync-item" data-sync-index="0"><p>x = 5</p></div>
-                <div class="sync-item" data-sync-index="1"><p>x = 10</p></div>
-                <div class="sync-item" data-sync-index="2"><p>Output: 10</p></div>
-            </div>
-            </div>
-        </section>
         <section data-slide-index="0">
-            <h3>Variable Evolution Demo (Keep Mode)</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start">
-            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1|2|3|4">let x = 0;
-x = x + 5;
-x = x * 2;
-console.log(x);
-</code></pre>
-            <div class="sync-container" data-keep="true">
-                <div class="sync-item" data-sync-index="-1"><p>x = 0</p></div>
-                <div class="sync-item" data-sync-index="0"><p>x = 5</p></div>
-                <div class="sync-item" data-sync-index="1"><p>x = 10</p></div>
-                <div class="sync-item" data-sync-index="2"><p>Output: 10</p></div>
-            </div>
-            </div>
+            <h1>Mathematical Equations with LaTeX</h1>
+            <p>This presentation demonstrates the LaTeX block feature in SlideDeckML</p>
         </section>
         <section data-slide-index="1">
-            <h3>Image Evolution Demo</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start">
-            <pre><code class="language-python" data-trim data-noescape data-line-numbers="1|2|3">data = load_data()
-cleaned = process(data)
-result = analyze(cleaned)
-</code></pre>
-            <div class="sync-container">
-                <div class="sync-item" data-sync-index="-1"><img src="https://placehold.co/400x200/3498db/white?text=Raw+Data" alt="Raw Data" style="max-width: 100%; height: auto;" /></div>
-                <div class="sync-item" data-sync-index="0"><img src="https://placehold.co/400x200/2ecc71/white?text=Cleaned+Data" alt="Cleaned Data" style="max-width: 100%; height: auto;" /></div>
-                <div class="sync-item" data-sync-index="1"><img src="https://placehold.co/400x200/e74c3c/white?text=Results" alt="Analysis Results" style="max-width: 100%; height: auto;" /></div>
-            </div>
+            <h2>Simple Equation</h2>
+            <p>The quadratic formula:</p>
+            <div class="latex-block">
+                $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
             </div>
         </section>
         <section data-slide-index="2">
-            <h3>Mixed Content Demo</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start">
-            <pre><code class="language-java" data-trim data-noescape data-line-numbers="1|2|3|4">User user = new User(&quot;Alice&quot;);
-user.setAge(25);
-user.setRole(&quot;Admin&quot;);
-System.out.println(user);
-</code></pre>
-            <div class="sync-container">
-                <div class="sync-item" data-sync-index="-1"><p>User created: name=&quot;Alice&quot;</p></div>
-                <div class="sync-item" data-sync-index="0"><p>Updated: age=25</p></div>
-                <div class="sync-item" data-sync-index="1"><p>Updated: role=&quot;Admin&quot;  </p></div>
-                <div class="sync-item" data-sync-index="2"><img src="https://placehold.co/300x150/9b59b6/white?text=User+Object" alt="Final State" style="max-width: 100%; height: auto;" /></div>
+            <h2>Einstein&#39;s Famous Equation</h2>
+            <div class="latex-block">
+                $$E = mc^2$$
             </div>
+            <p>This equation shows the relationship between energy and mass.</p>
+        </section>
+        <section data-slide-index="3">
+            <h2>Integrals and Limits</h2>
+            <div class="latex-block">
+                $$\int_{a}^{b} f(x) \, dx = F(b) - F(a)$$
             </div>
+            <p>And a limit:</p>
+            <div class="latex-block">
+                $$\lim_{x \to \infty} \frac{1}{x} = 0$$
+            </div>
+        </section>
+        <section data-slide-index="4">
+            <h2>Matrices</h2>
+            <div class="latex-block">
+                $$\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix}
+=
+\begin{pmatrix}
+ax + by \\
+cx + dy
+\end{pmatrix}$$
+            </div>
+        </section>
+        <section data-slide-index="5">
+            <h2>Greek Letters and Summations</h2>
+            <p>The sum of a series:</p>
+            <div class="latex-block">
+                $$\sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}$$
+            </div>
+        </section>
+        <section data-slide-index="6">
+            <h2>Complex Equation</h2>
+            <p>Schrödinger equation:</p>
+            <div class="latex-block">
+                $$i\hbar\frac{\partial}{\partial t}\Psi(\mathbf{r},t) = \left[-\frac{\hbar^2}{2m}\nabla^2 + V(\mathbf{r},t)\right]\Psi(\mathbf{r},t)$$
+            </div>
+        </section>
+        <section data-slide-index="7">
+            <h2>Binomial Theorem</h2>
+            <div class="latex-block">
+                $$(x + y)^n = \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^k$$
+            </div>
+        </section>
+        <section data-slide-index="8">
+            <h2>Maxwell&#39;s Equation</h2>
+            <div class="latex-block">
+                $$\nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}$$
+            </div>
+            <p>One of Maxwell&#39;s fundamental equations of electromagnetism!</p>
+        </section>
+        <section data-slide-index="9">
+            <h1>Thank You!</h1>
+            <p>Mathematical notation made easy with SlideDeckML ✨</p>
         </section>
         </div>
     </div>

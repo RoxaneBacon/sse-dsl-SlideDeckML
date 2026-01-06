@@ -113,6 +113,10 @@ export class ElementGenerator {
         const attributesStr = match[2] || '';
         const code = match[3] || '';
 
+        if (language.toLowerCase() === 'latex') {
+            return this.generateLatexBlock(code.trim(), style)
+        }
+
         // Build the class attribute
         const languageClass = language ? ` class="language-${language}"` : '';
 
@@ -147,6 +151,17 @@ export class ElementGenerator {
 
         return `            <pre${style}><code${languageClass}${dataAttrs}>${escapedCode}</code></pre>`;
     }
+    /**
+    * Generate a LaTeX block element for mathematical equations
+    * @param latexCode The LaTeX equation code
+    * @param style Optional style attributes
+    * @returns The HTML string for the LaTeX block
+    */
+
+    private generateLatexBlock(latexCode: string, style: string = ''): string {
+        return `            <div class="latex-block"${style}>\n                $$${latexCode}$$\n            </div>`;
+    }
+
 
     /**
      * Parse code block attributes from string
