@@ -6,7 +6,7 @@ entry Presentation:
     (SLIDE_SEPARATOR? slides+=Slide (SLIDE_SEPARATOR slides+=Slide)* SLIDE_SEPARATOR?)?;
 
 Metadata:
-    '{' 'author' ':' author=STRING 'title' ':' title=STRING '}';
+    '{' 'author' ':' author=STRING 'title' ':' title=STRING ('theme' ':' theme=STRING)? ('logo' ':' logo=STRING)? ('css' ':' css=STRING)?  '}';
 
 Slide:
     blocks+=Block+;
@@ -68,7 +68,7 @@ terminal HEADER_LEVEL: /###|##|#/;
 terminal LIST_MARKER: /[\-\*\+]/;
 
 terminal PARAGRAPH_TEXT returns string:
-    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!```)(?!===)(?!---)(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
+    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!```)(?!===)(?!---)(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*css)(?![\s]*logo)(?![\s]*theme)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
 
 terminal STRING returns string:
     /"(?:\\.|[^"\\])*"/;

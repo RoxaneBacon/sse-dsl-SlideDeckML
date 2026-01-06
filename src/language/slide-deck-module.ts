@@ -1,37 +1,55 @@
 import {
-    createDefaultModule, createDefaultSharedModule, DefaultSharedModuleContext, inject,
-    LangiumServices, LangiumSharedServices, Module, PartialLangiumServices, DefaultTokenBuilder
-} from 'langium';
-import { SlideDeckMLGeneratedModule, SlideDeckMlGeneratedSharedModule } from './generated/module';
+    createDefaultModule,
+    createDefaultSharedModule,
+    DefaultSharedModuleContext,
+    inject,
+    LangiumServices,
+    LangiumSharedServices,
+    Module,
+    PartialLangiumServices,
+    DefaultTokenBuilder,
+} from 'langium'
+import {
+    SlideDeckMLGeneratedModule,
+    SlideDeckMlGeneratedSharedModule,
+} from './generated/module'
 
 /**
  * Custom TokenBuilder that prioritizes specific terminals
  */
 class SlideDeckMLTokenBuilder extends DefaultTokenBuilder {
     protected override buildTerminalTokens(grammar: any) {
-        const tokens = super.buildTerminalTokens(grammar);
-        
+        const tokens = super.buildTerminalTokens(grammar)
+
         // Find the paragraph text token and mark it as longer_alt
-        const paragraphToken = tokens.find((t: any) => t.name === 'PARAGRAPH_TEXT');
+        const paragraphToken = tokens.find(
+            (t: any) => t.name === 'PARAGRAPH_TEXT'
+        )
         if (paragraphToken) {
             // Mark all other tokens as having higher priority than PARAGRAPH_TEXT
-            paragraphToken.LONGER_ALT = tokens.filter((t: any) => 
-                t.name === 'HEADER_LEVEL' ||
-                t.name === 'LIST_MARKER' ||
-                t.name === '>' ||
-                t.name === 'MEDIA_LINE' ||
-                t.name === 'CODE_BLOCK' ||
-                t.name === 'STYLE_DELIMITER' ||
-                t.name === 'STYLE_ATTRS' ||
-                t.name === 'SLIDE_SEPARATOR' ||
-                t.name === 'TEMPLATE_SEPARATOR' ||
-                // Include keyword tokens for metadata
-                t.name === '{' || t.name === '}' || t.name === ':' ||
-                t.name === 'author' || t.name === 'title'
-            );
+            paragraphToken.LONGER_ALT = tokens.filter(
+                (t: any) =>
+                    t.name === 'HEADER_LEVEL' ||
+                    t.name === 'LIST_MARKER' ||
+                    t.name === '>' ||
+                    t.name === 'MEDIA_LINE' ||
+                    t.name === 'CODE_BLOCK' ||
+                    t.name === 'STYLE_DELIMITER' ||
+                    t.name === 'STYLE_ATTRS' ||
+                    t.name === 'SLIDE_SEPARATOR' ||
+                    t.name === 'TEMPLATE_SEPARATOR' ||
+                    // Include keyword tokens for metadata
+                    t.name === '{' ||
+                    t.name === '}' ||
+                    t.name === ':' ||
+                    t.name === 'author' ||
+                    t.name === 'title' ||
+                    t.name === 'css' || 
+                    t.name === 'logo'
+            )
         }
-        
-        return tokens;
+
+        return tokens
     }
 }
 
@@ -39,29 +57,29 @@ class SlideDeckMLTokenBuilder extends DefaultTokenBuilder {
  * Declaration of custom services - add your own service classes here.
  */
 export type SlideDeckMlAddedServices = {
-    validation: {
-
-    }
+    validation: {}
 }
 
 /**
  * Union of Langium default services and your custom services - use this as constructor parameter
  * of custom service classes.
  */
-export type SlideDeckMlServices = LangiumServices & SlideDeckMlAddedServices;
+export type SlideDeckMlServices = LangiumServices & SlideDeckMlAddedServices
 
 /**
  * Dependency injection module that overrides Langium default services and contributes the
  * declared custom services. The Langium defaults can be partially specified to override only
  * selected services, while the custom services must be fully specified.
  */
-export const SlideDeckMLModule: Module<SlideDeckMlServices, PartialLangiumServices & SlideDeckMlAddedServices> = {
+export const SlideDeckMLModule: Module<
+    SlideDeckMlServices,
+    PartialLangiumServices & SlideDeckMlAddedServices
+> = {
     validation: {},
     parser: {
-        TokenBuilder: () => new SlideDeckMLTokenBuilder()
-    }
-};
-
+        TokenBuilder: () => new SlideDeckMLTokenBuilder(),
+    },
+}
 
 /**
  * Create the full set of services required by Langium.
@@ -78,19 +96,21 @@ export const SlideDeckMLModule: Module<SlideDeckMlServices, PartialLangiumServic
  * @param context Optional module context with the LSP connection
  * @returns An object wrapping the shared services and the language-specific services
  */
-export function createSlideDeckMlServices(context: DefaultSharedModuleContext): {
-    shared: LangiumSharedServices,
+export function createSlideDeckMlServices(
+    context: DefaultSharedModuleContext
+): {
+    shared: LangiumSharedServices
     SlideDeckMl: SlideDeckMlServices
 } {
     const shared = inject(
         createDefaultSharedModule(context),
         SlideDeckMlGeneratedSharedModule
-    );
+    )
     const SlideDeckMl = inject(
         createDefaultModule({ shared }),
         SlideDeckMLGeneratedModule,
         SlideDeckMLModule
-    );
-    shared.ServiceRegistry.register(SlideDeckMl);
-    return { shared, SlideDeckMl };
+    )
+    shared.ServiceRegistry.register(SlideDeckMl)
+    return { shared, SlideDeckMl }
 }
