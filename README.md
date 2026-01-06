@@ -19,27 +19,9 @@ npm run build
 
 ## Usage
 
-### Development Mode (Live Preview)
+### 1. Write your presentation
 
-```bash
-npm run dev examples/demo.sdml
-```
-
-Opens a browser with split-screen editor and live preview. Changes are compiled automatically.
-
-```bash
-npm run dev examples/demo.sdml -- --port 3001  # Custom port
-npm run dev examples/demo.sdml -- --no-open    # Don't open browser
-npm run dev                                     # Start without file
-```
-
-See [DEV_MODE.md](DEV_MODE.md) for details.
-
-### Production Mode (Compile to HTML)
-
-#### 1. Write your presentation
-
-Create a `.sdml` file:
+Create a `.sdml` file with your content:
 
 ```
 # Welcome to My Presentation
@@ -49,6 +31,7 @@ This is the first slide
 
 ## Second Slide
 Some content here
+More content on the same slide
 
 ===
 
@@ -56,13 +39,55 @@ Some content here
 Thank you!
 ```
 
-#### 2. Compile to HTML
+### 2. Compile to HTML
+
+**Manual compilation:**
 
 ```bash
 npm run compile examples/demo.sdml -o output.html
 ```
 
-#### 3. Open in browser
+Or using the CLI directly:
+
+```bash
+node out/cli/main.js compile examples/demo.sdml -o output.html
+```
+
+**Using build scripts (recommended):**
+
+For PowerShell:
+```powershell
+# Compile a single file
+.\build-and-compile.ps1 -InputPath examples/demo.sdml
+
+# Compile all files in a directory
+.\build-and-compile.ps1 -InputPath examples -OutputPath output
+
+# Skip build step (if already built)
+.\build-and-compile.ps1 -InputPath examples/demo.sdml -SkipBuild
+```
+
+For Bash:
+```bash
+# Compile a single file
+./build-and-compile.sh examples/demo.sdml
+
+# Compile all files in a directory
+./build-and-compile.sh examples output
+
+# Skip build step (if already built)
+./build-and-compile.sh examples/demo.sdml "" --skip-build
+```
+
+The build scripts automatically:
+- Run `npm run langium:generate` to regenerate the parser
+- Run `npm run build` to compile TypeScript
+- Compile the specified .sdml file(s) to HTML
+- Show colored progress messages and error reporting
+
+### 3. Open in browser
+
+Simply open the generated HTML file in your web browser:
 
 ```bash
 open output.html

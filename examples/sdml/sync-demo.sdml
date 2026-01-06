@@ -1,0 +1,101 @@
+{
+    author: "Demo Author"
+    title: "Synchronized Fragments Demo"
+}
+
+---
+
+### Variable Evolution Demo
+
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start;}
+
+```javascript [highlight:line-by-line]
+let x = 0;
+x = x + 5;
+x = x * 2;
+console.log(x);
+```
+
+:::[sync-fragments]
+x = 0
+[---]
+x = 5
+[---]
+x = 10
+[---]
+Output: 10
+:::[sync-fragments]
+
+:::
+
+===
+
+### Variable Evolution Demo (Keep Mode)
+
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start;}
+
+```javascript [highlight:line-by-line]
+let x = 0;
+x = x + 5;
+x = x * 2;
+console.log(x);
+```
+
+:::[sync-fragments keep]
+x = 0
+[---]
+x = 5
+[---]
+x = 10
+[---]
+Output: 10
+:::[sync-fragments]
+
+:::
+
+===
+
+### Image Evolution Demo
+
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start;}
+
+```python [highlight:line-by-line]
+data = load_data()
+cleaned = process(data)
+result = analyze(cleaned)
+```
+
+:::[sync-fragments]
+![Raw Data](https://placehold.co/400x200/3498db/white?text=Raw+Data)
+[---]
+![Cleaned Data](https://placehold.co/400x200/2ecc71/white?text=Cleaned+Data)
+[---]
+![Analysis Results](https://placehold.co/400x200/e74c3c/white?text=Results)
+:::[sync-fragments]
+
+:::
+
+===
+
+### Mixed Content Demo
+
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start;}
+
+```java [highlight:line-by-line]
+User user = new User("Alice");
+user.setAge(25);
+user.setRole("Admin");
+System.out.println(user);
+```
+
+:::[sync-fragments]
+User created: name="Alice"
+[---]
+Updated: age=25
+[---]
+Updated: role="Admin"  
+[---]
+![Final State](https://placehold.co/300x150/9b59b6/white?text=User+Object)
+:::[sync-fragments]
+
+:::

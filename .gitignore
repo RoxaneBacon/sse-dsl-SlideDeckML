@@ -22,7 +22,3 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
-
-# Output files
-*.html
-!examples/*.html

@@ -1,42 +1,16 @@
-import { Metadata } from '../language/generated/ast'
-
-export class TemplateGenerator {
-    private title: string = 'SlideDeckML Presentation'
-    private author: string = 'Unknown Author'
-    private css: string = ''
-    private logo: string = ''
-    private theme: string = 'white'
-
-    public setMetadata(metadata: Metadata): void {
-        // Access author and title directly from the metadata object
-        this.author = metadata.author.replace(/^"|"$/g, '')
-        this.title = metadata.title.replace(/^"|"$/g, '')
-        if (metadata.css) {
-            this.css = metadata.css.replace(/^"|"$/g, '')
-        }
-        if (metadata.logo) {
-            this.logo = metadata.logo.replace(/^"|"$/g, '')
-        }
-        if (metadata.theme) {
-            this.theme = metadata.theme.replace(/^"|"$/g, '')
-        }
-    }
-    public getHTMLTemplate(slidesContent: string): string {
-        return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="${this.author}">
-    <meta name="title" content="${this.title}">
-    <title>${this.title}</title>
+    <meta name="author" content="Style Demo">
+    <meta name="title" content="Presentation with Custom Styles">
+    <title>Presentation with Custom Styles</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/${
-        this.theme
-    }.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <style> 
-        ${this.css}
+        
         /* Synchronized fragments styling */
         .sync-container {
             position: relative;
@@ -71,21 +45,57 @@ export class TemplateGenerator {
     </style>
 </head>
 <body>
-    ${
-        this.css
-            ? `<header class="header-banner">
-        <div class="header-author">${this.author}</div>
-        ${
-            this.logo
-                ? `<img src="${this.logo}" alt="Logo" class="header-logo">`
-                : ''
-        }
-    </header>`
-            : ''
-    }
+    
     <div class="reveal">
         <div class="slides">
-${slidesContent}
+        <section data-slide-index="0">
+            <div style="color: #2c3e50; text-align: center">
+            <h1>Welcome to Styled Presentation</h1>
+            </div>
+            <p>This is a normal paragraph without styling</p>
+            <div style="background-color: #f39c12; padding: 10px; border-radius: 5px">
+            <p>This is a styled paragraph with background</p>
+            </div>
+            <ul>
+                <li>Normal bullet one</li>
+                <li>Normal bullet two</li>
+            </ul>
+            <div style="color: #e74c3c; font-size: 20px">
+            <ul>
+                <li>Styled bullet one</li>
+                <li>Styled bullet two</li>
+            </ul>
+            </div>
+            <div style="background: #ecf0f1; border-left: 4px solid #3498db; padding: 15px; font-style: italic">
+            <blockquote>Important quote with styling</blockquote>
+            </div>
+            <img src="https://via.placeholder.com/400x300" alt="Normal Image">
+            <div style="width: 50%; border: 3px solid #9b59b6; border-radius: 10px">
+            <img src="https://via.placeholder.com/600x400" alt="Styled Image">
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <div style="color: #8e44ad; border-bottom: 3px solid #8e44ad; padding-bottom: 10px">
+            <h2>Different Heading Style</h2>
+            </div>
+            <div style="font-size: 24px; color: #34495e; text-align: center">
+            <p>Centered large paragraph</p>
+            </div>
+            <div style="list-style-type: square; color: #16a085">
+            <ol>
+                <li>Styled ordered item one</li>
+                <li>Styled ordered item two</li>
+            </ol>
+            </div>
+        </section>
+        <section data-slide-index="2">
+            <div style="text-align: center; color: #c0392b">
+            <h3>Final Slide</h3>
+            </div>
+            <div style="font-size: 48px; font-weight: bold; text-align: center; color: #2980b9">
+            <p>Thank you!</p>
+            </div>
+        </section>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
@@ -169,6 +179,4 @@ ${slidesContent}
         });
     </script>
 </body>
-</html>`
-    }
-}
+</html>

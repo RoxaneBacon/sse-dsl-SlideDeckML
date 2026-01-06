@@ -1,42 +1,16 @@
-import { Metadata } from '../language/generated/ast'
-
-export class TemplateGenerator {
-    private title: string = 'SlideDeckML Presentation'
-    private author: string = 'Unknown Author'
-    private css: string = ''
-    private logo: string = ''
-    private theme: string = 'white'
-
-    public setMetadata(metadata: Metadata): void {
-        // Access author and title directly from the metadata object
-        this.author = metadata.author.replace(/^"|"$/g, '')
-        this.title = metadata.title.replace(/^"|"$/g, '')
-        if (metadata.css) {
-            this.css = metadata.css.replace(/^"|"$/g, '')
-        }
-        if (metadata.logo) {
-            this.logo = metadata.logo.replace(/^"|"$/g, '')
-        }
-        if (metadata.theme) {
-            this.theme = metadata.theme.replace(/^"|"$/g, '')
-        }
-    }
-    public getHTMLTemplate(slidesContent: string): string {
-        return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="${this.author}">
-    <meta name="title" content="${this.title}">
-    <title>${this.title}</title>
+    <meta name="author" content="User">
+    <meta name="title" content="Demo Presentation 2">
+    <title>Demo Presentation 2</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/${
-        this.theme
-    }.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <style> 
-        ${this.css}
+        
         /* Synchronized fragments styling */
         .sync-container {
             position: relative;
@@ -71,21 +45,67 @@ export class TemplateGenerator {
     </style>
 </head>
 <body>
-    ${
-        this.css
-            ? `<header class="header-banner">
-        <div class="header-author">${this.author}</div>
-        ${
-            this.logo
-                ? `<img src="${this.logo}" alt="Logo" class="header-logo">`
-                : ''
-        }
-    </header>`
-            : ''
-    }
+    
     <div class="reveal">
         <div class="slides">
-${slidesContent}
+        <section>
+            <h1>Template Title with <strong>bold</strong> and <em>italic</em></h1>
+            <p>A template paragraph with <u>underline</u>, <strong>bold</strong>, <em>italic</em>, and plain text.</p>
+            <ul>
+                <li>Template bullet one</li>
+                <li>Template bullet two</li>
+                <li>Template bullet three</li>
+            </ul>
+            <ol>
+                <li>Template ordered item</li>
+                <li>Another ordered item</li>
+            </ol>
+            <blockquote>Template quote text</blockquote>
+            <img src="template_image.png" alt="Template Image with any text as a want it willbe yhe ALT of the image and video">
+            <video controls>
+                <source src="template_video.mp4" type="video/mp4">
+                TemplateVideo
+            </video>
+        </section>
+        <section data-slide-index="0">
+            <h1>Slide One Heading</h1>
+            <p>This is a paragraph mixing <strong>bold</strong>, <em>italic</em>, and <u>underline</u> text spans.</p>
+            <ul>
+                <li>First pointed item</li>
+                <li>Second pointed item</li>
+                <li>Third pointed item</li>
+            </ul>
+            <ol>
+                <li>First ordered item</li>
+                <li>Second ordered item</li>
+                <li>Third ordered item</li>
+            </ol>
+            <blockquote>This is a quoted line with <em>italic</em> text</blockquote>
+            <img src="image1.png" alt="AnImage">
+            <video controls>
+                <source src="video1.mp4" type="video/mp4">
+                AVideo
+            </video>
+        </section>
+        <section data-slide-index="1">
+            <h2>Slide Two Heading</h2>
+            <p>Another paragraph with plain text only.</p>
+            <ul>
+                <li>Bullet with <strong>bold</strong></li>
+                <li>Bullet with <em>italic</em></li>
+                <li>Bullet with <u>underline</u></li>
+            </ul>
+            <ol>
+                <li>Ordered item with two digits</li>
+                <li>Another ordered item</li>
+            </ol>
+            <blockquote>Another quote here</blockquote>
+            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pixelstalk.net%2Fwp-content%2Fuploads%2F2016%2F07%2F3840x2160-Images-Free-Download.jpg&f=1&nofb=1&ipt=b848861a1f0a93e859949fdf18bd273e08f654a263602dc4f965bd47b4349040" alt="SecondImage">
+        </section>
+        <section data-slide-index="2">
+            <h3>Slide Three Heading</h3>
+            <p>Final paragraph combining <strong>bold</strong>, <em>italic</em>, <u>underline</u>, and plain text all together.</p>
+        </section>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
@@ -169,6 +189,4 @@ ${slidesContent}
         });
     </script>
 </body>
-</html>`
-    }
-}
+</html>

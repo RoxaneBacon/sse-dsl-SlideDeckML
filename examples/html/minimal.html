@@ -1,42 +1,16 @@
-import { Metadata } from '../language/generated/ast'
-
-export class TemplateGenerator {
-    private title: string = 'SlideDeckML Presentation'
-    private author: string = 'Unknown Author'
-    private css: string = ''
-    private logo: string = ''
-    private theme: string = 'white'
-
-    public setMetadata(metadata: Metadata): void {
-        // Access author and title directly from the metadata object
-        this.author = metadata.author.replace(/^"|"$/g, '')
-        this.title = metadata.title.replace(/^"|"$/g, '')
-        if (metadata.css) {
-            this.css = metadata.css.replace(/^"|"$/g, '')
-        }
-        if (metadata.logo) {
-            this.logo = metadata.logo.replace(/^"|"$/g, '')
-        }
-        if (metadata.theme) {
-            this.theme = metadata.theme.replace(/^"|"$/g, '')
-        }
-    }
-    public getHTMLTemplate(slidesContent: string): string {
-        return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="${this.author}">
-    <meta name="title" content="${this.title}">
-    <title>${this.title}</title>
+    <meta name="author" content="Baptiste Pellerin">
+    <meta name="title" content="Minimal Example v2.0">
+    <title>Minimal Example v2.0</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/${
-        this.theme
-    }.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <style> 
-        ${this.css}
+        
         /* Synchronized fragments styling */
         .sync-container {
             position: relative;
@@ -71,21 +45,40 @@ export class TemplateGenerator {
     </style>
 </head>
 <body>
-    ${
-        this.css
-            ? `<header class="header-banner">
-        <div class="header-author">${this.author}</div>
-        ${
-            this.logo
-                ? `<img src="${this.logo}" alt="Logo" class="header-logo">`
-                : ''
-        }
-    </header>`
-            : ''
-    }
+    
     <div class="reveal">
         <div class="slides">
-${slidesContent}
+        <section data-slide-index="0">
+            <h1>Welcome v2.0 !</h1>
+            <h2>Agenda</h2>
+            <ul>
+                <li>Introduction</li>
+                <li>Goals</li>
+            </ul>
+            <ol>
+                <li>First step</li>
+                <li>Second step</li>
+            </ol>
+        </section>
+        <section data-slide-index="1">
+            <h1>Introduction</h1>
+            <h2>Minimal <em>Example</em> <em>v2.0</em> <strong>ALERT</strong></h2>
+            <p>This is a minimal <strong>SlideDeckML</strong> <em>presentation</em> example <em>version</em> 2.0 !</p>
+            <h3>It shows how to <strong>create</strong> <em>slides</em> with headings, paragraphs, bullet points and numbered lists.</h3>
+            <ul>
+                <li>Bullet <em>point</em> 1 with <strong>formatting</strong></li>
+                <li>Bullet <em>point</em> 2 with <em>formatting</em></li>
+            </ul>
+            <ol>
+                <li>Numbered item 1 with <strong>formatting</strong></li>
+                <li>Numbered item 2 with <em>formatting</em></li>
+            </ol>
+        </section>
+        <section data-slide-index="2">
+            <h1>Conclusion</h1>
+            <p>Thank you for using <em>SlideDeckML</em> <strong>v2.0</strong> !</p>
+            <p>Feel free to explore more features and create stunning presentations.</p>
+        </section>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
@@ -169,6 +162,4 @@ ${slidesContent}
         });
     </script>
 </body>
-</html>`
-    }
-}
+</html>
