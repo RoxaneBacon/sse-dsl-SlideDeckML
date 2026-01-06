@@ -1,4 +1,4 @@
-import { Block, Header, LineContent, UnorderedList, Presentation, Slide, Template, OrderedList, Quote, Media, StyledElement, CodeBlock, isHeader, isUnorderedList, isOrderedList, isParagraph, isQuote, isMedia, isStyledElement, isCodeBlock } from "../language/generated/ast";
+import { Block, Header, LineContent, UnorderedList, Presentation, Slide, Template, OrderedList, Quote, Media, StyledElement, CodeBlock, SyncFragments, isHeader, isUnorderedList, isOrderedList, isParagraph, isQuote, isMedia, isStyledElement, isCodeBlock, isSyncFragments } from "../language/generated/ast";
 import { ElementGenerator } from "./element-generator";
 import { TemplateGenerator } from "./template";
 
@@ -34,6 +34,8 @@ export class HtmlGenerator {
         return `        <section>\n${contentHTML}\n        </section>`;
     }
 
+    private lastCodeBlock: CodeBlock | null = null;
+
     private generateBlock(block: Block): string {
         let html = '';
 
@@ -52,29 +54,33 @@ export class HtmlGenerator {
         // Handle styled elements first
         if (isStyledElement(line)) {
             const style = this.parseStyle(line.style);
-            const element = line.element;
+            const elements = line.elements || [];
             
-            if (isHeader(element)) {
-                return this.elementGenerator.generateHeading(element, style);
+            let containerHtml = `            <div${style}>\n`;
+            
+            for (const element of elements) {
+                if (isHeader(element)) {
+                    containerHtml += this.elementGenerator.generateHeading(element, '') + '\n';
+                } else if (isUnorderedList(element)) {
+                    containerHtml += this.elementGenerator.generatePointedList(element, '') + '\n';
+                } else if (isOrderedList(element)) {
+                    containerHtml += this.elementGenerator.generateOrderedList(element, '') + '\n';
+                } else if (isQuote(element)) {
+                    containerHtml += this.elementGenerator.generateQuote(element, '') + '\n';
+                } else if (isMedia(element)) {
+                    containerHtml += this.elementGenerator.generateMedia(element, '') + '\n';
+                } else if (isCodeBlock(element)) {
+                    this.lastCodeBlock = element;
+                    containerHtml += this.elementGenerator.generateCodeBlock(element, '') + '\n';
+                } else if (isSyncFragments(element)) {
+                    containerHtml += this.elementGenerator.generateSyncFragments(element, this.lastCodeBlock) + '\n';
+                } else if (isParagraph(element)) {
+                    containerHtml += this.elementGenerator.generateParagraph(element, '') + '\n';
+                }
             }
-            if (isUnorderedList(element)) {
-                return this.elementGenerator.generatePointedList(element, style);
-            }
-            if (isOrderedList(element)) {
-                return this.elementGenerator.generateOrderedList(element, style);
-            }
-            if (isQuote(element)) {
-                return this.elementGenerator.generateQuote(element, style);
-            }
-            if (isMedia(element)) {
-                return this.elementGenerator.generateMedia(element, style);
-            }
-            if (isCodeBlock(element)) {
-                return this.elementGenerator.generateCodeBlock(element, style);
-            }
-            if (isParagraph(element)) {
-                return this.elementGenerator.generateParagraph(element, style);
-            }
+            
+            containerHtml += `            </div>`;
+            return containerHtml;
         }
         
         // Handle regular unstyled elements
@@ -94,7 +100,11 @@ export class HtmlGenerator {
             return this.elementGenerator.generateMedia(line);
         }
         if (isCodeBlock(line)) {
+            this.lastCodeBlock = line;
             return this.elementGenerator.generateCodeBlock(line);
+        }
+        if (isSyncFragments(line)) {
+            return this.elementGenerator.generateSyncFragments(line, this.lastCodeBlock);
         }
         if (isParagraph(line)) {
             return this.elementGenerator.generateParagraph(line);
@@ -115,37 +125,42 @@ export class HtmlGenerator {
             const content = styleBlock.replace(/^\{|\}$/g, '').trim();
             if (!content) return '';
             
-            // Parse key-value pairs
+            // Parse key-value pairs (support both semicolon and comma separators)
             const styles: string[] = [];
             let hasAbsoluteKeywords = false;
             
-            const pairs = content.split(',').map(pair => {
-                const [key, value] = pair.split(':').map(s => s.trim());
-                // Remove quotes from values
-                const cleanValue = value?.replace(/^['"]|['"]$/g, '');
+            // Split by semicolon or comma
+            const pairs = content.split(/[;,]/).map(pair => pair.trim()).filter(pair => pair.length > 0);
+            
+            const processedStyles = pairs.map(pair => {
+                const colonIndex = pair.indexOf(':');
+                if (colonIndex === -1) return null;
+                
+                const key = pair.substring(0, colonIndex).trim();
+                const value = pair.substring(colonIndex + 1).trim().replace(/^['"]|['"]$/g, '');
                 
                 // Check for simplified keywords
                 if (key === 'calque') {
                     hasAbsoluteKeywords = true;
-                    return `z-index: ${cleanValue}`;
+                    return `z-index: ${value}`;
                 } else if (key === 'horizontal-margin') {
                     hasAbsoluteKeywords = true;
-                    return `left: ${cleanValue}px`;
+                    return `left: ${value}px`;
                 } else if (key === 'vertical-margin') {
                     hasAbsoluteKeywords = true;
-                    return `top: ${cleanValue}px`;
+                    return `top: ${value}px`;
                 } else {
                     // Regular CSS property
-                    return `${key}: ${cleanValue}`;
+                    return `${key}: ${value}`;
                 }
-            });
+            }).filter(style => style !== null);
             
             // If absolute positioning keywords were used, add position: absolute
             if (hasAbsoluteKeywords) {
                 styles.push('position: absolute');
             }
             
-            styles.push(...pairs);
+            styles.push(...processedStyles);
             
             return ` style="${styles.join('; ')}"`;
         } catch (e) {

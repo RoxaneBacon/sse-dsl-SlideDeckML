@@ -1,6 +1,6 @@
-header {
-    title: "Welcome to SlideDeckML"
+{
     author: "SlideDeckML Team"
+    title: "Welcome to SlideDeckML"
 }
 
 ===

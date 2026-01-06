@@ -120,7 +120,7 @@ export class ElementGenerator {
         let dataAttrs = ' data-trim data-noescape';
         
         if (attributesStr) {
-            // Parse attributes - handle both new abstract syntax and reveal.js syntax
+            // Parse attributes
             const attributes = this.parseCodeAttributes(attributesStr);
             
             // Handle abstract highlight modes
@@ -150,7 +150,7 @@ export class ElementGenerator {
 
     /**
      * Parse code block attributes from string
-     * Supports both: highlight:block lines:'1-5' start:10
+     * Supports: highlight:block lines:'1-5' start:10
      * @param attributesStr The attributes string from the code block
      * @returns Parsed attributes object
      */
@@ -317,6 +317,49 @@ export class ElementGenerator {
         }
         
         return classes.join('|') || '1';
+    }
+
+    /**
+     * Generate synchronized fragments that appear with code highlighting
+     * @param syncFragments The sync fragments AST node
+     * @param lastCodeBlock The previous code block to sync with
+     * @returns The HTML string for the synchronized fragments
+     */
+    public generateSyncFragments(syncFragments: any, lastCodeBlock: any | null): string {
+        if (!syncFragments.fragments || syncFragments.fragments.length === 0) {
+            return '';
+        }
+
+        // Check if keep mode is enabled (accumulate fragments instead of replacing)
+        const keepMode = syncFragments.opening && syncFragments.opening.includes('keep');
+        const keepAttr = keepMode ? ' data-keep="true"' : '';
+        
+        // Generate container div with custom classes
+        let html = `            <div class="sync-container"${keepAttr}>`;
+        
+        syncFragments.fragments.forEach((fragment: any, index: number) => {
+            let content = '';
+            
+            // Check if it's media or text
+            if (fragment.media) {
+                // Parse media line: ![alt](url)
+                const match = fragment.media.match(/!\[([^\]]*)\]\(([^\)]+)\)/);
+                if (match) {
+                    const alt = match[1] || '';
+                    const url = match[2];
+                    content = `<img src="${url}" alt="${this.textProcessor.escapeHtml(alt)}" style="max-width: 100%; height: auto;" />`;
+                }
+            } else if (fragment.text) {
+                // Process text with inline formatting
+                content = `<p>${this.textProcessor.processInlineText(fragment.text)}</p>`;
+            }
+            
+            // Add sync item with data-sync-index matching code highlight step
+            html += `\n                <div class="sync-item" data-sync-index="${index - 1}">${content}</div>`;
+        });
+        
+        html += '\n            </div>';
+        return html;
     }
 
     /**

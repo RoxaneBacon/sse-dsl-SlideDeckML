@@ -18,13 +18,19 @@ Block:
     lines+=LineContent+;
 
 LineContent:
-    StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock;
+    StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments;
 
 CodeBlock:
     content=CODE_BLOCK;
 
+SyncFragments:
+    (opening=SYNC_DELIMITER_KEEP | opening=SYNC_DELIMITER) fragments+=FragmentItem (FRAGMENT_SEPARATOR fragments+=FragmentItem)* (closing=SYNC_DELIMITER_KEEP | closing=SYNC_DELIMITER);
+
+FragmentItem:
+    text=PARAGRAPH_TEXT | media=MEDIA_LINE;
+
 StyledElement:
-    STYLE_DELIMITER style=STYLE_ATTRS element=(Header | UnorderedList | OrderedList | Quote | Media | Paragraph) STYLE_DELIMITER;
+    STYLE_DELIMITER style=STYLE_ATTRS elements+=(Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments)+ STYLE_DELIMITER;
 
 UnorderedList:
     items+=UnorderedListItem+;
@@ -53,6 +59,11 @@ Media:
 terminal CODE_BLOCK returns string:
     /```[a-zA-Z0-9_\-]*(?:\s*\[(?:(?:highlight:\s*(?:block|function|class|line-by-line|all|none))|(?:lines:\s*["'][^"']+["'])|(?:start:\s*\d+)|\s)+\])?[\r\n]([\s\S]*?)```/;
 
+terminal SYNC_DELIMITER_KEEP: /:::\[sync-fragments\s+keep\]/;
+terminal SYNC_DELIMITER: /:::\[sync-fragments\]/;
+
+terminal FRAGMENT_SEPARATOR: /\[\-\-\-\]/;
+
 terminal MEDIA_LINE returns string:
     /!\[[^\]]+\]\([^\)]+\)/;
 
@@ -68,7 +79,7 @@ terminal HEADER_LEVEL: /###|##|#/;
 terminal LIST_MARKER: /[\-\*\+]/;
 
 terminal PARAGRAPH_TEXT returns string:
-    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!```)(?!===)(?!---)(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
+    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!```)(?!===)(?!---)(?!\[\-\-\-\])(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
 
 terminal STRING returns string:
     /"(?:\\.|[^"\\])*"/;

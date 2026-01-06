@@ -23,6 +23,9 @@ class SlideDeckMLTokenBuilder extends DefaultTokenBuilder {
                 t.name === 'CODE_BLOCK' ||
                 t.name === 'STYLE_DELIMITER' ||
                 t.name === 'STYLE_ATTRS' ||
+                t.name === 'SYNC_DELIMITER_KEEP' ||
+                t.name === 'SYNC_DELIMITER' ||
+                t.name === 'FRAGMENT_SEPARATOR' ||
                 t.name === 'SLIDE_SEPARATOR' ||
                 t.name === 'TEMPLATE_SEPARATOR' ||
                 // Include keyword tokens for metadata
