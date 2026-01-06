@@ -60,13 +60,13 @@ Les métadonnées définissent les informations générales de votre présentati
 
 ### Propriétés disponibles
 
-| Propriété | Obligatoire | Description |
-|-----------|-------------|-------------|
-| `author` | Oui | Nom de l'auteur |
-| `title` | Oui | Titre de la présentation |
-| `theme` | Non | Thème visuel (ex: "dark", "light") |
-| `logo` | Non | URL du logo |
-| `css` | Non | URL d'une feuille de style personnalisée |
+| Propriété | Obligatoire | Description                              |
+| --------- | ----------- | ---------------------------------------- |
+| `author`  | Oui         | Nom de l'auteur                          |
+| `title`   | Oui         | Titre de la présentation                 |
+| `theme`   | Non         | Thème visuel (ex: "dark", "light")       |
+| `logo`    | Non         | URL du logo                              |
+| `css`     | Non         | URL d'une feuille de style personnalisée |
 
 ### Exemple
 
@@ -120,11 +120,11 @@ Template commun à toutes les slides
 
 Les titres utilisent le symbole `#` (similaire à Markdown).
 
-| Symbole | Niveau | Utilisation |
-|---------|--------|-------------|
-| `#` | H1 | Titre principal de la slide |
-| `##` | H2 | Titre de section |
-| `###` | H3 | Titre de sous-section |
+| Symbole | Niveau | Utilisation                 |
+| ------- | ------ | --------------------------- |
+| `#`     | H1     | Titre principal de la slide |
+| `##`    | H2     | Titre de section            |
+| `###`   | H3     | Titre de sous-section       |
 
 ### Exemple
 
@@ -152,12 +152,12 @@ Paragraphe normal
 
 ### Symboles de formatage inline
 
-| Symbole | Effet | Exemple | Résultat |
-|---------|-------|---------|----------|
-| `**texte**` | Gras | `**Important**` | **Important** |
-| `*texte*` | Italique | `*Emphase*` | *Emphase* |
-| `_texte_` | Italique (alt) | `_Souligner_` | _Souligner_ |
-| `__texte__` | Souligné | `__Attention__` | <u>Attention</u> |
+| Symbole     | Effet          | Exemple         | Résultat         |
+| ----------- | -------------- | --------------- | ---------------- |
+| `**texte**` | Gras           | `**Important**` | **Important**    |
+| `*texte*`   | Italique       | `*Emphase*`     | _Emphase_        |
+| `_texte_`   | Italique (alt) | `_Souligner_`   | _Souligner_      |
+| `__texte__` | Souligné       | `__Attention__` | <u>Attention</u> |
 
 ### Exemple de combinaisons
 
@@ -198,9 +198,10 @@ Tous ces symboles créent des puces. Ils sont interchangeables.
 ```
 
 **Rendu :**
-- Premier élément
-- Deuxième élément
-- Troisième élément
+
+-   Premier élément
+-   Deuxième élément
+-   Troisième élément
 
 ### Listes ordonnées
 
@@ -213,6 +214,7 @@ Symbole : `1.`, `2.`, etc.
 ```
 
 **Rendu :**
+
 1. Première étape
 2. Deuxième étape
 3. Troisième étape
@@ -251,6 +253,7 @@ Utilisé pour mettre en évidence des citations ou des remarques importantes.
 ```
 
 **Rendu :**
+
 > Ceci est une citation importante
 
 ---
@@ -343,14 +346,14 @@ public class Example {
 
 #### 4. Modes de surlignage
 
-| Mode | Description | Syntaxe |
-|------|-------------|---------|
-| `line-by-line` | Surligne ligne par ligne | `[highlight:line-by-line]` |
-| `block` | Surligne par blocs (séparés par lignes vides) | `[highlight:block]` |
-| `function` | Surligne par fonction | `[highlight:function]` |
-| `class` | Surligne par classe | `[highlight:class]` |
-| `all` | Tout surligner | `[highlight:all]` |
-| `none` | Aucun surlignage | `[highlight:none]` |
+| Mode           | Description                                   | Syntaxe                    |
+| -------------- | --------------------------------------------- | -------------------------- |
+| `line-by-line` | Surligne ligne par ligne                      | `[highlight:line-by-line]` |
+| `block`        | Surligne par blocs (séparés par lignes vides) | `[highlight:block]`        |
+| `function`     | Surligne par fonction                         | `[highlight:function]`     |
+| `class`        | Surligne par classe                           | `[highlight:class]`        |
+| `all`          | Tout surligner                                | `[highlight:all]`          |
+| `none`         | Aucun surlignage                              | `[highlight:none]`         |
 
 ### Exemples
 
@@ -410,18 +413,18 @@ Contenu stylisé
 
 ### Propriétés CSS courantes
 
-| Propriété | Exemple | Description |
-|-----------|---------|-------------|
-| `color` | `'#FF0000'` ou `'red'` | Couleur du texte |
-| `background-color` | `'#EFEFEF'` | Couleur de fond |
-| `font-size` | `'24px'` | Taille de police |
-| `font-weight` | `'bold'` | Épaisseur de police |
-| `text-align` | `'center'` | Alignement du texte |
-| `padding` | `'20px'` | Espacement intérieur |
-| `margin` | `'10px'` | Espacement extérieur |
-| `border` | `'2px solid blue'` | Bordure |
-| `border-radius` | `'10px'` | Coins arrondis |
-| `width` | `'50%'` | Largeur |
+| Propriété          | Exemple                | Description          |
+| ------------------ | ---------------------- | -------------------- |
+| `color`            | `'#FF0000'` ou `'red'` | Couleur du texte     |
+| `background-color` | `'#EFEFEF'`            | Couleur de fond      |
+| `font-size`        | `'24px'`               | Taille de police     |
+| `font-weight`      | `'bold'`               | Épaisseur de police  |
+| `text-align`       | `'center'`             | Alignement du texte  |
+| `padding`          | `'20px'`               | Espacement intérieur |
+| `margin`           | `'10px'`               | Espacement extérieur |
+| `border`           | `'2px solid blue'`     | Bordure              |
+| `border-radius`    | `'10px'`               | Coins arrondis       |
+| `width`            | `'50%'`                | Largeur              |
 
 ### Exemples
 
@@ -460,6 +463,7 @@ Ceci est un paragraphe important avec un fond orange et des coins arrondis
 ```
 
 #### Citation avec style personnalisé
+
 ````
 ```
 ```sdml
@@ -537,16 +541,17 @@ Les fragments synchronisés permettent de faire évoluer du contenu en parallèl
 
 ### Deux modes disponibles
 
-| Mode | Syntaxe | Comportement |
-|------|---------|--------------|
-| Normal | `:::[sync-fragments]` | Remplace le fragment à chaque étape |
-| Keep | `:::[sync-fragments keep]` | Accumule les fragments |
+| Mode   | Syntaxe                    | Comportement                        |
+| ------ | -------------------------- | ----------------------------------- |
+| Normal | `:::[sync-fragments]`      | Remplace le fragment à chaque étape |
+| Keep   | `:::[sync-fragments keep]` | Accumule les fragments              |
 
 ### Symbole de séparation : `[---]`
 
 Sépare les différents fragments.
 
 ### Exemple - Mode Normal (Remplacement)
+
 ````
 ```sdml
 ::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em;}
@@ -573,12 +578,14 @@ Output: 10
 ````
 
 **Comportement :**
-- Étape 1 : affiche "x = 0"
-- Étape 2 : **remplace** par "x = 5"
-- Étape 3 : **remplace** par "x = 10"
-- Étape 4 : **remplace** par "Output: 10"
+
+-   Étape 1 : affiche "x = 0"
+-   Étape 2 : **remplace** par "x = 5"
+-   Étape 3 : **remplace** par "x = 10"
+-   Étape 4 : **remplace** par "Output: 10"
 
 ### Exemple - Mode Keep (Accumulation)
+
 ````
 ```sdml
 ::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em;}
@@ -605,12 +612,14 @@ Output: 10
 ````
 
 **Comportement :**
-- Étape 1 : affiche "x = 0"
-- Étape 2 : affiche "x = 0" **ET** "x = 5"
-- Étape 3 : affiche "x = 0", "x = 5" **ET** "x = 10"
-- Étape 4 : affiche tout + "Output: 10"
+
+-   Étape 1 : affiche "x = 0"
+-   Étape 2 : affiche "x = 0" **ET** "x = 5"
+-   Étape 3 : affiche "x = 0", "x = 5" **ET** "x = 10"
+-   Étape 4 : affiche tout + "Output: 10"
 
 ### Exemple avec images
+
 ````
 ```sdml
 ::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em;}
@@ -640,26 +649,26 @@ save(img)
 
 ## Récapitulatif des symboles
 
-| Symbole | Utilisation | Exemple |
-|---------|-------------|---------|
-| `{ }` | Métadonnées | `{author: "Nom", title: "Titre"}` |
-| `===` | Séparateur de slides | `===` |
-| `---` | Séparateur de template | `---` |
-| `#` | Titre H1 | `# Mon Titre` |
-| `##` | Titre H2 | `## Sous-titre` |
-| `###` | Titre H3 | `### Section` |
-| `**texte**` | Gras | `**Important**` |
-| `*texte*` | Italique | `*Emphase*` |
-| `_texte_` | Italique (alt) | `_Texte_` |
-| `__texte__` | Souligné | `__Attention__` |
-| `-`, `*`, `+` | Liste non ordonnée | `- Élément` |
-| `1.`, `2.` | Liste ordonnée | `1. Premier` |
-| `>` | Citation | `> Citation` |
-| `![alt](url)` | Image/Vidéo | `![Logo](url)` |
-| ` ``` ` | Bloc de code | ` ```javascript ` |
-| `:::` | Styles personnalisés | `::: {color: 'red'}` |
-| `:::[sync-fragments]` | Fragments synchronisés | `:::[sync-fragments]` |
-| `[---]` | Séparateur de fragment | `[---]` |
+| Symbole               | Utilisation            | Exemple                           |
+| --------------------- | ---------------------- | --------------------------------- |
+| `{ }`                 | Métadonnées            | `{author: "Nom", title: "Titre"}` |
+| `===`                 | Séparateur de slides   | `===`                             |
+| `---`                 | Séparateur de template | `---`                             |
+| `#`                   | Titre H1               | `# Mon Titre`                     |
+| `##`                  | Titre H2               | `## Sous-titre`                   |
+| `###`                 | Titre H3               | `### Section`                     |
+| `**texte**`           | Gras                   | `**Important**`                   |
+| `*texte*`             | Italique               | `*Emphase*`                       |
+| `_texte_`             | Italique (alt)         | `_Texte_`                         |
+| `__texte__`           | Souligné               | `__Attention__`                   |
+| `-`, `*`, `+`         | Liste non ordonnée     | `- Élément`                       |
+| `1.`, `2.`            | Liste ordonnée         | `1. Premier`                      |
+| `>`                   | Citation               | `> Citation`                      |
+| `![alt](url)`         | Image/Vidéo            | `![Logo](url)`                    |
+| ` ``` `               | Bloc de code           | ` ```javascript `                 |
+| `:::`                 | Styles personnalisés   | `::: {color: 'red'}`              |
+| `:::[sync-fragments]` | Fragments synchronisés | `:::[sync-fragments]`             |
+| `[---]`               | Séparateur de fragment | `[---]`                           |
 
 ---
 
@@ -667,33 +676,33 @@ save(img)
 
 ### 1. Organisation
 
-- **Une idée par slide** : ne surchargez pas vos slides
-- **Utilisez les templates** pour les éléments récurrents
-- **Structurez avec des titres** hiérarchiques
+-   **Une idée par slide** : ne surchargez pas vos slides
+-   **Utilisez les templates** pour les éléments récurrents
+-   **Structurez avec des titres** hiérarchiques
 
 ### 2. Formatage
 
-- **Soyez cohérent** dans vos choix de formatage
-- **Utilisez le gras** pour les mots-clés importants
-- **Les listes** rendent le contenu plus lisible
+-   **Soyez cohérent** dans vos choix de formatage
+-   **Utilisez le gras** pour les mots-clés importants
+-   **Les listes** rendent le contenu plus lisible
 
 ### 3. Code
 
-- **Spécifiez le langage** pour une meilleure coloration
-- **Utilisez les fragments synchronisés** pour les explications pas à pas
-- **Limitez la longueur** des blocs de code (10-15 lignes max)
+-   **Spécifiez le langage** pour une meilleure coloration
+-   **Utilisez les fragments synchronisés** pour les explications pas à pas
+-   **Limitez la longueur** des blocs de code (10-15 lignes max)
 
 ### 4. Styles
 
-- **Restez simple** : trop de styles nuisent à la lisibilité
-- **Utilisez une palette cohérente** de couleurs
-- **Testez la lisibilité** (contraste texte/fond)
+-   **Restez simple** : trop de styles nuisent à la lisibilité
+-   **Utilisez une palette cohérente** de couleurs
+-   **Testez la lisibilité** (contraste texte/fond)
 
 ### 5. Médias
 
-- **Optimisez la taille** des images
-- **Utilisez des URLs absolues** pour les ressources externes
-- **Ajoutez toujours une description** dans `![description](url)`
+-   **Optimisez la taille** des images
+-   **Utilisez des URLs absolues** pour les ressources externes
+-   **Ajoutez toujours une description** dans `![description](url)`
 
 ---
 
@@ -701,12 +710,12 @@ save(img)
 
 Consultez les exemples fournis dans le dossier `examples/sdml/` :
 
-- `minimal.sdml` - Exemple minimal pour débuter
-- `comprehensive-demo.sdml` - Toutes les fonctionnalités
-- `demo-with-styles.sdml` - Styles CSS personnalisés
-- `code-demo.sdml` - Blocs de code avec options
-- `highlight-demo.sdml` - Modes de surlignage
-- `sync-demo.sdml` - Fragments synchronisés
+-   `minimal.sdml` - Exemple minimal pour débuter
+-   `comprehensive-demo.sdml` - Toutes les fonctionnalités
+-   `demo-with-styles.sdml` - Styles CSS personnalisés
+-   `code-demo.sdml` - Blocs de code avec options
+-   `highlight-demo.sdml` - Modes de surlignage
+-   `sync-demo.sdml` - Fragments synchronisés
 
 ---
 
