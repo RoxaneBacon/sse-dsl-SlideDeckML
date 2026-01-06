@@ -1,11 +1,10 @@
-
 /**
  * This module is responsible for generating HTML elements from the AST nodes.
  * So Each lines is a specific element (heading, paragraph, list, etc.)
- * And for each text inside an element we use the TextProcessor to handle inline formatting. (bold, italic, underline) 
+ * And for each text inside an element we use the TextProcessor to handle inline formatting. (bold, italic, underline)
  */
 export class ElementGenerator {
-    textProcessor = new TextProcessor();
+    textProcessor = new TextProcessor()
 
     /**
      * Generate a heading element
@@ -14,10 +13,12 @@ export class ElementGenerator {
      */
     public generateHeading(heading: any, style: string = ''): string {
         // Access level and text directly from the AST
-        const level = heading.level.length;
-        const text = heading.text;
-        
-        return `            <h${level}${style}>${this.textProcessor.processInlineText(text)}</h${level}>`;
+        const level = heading.level.length
+        const text = heading.text
+
+        return `            <h${level}${style}>${this.textProcessor.processInlineText(
+            text
+        )}</h${level}>`
     }
 
     /**
@@ -26,7 +27,9 @@ export class ElementGenerator {
      * @returns The HTML string for the paragraph
      */
     public generateParagraph(paragraph: any, style: string = ''): string {
-        return `            <p${style}>${this.textProcessor.processInlineText(paragraph.text)}</p>`;
+        return `            <p${style}>${this.textProcessor.processInlineText(
+            paragraph.text
+        )}</p>`
     }
 
     /**
@@ -38,11 +41,13 @@ export class ElementGenerator {
         const items = list.items
             .map((item: any) => {
                 // Access text directly from the AST
-                const text = item.text;
-                return `                <li>${this.textProcessor.processInlineText(text)}</li>`;
+                const text = item.text
+                return `                <li>${this.textProcessor.processInlineText(
+                    text
+                )}</li>`
             })
-            .join('\n');
-        return `            <ul${style}>\n${items}\n            </ul>`;
+            .join('\n')
+        return `            <ul${style}>\n${items}\n            </ul>`
     }
 
     /**
@@ -54,11 +59,13 @@ export class ElementGenerator {
         const items = list.items
             .map((item: any) => {
                 // Access text directly from the AST
-                const text = item.text;
-                return `                <li>${this.textProcessor.processInlineText(text)}</li>`;
+                const text = item.text
+                return `                <li>${this.textProcessor.processInlineText(
+                    text
+                )}</li>`
             })
-            .join('\n');
-        return `            <ol${style}>\n${items}\n            </ol>`;
+            .join('\n')
+        return `            <ol${style}>\n${items}\n            </ol>`
     }
 
     /**
@@ -67,8 +74,10 @@ export class ElementGenerator {
      * @returns The HTML string for the quote
      */
     public generateQuote(quote: any, style: string = ''): string {
-        const text = quote.text;
-        return `            <blockquote${style}>${this.textProcessor.processInlineText(text)}</blockquote>`;
+        const text = quote.text
+        return `            <blockquote${style}>${this.textProcessor.processInlineText(
+            text
+        )}</blockquote>`
     }
 
     /**
@@ -77,75 +86,95 @@ export class ElementGenerator {
      * @returns The HTML string for the media
      */
     public generateMedia(media: any, style: string = ''): string {
-        const content = media.content;
-        
+        const content = media.content
+
         // Parse the media line: ![alt](url)
-        const match = content.match(/!\[([^\]]+)\]\(([^\)]+)\)/);
-        if (!match) return '';
-        
-        const alt = match[1];
-        const url = match[2];
-        
+        const match = content.match(/!\[([^\]]+)\]\(([^\)]+)\)/)
+        if (!match) return ''
+
+        const alt = match[1]
+        const url = match[2]
+
         // Determine if it's a video based on file extension
-        const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
-        const isVideo = videoExtensions.some(ext => url.toLowerCase().endsWith(ext));
-        
+        const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov']
+        const isVideo = videoExtensions.some((ext) =>
+            url.toLowerCase().endsWith(ext)
+        )
+
         if (isVideo) {
-            return `            <video controls${style}>\n                <source src="${url}" type="video/${this.getVideoType(url)}">\n                ${alt}\n            </video>`;
+            return `            <video controls${style}>\n                <source src="${url}" type="video/${this.getVideoType(
+                url
+            )}">\n                ${alt}\n            </video>`
         } else {
-            return `            <img src="${url}" alt="${alt}"${style}>`;
+            return `            <img src="${url}" alt="${alt}"${style}>`
         }
     }
 
-        /**
+    /**
      * Generate a code block element
      * @param codeBlock The code block AST node
      * @returns The HTML string for the code block
      */
     public generateCodeBlock(codeBlock: any, style: string = ''): string {
-        const content = codeBlock.content;
-        
+        const content = codeBlock.content
+
         // Parse the code block: ```language [attributes] code ```
-        const match = content.match(/```([a-zA-Z][a-zA-Z0-9\-]*)?(?:\s*\[([^\]]*)\])?\s*[\r\n]([\s\S]*?)```/);
-        if (!match) return '';
-        
-        const language = match[1] || '';
-        const attributes = match[2] || '';
-        const code = match[3] || '';
+        const match = content.match(
+            /```([a-zA-Z][a-zA-Z0-9\-]*)?(?:\s*\[([^\]]*)\])?\s*[\r\n]([\s\S]*?)```/
+        )
+        if (!match) return ''
+
+        const language = match[1] || ''
+        const attributes = match[2] || ''
+        const code = match[3] || ''
+
+        if (language.toLowerCase() === 'latex') {
+            return this.generateLatexBlock(code.trim(), style)
+        }
 
         // Build the class attribute
-        const languageClass = language ? ` class="language-${language}"` : '';
+        const languageClass = language ? ` class="language-${language}"` : ''
 
         // Build data attributes for line numbers
-        let dataAttrs = ' data-trim data-noescape';
-        
+        let dataAttrs = ' data-trim data-noescape'
+
         if (attributes) {
             // Parse attributes - formats: 'lines:value' or 'lines:value' 'start:value'
             // Remove surrounding quotes and split by spaces to handle multiple attributes
-            const attrParts = attributes.match(/'[^']+'/g) || [];
+            const attrParts = attributes.match(/'[^']+'/g) || []
 
             for (const part of attrParts) {
                 // Remove quotes and parse
-                const cleanPart = part.replace(/^'|'$/g, '');
+                const cleanPart = part.replace(/^'|'$/g, '')
 
                 // Check for lines attribute
-                const linesMatch = cleanPart.match(/^lines:(.+)$/);
+                const linesMatch = cleanPart.match(/^lines:(.+)$/)
                 if (linesMatch) {
-                    dataAttrs += ` data-line-numbers="${linesMatch[1]}"`;
+                    dataAttrs += ` data-line-numbers="${linesMatch[1]}"`
                 }
 
                 // Check for start attribute
-                const startMatch = cleanPart.match(/^start:(\d+)$/);
+                const startMatch = cleanPart.match(/^start:(\d+)$/)
                 if (startMatch) {
-                    dataAttrs += ` data-line-numbers data-ln-start-from="${startMatch[1]}"`;
+                    dataAttrs += ` data-line-numbers data-ln-start-from="${startMatch[1]}"`
                 }
             }
         }
 
         // Escape HTML in code content
-        const escapedCode = this.textProcessor.escapeHtml(code);
+        const escapedCode = this.textProcessor.escapeHtml(code)
 
-        return `            <pre${style}><code${languageClass}${dataAttrs}>${escapedCode}</code></pre>`;
+        return `            <pre${style}><code${languageClass}${dataAttrs}>${escapedCode}</code></pre>`
+    }
+    /**
+    * Generate a LaTeX block element for mathematical equations
+    * @param latexCode The LaTeX equation code
+    * @param style Optional style attributes
+    * @returns The HTML string for the LaTeX block
+    */
+
+    private generateLatexBlock(latexCode: string, style: string = ''): string {
+        return `            <div class="latex-block"${style}>\n                $$${latexCode}$$\n            </div>`
     }
 
     /**
@@ -154,10 +183,10 @@ export class ElementGenerator {
      * @returns The MIME type
      */
     private getVideoType(url: string): string {
-        if (url.toLowerCase().endsWith('.webm')) return 'webm';
-        if (url.toLowerCase().endsWith('.ogg')) return 'ogg';
-        if (url.toLowerCase().endsWith('.mov')) return 'quicktime';
-        return 'mp4'; // default
+        if (url.toLowerCase().endsWith('.webm')) return 'webm'
+        if (url.toLowerCase().endsWith('.ogg')) return 'ogg'
+        if (url.toLowerCase().endsWith('.mov')) return 'quicktime'
+        return 'mp4' // default
     }
 }
 
@@ -168,14 +197,14 @@ export class ElementGenerator {
 export class TextProcessor {
     public processInlineText(text: string): string {
         // First escape HTML entities
-        let result = this.escapeHtml(text);
+        let result = this.escapeHtml(text)
         // Process bold (**text**)
-        result = this.processBold(result);
+        result = this.processBold(result)
         // Process underline (__text__)
-        result = this.processUnderline(result);
+        result = this.processUnderline(result)
         // Process italic (*text* or _text_)
-        result = this.processItalic(result);
-        return result;
+        result = this.processItalic(result)
+        return result
     }
 
     /**
@@ -185,7 +214,10 @@ export class TextProcessor {
      */
     private processBold(text: string): string {
         // Match ** but not *** (which would be bold+italic)
-        return text.replace(/\*\*(?!\*)(.+?)(?<!\*)\*\*/g, '<strong>$1</strong>');
+        return text.replace(
+            /\*\*(?!\*)(.+?)(?<!\*)\*\*/g,
+            '<strong>$1</strong>'
+        )
     }
 
     /**
@@ -196,10 +228,13 @@ export class TextProcessor {
      */
     private processItalic(text: string): string {
         // Process *italic* but not ** (bold) or <strong>*text*</strong>
-        let result = text.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
+        let result = text.replace(
+            /(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g,
+            '<em>$1</em>'
+        )
         // Process _italic_ but not __ (underline)
-        result = result.replace(/(?<!_)_(?!_)(.+?)(?<!_)_(?!_)/g, '<em>$1</em>');
-        return result;
+        result = result.replace(/(?<!_)_(?!_)(.+?)(?<!_)_(?!_)/g, '<em>$1</em>')
+        return result
     }
 
     /**
@@ -208,7 +243,7 @@ export class TextProcessor {
      * @returns The processed text
      */
     private processUnderline(text: string): string {
-        return text.replace(/__(.+?)__/g, '<u>$1</u>');
+        return text.replace(/__(.+?)__/g, '<u>$1</u>')
     }
 
     /**
@@ -222,6 +257,6 @@ export class TextProcessor {
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;');
+            .replace(/'/g, '&#39;')
     }
 }
