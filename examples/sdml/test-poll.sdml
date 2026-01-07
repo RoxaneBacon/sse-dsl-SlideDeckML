@@ -1,0 +1,72 @@
+{ 
+    author: "Workshop Instructor" 
+    title: "Performance Workshop"
+}
+
+===
+
+# Welcome to the Workshop
+
+Today we'll explore software performance optimization
+
+===
+
+:::quiz
+"Software Performance Workshop Quiz"
+
+question : "What is the average time complexity of QuickSort?"
+choice "n" : "O(n)"
+choice "nlogn" : "O(n log n)"
+choice "n2" : "O(n²)"
+choice "logn" : "O(log n)"
+correct : "nlogn"
+showResultsOnDemand : true
+visualization : barChart
+
+question : "Which sorting algorithm is most efficient for nearly sorted data?"
+choice "bubble" : "Bubble Sort"
+choice "insertion" : "Insertion Sort"
+choice "merge" : "Merge Sort"
+choice "quick" : "Quick Sort"
+correct : "insertion"
+showResultsOnDemand : false
+visualization : pieChart
+
+question : "What is the space complexity of Merge Sort?"
+choice "o1" : "O(1)"
+choice "ologn" : "O(log n)"
+choice "on" : "O(n)"
+choice "on2" : "O(n²)"
+correct : "on"
+showResultsOnDemand : true
+:::
+
+===
+
+:::poll
+"Language Preferences"
+
+question : "Which programming language do you prefer for performance-critical tasks?"
+choice "cpp" : "C++"
+choice "rust" : "Rust"
+choice "go" : "Go"
+choice "java" : "Java"
+choice "c" : "C"
+showResultsOnDemand : false
+visualization : barChart
+
+question : "What profiling tool do you use most often?"
+choice "perf" : "perf (Linux)"
+choice "vtune" : "Intel VTune"
+choice "valgrind" : "Valgrind"
+choice "xcode" : "Xcode Instruments"
+choice "visualstudio" : "Visual Studio Profiler"
+showResultsOnDemand : true
+visualization : pieChart
+:::
+
+===
+
+# Thank You!
+
+Your feedback helps us improve our workshops

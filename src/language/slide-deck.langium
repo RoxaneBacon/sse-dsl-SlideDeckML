@@ -20,7 +20,7 @@ Slide:
     (transition=TRANSITION_ATTR)? blocks+=Block+;
 
 Block:
-    lines+=LineContent+;
+    Quiz | LivePoll | lines+=LineContent+;
 
 LineContent:
     FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments;
@@ -76,9 +76,55 @@ Output:
 EditorLanguage returns string:
     'python' | 'sql' | 'javascript';
 
+// fragment = abstract class
+fragment InteractiveElement:
+    title=STRING;
+
+Quiz:
+    QUIZ_START InteractiveElement
+    questions+=QuizQuestion+
+    STYLE_DELIMITER;
+
+LivePoll:
+    POLL_START InteractiveElement
+    questions+=PollQuestion+
+    STYLE_DELIMITER;
+
+// fragment = abstract class
+fragment InteractiveElementQuestion:
+    text=STRING;
+
+QuizQuestion:
+    QuizMultipleChoice;
+
+PollQuestion:
+    PollMultipleChoice;
+
+QuizMultipleChoice:
+    'question' ':' InteractiveElementQuestion
+        choices+=Choice+
+        'correct' ':'
+            correctAnswers+=[Choice:STRING]+
+    ('showResultsOnDemand' ':' showResultsOnDemand=BOOLEAN)?
+    ('visualization' ':' visualizationType=VisualizationType)?;
+
+PollMultipleChoice:
+    'question' ':' InteractiveElementQuestion
+        choices+=Choice+
+    ('showResultsOnDemand' ':' showResultsOnDemand=BOOLEAN)?
+    ('visualization' ':' visualizationType=VisualizationType)?;
+
+Choice:
+    'choice' choice=STRING ':' text=STRING;
+
+VisualizationType returns string:
+    'barChart' | 'pieChart';
+
 terminal CODE_BLOCK returns string:
     /```[a-zA-Z0-9_\-]*(?:\s*\[(?:(?:highlight:\s*(?:block|function|class|line-by-line|all|none))|(?:lines:\s*["'][^"']+["'])|(?:start:\s*\d+)|\s)+\])?[\r\n]([\s\S]*?)```/;
 
+terminal QUIZ_START: /:::quiz/;
+terminal POLL_START: /:::poll/;
 terminal SYNC_DELIMITER_KEEP: /:::\[sync-fragments\s+keep\]/;
 terminal SYNC_DELIMITER: /:::\[sync-fragments\]/;
 
@@ -106,8 +152,11 @@ terminal HEADER_LEVEL: /###|##|#/;
 
 terminal LIST_MARKER: /[\-\*\+]/;
 
+terminal BOOLEAN returns boolean:
+    /true|false/;
+
 terminal PARAGRAPH_TEXT returns string:
-    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!```)(?!,,,)(?!===)(?!---)(?!\[\-\-\-\])(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*css)(?![\s]*logo)(?![\s]*theme)(?![\s]*transition)(?![\s]*chalkboard)(?![\s]*python)(?![\s]*sql)(?![\s]*javascript)(?![\s]*output)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
+    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!```)(?!,,,)(?!===)(?!---)(?!\[\-\-\-\])(?![\s]*\{)(?![\s]*\})(?![\s]*true)(?![\s]*false)(?![\s]*author)(?![\s]*title)(?![\s]*css)(?![\s]*logo)(?![\s]*theme)(?![\s]*transition)(?![\s]*chalkboard)(?![\s]*python)(?![\s]*sql)(?![\s]*javascript)(?![\s]*output)(?![\s]*question)(?![\s]*freeText)(?![\s]*choice)(?![\s]*choices)(?![\s]*correct)(?![\s]*results)(?![\s]*showResultsOnDemand)(?![\s]*visualization)(?![\s]*maxLength)(?![\s]*barChart)(?![\s]*pieChart)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
 
 terminal STRING returns string:
     /"(?:\\.|[^"\\])*"/;
