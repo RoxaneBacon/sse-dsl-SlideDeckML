@@ -69,7 +69,7 @@ export class CompilerService {
             const presentation = document.parseResult.value as Presentation;
 
             // Generate HTML
-            const html = this.htmlGenerator.generateHTML(presentation);
+            const html = await this.htmlGenerator.generateHTML(presentation);
 
             // Calculate slide count (template is not counted as a slide)
             const slideCount = presentation.slides.length;

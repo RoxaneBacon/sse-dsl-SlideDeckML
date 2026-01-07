@@ -13,15 +13,21 @@ export class SectionGenerator {
     }
 
     /**
+     * Get the line content handler
+     */
+    public getLineContentHandler(): LineContentHandler {
+        return this.lineContentHandler;
+    }
+
+    /**
      * Generate HTML for a slide or template section
      * @param slideOrTemplate The slide or template to generate
      * @param isTemplate Whether this is a template section
      * @returns Generated HTML string
      */
-    public generateSection(slideOrTemplate: Slide | Template, isTemplate: boolean): string {
-        const contentHTML = slideOrTemplate.blocks
-            .map(block => this.generateBlock(block))
-            .join('\n');
+    public async generateSection(slideOrTemplate: Slide | Template, isTemplate: boolean): Promise<string> {
+        const blockPromises = slideOrTemplate.blocks.map(block => this.generateBlock(block));
+        const contentHTML = (await Promise.all(blockPromises)).join('\n');
 
         // Add data-slide-index attribute for regular slides (not template)
         const dataAttribute = isTemplate ? '' : ` data-slide-index="${this.currentSlideIndex}"`;
@@ -34,11 +40,12 @@ export class SectionGenerator {
      * @param block The block to generate
      * @returns Generated HTML string
      */
-    private generateBlock(block: Block): string {
+    private async generateBlock(block: Block): Promise<string> {
         let html = '';
 
         if (block.lines.length > 0) {
-            html += block.lines.map(line => this.lineContentHandler.generateLine(line)).join('\n');
+            const linePromises = block.lines.map(line => this.lineContentHandler.generateLine(line));
+            html += (await Promise.all(linePromises)).join('\n');
         }
 
         return html;

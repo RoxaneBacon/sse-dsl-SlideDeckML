@@ -1,55 +1,44 @@
-import { Metadata } from '../language/generated/ast';
-import { ImageConverter } from './image-converter';
-import * as path from 'path';
-
-export class TemplateGenerator {
-    private title: string = 'SlideDeckML Presentation'
-    private author: string = 'Unknown Author'
-    private css: string = ''
-    private logo: string = ''
-    private theme: string = 'white'
-    private sourceFilePath?: string;
-
-    /**
-     * Set the source file path for resolving relative paths
-     * @param filePath Absolute path to the .sdml file
-     */
-    public setSourceFilePath(filePath: string): void {
-        this.sourceFilePath = filePath;
-    }
-
-    public setMetadata(metadata: Metadata): void {
-        // Access author and title directly from the metadata object
-        this.author = metadata.author.replace(/^"|"$/g, '')
-        this.title = metadata.title.replace(/^"|"$/g, '')
-        if (metadata.css) {
-            this.css = metadata.css.replace(/^"|"$/g, '')
-        }
-        if (metadata.logo) {
-            this.logo = metadata.logo.replace(/^"|"$/g, '')
-        }
-        if (metadata.theme) {
-            this.theme = metadata.theme.replace(/^"|"$/g, '')
-        }
-    }
-    public getHTMLTemplate(slidesContent: string): string {
-        return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="${this.author}">
-    <meta name="title" content="${this.title}">
-    <title>${this.title}</title>
+    <meta name="author" content="Jane Smith">
+    <meta name="title" content="Project Update">
+    <title>Project Update</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/${
-        this.theme
-    }.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <style> 
         
-        ${this.css}
+        .reveal h1 {
+                color: #2c3e50;
+                font-weight: 300;
+                font-size: 3em;
+                margin-bottom: 0.5em;
+            }
+            .reveal h2 {
+                color: #34495e;
+                font-weight: 300;
+                font-size: 2em;
+            }
+            .reveal h3 {
+                color: #7f8c8d;
+                font-weight: 400;
+            }
+            .reveal .slides section {
+                text-align: left;
+            }
+            .reveal ul, .reveal ol {
+                margin-left: 0;
+            }
+            .reveal li {
+                margin-bottom: 0.5em;
+            }
+            .reveal p {
+                line-height: 1.6;
+            }
 
         /* Default Reveal.js overrides */
         .reveal {
@@ -106,24 +95,51 @@ export class TemplateGenerator {
     </style>
 </head>
 <body>
-    ${
-        this.css
-            ? `<header class="header-banner">
-        <div class="header-author">${this.author}</div>
-        ${
-            this.logo
-                ? `<img src="${ImageConverter.convertToBase64Sync(
-                    this.logo, 
-                    this.sourceFilePath ? path.dirname(this.sourceFilePath) : undefined
-                )}" alt="Logo" class="header-logo">`
-                : ''
-        }
-    </header>`
-            : ''
-    }
+    <header class="header-banner">
+        <div class="header-author">Jane Smith</div>
+        
+    </header>
     <div class="reveal">
         <div class="slides">
-${slidesContent}
+        <section>
+            <div style="text-align: center">
+            <h1>Project Update</h1>
+            <p>Jane Smith</p>
+            <p>January 7, 2026</p>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>Progress Overview</h1>
+            <h2>What We Accomplished</h2>
+            <ul>
+                <li>Completed Phase 1 implementation</li>
+                <li>User testing completed</li>
+                <li>Documentation updated</li>
+            </ul>
+        </section>
+        <section data-slide-index="0">
+            <h1>Current Status</h1>
+            <h2>Metrics</h2>
+            <p><strong>Completion</strong>: 75%</p>
+            <p><strong>Timeline</strong>: On track for Q1 delivery</p>
+            <p><strong>Team</strong>: 5 developers, 2 designers</p>
+        </section>
+        <section data-slide-index="0">
+            <h1>Next Steps</h1>
+            <h2>Q1 Priorities</h2>
+            <ol>
+                <li>Finalize remaining features</li>
+                <li>Performance optimization</li>
+                <li>Security audit</li>
+                <li>Production deployment</li>
+            </ol>
+        </section>
+        <section data-slide-index="3">
+            <div style="text-align: center">
+            <h1>Thank You</h1>
+            <p>jane.smith@company.com</p>
+            </div>
+        </section>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
@@ -222,6 +238,4 @@ ${slidesContent}
         });
     </script>
 </body>
-</html>`
-    }
-}
+</html>

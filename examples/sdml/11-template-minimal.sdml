@@ -1,0 +1,77 @@
+{
+    author: "Jane Smith"
+    title: "Project Update"
+    theme: "white"
+    css: ".reveal h1 {
+                color: #2c3e50;
+                font-weight: 300;
+                font-size: 3em;
+                margin-bottom: 0.5em;
+            }
+            .reveal h2 {
+                color: #34495e;
+                font-weight: 300;
+                font-size: 2em;
+            }
+            .reveal h3 {
+                color: #7f8c8d;
+                font-weight: 400;
+            }
+            .reveal .slides section {
+                text-align: left;
+            }
+            .reveal ul, .reveal ol {
+                margin-left: 0;
+            }
+            .reveal li {
+                margin-bottom: 0.5em;
+            }
+            .reveal p {
+                line-height: 1.6;
+            }"
+}
+---
+::: {text-align: 'center'}
+# Project Update
+
+Jane Smith
+
+January 7, 2026
+:::
+
+===
+# Progress Overview
+
+## What We Accomplished
+
+- Completed Phase 1 implementation
+- User testing completed
+- Documentation updated
+
+===
+# Current Status
+
+## Metrics
+
+**Completion**: 75%
+
+**Timeline**: On track for Q1 delivery
+
+**Team**: 5 developers, 2 designers
+
+===
+# Next Steps
+
+## Q1 Priorities
+
+1. Finalize remaining features
+2. Performance optimization
+3. Security audit
+4. Production deployment
+
+===
+::: {text-align: 'center'}
+# Thank You
+
+jane.smith@company.com
+:::

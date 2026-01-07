@@ -25,11 +25,18 @@ export class HtmlGenerator {
     /**
      * Generate complete HTML presentation from SlideDeckML AST
      * @param presentation The presentation AST
+     * @param sourceFilePath Absolute path to the source .sdml file (for resolving relative image paths)
      * @returns Complete HTML document string
      */
-    public generateHTML(presentation: Presentation): string {
+    public async generateHTML(presentation: Presentation, sourceFilePath?: string): Promise<string> {
         if (presentation.metadata) {
             this.templateGenerator.setMetadata(presentation.metadata);
+        }
+
+        // Set source file path for image resolution
+        if (sourceFilePath) {
+            this.templateGenerator.setSourceFilePath(sourceFilePath);
+            this.setSourceFilePath(sourceFilePath);
         }
 
         // Reset slide index counter
@@ -38,18 +45,30 @@ export class HtmlGenerator {
         // Generate template if it exists
         let allSlidesHTML = '';
         if (presentation.template) {
-            allSlidesHTML += this.sectionGenerator.generateSection(presentation.template, true) + '\n';
+            allSlidesHTML += await this.sectionGenerator.generateSection(presentation.template, true) + '\n';
         }
 
         // Generate regular slides with index tracking
-        const slidesHTML = presentation.slides.map((slide: Slide) => {
-            const html = this.sectionGenerator.generateSection(slide, false);
+        const slidesPromises = presentation.slides.map(async (slide: Slide) => {
+            const html = await this.sectionGenerator.generateSection(slide, false);
             this.sectionGenerator.incrementSlideIndex();
             return html;
-        }).join("\n");
+        });
+        
+        const slidesHTML = (await Promise.all(slidesPromises)).join("\n");
 
         allSlidesHTML += slidesHTML;
 
         return this.templateGenerator.getHTMLTemplate(allSlidesHTML);
+    }
+
+    /**
+     * Set the source file path for resolving relative image paths
+     * @param sourceFilePath Absolute path to the source .sdml file
+     */
+    private setSourceFilePath(sourceFilePath: string): void {
+        const lineContentHandler = this.sectionGenerator.getLineContentHandler();
+        const elementGenerator = lineContentHandler.getElementGenerator();
+        elementGenerator.setSourceFilePath(sourceFilePath);
     }
 }
