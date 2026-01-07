@@ -142,7 +142,7 @@ export class ElementGenerator {
             
             // Handle start offset
             if (attributes.start) {
-                dataAttrs += ` data-ln-start-from="${attributes.start}"`;
+                dataAttrs += ` data-line-numbers data-ln-start-from="${attributes.start}"`;
             }
         }
 
