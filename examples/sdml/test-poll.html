@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Workshop Instructor">
+    <meta name="title" content="Performance Workshop">
+    <title>Performance Workshop</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+    <!-- Poll plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/poll/style.css">
+    
+    <style>
+        
+        /* Poll/Quiz responsive styling */
+        .reveal .slides section {
+            padding: 20px 0 !important;
+        }
+
+        .poll {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15em;
+            max-width: 700px;
+            margin: 0.12em auto 0.1em auto;
+        }
+
+        .poll button {
+            font-size: 0.7em !important;
+            padding: 0.35em 0.7em !important;
+            margin: 0 !important;
+            white-space: normal;
+            text-align: left;
+            width: 100%;
+        }
+
+        .reveal section h3 {
+            font-size: 1em;
+            margin: 0.2em 0 1.0em 0;
+        }
+
+        .results {
+            font-size: 0.85em;
+            margin-top: 0.5em !important;
+            text-align: center;
+        }
+
+        .results canvas {
+            max-height: 250px;
+        }
+
+        .qr-code-container {
+            text-align: center;
+            margin: 2em auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-code-container .qr-code {
+            display: inline-block;
+            margin: 1em auto;
+        }
+
+        .qr-code img,
+        .qr-code-container img {
+            margin: 0 auto;
+            display: block !important;
+        }
+
+        .qr-code-container p {
+            font-size: 0.9em;
+            font-style: italic;
+            margin-top: 1em;
+        }
+
+        .toggle-results-btn {
+            background-color: #2a76dd;
+            color: white;
+            border: none;
+            padding: 0.25em 0.8em;
+            font-size: 0.65em;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 1.0em auto;
+            display: block;
+        }
+
+        .toggle-results-btn:hover {
+            background-color: #1e5bb8;
+        }
+
+        .results canvas {
+            margin: 0.5em auto;
+            display: block;
+        }
+
+        /* Hide show results button for guests */
+        body.guest-mode .toggle-results-btn {
+            display: none !important;
+        }
+        
+
+        
+   
+        /* Synchronized fragments styling */
+        .sync-container {
+            position: relative;
+            min-height: 50px;
+            font-size: 0.9em;
+        }
+        .sync-item {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .sync-item.active {
+            display: block;
+            opacity: 1;
+        }
+        .sync-item p {
+            margin: 0.3em 0;
+        }
+        .sync-item img {
+            max-width: 100%;
+            height: auto;
+        }
+        /* Keep mode: stack items vertically */
+        .sync-container[data-keep="true"] {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3em;
+        }
+        .sync-container[data-keep="true"] .sync-item {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="reveal">
+        <div class="slides">
+        <section data-slide-index="0">
+            <h1>Welcome to the Workshop</h1>
+            <p>Today we&#39;ll explore software performance optimization</p>
+        </section>
+        <section data-slide-index="1">
+        <section>
+            <h2>Software Performance Workshop Quiz</h2>
+            <div class="qr-code-container">
+                <img class="qr-code" alt="QR Code to join" />
+                <p>Scan to join and participate</p>
+            </div>
+        </section>
+        <section>
+            <h3>What is the average time complexity of QuickSort?</h3>
+            <div class="poll" data-poll="poll-0" data-auto-show-results="false">
+                <button data-value="n">O(n)</button>
+                <button data-value="nlogn">O(n log n)</button>
+                <button data-value="n2">O(n²)</button>
+                <button data-value="logn">O(log n)</button>
+            </div>
+            <button class="toggle-results-btn" data-poll="poll-0">Show Results</button>
+            <div class="results" data-poll="poll-0" data-visualization="barChart" data-is-quiz="true" style="display: none;">
+                <p><strong>Results:</strong> <span class="voters" data-poll="poll-0">0</span> votes</p>
+                <canvas id="chart-poll-0" width="400" height="300"></canvas>
+                <div style="display: none;">
+                    <p data-correct="false">O(n): <span data-value="n">0</span></p>
+                    <p data-correct="true">O(n log n): <span data-value="nlogn">0</span></p>
+                    <p data-correct="false">O(n²): <span data-value="n2">0</span></p>
+                    <p data-correct="false">O(log n): <span data-value="logn">0</span></p>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>Which sorting algorithm is most efficient for nearly sorted data?</h3>
+            <div class="poll" data-poll="poll-1" data-auto-show-results="true">
+                <button data-value="bubble">Bubble Sort</button>
+                <button data-value="insertion">Insertion Sort</button>
+                <button data-value="merge">Merge Sort</button>
+                <button data-value="quick">Quick Sort</button>
+            </div>
+            <div class="results" data-poll="poll-1" data-visualization="pieChart" data-is-quiz="true" style="display: none;">
+                <p><strong>Results:</strong> <span class="voters" data-poll="poll-1">0</span> votes</p>
+                <canvas id="chart-poll-1" width="400" height="300"></canvas>
+                <div style="display: none;">
+                    <p data-correct="false">Bubble Sort: <span data-value="bubble">0</span></p>
+                    <p data-correct="true">Insertion Sort: <span data-value="insertion">0</span></p>
+                    <p data-correct="false">Merge Sort: <span data-value="merge">0</span></p>
+                    <p data-correct="false">Quick Sort: <span data-value="quick">0</span></p>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>What is the space complexity of Merge Sort?</h3>
+            <div class="poll" data-poll="poll-2" data-auto-show-results="false">
+                <button data-value="o1">O(1)</button>
+                <button data-value="ologn">O(log n)</button>
+                <button data-value="on">O(n)</button>
+                <button data-value="on2">O(n²)</button>
+            </div>
+            <button class="toggle-results-btn" data-poll="poll-2">Show Results</button>
+            <div class="results" data-poll="poll-2" data-visualization="barChart" data-is-quiz="true" style="display: none;">
+                <p><strong>Results:</strong> <span class="voters" data-poll="poll-2">0</span> votes</p>
+                <canvas id="chart-poll-2" width="400" height="300"></canvas>
+                <div style="display: none;">
+                    <p data-correct="false">O(1): <span data-value="o1">0</span></p>
+                    <p data-correct="false">O(log n): <span data-value="ologn">0</span></p>
+                    <p data-correct="true">O(n): <span data-value="on">0</span></p>
+                    <p data-correct="false">O(n²): <span data-value="on2">0</span></p>
+                </div>
+            </div>
+        </section>
+
+        </section>
+        <section data-slide-index="2">
+        <section>
+            <h2>Language Preferences</h2>
+            <div class="qr-code-container">
+                <img class="qr-code" alt="QR Code to join" />
+                <p>Scan to join and participate</p>
+            </div>
+        </section>
+        <section>
+            <h3>Which programming language do you prefer for performance-critical tasks?</h3>
+            <div class="poll" data-poll="poll-3" data-auto-show-results="true">
+                <button data-value="cpp">C++</button>
+                <button data-value="rust">Rust</button>
+                <button data-value="go">Go</button>
+                <button data-value="java">Java</button>
+                <button data-value="c">C</button>
+            </div>
+            <div class="results" data-poll="poll-3" data-visualization="barChart" data-is-quiz="false" style="display: none;">
+                <p><strong>Results:</strong> <span class="voters" data-poll="poll-3">0</span> votes</p>
+                <canvas id="chart-poll-3" width="400" height="300"></canvas>
+                <div style="display: none;">
+                    <p data-correct="false">C++: <span data-value="cpp">0</span></p>
+                    <p data-correct="false">Rust: <span data-value="rust">0</span></p>
+                    <p data-correct="false">Go: <span data-value="go">0</span></p>
+                    <p data-correct="false">Java: <span data-value="java">0</span></p>
+                    <p data-correct="false">C: <span data-value="c">0</span></p>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>What profiling tool do you use most often?</h3>
+            <div class="poll" data-poll="poll-4" data-auto-show-results="false">
+                <button data-value="perf">perf (Linux)</button>
+                <button data-value="vtune">Intel VTune</button>
+                <button data-value="valgrind">Valgrind</button>
+                <button data-value="xcode">Xcode Instruments</button>
+                <button data-value="visualstudio">Visual Studio Profiler</button>
+            </div>
+            <button class="toggle-results-btn" data-poll="poll-4">Show Results</button>
+            <div class="results" data-poll="poll-4" data-visualization="pieChart" data-is-quiz="false" style="display: none;">
+                <p><strong>Results:</strong> <span class="voters" data-poll="poll-4">0</span> votes</p>
+                <canvas id="chart-poll-4" width="400" height="300"></canvas>
+                <div style="display: none;">
+                    <p data-correct="false">perf (Linux): <span data-value="perf">0</span></p>
+                    <p data-correct="false">Intel VTune: <span data-value="vtune">0</span></p>
+                    <p data-correct="false">Valgrind: <span data-value="valgrind">0</span></p>
+                    <p data-correct="false">Xcode Instruments: <span data-value="xcode">0</span></p>
+                    <p data-correct="false">Visual Studio Profiler: <span data-value="visualstudio">0</span></p>
+                </div>
+            </div>
+        </section>
+
+        </section>
+        <section data-slide-index="3">
+            <h1>Thank You!</h1>
+            <p>Your feedback helps us improve our workshops</p>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    
+    <!-- ResizeObserver polyfill for older browsers/mobile -->
+    <script src="https://cdn.jsdelivr.net/npm/@juggle/resize-observer@3.4.0/lib/exports/resize-observer.umd.js"></script>
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Seminar plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/seminar/plugin.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+    <!-- Poll plugin requires seminar plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/poll/plugin.js"></script>
+    
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            
+            seminar: {
+                server: window.location.protocol + '//' + window.location.hostname + ':4433',
+                venue: 'slidedeckml',
+                room: 'slidedeckml-room',
+                hash: '$2a$05$hhgakVn1DWBfgfSwMihABeYToIBEiQGJ.ONa.HWEiNGNI6mxFCy8S',
+                autoJoin: false
+            },
+            
+            plugins: [ RevealHighlight, RevealSeminar, RevealPoll ]
+        });
+
+        // Auto-render LaTeX when slides are ready
+        Reveal.on('ready', function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        });
+
+        // Synchronized fragments handler
+        let currentFragmentIndex = -1;
+
+        Reveal.on('fragmentshown', event => {
+            currentFragmentIndex++;
+            updateSyncItems();
+        });
+
+        Reveal.on('fragmenthidden', event => {
+            currentFragmentIndex--;
+            updateSyncItems();
+        });
+
+        Reveal.on('slidechanged', event => {
+            // Detect the current fragment state by checking visible fragments
+            const currentSlide = Reveal.getCurrentSlide();
+            if (currentSlide) {
+                const fragments = currentSlide.querySelectorAll('.fragment');
+                let maxVisibleIndex = -1;
+                
+                fragments.forEach(fragment => {
+                    if (fragment.classList.contains('visible')) {
+                        const fragmentIndex = parseInt(fragment.getAttribute('data-fragment-index') || '0');
+                        maxVisibleIndex = Math.max(maxVisibleIndex, fragmentIndex);
+                    }
+                });
+                
+                currentFragmentIndex = maxVisibleIndex;
+            } else {
+                currentFragmentIndex = -1;
+            }
+            updateSyncItems();
+        });
+
+        function updateSyncItems() {
+            const currentSlide = Reveal.getCurrentSlide();
+            if (!currentSlide) return;
+
+            const syncContainers = currentSlide.querySelectorAll('.sync-container');
+            syncContainers.forEach(container => {
+                const keepMode = container.getAttribute('data-keep') === 'true';
+                const items = container.querySelectorAll('.sync-item');
+                
+                items.forEach(item => {
+                    const syncIndex = parseInt(item.getAttribute('data-sync-index') || '0');
+                    
+                    if (keepMode) {
+                        // In keep mode, show all items up to and including current index
+                        if (syncIndex <= currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    } else {
+                        // Default mode: show only the current item
+                        if (syncIndex === currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Initialize on load
+        Reveal.on('ready', () => {
+            updateSyncItems();
+        });
+
+        
+        // Detect guest mode and apply CSS class early
+        const urlParams = new URLSearchParams(window.location.search);
+        const isGuest = urlParams.get('guest') === 'true';
+        if (isGuest) {
+            document.body.classList.add('guest-mode');
+        }
+
+        // Join seminar room (host or participant)
+        Reveal.on('ready', function() {
+            console.log('Current URL:', window.location.href);
+            console.log('isGuest:', isGuest);
+            console.log('RevealSeminar available:', typeof RevealSeminar !== 'undefined');
+
+            if (isGuest) {
+                console.log('Joining as GUEST/PARTICIPANT without password');
+                RevealSeminar.join_room();
+            } else {
+                console.log('Joining as HOST with password');
+                RevealSeminar.open_or_join_room('123456');
+            }
+        });
+
+        // Generate QR code once and set it for all quiz/poll
+        Reveal.on('ready', function() {
+            let url = window.location.href;
+            if (url.startsWith('file://')) {
+                const hostname = window.location.hostname || 'localhost';
+                const port = 3000;
+                const path = window.location.pathname.split('/').pop() || 'index.html';
+                url = 'http://' + hostname + ':' + port + '/' + path;
+            }
+
+            // Add ?guest=true to URL for participants (QR code)
+            const guestUrl = url.split('?')[0] + '?guest=true';
+
+            const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(guestUrl);
+            document.querySelectorAll('img.qr-code').forEach(function(img) {
+                img.src = qrUrl;
+            });
+        });
+
+        // Store chart instances
+        const chartInstances = {};
+
+        // Toggle results button handler
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('toggle-results-btn')) {
+                const pollId = e.target.dataset.poll;
+                const pollDiv = document.querySelector('.poll[data-poll="' + pollId + '"]');
+                const resultsDiv = document.querySelector('.results[data-poll="' + pollId + '"]');
+
+                if (resultsDiv.style.display === 'none') {
+                    if (pollDiv) pollDiv.style.display = 'none';
+                    resultsDiv.style.display = 'block';
+                    e.target.textContent = 'Hide Results';
+
+                    updateChart(pollId);
+
+                    // Broadcast to participants to show results
+                    broadcastPollState(pollId, true);
+                } else {
+                    if (pollDiv) pollDiv.style.display = 'flex';
+                    resultsDiv.style.display = 'none';
+                    e.target.textContent = 'Show Results';
+
+                    // Broadcast to participants to hide results
+                    broadcastPollState(pollId, false);
+                }
+            }
+        });
+
+        // Auto-show results when voting (for showResultsOnDemand: false)
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('.poll[data-auto-show-results="true"] button')) {
+                const pollDiv = e.target.closest('.poll');
+                const pollId = pollDiv.dataset.poll;
+                const resultsDiv = document.querySelector('.results[data-poll="' + pollId + '"]');
+
+                // Wait a bit for the vote to be registered
+                setTimeout(function() {
+                    pollDiv.style.display = 'none';
+                    resultsDiv.style.display = 'block';
+                    updateChart(pollId);
+
+                    // Broadcast to participants to show results
+                    broadcastPollState(pollId, true);
+                }, 500);
+            }
+        });
+
+        // Broadcast poll state to participants (host only)
+        function broadcastPollState(pollId, showResults) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isHost = urlParams.get('host') === 'true';
+
+            if (isHost && typeof RevealSeminar !== 'undefined') {
+                RevealSeminar.post({
+                    type: 'poll-state',
+                    pollId: pollId,
+                    showResults: showResults
+                });
+            }
+        }
+
+        // Listen for poll state changes (participants)
+        Reveal.on('message', function(event) {
+            if (event.content && event.content.type === 'poll-state') {
+                const pollId = event.content.pollId;
+                const showResults = event.content.showResults;
+                const pollDiv = document.querySelector('.poll[data-poll="' + pollId + '"]');
+                const resultsDiv = document.querySelector('.results[data-poll="' + pollId + '"]');
+
+                if (pollDiv && resultsDiv) {
+                    if (showResults) {
+                        pollDiv.style.display = 'none';
+                        resultsDiv.style.display = 'block';
+                        updateChart(pollId);
+                    } else {
+                        pollDiv.style.display = 'flex';
+                        resultsDiv.style.display = 'none';
+                    }
+                }
+            }
+        });
+
+        // Listen for vote updates from the poll plugin
+        Reveal.on('received', function(event) {
+            if (event.content && event.content.type === 'poll') {
+                // A vote was received, update all visible charts
+                document.querySelectorAll('.results').forEach(function(resultsDiv) {
+                    const displayStyle = window.getComputedStyle(resultsDiv).display;
+                    if (displayStyle !== 'none') {
+                        const pollId = resultsDiv.dataset.poll;
+                        setTimeout(function() {
+                            updateChart(pollId);
+                        }, 300); // Small delay to let the poll plugin update the data
+                    }
+                });
+            }
+        });
+
+        // Listen for vote updates and refresh charts (backup polling)
+        setInterval(function() {
+            // Update all visible charts with latest data
+            document.querySelectorAll('.results').forEach(function(resultsDiv) {
+                const displayStyle = window.getComputedStyle(resultsDiv).display;
+                if (displayStyle !== 'none') {
+                    const pollId = resultsDiv.dataset.poll;
+                    updateChart(pollId);
+                }
+            });
+        }, 2000); // Check every 2 seconds for updates
+
+        // Update or create chart for a poll
+        function updateChart(pollId) {
+            const resultsDiv = document.querySelector('.results[data-poll="' + pollId + '"]');
+            const visualization = resultsDiv.dataset.visualization;
+            const isQuiz = resultsDiv.dataset.isQuiz === 'true';
+            const canvas = document.querySelector('#chart-' + pollId);
+
+            // Get data from results spans
+            const valueSpans = resultsDiv.querySelectorAll('span[data-value]');
+            const labels = [];
+            const data = [];
+            const defaultColors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'];
+            const colors = [];
+
+            valueSpans.forEach(function(span, index) {
+                const parentP = span.parentElement;
+                const label = parentP.textContent.split(':')[0].trim();
+                const value = parseInt(span.textContent) || 0;
+                labels.push(label);
+                data.push(value);
+
+                // Determine color based on quiz/poll and correct/incorrect
+                if (isQuiz) {
+                    const isCorrect = parentP.dataset.correct === 'true';
+                    colors.push(isCorrect ? '#4CAF50' : '#F44336'); // Green for correct, red for incorrect
+                } else {
+                    colors.push(defaultColors[index % defaultColors.length]);
+                }
+            });
+
+            // Destroy existing chart if it exists
+            if (chartInstances[pollId]) {
+                chartInstances[pollId].destroy();
+            }
+
+            // Create new chart
+            const ctx = canvas.getContext('2d');
+            const chartType = visualization === 'pieChart' ? 'pie' : 'bar';
+
+            chartInstances[pollId] = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Votes',
+                        data: data,
+                        backgroundColor: colors,
+                        borderColor: colors.map(c => c + 'CC'),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: chartType === 'pie',
+                            position: 'bottom'
+                        }
+                    },
+                    scales: chartType === 'bar' ? {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    } : {}
+                }
+            });
+        }
+        
+    </script>
+</body>
+</html>

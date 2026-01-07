@@ -4,6 +4,8 @@ import { TemplateGenerator } from "./template";
 import { StyleParser } from "./style-parser";
 import { LineContentHandler } from "./line-content-handler";
 import { SectionGenerator } from "./section-generator";
+import { InteractiveElementDetector } from "./interactive-element-detector";
+import { IdeRuntimeGenerator } from "./ide-runtime";
 
 /**
  * Main HTML generator that orchestrates the conversion of SlideDeckML to HTML
@@ -11,15 +13,16 @@ import { SectionGenerator } from "./section-generator";
 export class HtmlGenerator {
     private templateGenerator: TemplateGenerator;
     private sectionGenerator: SectionGenerator;
+    private ideRuntime: IdeRuntimeGenerator;
 
     constructor() {
-        this.templateGenerator = new TemplateGenerator();
-
         // Initialize the dependency chain
+        this.ideRuntime = new IdeRuntimeGenerator();
         const elementGenerator = new ElementGenerator();
         const styleParser = new StyleParser();
-        const lineContentHandler = new LineContentHandler(elementGenerator, styleParser, this.templateGenerator.getIdeRuntime());
+        const lineContentHandler = new LineContentHandler(elementGenerator, styleParser, this.ideRuntime);
         this.sectionGenerator = new SectionGenerator(lineContentHandler);
+        this.templateGenerator = new TemplateGenerator(this.sectionGenerator.getPollGenerator(), this.ideRuntime);
     }
 
     /**
@@ -41,6 +44,10 @@ export class HtmlGenerator {
 
         // Detect feature usage in the presentation
         this.detectFeatureUsage(presentation);
+
+        // Check if presentation has interactive elements (quiz/poll)
+        const hasInteractive = InteractiveElementDetector.hasInteractiveElements(presentation);
+        this.templateGenerator.setHasInteractiveElements(hasInteractive);
 
         // Reset slide index counter
         this.sectionGenerator.resetSlideIndex();

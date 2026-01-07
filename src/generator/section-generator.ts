@@ -1,15 +1,18 @@
-import { Block, Slide } from "../language/generated/ast";
+import { Block, Slide, Template, isQuiz, isLivePoll } from "../language/generated/ast";
 import { LineContentHandler } from "./line-content-handler";
+import { PollGenerator } from "./poll-generator";
 
 /**
  * Handles the generation of HTML sections (slides)
  */
 export class SectionGenerator {
     private lineContentHandler: LineContentHandler;
+    private pollGenerator: PollGenerator;
     private currentSlideIndex = 0;
 
     constructor(lineContentHandler: LineContentHandler) {
         this.lineContentHandler = lineContentHandler;
+        this.pollGenerator = new PollGenerator();
     }
 
     /**
@@ -17,6 +20,13 @@ export class SectionGenerator {
      */
     public getLineContentHandler(): LineContentHandler {
         return this.lineContentHandler;
+    }
+
+    /**
+     * Get the poll generator
+     */
+    public getPollGenerator(): PollGenerator {
+        return this.pollGenerator;
     }
 
     /**
@@ -58,7 +68,16 @@ export class SectionGenerator {
     private async generateBlock(block: Block): Promise<string> {
         let html = '';
 
-        if (block.lines.length > 0) {
+        // Handle Quiz blocks
+        if (isQuiz(block)) {
+            html += this.pollGenerator.generateQuiz(block);
+        }
+        // Handle LivePoll blocks
+        else if (isLivePoll(block)) {
+            html += this.pollGenerator.generateLivePoll(block);
+        }
+        // Handle regular content blocks
+        else if (block.lines.length > 0) {
             const linePromises = block.lines.map(line => this.lineContentHandler.generateLine(line));
             html += (await Promise.all(linePromises)).join('\n');
         }

@@ -24,10 +24,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "chevrotain": "^10.4.1",
     "commander": "^8.0.0",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "langium": "~1.0.0",
+    "moment": "^2.29.4",
     "open": "^8.4.0",
     "socket.io": "^4.5.4",
     "vscode-languageclient": "^8.0.2",

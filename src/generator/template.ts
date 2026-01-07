@@ -1,21 +1,22 @@
 import { Metadata } from '../language/generated/ast';
 import { ImageConverter } from './image-converter';
 import { IdeRuntimeGenerator } from './ide-runtime';
+import { PollGenerator } from './poll-generator';
 import * as path from 'path';
 
 export class TemplateGenerator {
-    private ideRuntime = new IdeRuntimeGenerator()
+    private ideRuntime: IdeRuntimeGenerator;
     private title: string = 'SlideDeckML Presentation'
     private author: string = 'Unknown Author'
     private css: string = ''
     private logo: string = ''
     private theme: string = 'white'
     private sourceFilePath?: string;
-    
+
     // Feature usage tracking
     private useSyncFragments: boolean = false;
     private useLatex: boolean = false;
-    
+
     // Chalkboard configuration
     private chalkboardEnabled: boolean = false;
     private chalkboardTheme: string = 'chalkboard';
@@ -26,6 +27,14 @@ export class TemplateGenerator {
     private chalkboardReadonly: boolean = false;
     private chalkboardButtons: boolean = true;
     private chalkboardTransition: number = 800;
+
+    private hasInteractiveElements: boolean = false
+    private pollGenerator: PollGenerator
+
+    constructor(pollGenerator: PollGenerator, ideRuntime: IdeRuntimeGenerator) {
+        this.pollGenerator = pollGenerator
+        this.ideRuntime = ideRuntime
+    }
 
     /**
      * Set the source file path for resolving relative paths
@@ -103,7 +112,11 @@ export class TemplateGenerator {
             this.chalkboardTransition = parseFloat(metadata.chalkboardTransition.replace(/^"|"$/g, ''));
         }
     }
-    
+
+    public setHasInteractiveElements(hasInteractiveElements: boolean): void {
+        this.hasInteractiveElements = hasInteractiveElements
+    }
+
     /**
      * Get chalkboard plugin CDN links
      * @returns HTML string with CDN links for chalkboard dependencies
@@ -124,7 +137,7 @@ export class TemplateGenerator {
     <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/plugin.js"></script>`
         };
     }
-    
+
     /**
      * Generate chalkboard configuration object
      * @returns Configuration object for RevealChalkboard
@@ -133,7 +146,7 @@ export class TemplateGenerator {
         if (!this.chalkboardEnabled) {
             return '';
         }
-        
+
         const config: any = {
             theme: this.chalkboardTheme,
             boardmarkerWidth: this.chalkboardBoardmarkerWidth,
@@ -143,14 +156,15 @@ export class TemplateGenerator {
             buttons: this.chalkboardButtons,
             transition: this.chalkboardTransition
         };
-        
+
         if (this.chalkboardSrc) {
             config.src = this.chalkboardSrc;
         }
-        
+
         return JSON.stringify(config, null, 12);
     }
-    
+
+
     public getHTMLTemplate(slidesContent: string): string {
         const chalkboardCDN = this.chalkboardEnabled ? this.getChalkboardCDNLinks() : { css: '', js: '' };
         
@@ -170,7 +184,12 @@ export class TemplateGenerator {
     ${this.useLatex ? '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">' : ''}
     ${this.chalkboardEnabled ? chalkboardCDN.css : ''}
     ${this.ideRuntime.generateCdnLinks()}
+    ${this.hasInteractiveElements ? `
+    <!-- Poll plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/poll/style.css">
+    ` : ''}
     <style>
+        ${this.hasInteractiveElements ? this.pollGenerator.getPollCSS() : ''}
 
         ${this.css}
 
@@ -257,6 +276,17 @@ ${slidesContent}
     ${this.chalkboardEnabled ? chalkboardCDN.js : ''}
     ${this.ideRuntime.generateScriptTags()}
     <script>${this.ideRuntime.generateRuntimeScript()}</script>
+    ${this.hasInteractiveElements ? `
+    <!-- ResizeObserver polyfill for older browsers/mobile -->
+    <script src="https://cdn.jsdelivr.net/npm/@juggle/resize-observer@3.4.0/lib/exports/resize-observer.umd.js"></script>
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Seminar plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/seminar/plugin.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+    <!-- Poll plugin requires seminar plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/poll/plugin.js"></script>
+    ` : ''}
     <script>
         Reveal.initialize({
             hash: true,
@@ -264,7 +294,16 @@ ${slidesContent}
             progress: true,
             center: true,
             backgroundTransition: 'fade',
-            plugins: [ RevealHighlight${this.chalkboardEnabled ? ', RevealChalkboard, RevealCustomControls' : ''} ]${this.chalkboardEnabled ? ',\n            chalkboard: ' + this.getChalkboardConfig() : ''}
+            ${this.hasInteractiveElements ? `
+            seminar: {
+                server: window.location.protocol + '//' + window.location.hostname + ':4433',
+                venue: 'slidedeckml',
+                room: 'slidedeckml-room',
+                hash: '$2a$05$hhgakVn1DWBfgfSwMihABeYToIBEiQGJ.ONa.HWEiNGNI6mxFCy8S',
+                autoJoin: false
+            },
+            ` : ''}
+            plugins: [ RevealHighlight${this.chalkboardEnabled ? ', RevealChalkboard, RevealCustomControls' : ''}${this.hasInteractiveElements ? ', RevealSeminar, RevealPoll' : ''} ]${this.chalkboardEnabled ? ',\n            chalkboard: ' + this.getChalkboardConfig() : ''}
         });${this.useLatex ? `
 
         // Auto-render LaTeX when slides are ready
@@ -347,6 +386,8 @@ ${slidesContent}
         Reveal.on('ready', () => {
             updateSyncItems();
         });` : ''}
+
+        ${this.hasInteractiveElements ? this.pollGenerator.getPollJS() : ''}
     </script>
 </body>
 </html>`
