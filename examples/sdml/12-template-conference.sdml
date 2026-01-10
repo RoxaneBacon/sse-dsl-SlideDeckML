@@ -1,0 +1,292 @@
+{
+    author: "Dr. Emily Chen, Dr. Robert Kumar"
+    title: "Deep Learning for Medical Image Analysis"
+    theme: "white"
+    css: ".reveal h1 {
+                color: #c0392b;
+                font-weight: 700;
+                text-transform: none;
+                border-bottom: 4px solid #c0392b;
+                padding-bottom: 20px;
+            }
+            .reveal h2 {
+                color: #2c3e50;
+                font-weight: 600;
+                margin-top: 0.8em;
+            }
+            .reveal h3 {
+                color: #7f8c8d;
+                font-weight: 500;
+                font-style: italic;
+            }
+            .header-banner {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 70px;
+                background: linear-gradient(to right, #c0392b 0%, #8e44ad 100%);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                z-index: 1000;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            }
+            .header-author {
+                color: #ffffff;
+                font-size: 16px;
+                font-weight: 600;
+                margin-left: 30px;
+            }
+            .header-logo {
+                height: 50px;
+                width: auto;
+                margin-right: 30px;
+            }
+            .reveal {
+                margin-top: 70px;
+            }
+            .reveal .slides section {
+                text-align: left;
+            }
+            .reveal blockquote {
+                background: #f8f9fa;
+                border-left: 5px solid #c0392b;
+                padding: 20px;
+                font-style: italic;
+                color: #2c3e50;
+            }
+            .reveal .footer-note {
+                position: fixed;
+                bottom: 10px;
+                right: 20px;
+                font-size: 14px;
+                color: #7f8c8d;
+            }"
+}
+---
+::: {text-align: 'center'; padding: '40px'}
+# Deep Learning for Medical Image Analysis
+
+## Automated Detection of Lung Abnormalities
+
+### Dr. Emily Chen, Dr. Robert Kumar
+
+Medical AI Research Lab, Stanford University
+
+International Conference on Medical Imaging - January 2026
+:::
+
+===
+# Outline
+
+1. **Motivation** - Clinical need for automated diagnosis
+2. **Background** - Previous work in medical imaging AI
+3. **Methodology** - Our deep learning approach
+4. **Results** - Performance metrics and validation
+5. **Discussion** - Clinical implications
+6. **Conclusion** - Impact and future directions
+
+===
+# Motivation
+
+## Research Problem
+
+Early detection of lung abnormalities is critical but time-consuming for radiologists, with high inter-observer variability
+
+::: {background: '#ecf0f1'; padding: '20px'; border-radius: '10px'}
+### Research Questions
+1. Can deep learning match radiologist accuracy?
+2. What architectures work best for chest X-rays?
+3. How to ensure clinical interpretability?
+:::
+
+===
+# Background
+
+## Related Work
+
+### Previous Research
+
+- **CheXNet (2017)**: Pneumonia detection from chest X-rays
+- **RadNet (2019)**: Multi-disease classification
+- **MedAI (2022)**: Ensemble methods for medical imaging
+
+### Research Gap
+
+> Existing models lack robust validation on diverse patient populations and do not provide clinically actionable explanations
+
+===
+# Methodology
+
+## Our Approach
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'}
+
+### Data Collection
+- Dataset: 150,000 chest X-rays
+- 8 major hospitals
+- Sample size: N=150,000
+- IRB approved
+
+### Analysis Methods
+- ResNet-50 architecture
+- Transfer learning
+- Data augmentation
+- 5-fold cross-validation
+
+:::
+
+===
+# Methodology
+
+## Network Architecture
+
+```python [highlight:block]
+class MedicalImageClassifier(nn.Module):
+    def __init__(self, num_classes=14):
+        super().__init__()
+        self.backbone = resnet50(pretrained=True)
+        self.classifier = nn.Linear(2048, num_classes)
+        self.attention = AttentionModule()
+    
+    def forward(self, x):
+        features = self.backbone(x)
+        attention_map = self.attention(features)
+        output = self.classifier(features * attention_map)
+        return output, attention_map
+```
+
+===
+# Results
+
+## Key Findings
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'}
+
+### Model Performance
+- Accuracy: 94.2%
+- AUC-ROC: 0.968
+- Sensitivity: 92.8%
+- Specificity: 95.1%
+
+### Comparison
+- vs. Radiologist 1: +2.3%
+- vs. Radiologist 2: +1.8%
+- Ensemble: 96.1% accuracy
+- Processing: <2s per image
+
+:::
+
+===
+# Results
+
+## Performance Visualization
+
+![ROC Curves](https://placehold.co/800x500/c0392b/white?text=ROC+Curves+By+Disease+Category)
+
+*Figure 1: Receiver Operating Characteristic curves showing model performance across 14 disease categories*
+
+===
+# Results
+
+## Attention Heatmaps
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'}
+
+![Original X-ray](https://placehold.co/400x400/7f8c8d/white?text=Original+X-ray)
+
+![Attention Map](https://placehold.co/400x400/c0392b/white?text=Attention+Heatmap)
+
+:::
+
+*Figure 2: Original chest X-ray (left) and corresponding attention heatmap (right) highlighting regions the model focuses on*
+
+===
+# Discussion
+
+## Interpretation
+
+### What Our Results Mean
+
+- **Clinical Impact**: Model can assist radiologists, reducing diagnostic time by 40%
+- **Generalization**: Strong performance across diverse patient demographics
+- **Explainability**: Attention maps align with radiologist annotations (κ=0.87)
+
+### Limitations
+
+- Limited to chest X-rays (not CT scans)
+- Requires validation on rare diseases
+- Need prospective clinical trial
+
+===
+# Discussion
+
+## Clinical Integration
+
+```python [highlight:line-by-line]
+def clinical_workflow(xray_image):
+    # AI screening
+    prediction, confidence = model.predict(xray_image)
+    
+    # Risk stratification
+    if confidence > 0.95 and prediction == 'normal':
+        return "Low priority review"
+    elif confidence > 0.90 and prediction == 'abnormal':
+        return "Urgent radiologist review"
+    else:
+        return "Standard workflow"
+```
+
+===
+# Conclusion
+
+## Summary
+
+::: {background: '#fff5f5'; padding: '25px'; border-radius: '10px'; border-left: '5px solid #c0392b'}
+### Key Contributions
+
+1. **Novel Architecture** - Attention-based ResNet achieving 94.2% accuracy
+2. **Large-scale Validation** - 150K images from 8 hospitals
+3. **Clinical Interpretability** - Explainable predictions aligned with clinical reasoning
+4. **Real-world Deployment** - Currently piloting in 2 hospitals
+:::
+
+===
+# Future Work
+
+## Next Steps
+
+- **Multi-modal Analysis**: Integrate patient history and lab results
+- **Rare Disease Detection**: Expand dataset for uncommon conditions
+- **Prospective Study**: 12-month clinical trial starting Q2 2026
+- **Mobile Deployment**: Point-of-care diagnostic tool
+
+### Broader Impact
+
+This research can accelerate diagnosis in resource-limited settings and reduce radiologist workload
+
+===
+::: {text-align: 'center'; padding: '50px'}
+# Thank You
+
+## Questions?
+
+emily.chen@stanford.edu
+
+Medical AI Lab: https://medai.stanford.edu
+
+Paper DOI: 10.1000/medimg.2026.001
+:::
+
+===
+# References
+
+## Selected Bibliography
+
+1. Chen, E., Kumar, R. et al. (2026). "Deep Learning for Automated Lung Abnormality Detection". *Journal of Medical Imaging*, 15(2), 245-260.
+2. Rajpurkar, P. et al. (2017). "CheXNet: Radiologist-Level Pneumonia Detection". *Nature Medicine*.
+3. Zhang, L. et al. (2022). "Ensemble Methods in Medical Image Classification". *IEEE Medical Imaging*.
+4. Johnson, A. et al. (2023). "Clinical Validation of AI Diagnostic Tools". *Lancet Digital Health*.
+
+*Full bibliography available in the paper*

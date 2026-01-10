@@ -1,0 +1,143 @@
+{
+    author: "SlideDeckML Team"
+    title: "Styling Test"
+}
+===
+# Basic Text Styling
+
+::: {color: '#e74c3c'; font-size: '28px'; font-weight: 'bold'}
+Red, large, bold text
+:::
+
+::: {background-color: '#3498db'; color: 'white'; padding: '20px'; border-radius: '10px'}
+Box with blue background and white text
+:::
+
+===
+# Border and Padding
+
+::: {border: '3px solid #2ecc71'; padding: '15px'; border-radius: '8px'}
+Content with green border
+:::
+
+::: {border-left: '6px solid #f39c12'; padding-left: '20px'; background: '#ecf0f1'}
+Left border accent with gray background
+:::
+
+===
+# Text Alignment
+
+::: {text-align: 'center'}
+## Centered Heading
+
+This paragraph is centered
+:::
+
+::: {text-align: 'right'; color: '#9b59b6'}
+Right-aligned purple text
+:::
+
+===
+# Styled Lists
+
+::: {color: '#e74c3c'; font-size: '22px'}
+- Styled unordered list
+- With custom color
+- And larger font
+:::
+
+::: {background: '#f8f9fa'; padding: '15px'; border-radius: '5px'}
+1. Styled ordered list
+2. With background
+3. And padding
+:::
+
+===
+# Styled Quotes
+
+::: {border-left: '4px solid #3498db'; padding-left: '20px'; font-style: 'italic'; color: '#7f8c8d'}
+> Important quote with custom styling
+:::
+
+===
+# Styled Images
+
+Normal image:
+![Regular](https://placehold.co/400x300)
+
+::: {width: '50%'; border: '5px solid #e74c3c'; border-radius: '15px'; box-shadow: '0 4px 8px rgba(0,0,0,0.2)'}
+![Styled](https://placehold.co/600x400/3498db/white?text=Styled+Image)
+:::
+
+===
+# Styled Code Blocks
+
+::: {border: '2px solid #2ecc71'; border-radius: '8px'; padding: '10px'}
+```javascript
+function styledCode() {
+    return "Code in styled container";
+}
+```
+:::
+
+===
+# Multiple Elements in One Style
+
+::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; color: 'white'; padding: '30px'; border-radius: '15px'}
+## Beautiful Header
+
+This paragraph is also styled
+
+- List item one
+- List item two
+
+![Styled](https://placehold.co/300x200/ffffff/667eea?text=In+Gradient)
+:::
+
+===
+# Grid Layout
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'}
+### Left Column
+Content on the left
+
+### Right Column
+Content on the right
+:::
+
+===
+# Three Column Grid
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr 1fr'; gap: '1.5em'}
+### Column 1
+First
+
+### Column 2
+Second
+
+### Column 3
+Third
+:::
+
+===
+# Flexbox Layout
+
+::: {display: 'flex'; justify-content: 'space-around'; align-items: 'center'}
+![Image 1](https://placehold.co/200x150/3498db/white?text=1)
+
+![Image 2](https://placehold.co/200x150/e74c3c/white?text=2)
+
+![Image 3](https://placehold.co/200x150/2ecc71/white?text=3)
+:::
+
+===
+# Complex Styling
+
+::: {background: '#2c3e50'; color: '#ecf0f1'; padding: '25px'; border-radius: '12px'; box-shadow: '0 8px 16px rgba(0,0,0,0.3)'}
+### Dark Theme Box
+
+This is a paragraph in a dark themed box with custom styling and shadow effect
+
+- Item one in dark box
+- Item two in dark box
+:::

@@ -1,76 +1,18 @@
-import { Metadata } from '../language/generated/ast';
-import { ImageConverter } from './image-converter';
-import * as path from 'path';
-
-export class TemplateGenerator {
-    private title: string = 'SlideDeckML Presentation'
-    private author: string = 'Unknown Author'
-    private css: string = ''
-    private logo: string = ''
-    private theme: string = 'white'
-    private sourceFilePath?: string;
-
-    /**
-     * Set the source file path for resolving relative paths
-     * @param filePath Absolute path to the .sdml file
-     */
-    public setSourceFilePath(filePath: string): void {
-        this.sourceFilePath = filePath;
-    }
-
-    public setMetadata(metadata: Metadata): void {
-        // Access author and title directly from the metadata object
-        this.author = metadata.author.replace(/^"|"$/g, '')
-        this.title = metadata.title.replace(/^"|"$/g, '')
-        if (metadata.css) {
-            this.css = metadata.css.replace(/^"|"$/g, '')
-        }
-        if (metadata.logo) {
-            this.logo = metadata.logo.replace(/^"|"$/g, '')
-        }
-        if (metadata.theme) {
-            this.theme = metadata.theme.replace(/^"|"$/g, '')
-        }
-    }
-    public getHTMLTemplate(slidesContent: string): string {
-        return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="${this.author}">
-    <meta name="title" content="${this.title}">
-    <title>${this.title}</title>
+    <meta name="author" content="SlideDeckML Team">
+    <meta name="title" content="LaTeX Mathematical Equations Test">
+    <title>LaTeX Mathematical Equations Test</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/${
-        this.theme
-    }.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <style> 
         
-        ${this.css}
-
-        /* Default Reveal.js overrides */
-        .reveal {
-            font-size: 32px; /* Reduced from default 40px */
-        }
         
-        .reveal .slides {
-            text-align: left; /* Remove default centering */
-        }
-        
-        .reveal h1 {
-            font-size: 2em; /* Reduced from default 2.5em */
-        }
-        
-        .reveal h2 {
-            font-size: 1.3em; /* Reduced from default 1.8em */
-        }
-        
-        .reveal h3 {
-            font-size: 1em; /* Reduced from default 1.5em */
-        }
    
         /* Synchronized fragments styling */
         .sync-container {
@@ -106,24 +48,88 @@ export class TemplateGenerator {
     </style>
 </head>
 <body>
-    ${
-        this.css
-            ? `<header class="header-banner">
-        <div class="header-author">${this.author}</div>
-        ${
-            this.logo
-                ? `<img src="${ImageConverter.convertToBase64Sync(
-                    this.logo, 
-                    this.sourceFilePath ? path.dirname(this.sourceFilePath) : undefined
-                )}" alt="Logo" class="header-logo">`
-                : ''
-        }
-    </header>`
-            : ''
-    }
+    
     <div class="reveal">
         <div class="slides">
-${slidesContent}
+        <section data-slide-index="0">
+            <h1>LaTeX Inline Math</h1>
+            <p>Inline equations use dollar signs: $E = mc^2$</p>
+            <p>The quadratic formula $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$ is fundamental.</p>
+        </section>
+        <section data-slide-index="0">
+            <h1>LaTeX Display Math - Basic</h1>
+            <div class="latex-block">
+                $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>LaTeX - Integrals</h1>
+            <div class="latex-block">
+                $$\int_{a}^{b} f(x) \, dx = F(b) - F(a)$$
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>LaTeX - Limits</h1>
+            <div class="latex-block">
+                $$\lim_{x \to \infty} \frac{1}{x} = 0$$
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>LaTeX - Summation</h1>
+            <div class="latex-block">
+                $$\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$$
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>LaTeX - Product</h1>
+            <div class="latex-block">
+                $$\prod_{i=1}^{n} i = n!$$
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>LaTeX - Matrices</h1>
+            <div class="latex-block">
+                $$\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix}
+=
+\begin{pmatrix}
+ax + by \\
+cx + dy
+\end{pmatrix}$$
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>LaTeX - Greek Letters</h1>
+            <div class="latex-block">
+                $$\alpha, \beta, \gamma, \delta, \epsilon, \theta, \lambda, \mu, \pi, \sigma, \omega$$
+            </div>
+            <div class="latex-block">
+                $$\Delta, \Gamma, \Lambda, \Sigma, \Omega$$
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>LaTeX - Complex Equations</h1>
+            <p>Euler&#39;s identity:</p>
+            <div class="latex-block">
+                $$e^{i\pi} + 1 = 0$$
+            </div>
+            <p>Schrödinger equation:</p>
+            <div class="latex-block">
+                $$i\hbar\frac{\partial}{\partial t}\Psi = \hat{H}\Psi$$
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>LaTeX - Fractions and Roots</h1>
+            <div class="latex-block">
+                $$\frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+            </div>
+        </section>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
@@ -135,7 +141,7 @@ ${slidesContent}
             hash: true,
             transition: 'slide',
             progress: true,
-            center: true,
+            center: false,
             backgroundTransition: 'fade',
             plugins: [ RevealHighlight ]
         });
@@ -222,6 +228,4 @@ ${slidesContent}
         });
     </script>
 </body>
-</html>`
-    }
-}
+</html>

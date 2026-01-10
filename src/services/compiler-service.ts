@@ -3,6 +3,7 @@ import { HtmlGenerator } from '../generator/html-generator';
 import { createSlideDeckMlServices } from "../language/slide-deck-module";
 import { NodeFileSystem } from "langium/node";
 import { URI } from "vscode-uri";
+import * as path from 'path';
 
 export interface CompilationResult {
     html: string;
@@ -26,9 +27,10 @@ export class CompilerService {
      * Compile SDML content to HTML
      * @param content SDML content
      * @param cursorLine Optional cursor line to determine which slide to display
+     * @param sourceFilePath Optional source file path for resolving relative paths (e.g., logos)
      * @returns Compilation result with HTML and metadata
      */
-    async compile(content: string, cursorLine?: number): Promise<CompilationResult> {
+    async compile(content: string, cursorLine?: number, sourceFilePath?: string): Promise<CompilationResult> {
         try {
             // Parse the document
             const document = this.services.shared.workspace.LangiumDocumentFactory.fromString(
@@ -69,7 +71,10 @@ export class CompilerService {
             const presentation = document.parseResult.value as Presentation;
 
             // Generate HTML
-            const html = this.htmlGenerator.generateHTML(presentation);
+            const html = await this.htmlGenerator.generateHTML(
+                presentation,
+                sourceFilePath ? path.resolve(sourceFilePath) : undefined
+            );
 
             // Calculate slide count (template is not counted as a slide)
             const slideCount = presentation.slides.length;

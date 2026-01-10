@@ -1,76 +1,18 @@
-import { Metadata } from '../language/generated/ast';
-import { ImageConverter } from './image-converter';
-import * as path from 'path';
-
-export class TemplateGenerator {
-    private title: string = 'SlideDeckML Presentation'
-    private author: string = 'Unknown Author'
-    private css: string = ''
-    private logo: string = ''
-    private theme: string = 'white'
-    private sourceFilePath?: string;
-
-    /**
-     * Set the source file path for resolving relative paths
-     * @param filePath Absolute path to the .sdml file
-     */
-    public setSourceFilePath(filePath: string): void {
-        this.sourceFilePath = filePath;
-    }
-
-    public setMetadata(metadata: Metadata): void {
-        // Access author and title directly from the metadata object
-        this.author = metadata.author.replace(/^"|"$/g, '')
-        this.title = metadata.title.replace(/^"|"$/g, '')
-        if (metadata.css) {
-            this.css = metadata.css.replace(/^"|"$/g, '')
-        }
-        if (metadata.logo) {
-            this.logo = metadata.logo.replace(/^"|"$/g, '')
-        }
-        if (metadata.theme) {
-            this.theme = metadata.theme.replace(/^"|"$/g, '')
-        }
-    }
-    public getHTMLTemplate(slidesContent: string): string {
-        return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="${this.author}">
-    <meta name="title" content="${this.title}">
-    <title>${this.title}</title>
+    <meta name="author" content="SlideDeckML Team">
+    <meta name="title" content="Simple Markdown Test">
+    <title>Simple Markdown Test</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/${
-        this.theme
-    }.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <style> 
         
-        ${this.css}
-
-        /* Default Reveal.js overrides */
-        .reveal {
-            font-size: 32px; /* Reduced from default 40px */
-        }
         
-        .reveal .slides {
-            text-align: left; /* Remove default centering */
-        }
-        
-        .reveal h1 {
-            font-size: 2em; /* Reduced from default 2.5em */
-        }
-        
-        .reveal h2 {
-            font-size: 1.3em; /* Reduced from default 1.8em */
-        }
-        
-        .reveal h3 {
-            font-size: 1em; /* Reduced from default 1.5em */
-        }
    
         /* Synchronized fragments styling */
         .sync-container {
@@ -106,24 +48,58 @@ export class TemplateGenerator {
     </style>
 </head>
 <body>
-    ${
-        this.css
-            ? `<header class="header-banner">
-        <div class="header-author">${this.author}</div>
-        ${
-            this.logo
-                ? `<img src="${ImageConverter.convertToBase64Sync(
-                    this.logo, 
-                    this.sourceFilePath ? path.dirname(this.sourceFilePath) : undefined
-                )}" alt="Logo" class="header-logo">`
-                : ''
-        }
-    </header>`
-            : ''
-    }
+    
     <div class="reveal">
         <div class="slides">
-${slidesContent}
+        <section data-slide-index="0">
+            <h1>Main Title (H1)</h1>
+            <h2>Subtitle (H2)</h2>
+            <h3>Sub-subtitle (H3)</h3>
+        </section>
+        <section data-slide-index="0">
+            <h1>Paragraph Test</h1>
+            <p>This is a simple paragraph with no formatting.</p>
+            <p>This is another paragraph with <strong>bold text</strong>, <em>italic text</em>/<em>underlined text</em>, and <u>underlined</u></p>
+            <p>You can also combine them: <strong><em>bold italic</em></strong> and <strong><u>bold underline</u></strong>.</p>
+        </section>
+        <section data-slide-index="0">
+            <h1>Unordered Lists Test</h1>
+            <p>Basic unordered list:</p>
+            <ul>
+                <li>First item</li>
+                <li>Second item</li>
+                <li>Third item</li>
+            </ul>
+            <p>With formatting:</p>
+            <ul>
+                <li>Item with <strong>bold</strong></li>
+                <li>Item with <em>italic</em> or <em>italic</em></li>
+                <li>Item with <u>underline</u></li>
+                <li>Item with <strong><em>multiple formatting</em></strong></li>
+            </ul>
+        </section>
+        <section data-slide-index="0">
+            <h1>Ordered Lists Test</h1>
+            <p>Basic ordered list:</p>
+            <ol>
+                <li>First step</li>
+                <li>Second step</li>
+                <li>Third step</li>
+            </ol>
+            <p>With formatting:</p>
+            <ol>
+                <li>Step with <strong>bold text</strong></li>
+                <li>Step with <em>italic text</em> or <em>italic text</em></li>
+                <li>Step with <u>underlined text</u></li>
+                <li>Step with <u><strong><em>combined formatting</em></strong></u></li>
+            </ol>
+        </section>
+        <section data-slide-index="0">
+            <h1>Quote Test</h1>
+            <blockquote>This is a simple quote without formatting</blockquote>
+            <blockquote>This is a quote with <strong>bold text</strong> and <em>italic text</em> or <em>italic text</em></blockquote>
+            <blockquote>Another quote with <u>underlined text</u> and <strong><u>bold italic</u></strong></blockquote>
+        </section>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
@@ -135,7 +111,7 @@ ${slidesContent}
             hash: true,
             transition: 'slide',
             progress: true,
-            center: true,
+            center: false,
             backgroundTransition: 'fade',
             plugins: [ RevealHighlight ]
         });
@@ -222,6 +198,4 @@ ${slidesContent}
         });
     </script>
 </body>
-</html>`
-    }
-}
+</html>

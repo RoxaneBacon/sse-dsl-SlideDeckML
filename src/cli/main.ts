@@ -121,7 +121,7 @@ async function compile(inputFile: string, outputFile: string): Promise<void> {
 
     // Generate HTML
     const htmlGenerator = new HtmlGenerator();
-    const html = htmlGenerator.generateHTML(presentation);
+    const html = await htmlGenerator.generateHTML(presentation, path.resolve(inputFile));
 
     // Write output file
     fs.writeFileSync(outputFile, html, 'utf-8');

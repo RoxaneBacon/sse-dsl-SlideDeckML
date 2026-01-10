@@ -28,14 +28,21 @@ export class LineContentHandler {
     }
 
     /**
+     * Get the element generator
+     */
+    public getElementGenerator(): ElementGenerator {
+        return this.elementGenerator;
+    }
+
+    /**
      * Process a single line and generate appropriate HTML
      * @param line The line content to process
      * @returns Generated HTML string
      */
-    public generateLine(line: LineContent): string {
+    public async generateLine(line: LineContent): Promise<string> {
         // Handle styled elements first
         if (isStyledElement(line)) {
-            return this.handleStyledElement(line);
+            return await this.handleStyledElement(line);
         }
         
         // Handle regular unstyled elements
@@ -52,14 +59,14 @@ export class LineContentHandler {
             return this.elementGenerator.generateQuote(line);
         }
         if (isMedia(line)) {
-            return this.elementGenerator.generateMedia(line);
+            return await this.elementGenerator.generateMedia(line);
         }
         if (isCodeBlock(line)) {
             this.lastCodeBlock = line;
             return this.elementGenerator.generateCodeBlock(line);
         }
         if (isSyncFragments(line)) {
-            return this.elementGenerator.generateSyncFragments(line, this.lastCodeBlock);
+            return await this.elementGenerator.generateSyncFragments(line, this.lastCodeBlock);
         }
         if (isParagraph(line)) {
             return this.elementGenerator.generateParagraph(line);
@@ -72,7 +79,7 @@ export class LineContentHandler {
      * @param line The styled element
      * @returns Generated HTML string
      */
-    private handleStyledElement(line: any): string {
+    private async handleStyledElement(line: any): Promise<string> {
         const style = this.styleParser.parseStyle(line.style);
         const elements = line.elements || [];
         
@@ -88,12 +95,12 @@ export class LineContentHandler {
             } else if (isQuote(element)) {
                 containerHtml += this.elementGenerator.generateQuote(element, '') + '\n';
             } else if (isMedia(element)) {
-                containerHtml += this.elementGenerator.generateMedia(element, '') + '\n';
+                containerHtml += await this.elementGenerator.generateMedia(element, '') + '\n';
             } else if (isCodeBlock(element)) {
                 this.lastCodeBlock = element;
                 containerHtml += this.elementGenerator.generateCodeBlock(element, '') + '\n';
             } else if (isSyncFragments(element)) {
-                containerHtml += this.elementGenerator.generateSyncFragments(element, this.lastCodeBlock) + '\n';
+                containerHtml += await this.elementGenerator.generateSyncFragments(element, this.lastCodeBlock) + '\n';
             } else if (isParagraph(element)) {
                 containerHtml += this.elementGenerator.generateParagraph(element, '') + '\n';
             }

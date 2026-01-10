@@ -1,0 +1,36 @@
+{
+    author: "SlideDeckML Team"
+    title: "Code Blocks Demo"
+    css:".reveal h1 {
+                color: blue;
+            }
+            .header-banner {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                background-color: rgba(112, 41, 0, 1);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                z-index: 1000;
+                box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            }
+            .header-logo {
+                height: 40px;
+                width: auto;
+                margin-right: 20px;
+            }
+            .header-author {
+                color: #ffffffff;
+                font-size: 18px;
+                font-weight: 500;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                margin-left: 20px;
+            }
+            .reveal {
+                margin-bottom: 60px;
+            }
+            "
+}

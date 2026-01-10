@@ -1,0 +1,60 @@
+{
+    author: "SlideDeckML Team"
+    title: "Simple Markdown Test"
+}
+===
+# Main Title (H1)
+
+## Subtitle (H2)
+
+### Sub-subtitle (H3)
+
+===
+# Paragraph Test
+
+This is a simple paragraph with no formatting.
+
+This is another paragraph with **bold text**, *italic text*/_underlined text_, and __underlined__
+
+You can also combine them: **_bold italic_** and **__bold underline__**.
+
+===
+# Unordered Lists Test
+
+Basic unordered list:
+
+- First item
+- Second item
+- Third item
+
+With formatting:
+
+- Item with **bold**
+- Item with *italic* or _italic_
+- Item with __underline__
+- Item with **_multiple formatting_**
+
+===
+# Ordered Lists Test
+
+Basic ordered list:
+
+1. First step
+2. Second step
+3. Third step
+
+With formatting:
+
+1. Step with **bold text**
+2. Step with _italic text_ or *italic text*
+3. Step with __underlined text__
+4. Step with __**_combined formatting_**__
+
+===
+# Quote Test
+
+> This is a simple quote without formatting
+
+> This is a quote with **bold text** and *italic text* or _italic text_
+
+> Another quote with __underlined text__ and **__bold italic__**

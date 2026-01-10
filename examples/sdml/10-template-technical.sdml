@@ -1,0 +1,271 @@
+{
+    author: "Alex Rivera"
+    title: "Building Scalable Microservices"
+    theme: "black"
+    css: ".reveal h1 {
+                color: #61dafb;
+                font-weight: 700;
+                font-family: 'Courier New', monospace;
+            }
+            .reveal h2 {
+                color: #98c379;
+                font-weight: 600;
+                font-family: 'Courier New', monospace;
+            }
+            .reveal h3 {
+                color: #c678dd;
+                font-weight: 500;
+            }
+            .header-banner {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 45px;
+                background-color: #1e1e1e;
+                border-bottom: 2px solid #61dafb;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                z-index: 1000;
+            }
+            .header-author {
+                color: #61dafb;
+                font-size: 14px;
+                font-weight: 500;
+                margin-left: 20px;
+                font-family: 'Courier New', monospace;
+            }
+            .header-logo {
+                height: 30px;
+                width: auto;
+                margin-right: 20px;
+            }
+            .reveal {
+                margin-top: 45px;
+            }
+            .reveal code {
+                background: #282c34;
+                color: #61dafb;
+                padding: 3px 8px;
+                border-radius: 4px;
+            }
+            .reveal pre {
+                background: #282c34;
+                border: 1px solid #61dafb;
+                border-radius: 8px;
+            }
+            .reveal strong {
+                color: #e06c75;
+            }"
+}
+---
+::: {text-align: 'center'}
+# Building Scalable Microservices
+
+## Architecture Patterns & Best Practices
+
+Alex Rivera
+
+Senior Software Architect
+
+TechConf 2025
+:::
+
+===
+# Overview
+
+## What We'll Cover
+
+1. Problem Statement
+2. Microservices Architecture
+3. Implementation Details
+4. Code Examples
+5. Performance & Scaling
+6. Best Practices
+
+===
+# Problem Statement
+
+## The Challenge
+
+Moving from monolithic architecture to distributed microservices while maintaining performance and reliability
+
+::: {background: '#282c34'; padding: '20px'; border-radius: '10px'; border-left: '4px solid #e06c75'}
+### Key Issues
+- Tight coupling in monolithic system
+- Difficulty scaling individual components
+- Long deployment cycles
+- Single point of failure
+
+:::
+
+===
+# Architecture
+
+## System Design
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'}
+
+### Core Services
+- User Service
+- Order Service
+- Payment Service
+- Notification Service
+
+### Tech Stack
+- Node.js / Express
+- PostgreSQL / Redis
+- Docker / Kubernetes
+- RabbitMQ / Kafka
+
+:::
+
+===
+# Service Communication
+
+## API Gateway Pattern
+
+```javascript [highlight:line-by-line]
+class APIGateway {
+    constructor(services) {
+        this.services = services;
+        this.loadBalancer = new LoadBalancer();
+    }
+    
+    async route(request) {
+        const service = this.services[request.path];
+        const instance = this.loadBalancer.getNext(service);
+        return await instance.handle(request);
+    }
+}
+```
+
+===
+# Service Implementation
+
+## Microservice Structure
+
+```typescript [highlight:block]
+interface Service {
+    name: string;
+    port: number;
+    health: () => Promise<boolean>;
+}
+
+class OrderService implements Service {
+    name = 'order-service';
+    port = 3001;
+    
+    async health() {
+        return this.database.isConnected();
+    }
+    
+    async createOrder(data: OrderData) {
+        const order = await this.repository.create(data);
+        await this.eventBus.publish('order.created', order);
+        return order;
+    }
+}
+```
+
+===
+# Event-Driven Architecture
+
+## Asynchronous Communication
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'}
+
+```javascript [highlight:line-by-line]
+// Publisher
+eventBus.publish('order.created', {
+    orderId: '12345',
+    userId: 'user-001',
+    amount: 99.99
+});
+```
+
+```javascript [highlight:line-by-line]
+// Subscriber
+eventBus.subscribe('order.created', 
+    async (event) => {
+        await sendConfirmationEmail(event);
+        await updateInventory(event);
+    }
+);
+```
+
+:::
+
+===
+# Scaling Strategy
+
+## Horizontal Scaling
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'}
+
+### Load Balancing
+
+- Round-robin distribution
+- Health checks
+- Auto-scaling based on CPU/memory
+
+### Containerization
+
+- Docker containers
+- Kubernetes orchestration
+- Rolling deployments
+
+:::
+
+===
+# Monitoring & Observability
+
+## Essential Tools
+
+```yaml
+# Prometheus + Grafana
+metrics:
+  - request_count
+  - response_time
+  - error_rate
+  - active_connections
+
+alerts:
+  - high_error_rate: > 5%
+  - slow_response: > 500ms
+  - service_down: health_check_failed
+```
+
+===
+# Best Practices
+
+## Key Recommendations
+
+1. **Single Responsibility** - Each service does one thing well
+2. **API Versioning** - Maintain backward compatibility
+3. **Circuit Breakers** - Prevent cascade failures
+4. **Distributed Tracing** - Track requests across services
+5. **Database per Service** - Avoid shared databases
+6. **Automated Testing** - Unit, integration, and E2E tests
+
+===
+# Results
+
+## Performance Improvements
+
+- **Deployment Time**: 2 hours → 15 minutes
+- **Scaling**: Manual → Automatic (30 seconds)
+- **Availability**: 99.5% → 99.95%
+- **Development Speed**: 3x faster feature delivery
+
+===
+::: {text-align: 'center'}
+# Questions?
+
+## Let's Discuss
+
+GitHub: github.com/alexrivera/microservices-demo
+
+alex.rivera@techcorp.com
+:::

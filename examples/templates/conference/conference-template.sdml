@@ -1,0 +1,247 @@
+{
+    author: "Researcher Name"
+    title: "Conference Presentation"
+    theme: "white"
+    css: ".reveal h1 {
+                color: #c0392b;
+                font-weight: 700;
+                text-transform: none;
+                border-bottom: 4px solid #c0392b;
+                padding-bottom: 20px;
+            }
+            .reveal h2 {
+                color: #2c3e50;
+                font-weight: 600;
+                margin-top: 0.8em;
+            }
+            .reveal h3 {
+                color: #7f8c8d;
+                font-weight: 500;
+                font-style: italic;
+            }
+            .header-banner {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 70px;
+                background: linear-gradient(to right, #c0392b 0%, #8e44ad 100%);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                z-index: 1000;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            }
+            .header-author {
+                color: #ffffff;
+                font-size: 16px;
+                font-weight: 600;
+                margin-left: 30px;
+            }
+            .header-logo {
+                height: 50px;
+                width: auto;
+                margin-right: 30px;
+            }
+            .reveal {
+                margin-top: 70px;
+            }
+            .reveal .slides section {
+                text-align: left;
+            }
+            .reveal blockquote {
+                background: #f8f9fa;
+                border-left: 5px solid #c0392b;
+                padding: 20px;
+                font-style: italic;
+                color: #2c3e50;
+            }
+            .reveal .footer-note {
+                position: fixed;
+                bottom: 10px;
+                right: 20px;
+                font-size: 14px;
+                color: #7f8c8d;
+            }"
+}
+---
+::: {text-align: 'center'; padding: '40px'}
+# [Research Title]
+
+## [Subtitle or Research Question]
+
+### [Author Names]
+
+[Institution/University]
+
+[Conference Name - Date]
+:::
+
+===
+# Outline
+
+1. **Motivation** - Why this research matters
+2. **Background** - Related work and context
+3. **Methodology** - Our approach
+4. **Results** - Key findings
+5. **Discussion** - Analysis and implications
+6. **Conclusion** - Summary and future work
+
+===
+# Motivation
+
+## Research Problem
+
+Description of the problem you're addressing
+
+::: {background: '#ecf0f1'; padding: '20px'; border-radius: '10px'}
+### Research Questions
+1. Question 1?
+2. Question 2?
+3. Question 3?
+:::
+
+===
+# Background
+
+## Related Work
+
+### Previous Research
+
+- Study 1: Key findings
+- Study 2: Key findings
+- Study 3: Key findings
+
+### Research Gap
+
+> "Quote or statement highlighting the gap in current research"
+
+===
+# Methodology
+
+## Our Approach
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'}
+
+### Data Collection
+- Source 1
+- Source 2
+- Sample size: N=XXX
+
+### Analysis Methods
+- Method 1
+- Method 2
+- Statistical tests used
+
+:::
+
+===
+# Methodology
+
+## Experimental Setup
+
+```python [highlight:line-by-line]
+def experiment(data, parameters):
+    # Data preprocessing
+    processed = preprocess(data)
+    
+    # Apply model
+    results = model.fit(processed, parameters)
+    
+    # Evaluate
+    return evaluate(results)
+```
+
+===
+# Results
+
+## Key Findings
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'}
+
+### Finding 1
+- Observation A
+- Statistical significance: p < 0.05
+- Effect size: Cohen's d = X.XX
+
+### Finding 2
+- Observation B
+- Statistical significance: p < 0.01
+- Effect size: Cohen's d = X.XX
+
+:::
+
+===
+# Results
+
+## Visualization
+
+![Main Results Graph](https://placehold.co/800x500/c0392b/white?text=Results+Visualization)
+
+*Figure 1: Description of the results shown*
+
+===
+# Discussion
+
+## Interpretation
+
+### What Our Results Mean
+
+- Implication 1: Explanation
+- Implication 2: Explanation
+- Implication 3: Explanation
+
+### Limitations
+
+- Limitation 1
+- Limitation 2
+
+===
+# Conclusion
+
+## Summary
+
+::: {background: '#fff5f5'; padding: '25px'; border-radius: '10px'; border-left: '5px solid #c0392b'}
+### Key Contributions
+
+1. **Contribution 1** - Brief description
+2. **Contribution 2** - Brief description
+3. **Contribution 3** - Brief description
+:::
+
+===
+# Future Work
+
+## Next Steps
+
+- Direction 1: Description
+- Direction 2: Description
+- Direction 3: Description
+
+### Broader Impact
+
+This research can be applied to...
+
+===
+::: {text-align: 'center'; padding: '50px'}
+# Thank You
+
+## Questions?
+
+[Your Email]
+
+[Lab/Institution Website]
+
+[Paper DOI/Link]
+:::
+
+===
+# References
+
+## Selected Bibliography
+
+1. Author et al. (2024). "Title of Paper". *Journal Name*.
+2. Author et al. (2023). "Title of Paper". *Conference Name*.
+3. Author et al. (2022). "Title of Paper". *Journal Name*.
+
+*Full bibliography available in the paper*
