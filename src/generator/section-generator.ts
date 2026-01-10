@@ -1,4 +1,4 @@
-import { Block, Slide, Template } from "../language/generated/ast";
+import { Block, Slide } from "../language/generated/ast";
 import { LineContentHandler } from "./line-content-handler";
 
 /**
@@ -20,19 +20,15 @@ export class SectionGenerator {
     }
 
     /**
-     * Generate HTML for a slide or template section
-     * @param slideOrTemplate The slide or template to generate
-     * @param isTemplate Whether this is a template section
+     * Generate HTML for a slide section
+     * @param slide The slide to generate
      * @returns Generated HTML string
      */
-    public async generateSection(slideOrTemplate: Slide | Template, isTemplate: boolean): Promise<string> {
-        const blockPromises = slideOrTemplate.blocks.map(block => this.generateBlock(block));
+    public async generateSection(slide: Slide): Promise<string> {
+        const blockPromises = slide.blocks.map(block => this.generateBlock(block));
         const contentHTML = (await Promise.all(blockPromises)).join('\n');
 
-        // Add data-slide-index attribute for regular slides (not template)
-        const dataAttribute = isTemplate ? '' : ` data-slide-index="${this.currentSlideIndex}"`;
-
-        return `        <section${dataAttribute}>\n${contentHTML}\n        </section>`;
+        return `        <section data-slide-index="${this.currentSlideIndex}">\n${contentHTML}\n        </section>`;
     }
 
     /**

@@ -10,9 +10,31 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
     <style> 
         
         
+
+        /* Default Reveal.js overrides */
+        .reveal {
+            font-size: 32px; /* Reduced from default 40px */
+        }
+        
+        .reveal .slides {
+            text-align: left; /* Remove default centering */
+        }
+        
+        .reveal h1 {
+            font-size: 2em; /* Reduced from default 2.5em */
+        }
+        
+        .reveal h2 {
+            font-size: 1.3em; /* Reduced from default 1.8em */
+        }
+        
+        .reveal h3 {
+            font-size: 1em; /* Reduced from default 1.5em */
+        }
    
         /* Synchronized fragments styling */
         .sync-container {
@@ -136,12 +158,13 @@ cx + dy
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    
     <script>
         Reveal.initialize({
             hash: true,
             transition: 'slide',
             progress: true,
-            center: false,
+            center: true,
             backgroundTransition: 'fade',
             plugins: [ RevealHighlight ]
         });

@@ -64,7 +64,7 @@
                 color: #7f8c8d;
             }"
 }
----
+===
 ::: {text-align: 'center'; padding: '40px'}
 # Deep Learning for Medical Image Analysis
 

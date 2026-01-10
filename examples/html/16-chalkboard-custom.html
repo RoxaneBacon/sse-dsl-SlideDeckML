@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="SlideDeckML Team">
-    <meta name="title" content="Simple Markdown Test">
-    <title>Simple Markdown Test</title>
+    <meta name="author" content="Advanced User">
+    <meta name="title" content="Custom Chalkboard Configuration">
+    <title>Custom Chalkboard Configuration</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    
+    <!-- Font Awesome (required for chalkboard) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom controls plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/style.css">
+    <!-- Chalkboard plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/style.css">
     <style> 
         
         
@@ -73,54 +78,44 @@
     
     <div class="reveal">
         <div class="slides">
-        <section data-slide-index="0">
-            <h1>Main Title (H1)</h1>
-            <h2>Subtitle (H2)</h2>
-            <h3>Sub-subtitle (H3)</h3>
-        </section>
-        <section data-slide-index="0">
-            <h1>Paragraph Test</h1>
-            <p>This is a simple paragraph with no formatting.</p>
-            <p>This is another paragraph with <strong>bold text</strong>, <em>italic text</em>/<em>underlined text</em>, and <u>underlined</u></p>
-            <p>You can also combine them: <strong><em>bold italic</em></strong> and <strong><u>bold underline</u></strong>.</p>
-        </section>
-        <section data-slide-index="0">
-            <h1>Unordered Lists Test</h1>
-            <p>Basic unordered list:</p>
+        <section>
+            <h1>Custom Chalkboard Configuration</h1>
+            <p>This presentation demonstrates <strong>advanced chalkboard customization</strong>:</p>
             <ul>
-                <li>First item</li>
-                <li>Second item</li>
-                <li>Third item</li>
-            </ul>
-            <p>With formatting:</p>
-            <ul>
-                <li>Item with <strong>bold</strong></li>
-                <li>Item with <em>italic</em> or <em>italic</em></li>
-                <li>Item with <u>underline</u></li>
-                <li>Item with <strong><em>multiple formatting</em></strong></li>
+                <li><strong>Storage:</strong> Session storage enabled with key &quot;chalkboard-demo&quot;</li>
+                <li><strong>Grid:</strong> Custom blue grid (40px spacing, 2px width)</li>
+                <li><strong>Remember Color:</strong> Last selected color is remembered</li>
             </ul>
         </section>
         <section data-slide-index="0">
-            <h1>Ordered Lists Test</h1>
-            <p>Basic ordered list:</p>
-            <ol>
-                <li>First step</li>
-                <li>Second step</li>
-                <li>Third step</li>
-            </ol>
-            <p>With formatting:</p>
-            <ol>
-                <li>Step with <strong>bold text</strong></li>
-                <li>Step with <em>italic text</em> or <em>italic text</em></li>
-                <li>Step with <u>underlined text</u></li>
-                <li>Step with <u><strong><em>combined formatting</em></strong></u></li>
-            </ol>
+            <h2>Custom Grid Pattern</h2>
+            <p>The grid has been customized with:</p>
+            <ul>
+                <li><strong>Color:</strong> Light blue `rgb(127,127,255,0.1)`</li>
+                <li><strong>Distance:</strong> 40px between lines</li>
+                <li><strong>Width:</strong> 2px line thickness</li>
+            </ul>
+            <p>Try drawing to see the grid pattern!</p>
         </section>
         <section data-slide-index="0">
-            <h1>Quote Test</h1>
-            <blockquote>This is a simple quote without formatting</blockquote>
-            <blockquote>This is a quote with <strong>bold text</strong> and <em>italic text</em> or <em>italic text</em></blockquote>
-            <blockquote>Another quote with <u>underlined text</u> and <strong><u>bold italic</u></strong></blockquote>
+            <h2>Session Storage</h2>
+            <p>Drawings are saved to browser session storage with key `chalkboard-demo`.</p>
+            <p><strong>Benefits:</strong></p>
+            <ul>
+                <li>Drawings persist during the session</li>
+                <li>Reload the page to see them restored</li>
+                <li>Clear by closing the browser tab</li>
+            </ul>
+        </section>
+        <section data-slide-index="0">
+            <h2>Color Memory</h2>
+            <p>With `chalkboard-remember-color: true`:</p>
+            <ul>
+                <li>The last selected color is remembered</li>
+                <li>Persists across slides</li>
+                <li>Makes drawing more efficient</li>
+                <li>No need to reselect your favorite color</li>
+            </ul>
         </section>
         </div>
     </div>
@@ -128,7 +123,12 @@
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-    
+    <!-- Font Awesome (required for chalkboard) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <!-- Custom controls plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/plugin.js"></script>
+    <!-- Chalkboard plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/plugin.js"></script>
     <script>
         Reveal.initialize({
             hash: true,
@@ -136,7 +136,18 @@
             progress: true,
             center: true,
             backgroundTransition: 'fade',
-            plugins: [ RevealHighlight ]
+            plugins: [ RevealHighlight, RevealChalkboard, RevealCustomControls ],
+            chalkboard: {
+          "theme": "whiteboard",
+          "boardmarkerWidth": 4,
+          "chalkWidth": 8,
+          "chalkEffect": 1,
+          "readOnly": false,
+          "buttons": true,
+          "transition": 800,
+          "storage": "chalkboard-demo",
+          "rememberColor": true
+}
         });
 
         // Auto-render LaTeX when slides are ready
