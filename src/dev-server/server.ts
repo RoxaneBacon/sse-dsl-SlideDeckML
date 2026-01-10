@@ -53,7 +53,11 @@ export class DevServer {
         this.app.post('/api/compile', async (req, res) => {
             try {
                 const { content, cursorLine } = req.body;
-                const result = await this.compiler.compile(content, cursorLine);
+                const result = await this.compiler.compile(
+                    content,
+                    cursorLine,
+                    this.options.initialFile
+                );
                 res.json(result);
             } catch (error) {
                 res.status(500).json({
@@ -99,7 +103,11 @@ export class DevServer {
             // Handle compilation requests via WebSocket
             socket.on('compile', async (data: { content: string, cursorLine?: number }) => {
                 try {
-                    const result = await this.compiler.compile(data.content, data.cursorLine);
+                    const result = await this.compiler.compile(
+                        data.content,
+                        data.cursorLine,
+                        this.options.initialFile
+                    );
                     socket.emit('compilation-result', result);
                 } catch (error) {
                     socket.emit('compilation-error', {
