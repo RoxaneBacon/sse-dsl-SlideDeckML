@@ -2,6 +2,9 @@
     author: "SlideDeckML Team"
     title: "Complete Feature Showcase"
     theme: "black"
+    chalkboard: "true"
+    chalkboard-theme: "chalkboard"
+    chalkboard-buttons: "true"
 }
 ===
 ::: {text-align: 'center'; color: '#3498db'; font-size: '48px'; font-weight: 'bold'}
@@ -22,6 +25,7 @@ Complete Feature Demonstration
 5. **Styling** - Custom CSS and layouts
 6. **Media** - Images and positioning
 7. **Absolute Positioning** - calque, margins
+8. **Chalkboard** - Interactive drawing and annotations
 
 ===
 ::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
@@ -426,6 +430,62 @@ Layer 3 (z-index: 10)
 ::: {calque: 5; horizontal-margin: 450; vertical-margin: 250}
 ![Image 2](https://placehold.co/250x150/e74c3c/white?text=2)
 :::
+
+===
+::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
+## Part 8: Interactive Chalkboard
+:::
+
+===
+# Chalkboard Feature
+
+This presentation includes **interactive chalkboard** functionality!
+
+- Draw and annotate directly on slides
+- Toggle between presentation and drawing modes
+- Use keyboard shortcuts or buttons
+- Perfect for live presentations and teaching
+
+===
+# How to Use Chalkboard
+
+**Keyboard Shortcuts:**
+
+- Press **C** to toggle Chalkboard Mode (draw over slides)
+- Press **B** to toggle Notes Canvas (draw on black board)
+- Press **DEL** or **BACKSPACE** to clear drawings
+- Press **D** to download drawings as JSON
+
+**Mouse/Touch:**
+
+- Click the chalkboard buttons at the bottom of slides
+- Draw with mouse or touch input
+
+===
+# Chalkboard Modes
+
+**Chalkboard Mode (Press C):**
+- Draw directly over slide content
+- Annotate diagrams and code
+- Highlight important points
+
+**Notes Canvas (Press B):**
+- Opens a blank chalkboard for sketching
+- Great for explaining concepts from scratch
+- Like a traditional blackboard
+
+===
+# Try It Now!
+
+Press **C** to start drawing on this slide!
+
+You can:
+- Circle this text
+- Draw arrows
+- Add your own notes
+- Underline key points
+
+Press **DEL** to clear when done.
 
 ===
 ::: {text-align: 'center'; color: '#3498db'; font-size: '64px'; font-weight: 'bold'}

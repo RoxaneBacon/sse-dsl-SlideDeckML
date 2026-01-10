@@ -10,7 +10,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    
+    <!-- Font Awesome (required for chalkboard) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom controls plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/style.css">
+    <!-- Chalkboard plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/style.css">
     <style> 
         
         
@@ -91,6 +96,7 @@
                 <li><strong>Styling</strong> - Custom CSS and layouts</li>
                 <li><strong>Media</strong> - Images and positioning</li>
                 <li><strong>Absolute Positioning</strong> - calque, margins</li>
+                <li><strong>Chalkboard</strong> - Interactive drawing and annotations</li>
             </ol>
         </section>
         <section data-slide-index="1">
@@ -207,7 +213,7 @@ def process():
             <h2>Part 3: Synchronized Fragments</h2>
             </div>
         </section>
-        <section data-slide-index="18">
+        <section data-slide-index="22">
             <h1>Sync: line-by-line (replace)</h1>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start">
             <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1|2|3|4">let x = 0;
@@ -223,7 +229,7 @@ console.log(x);
             </div>
             </div>
         </section>
-        <section data-slide-index="18">
+        <section data-slide-index="22">
             <h1>Sync: line-by-line (keep)</h1>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start">
             <pre><code class="language-python" data-trim data-noescape data-line-numbers="1|2|3|4">count = 0
@@ -239,7 +245,7 @@ print(count)
             </div>
             </div>
         </section>
-        <section data-slide-index="37">
+        <section data-slide-index="42">
             <h1>Sync: with images</h1>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start">
             <pre><code class="language-python" data-trim data-noescape data-line-numbers="1|2|3">data = load_data()
@@ -253,7 +259,7 @@ result = analyze(cleaned)
             </div>
             </div>
         </section>
-        <section data-slide-index="31">
+        <section data-slide-index="37">
             <h1>Sync: mixed content</h1>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start">
             <pre><code class="language-java" data-trim data-noescape data-line-numbers="1|2|3|4">User user = new User(&quot;Alice&quot;);
@@ -343,7 +349,7 @@ cx + dy
             <p>Content C</p>
             </div>
         </section>
-        <section data-slide-index="35">
+        <section data-slide-index="40">
             <h1>Styled Multiple Elements</h1>
             <div style="background: #2c3e50; color: #ecf0f1; padding: 25px; border-radius: 12px">
             <h2>Dark Container</h2>
@@ -360,7 +366,7 @@ cx + dy
             <h2>Part 6: Media</h2>
             </div>
         </section>
-        <section data-slide-index="34">
+        <section data-slide-index="39">
             <h1>Images</h1>
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgNjAwIDQwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzM0OThkYiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xNjMuNzcgMTk0LjIycTAgNS4wOS0xLjY5IDkuMzUtMS43IDQuMjUtNC43NyA3LjMzLTMuMDcgMy4wNy03LjM5IDQuNzYtNC4zMiAxLjctOS42IDEuN2gtMTcuNjN2LTQ2LjI3aDE3LjYzcTUuMjggMCA5LjYgMS43MXQ3LjM5IDQuNzdxMy4wNyAzLjA1IDQuNzcgNy4zMSAxLjY5IDQuMjYgMS42OSA5LjM0bS04LjgzIDBxMC0zLjgtMS4wMS02LjgzLTEtMy4wMi0yLjkxLTUuMTItMS45LTIuMDktNC42MS0zLjIxLTIuNy0xLjEyLTYuMDktMS4xMmgtOC45OXYzMi41N2g4Ljk5cTMuMzkgMCA2LjA5LTEuMTIgMi43MS0xLjEyIDQuNjEtMy4yMSAxLjkxLTIuMSAyLjkxLTUuMTIgMS4wMS0zLjAzIDEuMDEtNi44NG0yMS40MSAyLjk1aDE0LjkxcTAtMS41NC0uNDMtMi45dC0xLjMtMi4zOHEtLjg2LTEuMDMtMi4xOS0xLjYydC0zLjA5LS41OXEtMy40MiAwLTUuMzkgMS45NXQtMi41MSA1LjU0bTIwLjE2IDQuNzdoLTIwLjMycS4xOSAyLjUyLjkgNC4zNi43IDEuODQgMS44NSAzLjA0dDIuNzQgMS44cTEuNTguNTkgMy41LjU5dDMuMzEtLjQ1cTEuNC0uNDUgMi40NC0uOTkgMS4wNC0uNTUgMS44Mi0uOTkuNzgtLjQ1IDEuNTItLjQ1Ljk5IDAgMS40Ny43M2wyLjI3IDIuODhxLTEuMzEgMS41NC0yLjk0IDIuNTh0LTMuNDEgMS42NnEtMS43Ny42My0zLjYxLjg4LTEuODQuMjYtMy41Ny4yNi0zLjQzIDAtNi4zNy0xLjE0LTIuOTQtMS4xMy01LjEyLTMuMzYtMi4xOC0yLjIyLTMuNDItNS41LTEuMjUtMy4yOC0xLjI1LTcuNiAwLTMuMzYgMS4wOS02LjMyIDEuMDgtMi45NiAzLjEyLTUuMTUgMi4wMy0yLjE5IDQuOTYtMy40NyAyLjkyLTEuMjggNi42LTEuMjggMy4xMSAwIDUuNzMuOTkgMi42My45OSA0LjUxIDIuODkgMS44OSAxLjkxIDIuOTYgNC42OCAxLjA4IDIuNzYgMS4wOCA2LjMyIDAgMS43OS0uMzkgMi40MS0uMzguNjMtMS40Ny42M20xNS42OCAxNS40MmgtNy45di0zMi44M2g0LjgzcTEuNTMgMCAyLjAxIDEuNDRsLjUyIDIuNDNxLjg2LS45NiAxLjgtMS43Ni45NS0uOCAyLjAyLTEuMzggMS4wNy0uNTcgMi4zLS45MSAxLjI0LS4zMyAyLjcxLS4zMyAzLjEgMCA1LjEgMS42OHQyLjk5IDQuNDZxLjc3LTEuNjMgMS45Mi0yLjggMS4xNi0xLjE3IDIuNTMtMS45IDEuMzgtLjc0IDIuOTMtMS4wOXQzLjEyLS4zNXEyLjcyIDAgNC44My44M3QzLjU1IDIuNDMgMi4yIDMuOXEuNzUgMi4zMS43NSA1LjI4djIwLjloLTcuOTF2LTIwLjlxMC0zLjEzLTEuMzctNC43Mi0xLjM4LTEuNTgtNC4wMy0xLjU4LTEuMjIgMC0yLjI2LjQyLTEuMDQuNDEtMS44MiAxLjItLjc5Ljc4LTEuMjQgMS45Ni0uNDQgMS4xOS0uNDQgMi43MnYyMC45aC03Ljk0di0yMC45cTAtMy4yOS0xLjMzLTQuOC0xLjMzLTEuNS0zLjg5LTEuNS0xLjcyIDAtMy4yMS44NXQtMi43NyAyLjMyem02MC4yMi0zMy4zNHEzLjY1IDAgNi42NCAxLjE4IDMgMS4xOCA1LjEyIDMuMzYgMi4xMyAyLjE4IDMuMjggNS4zMSAxLjE2IDMuMTQgMS4xNiA3LjAxIDAgMy45LTEuMTYgNy4wNC0xLjE1IDMuMTQtMy4yOCA1LjM0LTIuMTIgMi4yMS01LjEyIDMuNC0yLjk5IDEuMTgtNi42NCAxLjE4LTMuNjggMC02LjY4LTEuMTgtMy4wMS0xLjE5LTUuMTQtMy40LTIuMTMtMi4yLTMuMy01LjM0LTEuMTYtMy4xNC0xLjE2LTcuMDQgMC0zLjg3IDEuMTYtNy4wMSAxLjE3LTMuMTMgMy4zLTUuMzF0NS4xNC0zLjM2cTMtMS4xOCA2LjY4LTEuMThtMCAyNy43NHE0LjEgMCA2LjA3LTIuNzV0MS45Ny04LjA3cTAtNS4zMS0xLjk3LTguMDktMS45Ny0yLjc5LTYuMDctMi43OS00LjE2IDAtNi4xNiAyLjh0LTIgOC4wOCAyIDguMDUgNi4xNiAyLjc3bTQ3LjY4LTQwLjY3djQ2LjI3aC04LjY0di00Ni4yN3ptMTcgNDYuMjdoLTcuOTF2LTMyLjgzaDQuODNxMS41NCAwIDIuMDIgMS40NGwuNTEgMi40M3EuODctLjk2IDEuODEtMS43NnQyLjAyLTEuMzhxMS4wNy0uNTcgMi4zLS45MSAxLjIzLS4zMyAyLjctLjMzIDMuMTEgMCA1LjExIDEuNjh0Mi45OSA0LjQ2cS43Ny0xLjYzIDEuOTItMi44dDIuNTMtMS45cTEuMzctLjc0IDIuOTMtMS4wOSAxLjU1LS4zNSAzLjEyLS4zNSAyLjcyIDAgNC44My44M3QzLjU1IDIuNDMgMi4xOSAzLjlxLjc1IDIuMzEuNzUgNS4yOHYyMC45aC03Ljl2LTIwLjlxMC0zLjEzLTEuMzgtNC43Mi0xLjM3LTEuNTgtNC4wMy0xLjU4LTEuMjEgMC0yLjI1LjQyLTEuMDQuNDEtMS44MyAxLjItLjc4Ljc4LTEuMjMgMS45Ni0uNDUgMS4xOS0uNDUgMi43MnYyMC45aC03Ljkzdi0yMC45cTAtMy4yOS0xLjMzLTQuOC0xLjMzLTEuNS0zLjg5LTEuNS0xLjczIDAtMy4yMi44NS0xLjQ4Ljg1LTIuNzYgMi4zMnptNjMuMDQtOC40OHYtNS41NHEtMy40My4xNi01Ljc2LjYtMi4zNC40My0zLjc1IDEuMXQtMi4wMSAxLjU3cS0uNjEuODktLjYxIDEuOTUgMCAyLjA4IDEuMjMgMi45OCAxLjIzLjg5IDMuMjIuODkgMi40MyAwIDQuMi0uODggMS43OC0uODggMy40OC0yLjY3bS0xNi43MS0xNy4yNS0xLjQxLTIuNTNxNS42Ny01LjE4IDEzLjY0LTUuMTggMi44OCAwIDUuMTUuOTQgMi4yNy45NSAzLjg0IDIuNjN0Mi4zOCA0LjAxcS44MiAyLjM0LjgyIDUuMTJ2MjAuNzRoLTMuNTlxLTEuMTIgMC0xLjcyLS4zNC0uNjEtLjMzLS45Ni0xLjM2bC0uNzEtMi4zNnEtMS4yNSAxLjEyLTIuNDMgMS45Ni0xLjE4Ljg1LTIuNDYgMS40My0xLjI4LjU3LTIuNzQuODgtMS40Ni4zLTMuMjIuMy0yLjA4IDAtMy44NC0uNTZ0LTMuMDQtMS42OC0xLjk4LTIuNzhxLS43LTEuNjctLjctMy44NyAwLTEuMjUuNDEtMi40OC40Mi0xLjI0IDEuMzYtMi4zNi45NS0xLjEyIDIuNDUtMi4xMXQzLjctMS43M3EyLjE5LS43MyA1LjEtMS4yIDIuOTEtLjQ2IDYuNjYtLjU2di0xLjkycTAtMy4yOS0xLjQxLTQuODgtMS40MS0xLjU4LTQuMDctMS41OC0xLjkyIDAtMy4xOC40NXQtMi4yMiAxLjAxLTEuNzUgMXEtLjc4LjQ1LTEuNzQuNDUtLjgzIDAtMS40MS0uNDN0LS45My0xLjAxbTQzLjg0IDguNTFxMS40NyAwIDIuNTYtLjR0MS44MS0xLjEgMS4wOS0xLjdxLjM3LS45OS4zNy0yLjE3IDAtMi40My0xLjQ2LTMuODYtMS40Ni0xLjQyLTQuMzctMS40MnQtNC4zNyAxLjQycS0xLjQ1IDEuNDMtMS40NSAzLjg2IDAgMS4xNS4zNyAyLjE0LjM2Ljk5IDEuMDggMS43MXQxLjgzIDEuMTJxMS4xLjQgMi41NC40bTguOTMgMTguNjlxMC0uOTYtLjU4LTEuNTctLjU3LS42LTEuNTYtLjk0LTEtLjM0LTIuMzItLjUtMS4zMy0uMTYtMi44Mi0uMjR0LTMuMDctLjE0cS0xLjU5LS4wNi0zLjA5LS4yNi0xLjMxLjc0LTIuMTMgMS43My0uODEuOTktLjgxIDIuMzEgMCAuODYuNDMgMS42MXQxLjM3IDEuM3EuOTUuNTQgMi40NS44NSAxLjUxLjMgMy42OC4zIDIuMjEgMCAzLjgxLS4zNCAxLjYtLjMzIDIuNjQtLjkyIDEuMDQtLjYgMS41Mi0xLjQxLjQ4LS44Mi40OC0xLjc4bS0xLjU3LTMzLjE4aDkuNDR2Mi45NHEwIDEuNDEtMS42OSAxLjczbC0yLjk1LjU0cS42NyAxLjcuNjcgMy43MiAwIDIuNDMtLjk3IDQuNC0uOTggMS45Ni0yLjcxIDMuMzQtMS43MiAxLjM4LTQuMDggMi4xMy0yLjM1Ljc1LTUuMDcuNzUtLjk2IDAtMS44NS0uMS0uOS0uMDktMS43Ni0uMjUtMS41NC45My0xLjU0IDIuMDggMCAuOTkuOTEgMS40NS45MS40NyAyLjQyLjY2IDEuNS4xOSAzLjQyLjI0dDMuOTQuMjFxMi4wMS4xNiAzLjkzLjU2dDMuNDMgMS4yNnExLjUuODcgMi40MSAyLjM1LjkyIDEuNDkuOTIgMy44MyAwIDIuMTctMS4wOCA0LjIyLTEuMDcgMi4wNS0zLjEgMy42NXQtNC45OSAyLjU4cS0yLjk2Ljk3LTYuNzQuOTctMy43MSAwLTYuNDYtLjcydC00LjU4LTEuOTJxLTEuODItMS4yLTIuNzItMi43Ny0uODktMS41Ni0uODktMy4yNiAwLTIuMyAxLjM5LTMuODYgMS4zOS0xLjU1IDMuODItMi40OC0xLjMxLS42Ny0yLjA4LTEuNzl0LS43Ny0yLjk0cTAtLjc0LjI4LTEuNTIuMjctLjc5LjgtMS41NS41Mi0uNzcgMS4zMi0xLjQ2dDEuODktMS4yM3EtMi40OS0xLjM1LTMuOTItMy41OS0xLjQyLTIuMjQtMS40Mi01LjI0IDAtMi40NC45Ny00LjQuOTgtMS45NyAyLjcyLTMuMzYgMS43NS0xLjQgNC4xMy0yLjEzIDIuMzktLjc0IDUuMi0uNzQgMi4xMSAwIDMuOTcuNDMgMS44Ni40NCAzLjM5IDEuMjdtMjAuNjcgMTEuNTJoMTQuOTJxMC0xLjU0LS40NC0yLjktLjQzLTEuMzYtMS4yOS0yLjM4LS44Ny0xLjAzLTIuMTktMS42Mi0xLjMzLS41OS0zLjA5LS41OS0zLjQzIDAtNS4zOSAxLjk1LTEuOTcgMS45NS0yLjUyIDUuNTRtMjAuMTYgNC43N2gtMjAuMzJxLjIgMi41Mi45IDQuMzZ0MS44NiAzLjA0cTEuMTUgMS4yIDIuNzMgMS44IDEuNTkuNTkgMy41MS41OXQzLjMxLS40NSAyLjQzLS45OXExLjA0LS41NSAxLjgyLS45OS43OS0uNDUgMS41Mi0uNDUgMSAwIDEuNDguNzNsMi4yNyAyLjg4cS0xLjMxIDEuNTQtMi45NSAyLjU4LTEuNjMgMS4wNC0zLjQgMS42Ni0xLjc4LjYzLTMuNjIuODgtMS44NC4yNi0zLjU3LjI2LTMuNDIgMC02LjM3LTEuMTQtMi45NC0xLjEzLTUuMTItMy4zNi0yLjE3LTIuMjItMy40Mi01LjV0LTEuMjUtNy42cTAtMy4zNiAxLjA5LTYuMzJ0My4xMi01LjE1IDQuOTYtMy40NyA2LjYxLTEuMjhxMy4xIDAgNS43My45OSAyLjYyLjk5IDQuNTEgMi44OSAxLjg5IDEuOTEgMi45NiA0LjY4IDEuMDcgMi43NiAxLjA3IDYuMzIgMCAxLjc5LS4zOCAyLjQxLS4zOS42My0xLjQ4LjYzIi8+PC9zdmc+" alt="Demo">
         </section>
@@ -371,13 +377,13 @@ cx + dy
                 Demo Video
             </video>
         </section>
-        <section data-slide-index="32">
+        <section data-slide-index="38">
             <h1>Styled Images</h1>
             <div style="width: 60%; border: 5px solid #e74c3c; border-radius: 15px; box-shadow: 0 8px 16px rgba(0">
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3MDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgNzAwIDQwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2YzOWMxMiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Im0xNzQuNjkgMTcyLjM0LTIuNDggNC43cS0uNDQuNzgtLjk0IDEuMTN0LTEuMjQuMzVxLS43OCAwLTEuNjktLjU3LS45LS41OC0yLjE2LTEuMjh0LTIuOTQtMS4yOHEtMS42OS0uNTctMy45OC0uNTctMi4wNyAwLTMuNjMuNS0xLjU1LjUtMi42IDEuMzktMS4wNi44OC0xLjU4IDIuMTItLjUxIDEuMjQtLjUxIDIuNzIgMCAxLjg5IDEuMDUgMy4xNXQyLjc5IDIuMTRxMS43NC44OSAzLjk2IDEuNTkgMi4yMi43MSA0LjU1IDEuNSAyLjMzLjggNC41NSAxLjg1IDIuMjIgMS4wNiAzLjk2IDIuNjd0Mi44IDMuOTRxMS4wNSAyLjMzIDEuMDUgNS42NiAwIDMuNjMtMS4yNCA2Ljc5dC0zLjYyIDUuNTFxLTIuMzkgMi4zNS01LjgzIDMuN3QtNy44OCAxLjM1cS0yLjU2IDAtNS4wMy0uNS0yLjQ4LS41LTQuNzYtMS40Mi0yLjI3LS45My00LjI3LTIuMjItMi0xLjMtMy41NS0yLjg5bDIuOTItNC43N3EuMzctLjUyLjk2LS44N3QxLjI2LS4zNXEuOTIgMCAyIC43NiAxLjA3Ljc2IDIuNTUgMS42OCAxLjQ4LjkzIDMuNDYgMS42OCAxLjk4Ljc2IDQuNzUuNzYgNC4yNiAwIDYuNTktMi4wMSAyLjMzLTIuMDIgMi4zMy01Ljc5IDAtMi4xMS0xLjA1LTMuNDUtMS4wNi0xLjMzLTIuOC0yLjIzLTEuNzQtLjkxLTMuOTYtMS41NHQtNC41MS0xLjM3LTQuNTEtMS43N3EtMi4yMi0xLjA0LTMuOTYtMi43MS0xLjc0LTEuNjYtMi44LTQuMTYtMS4wNS0yLjUtMS4wNS02LjE2IDAtMi45MiAxLjE2LTUuNyAxLjE3LTIuNzcgMy4zOS00LjkyIDIuMjItMi4xNCA1LjQ4LTMuNDQgMy4yNS0xLjI5IDcuNDctMS4yOSA0Ljc0IDAgOC43MyAxLjQ4IDQgMS40OCA2LjgxIDQuMTRtMjAuODMgNDkuMDZxLTQuOTYgMC03LjYtMi43OS0yLjY1LTIuOC0yLjY1LTcuNzJ2LTIxLjJoLTMuODhxLS43NCAwLTEuMjYtLjQ4dC0uNTItMS40NHYtMy42M2w2LjExLTEgMS45Mi0xMC4zNnEuMTgtLjc0LjctMS4xNC41Mi0uNDEgMS4zMy0uNDFoNC43NHYxMS45NWgxMC4xNHY2LjUxaC0xMC4xNHYyMC41OHEwIDEuNzcuODcgMi43N3QyLjM5IDFxLjg1IDAgMS40Mi0uMi41Ny0uMjEgMS0uNDN0Ljc2LS40M3EuMzMtLjIuNjYtLjIuNDEgMCAuNjcuMi4yNi4yMS41Ni42MmwyLjczIDQuNDRxLTEuOTkgMS42Ni00LjU4IDIuNTF0LTUuMzcuODVtNDIuMDMtMzguNTVoNy4zM2wtMjAuNjggNDguMzlxLS40MS45Ny0xLjA2IDEuNDctLjY1LjQ5LTEuOTguNDloLTYuODFsNy4xMS0xNS4yNC0xNS4zNi0zNS4xMWg4LjAzcTEuMDcgMCAxLjY4LjUyLjYyLjUxLjkxIDEuMThsOC4wNyAxOS42OHEuNCAxIC42OCAydC41NCAyLjA0cS4zMy0xLjA0LjY2LTIuMDYuMzQtMS4wMS43NC0yLjAxbDcuNjMtMTkuNjVxLjI5LS43NC45OC0xLjIyLjY4LS40OCAxLjUzLS40OG0xMS45OS0xNy4wMmg5LjE0djU0Ljk4aC05LjE0em0yNS40OSAzMS42M2gxNy4yNXEwLTEuNzctLjUtMy4zNS0uNS0xLjU3LTEuNS0yLjc1LTEtMS4xOS0yLjU0LTEuODctMS41My0uNjgtMy41Ny0uNjgtMy45NiAwLTYuMjMgMi4yNS0yLjI4IDIuMjYtMi45MSA2LjRtMjMuMzEgNS41MmgtMjMuNDlxLjIyIDIuOTIgMS4wMyA1LjA1LjgyIDIuMTIgMi4xNSAzLjUxdDMuMTYgMi4wN3ExLjg0LjY5IDQuMDYuNjl0My44Mi0uNTJxMS42MS0uNTIgMi44Mi0xLjE1IDEuMi0uNjMgMi4xMS0xLjE0LjktLjUyIDEuNzUtLjUyIDEuMTUgMCAxLjcxLjg1bDIuNjIgMy4zM3EtMS41MSAxLjc4LTMuNCAyLjk4dC0zLjk0IDEuOTJxLTIuMDYuNzItNC4xOCAxLjAyLTIuMTMuMjktNC4xMy4yOS0zLjk2IDAtNy4zNi0xLjMxLTMuNDEtMS4zMS01LjkyLTMuODgtMi41Mi0yLjU3LTMuOTYtNi4zNy0xLjQ0LTMuNzktMS40NC04Ljc4IDAtMy44OSAxLjI1LTcuMzEgMS4yNi0zLjQyIDMuNjEtNS45NiAyLjM1LTIuNTMgNS43NC00LjAxIDMuMzgtMS40OCA3LjY0LTEuNDggMy41OSAwIDYuNjIgMS4xNCAzLjAzIDEuMTUgNS4yMiAzLjM1IDIuMTggMi4yIDMuNDIgNS40dDEuMjQgNy4zMXEwIDIuMDctLjQ0IDIuNzktLjQ1LjczLTEuNzEuNzNtMzIuODIgNi41OHYtMTcuMDJxLTEuNTUtMS44OC0zLjM4LTIuNjZ0LTMuOTQtLjc4cS0yLjA4IDAtMy43NC43OC0xLjY3Ljc4LTIuODUgMi4zNXQtMS44MSAzLjk5cS0uNjMgMi40My0uNjMgNS43MiAwIDMuMzMuNTMgNS42NC41NCAyLjMyIDEuNTQgMy43OHQyLjQ0IDIuMTFxMS40NS42NCAzLjIyLjY0IDIuODUgMCA0Ljg1LTEuMTh0My43Ny0zLjM3bTAtNDMuNzNoOS4xNHY1NC45OGgtNS41OXEtMS44MSAwLTIuMjktMS42NmwtLjc4LTMuNjdxLTIuMjkgMi42My01LjI3IDQuMjYtMi45OCAxLjYyLTYuOTQgMS42Mi0zLjEgMC01LjY5LTEuMjl0LTQuNDYtMy43NnEtMS44Ny0yLjQ2LTIuODktNi4wOC0xLjAyLTMuNjMtMS4wMi04LjI5IDAtNC4yMiAxLjE1LTcuODQgMS4xNS0zLjYzIDMuMjktNi4yOSAyLjE1LTIuNjcgNS4xNS00LjE3IDIuOTktMS40OSA2LjczLTEuNDkgMy4xOCAwIDUuNDQuOTkgMi4yNiAxIDQuMDMgMi43MXptNDcuNTggMS40OHY1My41aC05Ljk5di01My41em0xOS42NSA1My41aC05LjE0di0zNy45Nmg1LjU5cTEuNzggMCAyLjMzIDEuNjZsLjU5IDIuODJxMS0xLjExIDIuMDktMi4wNHQyLjMzLTEuNTlxMS4yNC0uNjcgMi42Ny0xLjA2IDEuNDItLjM4IDMuMTItLjM4IDMuNTkgMCA1LjkxIDEuOTQgMi4zMSAxLjk0IDMuNDYgNS4xNi44OC0xLjg5IDIuMjItMy4yNCAxLjMzLTEuMzUgMi45Mi0yLjJ0My4zOC0xLjI2cTEuOC0uNCAzLjYxLS40IDMuMTUgMCA1LjU5Ljk2dDQuMTEgMi44MXExLjY2IDEuODUgMi41MyA0LjUxLjg3IDIuNjcuODcgNi4xMXYyNC4xNmgtOS4xNHYtMjQuMTZxMC0zLjYzLTEuNTktNS40NnQtNC42Ni0xLjgzcS0xLjQxIDAtMi42MS40OHQtMi4xMSAxLjM5LTEuNDIgMi4yN3EtLjUyIDEuMzctLjUyIDMuMTV2MjQuMTZoLTkuMTh2LTI0LjE2cTAtMy44MS0xLjUzLTUuNTUtMS41NC0xLjc0LTQuNS0xLjc0LTIgMC0zLjcyLjk4dC0zLjIgMi42OHptNzIuODktOS44di02LjQxcS0zLjk2LjE5LTYuNjYuNjl0LTQuMzMgMS4yOHEtMS42My43Ny0yLjMzIDEuODEtLjcgMS4wMy0uNyAyLjI2IDAgMi40IDEuNDIgMy40NCAxLjQzIDEuMDMgMy43MiAxLjAzIDIuODEgMCA0Ljg3LTEuMDIgMi4wNS0xLjAxIDQuMDEtMy4wOG0tMTkuMzEtMTkuOTUtMS42My0yLjkycTYuNTUtNS45OSAxNS43Ni01Ljk5IDMuMzMgMCA1Ljk2IDEuMDl0NC40NCAzLjAzIDIuNzUgNC42NHEuOTUgMi43Ljk1IDUuOTJ2MjMuOThoLTQuMTVxLTEuMjkgMC0xLjk5LS4zOS0uNzEtLjM5LTEuMTEtMS41N2wtLjgyLTIuNzRxLTEuNDQgMS4zLTIuODEgMi4yOHQtMi44NSAxLjY0cS0xLjQ4LjY3LTMuMTYgMS4wMi0xLjY5LjM1LTMuNzIuMzUtMi40MSAwLTQuNDQtLjY1LTIuMDQtLjY0LTMuNTItMS45NC0xLjQ4LTEuMjktMi4yOS0zLjIyLS44MS0xLjkyLS44MS00LjQ3IDAtMS40NS40OC0yLjg3LjQ4LTEuNDMgMS41Ny0yLjcyIDEuMDktMS4zIDIuODMtMi40NCAxLjc0LTEuMTUgNC4yNy0yIDIuNTQtLjg1IDUuOTEtMS4zOSAzLjM2LS41MyA3LjY5LS42NXYtMi4yMnEwLTMuODEtMS42My01LjY0LTEuNjItMS44My00LjctMS44My0yLjIyIDAtMy42OC41MnQtMi41NyAxLjE2cS0xLjExLjY1LTIuMDIgMS4xNy0uOS41Mi0yLjAxLjUyLS45NiAwLTEuNjMtLjV0LTEuMDctMS4xN201MC42OSA5Ljg0cTEuNyAwIDIuOTYtLjQ2dDIuMDktMS4yN3EuODMtLjgyIDEuMjYtMS45Ny40Mi0xLjE0LjQyLTIuNTEgMC0yLjgxLTEuNjgtNC40Ni0xLjY5LTEuNjUtNS4wNS0xLjY1LTMuMzcgMC01LjA1IDEuNjUtMS42OSAxLjY1LTEuNjkgNC40NiAwIDEuMzMuNDMgMi40OC40MiAxLjE0IDEuMjYgMS45OC44My44MyAyLjExIDEuMjkgMS4yNy40NiAyLjk0LjQ2bTEwLjMyIDIxLjYxcTAtMS4xMS0uNjctMS44MS0uNjYtLjctMS44MS0xLjA5dC0yLjY4LS41OHEtMS41NC0uMTgtMy4yNi0uMjctMS43Mi0uMS0zLjU1LS4xN3QtMy41Ny0uM3EtMS41Mi44Ni0yLjQ2IDItLjk0IDEuMTUtLjk0IDIuNjcgMCAxIC41IDEuODYuNS44NyAxLjU5IDEuNXQyLjgzLjk4IDQuMjUuMzVxMi41NiAwIDQuNDEtLjM4IDEuODUtLjM5IDMuMDUtMS4wOCAxLjItLjY4IDEuNzYtMS42Mi41NS0uOTUuNTUtMi4wNm0tMS44MS0zOC4zN2gxMC45MXYzLjQxcTAgMS42My0xLjk2IDJsLTMuNC42MnEuNzcgMS45Ny43NyA0LjMgMCAyLjgxLTEuMTIgNS4wOC0xLjEzIDIuMjgtMy4xMyAzLjg3dC00LjcyIDIuNDYtNS44Ni44N3EtMS4xMSAwLTIuMTUtLjExLTEuMDMtLjExLTIuMDMtLjMtMS43OCAxLjA4LTEuNzggMi40MSAwIDEuMTUgMS4wNSAxLjY4IDEuMDYuNTQgMi44Ljc2dDMuOTYuMjhxMi4yMi4wNSA0LjU1LjI0IDIuMzMuMTggNC41NS42NSAyLjIyLjQ2IDMuOTYgMS40NnQyLjc5IDIuNzJxMS4wNiAxLjcyIDEuMDYgNC40MiAwIDIuNTEtMS4yNCA0Ljg4dC0zLjU5IDQuMjItNS43NyAyLjk4cS0zLjQzIDEuMTMtNy43OSAxLjEzLTQuMjkgMC03LjQ4LS44NC0zLjE4LS44My01LjI5LTIuMjItMi4xMS0xLjM4LTMuMTQtMy4yLTEuMDQtMS44MS0xLjA0LTMuNzcgMC0yLjY2IDEuNjEtNC40NiAxLjYxLTEuNzkgNC40Mi0yLjg3LTEuNTEtLjc3LTIuNC0yLjA3LS44OS0xLjI5LS44OS0zLjQgMC0uODUuMzEtMS43Ni4zMi0uOTEuOTMtMS43OS42MS0uODkgMS41My0xLjY5LjkzLS43OSAyLjE5LTEuNDItMi44OS0xLjU2LTQuNTQtNC4xNS0xLjY0LTIuNTktMS42NC02LjA2IDAtMi44MiAxLjEzLTUuMDkgMS4xMy0yLjI4IDMuMTQtMy44OSAyLjAyLTEuNjEgNC43Ny0yLjQ2IDIuNzYtLjg1IDYuMDItLjg1IDIuNDQgMCA0LjU5LjUgMi4xNC41IDMuOTIgMS40Nm0yMy45IDEzLjMyaDE3LjI0cTAtMS43Ny0uNS0zLjM1LS41LTEuNTctMS41LTIuNzUtMS0xLjE5LTIuNTMtMS44Ny0xLjU0LS42OC0zLjU3LS42OC0zLjk2IDAtNi4yNCAyLjI1LTIuMjcgMi4yNi0yLjkgNi40bTIzLjMxIDUuNTJoLTIzLjVxLjIzIDIuOTIgMS4wNCA1LjA1LjgxIDIuMTIgMi4xNSAzLjUxIDEuMzMgMS4zOSAzLjE2IDIuMDcgMS44My42OSA0LjA1LjY5dDMuODMtLjUyIDIuODEtMS4xNXExLjIxLS42MyAyLjExLTEuMTQuOTEtLjUyIDEuNzYtLjUyIDEuMTUgMCAxLjcuODVsMi42MyAzLjMzcS0xLjUyIDEuNzgtMy40MSAyLjk4LTEuODggMS4yLTMuOTQgMS45Mi0yLjA1LjcyLTQuMTggMS4wMi0yLjEyLjI5LTQuMTIuMjktMy45NiAwLTcuMzctMS4zMS0zLjQtMS4zMS01LjkyLTMuODgtMi41MS0yLjU3LTMuOTUtNi4zNy0xLjQ1LTMuNzktMS40NS04Ljc4IDAtMy44OSAxLjI2LTcuMzF0My42MS01Ljk2cTIuMzUtMi41MyA1LjczLTQuMDEgMy4zOS0xLjQ4IDcuNjQtMS40OCAzLjU5IDAgNi42MyAxLjE0IDMuMDMgMS4xNSA1LjIxIDMuMzUgMi4xOSAyLjIgMy40MyA1LjR0MS4yNCA3LjMxcTAgMi4wNy0uNDUgMi43OS0uNDQuNzMtMS43LjczIi8+PC9zdmc+" alt="Styled">
             </div>
         </section>
-        <section data-slide-index="33">
+        <section data-slide-index="36">
             <h1>Image Grid</h1>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em">
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgNDAwIDMwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzM0OThkYiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xMDMuNTM1IDE4NC4xMTVoMzkuMDJ2MTQuOTloLTU3LjE3di05Ny42MWgxOC4xNXptNjIuNTEtMjcuNmgzMS40NXEwLTMuMjQtLjkxLTYuMTF0LTIuNzMtNS4wMy00LjYyLTMuNDFxLTIuODEtMS4yNS02LjUyLTEuMjUtNy4yMiAwLTExLjM3IDQuMTJ0LTUuMyAxMS42OG00Mi41MiAxMC4wNWgtNDIuODZxLjQxIDUuMzQgMS44OSA5LjIyIDEuNDkgMy44OCAzLjkyIDYuNDF0NS43NyAzLjc4IDcuMzkgMS4yNSA2Ljk5LS45NXEyLjkzLS45NCA1LjEzLTIuMDkgMi4xOS0xLjE1IDMuODQtMi4wOSAxLjY2LS45NSAzLjIxLS45NSAyLjA5IDAgMy4xIDEuNTZsNC44IDYuMDdxLTIuNzcgMy4yNC02LjIxIDUuNDQtMy40NSAyLjE5LTcuMTkgMy41MS0zLjc1IDEuMzEtNy42MyAxLjg1dC03LjUzLjU0cS03LjIyIDAtMTMuNDMtMi4zOS02LjIxLTIuNC0xMC44LTcuMDl0LTcuMjItMTEuNjEtMi42My0xNi4wM3EwLTcuMDkgMi4yOS0xMy4zMyAyLjMtNi4yNSA2LjU4LTEwLjg3IDQuMjktNC42MyAxMC40Ny03LjMzIDYuMTctMi43IDEzLjkzLTIuNyA2LjU1IDAgMTIuMDkgMi4xIDUuNTMgMi4wOSA5LjUxIDYuMTEgMy45OSA0LjAxIDYuMjUgOS44NXQyLjI2IDEzLjMzcTAgMy43OC0uODEgNS4xLS44MSAxLjMxLTMuMTEgMS4zMW0zNy45NCAzMi41NGgtMTYuNjd2LTU2LjdsLTYuMDEtLjk1cS0xLjk2LS40LTMuMTQtMS4zOHQtMS4xOC0yLjh2LTYuODJoMTAuMzN2LTUuMTNxMC01Ljk0IDEuNzktMTAuNjYgMS43OC00LjczIDUuMTMtOC4wNCAzLjM0LTMuMyA4LjEzLTUuMDYgNC43OS0xLjc1IDEwLjgtMS43NSA0Ljc5IDAgOC45MSAxLjI4bC0uMzQgOC4zN3EtLjA3Ljk0LS41NCAxLjUyLS40Ny41Ny0xLjI1Ljg4LS43Ny4zLTEuNzguNC0xLjAyLjEtMi4xNi4xLTIuOTggMC01LjMuNjQtMi4zMy42NC0zLjk1IDIuMjN0LTIuNDcgNC4xOXEtLjg0IDIuNTktLjg0IDYuNDR2NC41OWgxOC4wMnYxMS44OGgtMTcuNDh6bTQ5Ljk1IDEuMDhxLTkuMDUgMC0xMy44Ny01LjEtNC44My01LjA5LTQuODMtMTQuMDd2LTM4LjY4aC03LjA5cS0xLjM1IDAtMi4yOS0uODgtLjk1LS44Ny0uOTUtMi42M3YtNi42MWwxMS4xNC0xLjgzIDMuNTEtMTguOXEuMzQtMS4zNSAxLjI4LTIuMDkuOTUtLjc0IDIuNDMtLjc0aDguNjR2MjEuOGgxOC41djExLjg4aC0xOC41djM3LjUzcTAgMy4yNCAxLjU5IDUuMDYgMS41OSAxLjgzIDQuMzUgMS44MyAxLjU2IDAgMi42LS4zNyAxLjA1LS4zOCAxLjgzLS43OC43Ny0uNDEgMS4zOC0uNzh0MS4yMS0uMzdxLjc1IDAgMS4yMi4zN3QxLjAxIDEuMTJsNSA4LjFxLTMuNjUgMy4wMy04LjM3IDQuNTktNC43MyAxLjU1LTkuNzkgMS41NSIvPjwvc3ZnPg==" alt="Left">
@@ -412,7 +418,7 @@ cx + dy
             <p>Layer 3 (z-index: 10)</p>
             </div>
         </section>
-        <section data-slide-index="36">
+        <section data-slide-index="41">
             <h1>Positioned Images</h1>
             <div style="position: absolute; z-index: 1; left: 100px; top: 100px">
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMzAwIDIwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzM0OThkYiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xNTkuNiAxMjYuOTVoMTN2OS4yNWgtNDB2LTkuMjVoMTQuNjVWODQuOHEwLTIuNS4xNS01LjE1bC0xMC40IDguN3EtLjkuNy0xLjc4Ljg3LS44Ny4xOC0xLjY0LjAzLS43OC0uMTUtMS4zOC0uNTMtLjYtLjM3LS45LS44MmwtMy45LTUuMzUgMjIuMDUtMTguNzVoMTAuMTV6Ii8+PC9zdmc+" alt="Image 1">
@@ -422,6 +428,63 @@ cx + dy
             </div>
         </section>
         <section data-slide-index="14">
+            <div style="background: linear-gradient(135deg; padding: 40px; border-radius: 15px; color: white; text-align: center">
+            <h2>Part 8: Interactive Chalkboard</h2>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>Chalkboard Feature</h1>
+            <p>This presentation includes <strong>interactive chalkboard</strong> functionality!</p>
+            <ul>
+                <li>Draw and annotate directly on slides</li>
+                <li>Toggle between presentation and drawing modes</li>
+                <li>Use keyboard shortcuts or buttons</li>
+                <li>Perfect for live presentations and teaching</li>
+            </ul>
+        </section>
+        <section data-slide-index="0">
+            <h1>How to Use Chalkboard</h1>
+            <p><strong>Keyboard Shortcuts:</strong></p>
+            <ul>
+                <li>Press <strong>C</strong> to toggle Chalkboard Mode (draw over slides)</li>
+                <li>Press <strong>B</strong> to toggle Notes Canvas (draw on black board)</li>
+                <li>Press <strong>DEL</strong> or <strong>BACKSPACE</strong> to clear drawings</li>
+                <li>Press <strong>D</strong> to download drawings as JSON</li>
+            </ul>
+            <p><strong>Mouse/Touch:</strong></p>
+            <ul>
+                <li>Click the chalkboard buttons at the bottom of slides</li>
+                <li>Draw with mouse or touch input</li>
+            </ul>
+        </section>
+        <section data-slide-index="0">
+            <h1>Chalkboard Modes</h1>
+            <p><strong>Chalkboard Mode (Press C):</strong></p>
+            <ul>
+                <li>Draw directly over slide content</li>
+                <li>Annotate diagrams and code</li>
+                <li>Highlight important points</li>
+            </ul>
+            <p><strong>Notes Canvas (Press B):</strong></p>
+            <ul>
+                <li>Opens a blank chalkboard for sketching</li>
+                <li>Great for explaining concepts from scratch</li>
+                <li>Like a traditional blackboard</li>
+            </ul>
+        </section>
+        <section data-slide-index="0">
+            <h1>Try It Now!</h1>
+            <p>Press <strong>C</strong> to start drawing on this slide!</p>
+            <p>You can:</p>
+            <ul>
+                <li>Circle this text</li>
+                <li>Draw arrows</li>
+                <li>Add your own notes</li>
+                <li>Underline key points</li>
+            </ul>
+            <p>Press <strong>DEL</strong> to clear when done.</p>
+        </section>
+        <section data-slide-index="18">
             <div style="text-align: center; color: #3498db; font-size: 64px; font-weight: bold">
             <h1>Thank You!</h1>
             </div>
@@ -435,7 +498,12 @@ cx + dy
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-    
+    <!-- Font Awesome (required for chalkboard) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <!-- Custom controls plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/plugin.js"></script>
+    <!-- Chalkboard plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/plugin.js"></script>
     <script>
         Reveal.initialize({
             hash: true,
@@ -443,7 +511,16 @@ cx + dy
             progress: true,
             center: true,
             backgroundTransition: 'fade',
-            plugins: [ RevealHighlight ]
+            plugins: [ RevealHighlight, RevealChalkboard, RevealCustomControls ],
+            chalkboard: {
+          "theme": "chalkboard",
+          "boardmarkerWidth": 3,
+          "chalkWidth": 7,
+          "chalkEffect": 1,
+          "readOnly": false,
+          "buttons": true,
+          "transition": 800
+}
         });
 
         // Auto-render LaTeX when slides are ready
