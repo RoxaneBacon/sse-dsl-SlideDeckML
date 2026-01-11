@@ -1,4 +1,4 @@
-import { Quiz, LivePoll, QuizQuestion, PollQuestion, isQuizMultipleChoice, isPollMultipleChoice } from "../language/generated/ast";
+import { Quiz, LivePoll, QuizQuestion, PollQuestion } from "../language/generated/ast";
 
 /**
  * Generates HTML for Quiz and LivePoll blocks
@@ -106,18 +106,6 @@ export class PollGenerator {
         });
         html += `                </div>\n`;
         html += `            </div>\n`;
-
-        return html;
-    }
-
-    /**
-     * Generate HTML for a free text question
-     */
-    private generateFreeTextQuestion(question: any, pollId: string): string {
-        const questionText = question.text.replace(/^"|"$/g, '');
-
-        let html = `            <h3>${questionText}</h3>\n`;
-        html += `            <p style="color: #999; font-style: italic;">Free text questions are not currently supported.</p>\n`;
 
         return html;
     }
@@ -274,7 +262,7 @@ export class PollGenerator {
         // Store chart instances
         const chartInstances = {};
 
-        // Toggle results button handler
+        // Toggle results button handler (host only)
         document.addEventListener('click', function(e) {
             if (e.target.classList.contains('toggle-results-btn')) {
                 const pollId = e.target.dataset.poll;
@@ -285,23 +273,16 @@ export class PollGenerator {
                     if (pollDiv) pollDiv.style.display = 'none';
                     resultsDiv.style.display = 'block';
                     e.target.textContent = 'Hide Results';
-
                     updateChart(pollId);
-
-                    // Broadcast to participants to show results
-                    broadcastPollState(pollId, true);
                 } else {
                     if (pollDiv) pollDiv.style.display = 'flex';
                     resultsDiv.style.display = 'none';
                     e.target.textContent = 'Show Results';
-
-                    // Broadcast to participants to hide results
-                    broadcastPollState(pollId, false);
                 }
             }
         });
 
-        // Auto-show results when voting (for showResultsOnDemand: false)
+        // Auto-show results when voting (for showResultsOnDemand: false, host only)
         document.addEventListener('click', function(e) {
             if (e.target.matches('.poll[data-auto-show-results="true"] button')) {
                 const pollDiv = e.target.closest('.poll');
@@ -313,75 +294,38 @@ export class PollGenerator {
                     pollDiv.style.display = 'none';
                     resultsDiv.style.display = 'block';
                     updateChart(pollId);
-
-                    // Broadcast to participants to show results
-                    broadcastPollState(pollId, true);
                 }, 500);
             }
         });
 
-        // Broadcast poll state to participants (host only)
-        function broadcastPollState(pollId, showResults) {
-            const urlParams = new URLSearchParams(window.location.search);
-            const isHost = urlParams.get('host') === 'true';
-
-            if (isHost && typeof RevealSeminar !== 'undefined') {
-                RevealSeminar.post({
-                    type: 'poll-state',
-                    pollId: pollId,
-                    showResults: showResults
-                });
-            }
-        }
-
-        // Listen for poll state changes (participants)
-        Reveal.on('message', function(event) {
-            if (event.content && event.content.type === 'poll-state') {
-                const pollId = event.content.pollId;
-                const showResults = event.content.showResults;
-                const pollDiv = document.querySelector('.poll[data-poll="' + pollId + '"]');
-                const resultsDiv = document.querySelector('.results[data-poll="' + pollId + '"]');
-
-                if (pollDiv && resultsDiv) {
-                    if (showResults) {
-                        pollDiv.style.display = 'none';
-                        resultsDiv.style.display = 'block';
-                        updateChart(pollId);
-                    } else {
-                        pollDiv.style.display = 'flex';
-                        resultsDiv.style.display = 'none';
-                    }
+        // Listen for vote updates from the poll plugin (host only)
+        if (!isGuest) {
+            Reveal.on('received', function(event) {
+                if (event.content && event.content.type === 'poll') {
+                    // A vote was received, update all visible charts
+                    document.querySelectorAll('.results').forEach(function(resultsDiv) {
+                        const displayStyle = window.getComputedStyle(resultsDiv).display;
+                        if (displayStyle !== 'none') {
+                            const pollId = resultsDiv.dataset.poll;
+                            setTimeout(function() {
+                                updateChart(pollId);
+                            }, 300); // Small delay to let the poll plugin update the data
+                        }
+                    });
                 }
-            }
-        });
+            });
 
-        // Listen for vote updates from the poll plugin
-        Reveal.on('received', function(event) {
-            if (event.content && event.content.type === 'poll') {
-                // A vote was received, update all visible charts
+            // Refresh charts periodically when visible (host only)
+            setInterval(function() {
                 document.querySelectorAll('.results').forEach(function(resultsDiv) {
                     const displayStyle = window.getComputedStyle(resultsDiv).display;
                     if (displayStyle !== 'none') {
                         const pollId = resultsDiv.dataset.poll;
-                        setTimeout(function() {
-                            updateChart(pollId);
-                        }, 300); // Small delay to let the poll plugin update the data
+                        updateChart(pollId);
                     }
                 });
-            }
-        });
-
-        // Listen for vote updates and refresh charts (backup polling)
-        setInterval(function() {
-            // Update all visible charts with latest data
-            document.querySelectorAll('.results').forEach(function(resultsDiv) {
-                const displayStyle = window.getComputedStyle(resultsDiv).display;
-                if (displayStyle !== 'none') {
-                    const pollId = resultsDiv.dataset.poll;
-                    updateChart(pollId);
-                }
-            });
-        }, 2000); // Check every 2 seconds for updates
+            }, 1000); // Check every seconds for updates
+        }
 
         // Update or create chart for a poll
         function updateChart(pollId) {
