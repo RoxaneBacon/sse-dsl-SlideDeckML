@@ -27,8 +27,9 @@ Complete Feature Demonstration
 6. **Media** - Images and positioning
 7. **Absolute Positioning** - calque, margins
 8. **Chalkboard** - Interactive drawing and annotations
-9. **Fragment Animations** - Incremental reveals and transitions
-10. **Slide Transitions** - Visual effects between slides
+9. **Integrated IDE** - Compile and run Python / Javascript / SQL
+10. **Fragment Animations** - Incremental reveals and transitions
+11. **Slide Transitions** - Visual effects between slides
 
 ===
 ::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
@@ -491,8 +492,113 @@ You can:
 Press **DEL** to clear when done.
 
 ===
+::: {background: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
+## Part 9: Integrated IDE
+:::
+
+===
+# Integrated IDE Feature
+
+This presentation includes **integrated IDE** functionality!
+
+- Compile and run Python / JavaScript / SQL
+- Monaco editor with VS Code-like syntax highlighting
+- Customize editor and output positions for better layout
+- Perfect for live coding demonstrations
+
+===
+
+::: {calque: 1, horizontal-margin: 0, vertical-margin: 50}
+,,,ide python 
+```
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+print(fibonacci(5))    
+```
+output : "python-output",,,
+:::
+
+::: {calque: 1, horizontal-margin: 0, vertical-margin: 420}
+output : "python-output"
+:::
+
+::: {calque: 1, horizontal-margin: 570, vertical-margin: 100}
+### Python editor with output at bottom for small exemples
+:::
+
+===
+
+### Side to side for better graphical view
+
+::: {calque: 1, horizontal-margin: -50, vertical-margin: 200}
+,,,ide python
+```
+#!/usr/bin/env python3
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.plot(x, y, 'b-', linewidth=2)
+plt.title('Simple Sinus')
+plt.xlabel('x')
+plt.ylabel('sin(x)')
+plt.grid(True, alpha=0.3)
+plt.show()
+```
+ output : "python-output-2",,,
+:::
+
+::: {calque: 1, horizontal-margin: 500, vertical-margin: 200}
+output : "python-output-2"
+:::
+
+===
+
+### Handle Javascript and SQL too !
+
+::: {calque: 1, horizontal-margin: -50, vertical-margin: 130}
+,,,ide javascript
+```
+#!/usr/bin/env node
+
+function fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+for (let i = 0; i < 5; i++) {
+  console.log(`F(${i}) = ${fibonacci(i)}`);
+}
+```
+output : "javascript-output",,,
+:::
+
+::: {calque: 1, horizontal-margin: -50, vertical-margin: 500}
+output : "javascript-output"
+:::
+
+::: {calque: 1, horizontal-margin: 500, vertical-margin: 130}
+,,,ide sql 
+```
+CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(50));
+INSERT INTO users (id, name) VALUES (1, 'Alice');
+SELECT * FROM users;
+```
+output : "sql-output",,,
+:::
+
+::: {calque: 1, horizontal-margin: 500, vertical-margin: 500}
+output : "sql-output"
+:::
+
+===
 ::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
-## Part 9: Fragment Animations
+## Part 10: Fragment Animations
 :::
 
 ===
@@ -570,7 +676,7 @@ Fade in → Turn red → Semi fade out
 
 ===
 ::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
-## Part 10: Slide Transitions
+## Part 11: Slide Transitions
 :::
 
 ===

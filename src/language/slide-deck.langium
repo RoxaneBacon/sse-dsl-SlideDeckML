@@ -38,7 +38,7 @@ FragmentElement:
     STYLE_DELIMITER fragment=FRAGMENT_ATTRS elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments)+ STYLE_DELIMITER;
 
 StyledElement:
-    STYLE_DELIMITER style=STYLE_ATTRS elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments)+ STYLE_DELIMITER;
+    STYLE_DELIMITER style=STYLE_ATTRS elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments | Editor | Output)+ STYLE_DELIMITER;
 
 UnorderedList:
     items+=UnorderedListItem+;
@@ -64,6 +64,18 @@ Quote:
 Media:
     content=MEDIA_LINE;
 
+Editor:
+    IDE_START language=EditorLanguage
+    (placeholder=CODE_BLOCK)?
+    ('output' ':' output=[Output:STRING])?
+    IDE_DELIMITER;
+
+Output:
+    'output' ':' id=STRING;
+
+EditorLanguage returns string:
+    'python' | 'sql' | 'javascript';
+
 terminal CODE_BLOCK returns string:
     /```[a-zA-Z0-9_\-]*(?:\s*\[(?:(?:highlight:\s*(?:block|function|class|line-by-line|all|none))|(?:lines:\s*["'][^"']+["'])|(?:start:\s*\d+)|\s)+\])?[\r\n]([\s\S]*?)```/;
 
@@ -84,6 +96,8 @@ terminal FRAGMENT_ATTRS returns string:
 terminal STYLE_ATTRS returns string:
     /\{[^\}\r\n]+\}/;
 
+terminal IDE_START: /,,,ide/;
+terminal IDE_DELIMITER: /,,,/;
 terminal STYLE_DELIMITER: /:::/;
 
 terminal SLIDE_SEPARATOR: /===[\t ]*\r?\n/;
@@ -93,7 +107,7 @@ terminal HEADER_LEVEL: /###|##|#/;
 terminal LIST_MARKER: /[\-\*\+]/;
 
 terminal PARAGRAPH_TEXT returns string:
-    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!```)(?!===)(?!---)(?!\[\-\-\-\])(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*css)(?![\s]*logo)(?![\s]*theme)(?![\s]*transition)(?![\s]*chalkboard)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
+    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!```)(?!,,,)(?!===)(?!---)(?!\[\-\-\-\])(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*css)(?![\s]*logo)(?![\s]*theme)(?![\s]*transition)(?![\s]*chalkboard)(?![\s]*python)(?![\s]*sql)(?![\s]*javascript)(?![\s]*output)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
 
 terminal STRING returns string:
     /"(?:\\.|[^"\\])*"/;

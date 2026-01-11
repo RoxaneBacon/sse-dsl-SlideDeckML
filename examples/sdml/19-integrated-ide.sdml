@@ -1,0 +1,106 @@
+{ 
+    author: "Code Instructor" 
+    title: "Code Workshop"
+}
+
+===
+
+# Welcome to the Code Workshop
+
+Today we'll explore Python, Sql and Javascript
+
+===
+
+::: {calque: 1, horizontal-margin: 0, vertical-margin: 50}
+,,,ide python 
+```
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+print(fibonacci(5))    
+```
+output : "python-output",,,
+:::
+
+::: {calque: 1, horizontal-margin: 0, vertical-margin: 420}
+output : "python-output"
+:::
+
+::: {calque: 1, horizontal-margin: 570, vertical-margin: 100}
+### Python editor with output at bottom for small exemples
+:::
+
+===
+
+### Side to side for better graphical view (run please)
+
+::: {calque: 1, horizontal-margin: -50, vertical-margin: 200}
+,,,ide python
+```
+#!/usr/bin/env python3
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.plot(x, y, 'b-', linewidth=2)
+plt.title('Simple Sinus')
+plt.xlabel('x')
+plt.ylabel('sin(x)')
+plt.grid(True, alpha=0.3)
+plt.show()
+```
+ output : "python-output-2",,,
+:::
+
+::: {calque: 1, horizontal-margin: 500, vertical-margin: 200}
+output : "python-output-2"
+:::
+
+===
+
+### Handle Javascript and SQL too !
+
+::: {calque: 1, horizontal-margin: -50, vertical-margin: 130}
+,,,ide javascript
+```
+#!/usr/bin/env node
+
+function fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+for (let i = 0; i < 5; i++) {
+  console.log(`F(${i}) = ${fibonacci(i)}`);
+}
+```
+output : "javascript-output",,,
+:::
+
+::: {calque: 1, horizontal-margin: -50, vertical-margin: 500}
+output : "javascript-output"
+:::
+
+::: {calque: 1, horizontal-margin: 500, vertical-margin: 130}
+,,,ide sql 
+```
+CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(50));
+INSERT INTO users (id, name) VALUES (1, 'Alice');
+SELECT * FROM users;
+```
+output : "sql-output",,,
+:::
+
+::: {calque: 1, horizontal-margin: 500, vertical-margin: 500}
+output : "sql-output"
+:::
+
+===
+
+# Thank You!
+
+Your feedback helps us improve our workshops
