@@ -1,4 +1,4 @@
-import { Presentation, Slide, isCodeBlock, isSyncFragments, isStyledElement, isFragmentElement, LineContent } from "../language/generated/ast";
+import { Presentation, Slide, isCodeBlock, isSyncFragments, isStyledElement, isFragmentElement, LineContent, Editor, Output } from "../language/generated/ast";
 import { ElementGenerator } from "./element-generator";
 import { TemplateGenerator } from "./template";
 import { StyleParser } from "./style-parser";
@@ -14,11 +14,11 @@ export class HtmlGenerator {
 
     constructor() {
         this.templateGenerator = new TemplateGenerator();
-        
+
         // Initialize the dependency chain
         const elementGenerator = new ElementGenerator();
         const styleParser = new StyleParser();
-        const lineContentHandler = new LineContentHandler(elementGenerator, styleParser);
+        const lineContentHandler = new LineContentHandler(elementGenerator, styleParser, this.templateGenerator.getIdeRuntime());
         this.sectionGenerator = new SectionGenerator(lineContentHandler);
     }
 
@@ -77,7 +77,7 @@ export class HtmlGenerator {
      * Recursively check a line and its nested elements for feature usage
      * @param line The line content to check
      */
-    private checkLineForFeatures(line: LineContent): void {
+    private checkLineForFeatures(line: LineContent | Editor | Output): void {
         // Check for LaTeX code blocks
         if (isCodeBlock(line)) {
             if (line.content.match(/```latex/i)) {

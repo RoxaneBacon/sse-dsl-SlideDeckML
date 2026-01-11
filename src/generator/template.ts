@@ -1,8 +1,10 @@
 import { Metadata } from '../language/generated/ast';
 import { ImageConverter } from './image-converter';
+import { IdeRuntimeGenerator } from './ide-runtime';
 import * as path from 'path';
 
 export class TemplateGenerator {
+    private ideRuntime = new IdeRuntimeGenerator()
     private title: string = 'SlideDeckML Presentation'
     private author: string = 'Unknown Author'
     private css: string = ''
@@ -45,6 +47,14 @@ export class TemplateGenerator {
      */
     public enableLatex(): void {
         this.useLatex = true;
+    }
+
+    /**
+     * Get the IDE runtime generator instance
+     * @returns The IDE runtime generator
+     */
+    public getIdeRuntime(): IdeRuntimeGenerator {
+        return this.ideRuntime;
     }
 
     public setMetadata(metadata: Metadata): void {
@@ -159,27 +169,28 @@ export class TemplateGenerator {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     ${this.useLatex ? '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">' : ''}
     ${this.chalkboardEnabled ? chalkboardCDN.css : ''}
-    <style> 
-        
+    ${this.ideRuntime.generateCdnLinks()}
+    <style>
+
         ${this.css}
 
         /* Default Reveal.js overrides */
         .reveal {
             font-size: 32px; /* Reduced from default 40px */
         }
-        
+
         .reveal .slides {
             text-align: left; /* Remove default centering */
         }
-        
+
         .reveal h1 {
             font-size: 2em; /* Reduced from default 2.5em */
         }
-        
+
         .reveal h2 {
             font-size: 1.3em; /* Reduced from default 1.8em */
         }
-        
+
         .reveal h3 {
             font-size: 1em; /* Reduced from default 1.5em */
         }
@@ -215,6 +226,7 @@ export class TemplateGenerator {
         .sync-container[data-keep="true"] .sync-item {
             position: relative;
         }` : ''}
+${this.ideRuntime.generateStyles()}
     </style>
 </head>
 <body>
@@ -243,6 +255,8 @@ ${slidesContent}
     ${this.useLatex ? '<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>' : ''}
     ${this.useLatex ? '<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>' : ''}
     ${this.chalkboardEnabled ? chalkboardCDN.js : ''}
+    ${this.ideRuntime.generateScriptTags()}
+    <script>${this.ideRuntime.generateRuntimeScript()}</script>
     <script>
         Reveal.initialize({
             hash: true,
