@@ -76,40 +76,26 @@ Output:
 EditorLanguage returns string:
     'python' | 'sql' | 'javascript';
 
-// fragment = abstract class
-fragment InteractiveElement:
-    title=STRING;
-
 Quiz:
-    QUIZ_START InteractiveElement
+    QUIZ_START title=STRING
     questions+=QuizQuestion+
     STYLE_DELIMITER;
 
 LivePoll:
-    POLL_START InteractiveElement
+    POLL_START title=STRING
     questions+=PollQuestion+
     STYLE_DELIMITER;
 
-// fragment = abstract class
-fragment InteractiveElementQuestion:
-    text=STRING;
-
 QuizQuestion:
-    QuizMultipleChoice;
-
-PollQuestion:
-    PollMultipleChoice;
-
-QuizMultipleChoice:
-    'question' ':' InteractiveElementQuestion
+    'question' ':' text=STRING
         choices+=Choice+
         'correct' ':'
             correctAnswers+=[Choice:STRING]+
     ('showResultsOnDemand' ':' showResultsOnDemand=BOOLEAN)?
     ('visualization' ':' visualizationType=VisualizationType)?;
 
-PollMultipleChoice:
-    'question' ':' InteractiveElementQuestion
+PollQuestion:
+    'question' ':' text=STRING
         choices+=Choice+
     ('showResultsOnDemand' ':' showResultsOnDemand=BOOLEAN)?
     ('visualization' ':' visualizationType=VisualizationType)?;

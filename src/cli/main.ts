@@ -11,7 +11,6 @@ import {NodeFileSystem} from "langium/node";
 import {URI} from "vscode-uri";
 import { DevServer } from '../dev-server/server';
 import { InteractiveElementDetector } from '../generator/interactive-element-detector';
-import { QuizServer } from '../quiz-server/quiz-server';
 
 const program = new Command();
 
@@ -121,17 +120,9 @@ async function compile(inputFile: string, outputFile: string): Promise<void> {
     // Extract AST
     const presentation = document.parseResult.value as Presentation;
 
-    // Start quiz server if needed
+    // Check for interactive elements and inform user
     if (InteractiveElementDetector.hasInteractiveElements(presentation)) {
-        console.log('Quiz/Poll detected - starting server...');
-        const quizServer = new QuizServer();
-        await quizServer.start();
-        console.log(`Quiz/Poll server running on port ${quizServer.getPort()}`);
-
-        process.on('SIGINT', () => {
-            quizServer.stop();
-            process.exit(0);
-        });
+        console.log('Quiz/Poll detected - remember to start the server with: npm run quiz-server and to expose your port for participants to join.');
     }
 
     // Generate HTML

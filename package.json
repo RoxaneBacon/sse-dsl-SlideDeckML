@@ -12,7 +12,8 @@
     "langium:generate": "langium generate",
     "langium:watch": "langium generate --watch",
     "compile": "node ./out/cli/main.js compile",
-    "dev": "node ./out/cli/main.js dev"
+    "dev": "node ./out/cli/main.js dev",
+    "quiz-server": "node ./standalone-quiz-server/start-server.js"
   },
   "keywords": [
     "langium",
