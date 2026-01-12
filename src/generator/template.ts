@@ -8,8 +8,11 @@ export class TemplateGenerator {
     private css: string = ''
     private logo: string = ''
     private theme: string = 'white'
-    private transition: string = 'slide'
     private sourceFilePath?: string;
+    
+    // Feature usage tracking
+    private useSyncFragments: boolean = false;
+    private useLatex: boolean = false;
     
     // Chalkboard configuration
     private chalkboardEnabled: boolean = false;
@@ -30,6 +33,20 @@ export class TemplateGenerator {
         this.sourceFilePath = filePath;
     }
 
+    /**
+     * Enable synchronized fragments JavaScript
+     */
+    public enableSyncFragments(): void {
+        this.useSyncFragments = true;
+    }
+
+    /**
+     * Enable LaTeX rendering JavaScript
+     */
+    public enableLatex(): void {
+        this.useLatex = true;
+    }
+
     public setMetadata(metadata: Metadata): void {
         // Access author and title directly from the metadata object
         this.author = metadata.author.replace(/^"|"$/g, '')
@@ -42,9 +59,6 @@ export class TemplateGenerator {
         }
         if (metadata.theme) {
             this.theme = metadata.theme.replace(/^"|"$/g, '')
-        }
-        if (metadata.transition) {
-            this.transition = metadata.transition.replace(/^"|"$/g, '')
         }
         
         // Chalkboard configuration
@@ -143,7 +157,7 @@ export class TemplateGenerator {
         this.theme
     }.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    ${this.useLatex ? '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">' : ''}
     ${this.chalkboardEnabled ? chalkboardCDN.css : ''}
     <style> 
         
@@ -169,7 +183,7 @@ export class TemplateGenerator {
         .reveal h3 {
             font-size: 1em; /* Reduced from default 1.5em */
         }
-   
+   ${this.useSyncFragments ? `
         /* Synchronized fragments styling */
         .sync-container {
             position: relative;
@@ -200,7 +214,7 @@ export class TemplateGenerator {
         }
         .sync-container[data-keep="true"] .sync-item {
             position: relative;
-        }
+        }` : ''}
     </style>
 </head>
 <body>
@@ -226,18 +240,18 @@ ${slidesContent}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    ${this.useLatex ? '<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>' : ''}
+    ${this.useLatex ? '<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>' : ''}
     ${this.chalkboardEnabled ? chalkboardCDN.js : ''}
     <script>
         Reveal.initialize({
             hash: true,
-            transition: '${this.transition}',
+            transition: 'slide',
             progress: true,
             center: true,
             backgroundTransition: 'fade',
             plugins: [ RevealHighlight${this.chalkboardEnabled ? ', RevealChalkboard, RevealCustomControls' : ''} ]${this.chalkboardEnabled ? ',\n            chalkboard: ' + this.getChalkboardConfig() : ''}
-        });
+        });${this.useLatex ? `
 
         // Auto-render LaTeX when slides are ready
         Reveal.on('ready', function() {
@@ -248,7 +262,7 @@ ${slidesContent}
                 ],
                 throwOnError: false
             });
-        });
+        });` : ''}${this.useSyncFragments ? `
 
         // Synchronized fragments handler
         let currentFragmentIndex = -1;
@@ -318,7 +332,7 @@ ${slidesContent}
         // Initialize on load
         Reveal.on('ready', () => {
             updateSyncItems();
-        });
+        });` : ''}
     </script>
 </body>
 </html>`

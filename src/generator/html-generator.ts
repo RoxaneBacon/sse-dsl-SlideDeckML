@@ -1,4 +1,4 @@
-import { Presentation, Slide } from "../language/generated/ast";
+import { Presentation, Slide, isCodeBlock, isSyncFragments, isStyledElement, isFragmentElement, LineContent } from "../language/generated/ast";
 import { ElementGenerator } from "./element-generator";
 import { TemplateGenerator } from "./template";
 import { StyleParser } from "./style-parser";
@@ -39,6 +39,9 @@ export class HtmlGenerator {
             this.setSourceFilePath(sourceFilePath);
         }
 
+        // Detect feature usage in the presentation
+        this.detectFeatureUsage(presentation);
+
         // Reset slide index counter
         this.sectionGenerator.resetSlideIndex();
 
@@ -52,6 +55,54 @@ export class HtmlGenerator {
         const slidesHTML = (await Promise.all(slidesPromises)).join("\n");
 
         return this.templateGenerator.getHTMLTemplate(slidesHTML);
+    }
+
+    /**
+     * Detect which features are used in the presentation and enable them in the template
+     * @param presentation The presentation AST
+     */
+    private detectFeatureUsage(presentation: Presentation): void {
+        const slides = presentation.slides?.slides || [];
+        
+        for (const slide of slides) {
+            for (const block of slide.blocks) {
+                for (const line of block.lines) {
+                    this.checkLineForFeatures(line);
+                }
+            }
+        }
+    }
+
+    /**
+     * Recursively check a line and its nested elements for feature usage
+     * @param line The line content to check
+     */
+    private checkLineForFeatures(line: LineContent): void {
+        // Check for LaTeX code blocks
+        if (isCodeBlock(line)) {
+            if (line.content.match(/```latex/i)) {
+                this.templateGenerator.enableLatex();
+            }
+        }
+        
+        // Check for synchronized fragments
+        if (isSyncFragments(line)) {
+            this.templateGenerator.enableSyncFragments();
+        }
+        
+        // Recursively check styled elements
+        if (isStyledElement(line)) {
+            for (const element of line.elements) {
+                this.checkLineForFeatures(element);
+            }
+        }
+        
+        // Recursively check fragment elements
+        if (isFragmentElement(line)) {
+            for (const element of line.elements) {
+                this.checkLineForFeatures(element);
+            }
+        }
     }
 
     /**

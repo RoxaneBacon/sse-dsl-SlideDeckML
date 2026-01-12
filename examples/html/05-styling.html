@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
     
     <style> 
         
@@ -36,37 +36,6 @@
             font-size: 1em; /* Reduced from default 1.5em */
         }
    
-        /* Synchronized fragments styling */
-        .sync-container {
-            position: relative;
-            min-height: 50px;
-            font-size: 0.9em;
-        }
-        .sync-item {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-        .sync-item.active {
-            display: block;
-            opacity: 1;
-        }
-        .sync-item p {
-            margin: 0.3em 0;
-        }
-        .sync-item img {
-            max-width: 100%;
-            height: auto;
-        }
-        /* Keep mode: stack items vertically */
-        .sync-container[data-keep="true"] {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3em;
-        }
-        .sync-container[data-keep="true"] .sync-item {
-            position: relative;
-        }
     </style>
 </head>
 <body>
@@ -124,11 +93,11 @@
             <blockquote>Important quote with custom styling</blockquote>
             </div>
         </section>
-        <section data-slide-index="9">
+        <section data-slide-index="10">
             <h1>Styled Images</h1>
             <p>Normal image:</p>
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgNDAwIDMwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI0RERERERCIvPjxwYXRoIGZpbGw9IiM5OTk5OTkiIGQ9Ik04Ny4zIDE1NC43MmgxMS42NnYtMTIuNTRxMC0xLjc3LjI0LTMuOTJ6bTE3LjM2IDBoNC44MnYzLjc5cTAgLjUzLS4zNS45MS0uMzQuMzktLjk4LjM5aC0zLjQ5djkuMzVoLTUuN3YtOS4zNUg4Mi43OXEtLjY2IDAtMS4xNi0uNDItLjUxLS40MS0uNjQtMS4wMmwtLjY5LTMuMzEgMTguMTYtMjQuMjVoNi4yem0zNS41OS00LjcycTAgNS4wMS0xLjA4IDguNzEtMS4wNyAzLjY5LTIuOTcgNi4xLTEuODkgMi40Mi00LjQ3IDMuNTktMi41OSAxLjE4LTUuNTggMS4xOC0zIDAtNS41NS0xLjE4LTIuNTYtMS4xNy00LjQ0LTMuNTktMS44OC0yLjQxLTIuOTQtNi4xLTEuMDYtMy43LTEuMDYtOC43MSAwLTUuMDMgMS4wNi04LjcyIDEuMDYtMy42OCAyLjk0LTYuMDl0NC40NC0zLjU5cTIuNTUtMS4xOCA1LjU1LTEuMTggMi45OSAwIDUuNTggMS4xOCAyLjU4IDEuMTggNC40NyAzLjU5IDEuOSAyLjQxIDIuOTcgNi4wOSAxLjA4IDMuNjkgMS4wOCA4LjcybS02Ljc2IDBxMC00LjE2LS42MS02Ljg5dC0xLjYzLTQuMzVxLTEuMDItMS42MS0yLjM1LTIuMjYtMS4zMi0uNjUtMi43NS0uNjUtMS40MSAwLTIuNzIuNjV0LTIuMzIgMi4yNnEtMSAxLjYyLTEuNiA0LjM1dC0uNiA2Ljg5LjYgNi44OSAxLjYgNC4zNXExLjAxIDEuNjEgMi4zMiAyLjI2dDIuNzIuNjVxMS40MyAwIDIuNzUtLjY1IDEuMzMtLjY1IDIuMzUtMi4yNiAxLjAyLTEuNjIgMS42My00LjM1dC42MS02Ljg5bTM3LjUgMHEwIDUuMDEtMS4wOCA4LjcxLTEuMDcgMy42OS0yLjk3IDYuMS0xLjg5IDIuNDItNC40NyAzLjU5LTIuNTkgMS4xOC01LjU4IDEuMTgtMyAwLTUuNTUtMS4xOC0yLjU2LTEuMTctNC40NC0zLjU5LTEuODgtMi40MS0yLjk0LTYuMS0xLjA2LTMuNy0xLjA2LTguNzEgMC01LjAzIDEuMDYtOC43MiAxLjA2LTMuNjggMi45NC02LjA5dDQuNDQtMy41OXEyLjU1LTEuMTggNS41NS0xLjE4IDIuOTkgMCA1LjU4IDEuMTggMi41OCAxLjE4IDQuNDcgMy41OSAxLjkgMi40MSAyLjk3IDYuMDkgMS4wOCAzLjY5IDEuMDggOC43Mm0tNi43NiAwcTAtNC4xNi0uNjEtNi44OXQtMS42My00LjM1cS0xLjAyLTEuNjEtMi4zNS0yLjI2LTEuMzItLjY1LTIuNzUtLjY1LTEuNDEgMC0yLjcyLjY1dC0yLjMyIDIuMjZxLTEgMS42Mi0xLjYgNC4zNXQtLjYgNi44OS42IDYuODkgMS42IDQuMzVxMS4wMSAxLjYxIDIuMzIgMi4yNnQyLjcyLjY1cTEuNDMgMCAyLjc1LS42NSAxLjMzLS42NSAyLjM1LTIuMjYgMS4wMi0xLjYyIDEuNjMtNC4zNXQuNjEtNi44OW00OC44NCAxMC4zOS0zLjQ3IDMuNDItOC45OS04Ljk5LTkuMDYgOS4wNC0zLjQ3LTMuNDIgOS4wNi05LjA5LTguNjQtOC42NCAzLjQ1LTMuNDQgOC42NCA4LjY0IDguNTgtOC41OSAzLjUgMy40NS04LjYxIDguNjF6bTIyLjA1LTE4LjI2LTMuNDUtLjYxcS40LTIuNzYgMS41NC00Ljg0dDIuODUtMy40NyAzLjkyLTIuMDkgNC43Ni0uN3EyLjY1IDAgNC43OC43NSAyLjEzLjc2IDMuNjQgMi4xIDEuNTEgMS4zMyAyLjMyIDMuMTQuODEgMS44LjgxIDMuODkgMCAxLjgzLS40MSAzLjIydC0xLjE4IDIuNDNxLS43NyAxLjAzLTEuOTEgMS43NS0xLjE0LjcxLTIuNTcgMS4xOSAzLjQ1IDEuMDggNS4xNCAzLjMxIDEuNyAyLjIzIDEuNyA1LjU5IDAgMi44Ni0xLjA2IDUuMDZ0LTIuODYgMy43cS0xLjgxIDEuNS00LjE4IDIuMjctMi4zNy43Ni01LjAyLjc2LTIuODkgMC01LjAzLS42Ni0yLjE1LS42Ni0zLjc0LTEuOTZ0LTIuNy0zLjE4cS0xLjEyLTEuODgtMS45MS00LjM1bDIuODktMS4xOXExLjE0LS40NyAyLjEzLS4yNS45OS4yMyAxLjQ0IDEuMDcuNDguOTMgMS4wNSAxLjgzdDEuMzcgMS42MXEuNzkuNyAxLjg2IDEuMTMgMS4wOC40NCAyLjU2LjQ0IDEuNjcgMCAyLjkyLS41NCAxLjI0LS41NCAyLjA4LTEuNDIuODMtLjg3IDEuMjQtMS45NS40MS0xLjA3LjQxLTIuMTYgMC0xLjM3LS4yOS0yLjV0LTEuMjItMS45MnEtLjkzLS44LTIuNjYtMS4yNS0xLjc0LS40NS00LjY1LS40NXYtNC42NnEyLjQxLS4wMyA0LS40NSAxLjU5LS40MyAyLjUzLTEuMTguOTQtLjc2IDEuMzEtMS44MnQuMzctMi4zM3EwLTIuNy0xLjUxLTQuMTEtMS41MS0xLjQtNC4wMy0xLjQtMS4xNiAwLTIuMTQuMzN0LTEuNzYuOTNxLS43OS41OS0xLjMyIDEuMzktLjUzLjc5LS43OSAxLjc1LS40NSAxLjIyLTEuMTggMS42MS0uNzMuNC0yLjA1LjE5bTUzLjg0IDcuODdxMCA1LjAxLTEuMDcgOC43MS0xLjA3IDMuNjktMi45NyA2LjEtMS44OSAyLjQyLTQuNDggMy41OS0yLjU4IDEuMTgtNS41NyAxLjE4LTMgMC01LjU2LTEuMTgtMi41NS0xLjE3LTQuNDMtMy41OS0xLjg5LTIuNDEtMi45NS02LjEtMS4wNi0zLjctMS4wNi04LjcxIDAtNS4wMyAxLjA2LTguNzIgMS4wNi0zLjY4IDIuOTUtNi4wOSAxLjg4LTIuNDEgNC40My0zLjU5IDIuNTYtMS4xOCA1LjU2LTEuMTggMi45OSAwIDUuNTcgMS4xOCAyLjU5IDEuMTggNC40OCAzLjU5IDEuOSAyLjQxIDIuOTcgNi4wOSAxLjA3IDMuNjkgMS4wNyA4LjcybS02Ljc1IDBxMC00LjE2LS42MS02Ljg5dC0xLjYzLTQuMzVxLTEuMDItMS42MS0yLjM1LTIuMjYtMS4zMi0uNjUtMi43NS0uNjUtMS40MSAwLTIuNzIuNjV0LTIuMzIgMi4yNnEtMS4wMSAxLjYyLTEuNiA0LjM1LS42IDIuNzMtLjYgNi44OXQuNiA2Ljg5cS41OSAyLjczIDEuNiA0LjM1IDEuMDEgMS42MSAyLjMyIDIuMjZ0Mi43Mi42NXExLjQzIDAgMi43NS0uNjUgMS4zMy0uNjUgMi4zNS0yLjI2IDEuMDItMS42MiAxLjYzLTQuMzV0LjYxLTYuODltMzcuNDkgMHEwIDUuMDEtMS4wNyA4LjcxLTEuMDcgMy42OS0yLjk3IDYuMS0xLjg5IDIuNDItNC40OCAzLjU5LTIuNTggMS4xOC01LjU3IDEuMTgtMyAwLTUuNTYtMS4xOC0yLjU1LTEuMTctNC40My0zLjU5LTEuODktMi40MS0yLjk1LTYuMS0xLjA2LTMuNy0xLjA2LTguNzEgMC01LjAzIDEuMDYtOC43MiAxLjA2LTMuNjggMi45NS02LjA5IDEuODgtMi40MSA0LjQzLTMuNTkgMi41Ni0xLjE4IDUuNTYtMS4xOCAyLjk5IDAgNS41NyAxLjE4IDIuNTkgMS4xOCA0LjQ4IDMuNTkgMS45IDIuNDEgMi45NyA2LjA5IDEuMDcgMy42OSAxLjA3IDguNzJtLTYuNzUgMHEwLTQuMTYtLjYxLTYuODl0LTEuNjMtNC4zNXEtMS4wMi0xLjYxLTIuMzUtMi4yNi0xLjMyLS42NS0yLjc1LS42NS0xLjQxIDAtMi43Mi42NXQtMi4zMiAyLjI2cS0xLjAxIDEuNjItMS42IDQuMzUtLjYgMi43My0uNiA2Ljg5dC42IDYuODlxLjU5IDIuNzMgMS42IDQuMzUgMS4wMSAxLjYxIDIuMzIgMi4yNnQyLjcyLjY1cTEuNDMgMCAyLjc1LS42NSAxLjMzLS42NSAyLjM1LTIuMjYgMS4wMi0xLjYyIDEuNjMtNC4zNXQuNjEtNi44OSIvPjwvc3ZnPg==" alt="Regular">
-            <div style="width: 50%; border: 5px solid #e74c3c; border-radius: 15px; box-shadow: 0 4px 8px rgba(0">
+            <div style="width: 50%; border: 5px solid #e74c3c; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2)">
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgNjAwIDQwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzM0OThkYiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Im0xNTAuNzU1IDE3Ni40NS0yLjEyIDQuMDFxLS4zNy42Ni0uOC45Ni0uNDIuMy0xLjA1LjMtLjY3IDAtMS40NC0uNDl0LTEuODQtMS4wOS0yLjUtMS4wOXEtMS40NC0uNDgtMy4zOS0uNDgtMS43NiAwLTMuMDkuNDItMS4zMi40My0yLjIyIDEuMTgtLjkuNzYtMS4zNCAxLjgxLS40NCAxLjA2LS40NCAyLjMyIDAgMS42LjkgMi42OC45IDEuMDcgMi4zOCAxLjgyIDEuNDguNzYgMy4zNyAxLjM2dDMuODcgMS4yN3ExLjk5LjY4IDMuODggMS41OHQzLjM3IDIuMjcgMi4zOCAzLjM1cS44OSAxLjk5Ljg5IDQuODIgMCAzLjA5LTEuMDUgNS43OC0xLjA2IDIuNjktMy4wOSA0LjY5dC00Ljk2IDMuMTUtNi43MSAxLjE1cS0yLjE3IDAtNC4yOC0uNDItMi4xMS0uNDMtNC4wNS0xLjIxLTEuOTQtLjc5LTMuNjQtMS44OS0xLjctMS4xMS0zLjAyLTIuNDZsMi40OS00LjA2cS4zMS0uNDUuODEtLjc0LjUxLS4zIDEuMDgtLjMuNzggMCAxLjcuNjQuOTEuNjUgMi4xNyAxLjQzIDEuMjYuNzkgMi45NSAxLjQ0IDEuNjguNjQgNC4wNC42NCAzLjYzIDAgNS42MS0xLjcxIDEuOTgtMS43MiAxLjk4LTQuOTMgMC0xLjgtLjg5LTIuOTMtLjktMS4xNC0yLjM4LTEuOTF0LTMuMzctMS4zcS0xLjg5LS41NC0zLjg0LTEuMTctMS45Ni0uNjMtMy44NS0xLjUxdC0zLjM3LTIuMy0yLjM4LTMuNTVxLS44OS0yLjEyLS44OS01LjI0IDAtMi40OS45OS00Ljg1dDIuODgtNC4xOSA0LjY2LTIuOTMgNi4zNy0xLjFxNC4wMyAwIDcuNDMgMS4yNnQ1LjggMy41Mm0xNy43MyA0MS43N3EtNC4yMiAwLTYuNDctMi4zNy0yLjI2LTIuMzgtMi4yNi02LjU3di0xOC4wNWgtMy4zcS0uNjMgMC0xLjA3LS40MS0uNDUtLjQxLS40NS0xLjIzdi0zLjA5bDUuMi0uODUgMS42NC04LjgycS4xNi0uNjMuNi0uOTcuNDQtLjM1IDEuMTMtLjM1aDQuMDN2MTAuMTdoOC42NHY1LjU1aC04LjY0djE3LjUxcTAgMS41MS43NCAyLjM2Ljc1Ljg2IDIuMDQuODYuNzIgMCAxLjIxLS4xOC40OS0uMTcuODUtLjM2dC42NS0uMzZxLjI4LS4xOC41Ni0uMTguMzUgMCAuNTcuMTguMjIuMTcuNDcuNTJsMi4zMyAzLjc4cS0xLjcgMS40MS0zLjkgMi4xNC0yLjIxLjcyLTQuNTcuNzJtMzUuNzgtMzIuODJoNi4yNGwtMTcuNjEgNDEuMnEtLjM0LjgyLS45IDEuMjUtLjU1LjQyLTEuNjguNDJoLTUuOGw2LjA1LTEyLjk4LTEzLjA3LTI5Ljg5aDYuODNxLjkyIDAgMS40NC40NHQuNzcgMS4wMWw2Ljg3IDE2Ljc2cS4zNC44NS41OCAxLjd0LjQ2IDEuNzNxLjI4LS44OC41Ni0xLjc1LjI5LS44Ni42My0xLjcxbDYuNDktMTYuNzNxLjI1LS42My44NC0xLjA0LjU4LS40MSAxLjMtLjQxbTEwLjIxLTE0LjQ5aDcuNzh2NDYuODFoLTcuNzh6bTIxLjcgMjYuOTNoMTQuNjhxMC0xLjUxLS40Mi0yLjg1LS40My0xLjM0LTEuMjgtMi4zNC0uODUtMS4wMS0yLjE2LTEuNTktMS4zLS41OS0zLjA0LS41OS0zLjM3IDAtNS4zIDEuOTItMS45NCAxLjkzLTIuNDggNS40NW0xOS44NSA0LjdoLTIwcS4xOCAyLjQ5Ljg4IDQuMy42OSAxLjgxIDEuODIgMi45OSAxLjE0IDEuMTggMi43IDEuNzYgMS41Ni41OSAzLjQ1LjU5dDMuMjYtLjQ1cTEuMzctLjQ0IDIuMzktLjk3IDEuMDMtLjU0IDEuOC0uOTh0MS40OS0uNDRxLjk4IDAgMS40NS43M2wyLjI0IDIuODNxLTEuMjkgMS41MS0yLjkgMi41NC0xLjYxIDEuMDItMy4zNSAxLjYzLTEuNzUuNjItMy41Ni44N3QtMy41Mi4yNXEtMy4zNyAwLTYuMjYtMS4xMi0yLjktMS4xMS01LjA0LTMuMy0yLjE1LTIuMTktMy4zNy01LjQyLTEuMjMtMy4yMy0xLjIzLTcuNDggMC0zLjMxIDEuMDctNi4yMiAxLjA3LTIuOTIgMy4wNy01LjA4IDItMi4xNSA0Ljg4LTMuNDF0Ni41MS0xLjI2cTMuMDUgMCA1LjYzLjk3IDIuNTkuOTggNC40NSAyLjg1IDEuODUgMS44OCAyLjkxIDQuNiAxLjA2IDIuNzMgMS4wNiA2LjIyIDAgMS43Ny0uMzggMi4zOC0uMzguNjItMS40NS42Mm0yNy45NCA1LjZ2LTE0LjQ5cS0xLjMyLTEuNi0yLjg4LTIuMjYtMS41Ni0uNjctMy4zNi0uNjctMS43NiAwLTMuMTguNjctMS40Mi42Ni0yLjQzIDItMSAxLjMzLTEuNTQgMy40LS41MyAyLjA2LS41MyA0Ljg2IDAgMi44NC40NSA0LjgxLjQ2IDEuOTcgMS4zMSAzLjIxLjg1IDEuMjUgMi4wOCAxLjh0Mi43NC41NXEyLjQyIDAgNC4xMy0xLjAxIDEuNy0xLjAxIDMuMjEtMi44N20wLTM3LjIzaDcuNzh2NDYuODFoLTQuNzZxLTEuNTQgMC0xLjk1LTEuNDJsLS42Ni0zLjEycS0xLjk1IDIuMjQtNC40OSAzLjYzLTIuNTQgMS4zOC01LjkxIDEuMzgtMi42NCAwLTQuODUtMS4xLTIuMi0xLjEtMy43OS0zLjItMS41OS0yLjA5LTIuNDYtNS4xOHQtLjg3LTcuMDZxMC0zLjU5Ljk4LTYuNjcuOTgtMy4wOSAyLjgtNS4zNiAxLjgzLTIuMjcgNC4zOC0zLjU0IDIuNTUtMS4yOCA1LjczLTEuMjggMi43MSAwIDQuNjQuODUgMS45Mi44NSAzLjQzIDIuM3ptNDAuNTEgMS4yNnY0NS41NWgtOC41MXYtNDUuNTV6bTE2LjcyIDQ1LjU1aC03Ljc4VjE4NS40aDQuNzZxMS41MSAwIDEuOTggMS40MmwuNTEgMi4zOXEuODUtLjk0IDEuNzgtMS43M3QxLjk4LTEuMzVxMS4wNi0uNTcgMi4yNy0uOXQyLjY2LS4zM3EzLjA2IDAgNS4wMyAxLjY1dDIuOTQgNC40cS43Ni0xLjYxIDEuODktMi43NiAxLjE0LTEuMTUgMi40OS0xLjg4IDEuMzYtLjcyIDIuODgtMS4wNyAxLjUzLS4zNCAzLjA3LS4zNCAyLjY4IDAgNC43Ni44MnQzLjUgMi4zOXExLjQxIDEuNTcgMi4xNiAzLjg0Ljc0IDIuMjcuNzQgNS4ydjIwLjU3aC03Ljc5di0yMC41N3EwLTMuMDktMS4zNS00LjY1LTEuMzUtMS41NS0zLjk3LTEuNTUtMS4yIDAtMi4yMi40LTEuMDIuNDEtMS43OSAxLjE5LS43OC43Ny0xLjIyIDEuOTMtLjQ0IDEuMTctLjQ0IDIuNjh2MjAuNTdoLTcuODF2LTIwLjU3cTAtMy4yNC0xLjMxLTQuNzJ0LTMuODMtMS40OHEtMS43IDAtMy4xNi44My0xLjQ3LjgzLTIuNzMgMi4yOHptNjIuMDYtOC4zNXYtNS40NXEtMy4zNy4xNi01LjY3LjU5LTIuMy40Mi0zLjY5IDEuMDgtMS4zOC42Ni0xLjk4IDEuNTUtLjYuODgtLjYgMS45MiAwIDIuMDQgMS4yMSAyLjkzIDEuMjIuODggMy4xNy44OCAyLjM5IDAgNC4xNC0uODcgMS43NS0uODYgMy40Mi0yLjYzbS0xNi40NC0xNi45OC0xLjM5LTIuNDhxNS41OC01LjExIDEzLjQyLTUuMTEgMi44MyAwIDUuMDcuOTN0My43OCAyLjU4cTEuNTQgMS42NiAyLjM1IDMuOTYuOCAyLjMuOCA1LjA0djIwLjQxaC0zLjUzcS0xLjEgMC0xLjctLjMzdC0uOTQtMS4zNGwtLjctMi4zM3EtMS4yMiAxLjEtMi4zOSAxLjk0LTEuMTcuODMtMi40MyAxLjR0LTIuNjkuODZxLTEuNDMuMy0zLjE2LjMtMi4wNSAwLTMuNzgtLjU1LTEuNzQtLjU1LTMtMS42NXQtMS45NS0yLjc0LS42OS0zLjgxcTAtMS4yMy40MS0yLjQ0LjQxLTEuMjIgMS4zMy0yLjMyLjkzLTEuMSAyLjQxLTIuMDggMS40OS0uOTggMy42NC0xLjcgMi4xNi0uNzIgNS4wMy0xLjE4IDIuODYtLjQ2IDYuNTUtLjU1di0xLjg5cTAtMy4yNS0xLjM5LTQuODEtMS4zOC0xLjU1LTQtMS41NS0xLjg5IDAtMy4xMy40NC0xLjI1LjQ0LTIuMTkuOTktLjk1LjU1LTEuNzIuOTl0LTEuNzEuNDRxLS44MiAwLTEuMzktLjQyLS41Ny0uNDMtLjkxLTFtNDMuMTUgOC4zOHExLjQ1IDAgMi41Mi0uMzl0MS43OC0xLjA5cS43MS0uNjkgMS4wNy0xLjY3LjM2LS45Ny4zNi0yLjE0IDAtMi4zOS0xLjQzLTMuNzktMS40My0xLjQxLTQuMy0xLjQxdC00LjMgMS40MXEtMS40MyAxLjQtMS40MyAzLjc5IDAgMS4xMy4zNiAyLjExdDEuMDcgMS42OSAxLjggMS4xcTEuMDguMzkgMi41LjM5bTguNzkgMTguNHEwLS45NS0uNTctMS41NC0uNTYtLjYtMS41NC0uOTN0LTIuMjgtLjQ5cS0xLjMxLS4xNi0yLjc4LS4yNC0xLjQ2LS4wOC0zLjAyLS4xNHQtMy4wNC0uMjVxLTEuMjkuNzItMi4xIDEuNy0uOC45OC0uOCAyLjI3IDAgLjg1LjQzIDEuNTkuNDIuNzQgMS4zNSAxLjI3LjkzLjU0IDIuNDEuODR0My42Mi4zcTIuMTggMCAzLjc1LS4zMyAxLjU4LS4zMyAyLjYtLjkyIDEuMDItLjU4IDEuNS0xLjM4LjQ3LS44MS40Ny0xLjc1bS0xLjU0LTMyLjY3aDkuMjl2Mi45cTAgMS4zOS0xLjY3IDEuN2wtMi45LjU0cS42NiAxLjY3LjY2IDMuNjUgMCAyLjQtLjk2IDQuMzMtLjk2IDEuOTQtMi42NiAzLjMtMS43IDEuMzUtNC4wMiAyLjA5LTIuMzEuNzQtNC45OS43NC0uOTQgMC0xLjgzLS4wOS0uODgtLjEtMS43My0uMjYtMS41MS45Mi0xLjUxIDIuMDUgMCAuOTguOSAxLjQzLjkuNDYgMi4zOC42NXQzLjM3LjI0cTEuODkuMDQgMy44Ny4yIDEuOTkuMTYgMy44OC41NSAxLjg5LjQgMy4zNyAxLjI1dDIuMzcgMi4zMXEuOSAxLjQ3LjkgMy43NyAwIDIuMTQtMS4wNSA0LjE1LTEuMDYgMi4wMi0zLjA2IDMuNi0yIDEuNTctNC45MSAyLjUzLTIuOTIuOTYtNi42My45Ni0zLjY2IDAtNi4zNy0uNzF0LTQuNS0xLjg5cS0xLjgtMS4xOC0yLjY4LTIuNzItLjg4LTEuNTUtLjg4LTMuMjIgMC0yLjI2IDEuMzctMy43OXQzLjc2LTIuNDRxLTEuMjktLjY2LTIuMDQtMS43Ny0uNzYtMS4xLS43Ni0yLjg5IDAtLjczLjI3LTEuNXQuNzktMS41M3EuNTItLjc1IDEuMy0xLjQzLjc5LS42OCAxLjg2LTEuMjEtMi40Ni0xLjMzLTMuODYtMy41My0xLjQtMi4yMS0xLjQtNS4xNyAwLTIuMzkuOTYtNC4zM3QyLjY4LTMuMzEgNC4wNi0yLjA5cTIuMzUtLjczIDUuMTItLjczIDIuMDggMCAzLjkxLjQzIDEuODIuNDIgMy4zNCAxLjI0bTIwLjM1IDExLjM0aDE0LjY3cTAtMS41MS0uNDItMi44NS0uNDMtMS4zNC0xLjI4LTIuMzQtLjg1LTEuMDEtMi4xNS0xLjU5LTEuMzEtLjU5LTMuMDQtLjU5LTMuMzcgMC01LjMxIDEuOTItMS45NCAxLjkzLTIuNDcgNS40NW0xOS44NCA0LjdoLTIwcS4xOSAyLjQ5Ljg4IDQuM3QxLjgzIDIuOTlxMS4xMyAxLjE4IDIuNjkgMS43NiAxLjU2LjU5IDMuNDUuNTl0My4yNi0uNDVxMS4zNy0uNDQgMi4zOS0uOTcgMS4wMy0uNTQgMS44LS45OHQxLjUtLjQ0cS45NyAwIDEuNDQuNzNsMi4yNCAyLjgzcS0xLjI5IDEuNTEtMi45IDIuNTQtMS42IDEuMDItMy4zNSAxLjYzLTEuNzUuNjItMy41Ni44N3QtMy41MS4yNXEtMy4zNyAwLTYuMjctMS4xMi0yLjktMS4xMS01LjA0LTMuM3QtMy4zNy01LjQyLTEuMjMtNy40OHEwLTMuMzEgMS4wNy02LjIyIDEuMDctMi45MiAzLjA3LTUuMDggMi0yLjE1IDQuODgtMy40MSAyLjg5LTEuMjYgNi41MS0xLjI2IDMuMDUgMCA1LjY0Ljk3IDIuNTguOTggNC40NCAyLjg1IDEuODYgMS44OCAyLjkxIDQuNiAxLjA2IDIuNzMgMS4wNiA2LjIyIDAgMS43Ny0uMzggMi4zOC0uMzguNjItMS40NS42MiIvPjwvc3ZnPg==" alt="Styled">
             </div>
         </section>
@@ -141,9 +110,9 @@
 </code></pre>
             </div>
         </section>
-        <section data-slide-index="10">
+        <section data-slide-index="9">
             <h1>Multiple Elements in One Style</h1>
-            <div style="background: linear-gradient(135deg; color: white; padding: 30px; border-radius: 15px">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px">
             <h2>Beautiful Header</h2>
             <p>This paragraph is also styled</p>
             <ul>
@@ -183,7 +152,7 @@
         </section>
         <section data-slide-index="0">
             <h1>Complex Styling</h1>
-            <div style="background: #2c3e50; color: #ecf0f1; padding: 25px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0">
+            <div style="background: #2c3e50; color: #ecf0f1; padding: 25px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.3)">
             <h3>Dark Theme Box</h3>
             <p>This is a paragraph in a dark themed box with custom styling and shadow effect</p>
             <ul>
@@ -196,8 +165,8 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    
+    
     
     <script>
         Reveal.initialize({
@@ -207,87 +176,6 @@
             center: true,
             backgroundTransition: 'fade',
             plugins: [ RevealHighlight ]
-        });
-
-        // Auto-render LaTeX when slides are ready
-        Reveal.on('ready', function() {
-            renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$$', right: '$$', display: true},
-                    {left: '$', right: '$', display: false}
-                ],
-                throwOnError: false
-            });
-        });
-
-        // Synchronized fragments handler
-        let currentFragmentIndex = -1;
-
-        Reveal.on('fragmentshown', event => {
-            currentFragmentIndex++;
-            updateSyncItems();
-        });
-
-        Reveal.on('fragmenthidden', event => {
-            currentFragmentIndex--;
-            updateSyncItems();
-        });
-
-        Reveal.on('slidechanged', event => {
-            // Detect the current fragment state by checking visible fragments
-            const currentSlide = Reveal.getCurrentSlide();
-            if (currentSlide) {
-                const fragments = currentSlide.querySelectorAll('.fragment');
-                let maxVisibleIndex = -1;
-                
-                fragments.forEach(fragment => {
-                    if (fragment.classList.contains('visible')) {
-                        const fragmentIndex = parseInt(fragment.getAttribute('data-fragment-index') || '0');
-                        maxVisibleIndex = Math.max(maxVisibleIndex, fragmentIndex);
-                    }
-                });
-                
-                currentFragmentIndex = maxVisibleIndex;
-            } else {
-                currentFragmentIndex = -1;
-            }
-            updateSyncItems();
-        });
-
-        function updateSyncItems() {
-            const currentSlide = Reveal.getCurrentSlide();
-            if (!currentSlide) return;
-
-            const syncContainers = currentSlide.querySelectorAll('.sync-container');
-            syncContainers.forEach(container => {
-                const keepMode = container.getAttribute('data-keep') === 'true';
-                const items = container.querySelectorAll('.sync-item');
-                
-                items.forEach(item => {
-                    const syncIndex = parseInt(item.getAttribute('data-sync-index') || '0');
-                    
-                    if (keepMode) {
-                        // In keep mode, show all items up to and including current index
-                        if (syncIndex <= currentFragmentIndex) {
-                            item.classList.add('active');
-                        } else {
-                            item.classList.remove('active');
-                        }
-                    } else {
-                        // Default mode: show only the current item
-                        if (syncIndex === currentFragmentIndex) {
-                            item.classList.add('active');
-                        } else {
-                            item.classList.remove('active');
-                        }
-                    }
-                });
-            });
-        }
-
-        // Initialize on load
-        Reveal.on('ready', () => {
-            updateSyncItems();
         });
     </script>
 </body>

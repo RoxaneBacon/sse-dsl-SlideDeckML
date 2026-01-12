@@ -319,30 +319,59 @@ export class ElementGenerator {
         const functions: string[] = [];
         let funcStart = -1;
         let braceCount = 0;
+        let baseIndent = -1;
+        let usesBraces = false;
 
         for (let i = 0; i < lines.length; i++) {
-            const line = lines[i].trim();
+            const line = lines[i];
+            const trimmedLine = line.trim();
             
             // Detect function start (simple heuristic for common languages)
             if (funcStart === -1 && (
-                /^(function|def|fn|func|public|private|protected|static)/.test(line) ||
-                /\bfunction\b/.test(line) ||
-                /^[a-zA-Z_][a-zA-Z0-9_]*\s*\(.*\)\s*\{/.test(line) ||
-                /^(async\s+)?[a-zA-Z_][a-zA-Z0-9_]*\s*\(.*\)\s*(=>|:)/.test(line)
+                /^(function|def|fn|func|public|private|protected|static)/.test(trimmedLine) ||
+                /\bfunction\b/.test(trimmedLine) ||
+                /^[a-zA-Z_][a-zA-Z0-9_]*\s*\(.*\)\s*\{/.test(trimmedLine) ||
+                /^(async\s+)?[a-zA-Z_][a-zA-Z0-9_]*\s*\(.*\)\s*(=>|:)/.test(trimmedLine)
             )) {
                 funcStart = i + 1;
+                baseIndent = line.length - line.trimStart().length;
+                usesBraces = /\{/.test(trimmedLine);
             }
             
             if (funcStart !== -1) {
-                // Count braces to find function end
-                braceCount += (line.match(/\{/g) || []).length;
-                braceCount -= (line.match(/\}/g) || []).length;
-                
-                if (braceCount === 0 && /\}/.test(line)) {
-                    functions.push(funcStart === i + 1 ? `${funcStart}` : `${funcStart}-${i + 1}`);
-                    funcStart = -1;
+                if (usesBraces) {
+                    // Brace-based languages (JavaScript, Java, C++, etc.)
+                    braceCount += (trimmedLine.match(/\{/g) || []).length;
+                    braceCount -= (trimmedLine.match(/\}/g) || []).length;
+                    
+                    if (braceCount === 0 && /\}/.test(trimmedLine)) {
+                        functions.push(funcStart === i + 1 ? `${funcStart}` : `${funcStart}-${i + 1}`);
+                        funcStart = -1;
+                        baseIndent = -1;
+                    }
+                } else {
+                    // Indentation-based languages (Python, etc.)
+                    const currentIndent = line.length - line.trimStart().length;
+                    
+                    // Function ends when we encounter a line with same or less indentation (and it's not empty)
+                    if (trimmedLine.length > 0 && currentIndent <= baseIndent && i > funcStart - 1) {
+                        functions.push(funcStart === i ? `${funcStart}` : `${funcStart}-${i}`);
+                        funcStart = -1;
+                        baseIndent = -1;
+                        
+                        // Check if this line starts a new function
+                        if (/^(def|async\s+def)\s+[a-zA-Z_]/.test(trimmedLine)) {
+                            funcStart = i + 1;
+                            baseIndent = currentIndent;
+                        }
+                    }
                 }
             }
+        }
+        
+        // Handle last function if file ends inside it
+        if (funcStart !== -1) {
+            functions.push(funcStart === lines.length ? `${funcStart}` : `${funcStart}-${lines.length}`);
         }
         
         return functions.join('|') || '1';
@@ -357,24 +386,55 @@ export class ElementGenerator {
         const classes: string[] = [];
         let classStart = -1;
         let braceCount = 0;
+        let baseIndent = -1;
+        let usesBraces = false;
 
         for (let i = 0; i < lines.length; i++) {
-            const line = lines[i].trim();
+            const line = lines[i];
+            const trimmedLine = line.trim();
             
             // Detect class start
-            if (classStart === -1 && /^(class|interface|struct|enum)\s+[a-zA-Z_]/.test(line)) {
+            if (classStart === -1 && /^(class|interface|struct|enum)\s+[a-zA-Z_]/.test(trimmedLine)) {
                 classStart = i + 1;
+                baseIndent = line.length - line.trimStart().length;
+                usesBraces = /\{/.test(trimmedLine);
             }
             
             if (classStart !== -1) {
-                braceCount += (line.match(/\{/g) || []).length;
-                braceCount -= (line.match(/\}/g) || []).length;
-                
-                if (braceCount === 0 && /\}/.test(line)) {
-                    classes.push(classStart === i + 1 ? `${classStart}` : `${classStart}-${i + 1}`);
-                    classStart = -1;
+                if (usesBraces) {
+                    // Brace-based languages (JavaScript, Java, C++, etc.)
+                    braceCount += (trimmedLine.match(/\{/g) || []).length;
+                    braceCount -= (trimmedLine.match(/\}/g) || []).length;
+                    
+                    if (braceCount === 0 && /\}/.test(trimmedLine)) {
+                        classes.push(classStart === i + 1 ? `${classStart}` : `${classStart}-${i + 1}`);
+                        classStart = -1;
+                        baseIndent = -1;
+                    }
+                } else {
+                    // Indentation-based languages (Python, etc.)
+                    const currentIndent = line.length - line.trimStart().length;
+                    
+                    // Class ends when we encounter a line with same or less indentation (and it's not empty)
+                    if (trimmedLine.length > 0 && currentIndent <= baseIndent && i > classStart - 1) {
+                        classes.push(classStart === i ? `${classStart}` : `${classStart}-${i}`);
+                        classStart = -1;
+                        baseIndent = -1;
+                        
+                        // Check if this line starts a new class
+                        if (/^class\s+[a-zA-Z_]/.test(trimmedLine)) {
+                            classStart = i + 1;
+                            baseIndent = currentIndent;
+                            usesBraces = /\{/.test(trimmedLine);
+                        }
+                    }
                 }
             }
+        }
+        
+        // Handle last class if file ends inside it
+        if (classStart !== -1) {
+            classes.push(classStart === lines.length ? `${classStart}` : `${classStart}-${lines.length}`);
         }
         
         return classes.join('|') || '1';
