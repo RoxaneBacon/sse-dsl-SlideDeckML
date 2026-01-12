@@ -7,12 +7,14 @@ import {
     isParagraph, 
     isQuote, 
     isMedia, 
-    isStyledElement, 
+    isStyledElement,
+    isFragmentElement,
     isCodeBlock, 
     isSyncFragments 
 } from "../language/generated/ast";
 import { ElementGenerator } from "./element-generator";
 import { StyleParser } from "./style-parser";
+import { FragmentParser } from "./fragment-parser";
 
 /**
  * Handles the generation of HTML for different types of line content
@@ -20,11 +22,13 @@ import { StyleParser } from "./style-parser";
 export class LineContentHandler {
     private elementGenerator: ElementGenerator;
     private styleParser: StyleParser;
+    private fragmentParser: FragmentParser;
     private lastCodeBlock: CodeBlock | null = null;
 
     constructor(elementGenerator: ElementGenerator, styleParser: StyleParser) {
         this.elementGenerator = elementGenerator;
         this.styleParser = styleParser;
+        this.fragmentParser = new FragmentParser();
     }
 
     /**
@@ -40,7 +44,12 @@ export class LineContentHandler {
      * @returns Generated HTML string
      */
     public async generateLine(line: LineContent): Promise<string> {
-        // Handle styled elements first
+        // Handle fragment elements first
+        if (isFragmentElement(line)) {
+            return await this.handleFragmentElement(line);
+        }
+        
+        // Handle styled elements
         if (isStyledElement(line)) {
             return await this.handleStyledElement(line);
         }
@@ -86,7 +95,52 @@ export class LineContentHandler {
         let containerHtml = `            <div${style}>\n`;
         
         for (const element of elements) {
-            if (isHeader(element)) {
+            if (isFragmentElement(element)) {
+                // Handle nested fragments
+                containerHtml += await this.handleFragmentElement(element) + '\n';
+            } else if (isHeader(element)) {
+                containerHtml += this.elementGenerator.generateHeading(element, '') + '\n';
+            } else if (isUnorderedList(element)) {
+                containerHtml += this.elementGenerator.generatePointedList(element, '') + '\n';
+            } else if (isOrderedList(element)) {
+                containerHtml += this.elementGenerator.generateOrderedList(element, '') + '\n';
+            } else if (isQuote(element)) {
+                containerHtml += this.elementGenerator.generateQuote(element, '') + '\n';
+            } else if (isMedia(element)) {
+                containerHtml += await this.elementGenerator.generateMedia(element, '') + '\n';
+            } else if (isCodeBlock(element)) {
+                this.lastCodeBlock = element;
+                containerHtml += this.elementGenerator.generateCodeBlock(element, '') + '\n';
+            } else if (isSyncFragments(element)) {
+                containerHtml += await this.elementGenerator.generateSyncFragments(element, this.lastCodeBlock) + '\n';
+            } else if (isParagraph(element)) {
+                containerHtml += this.elementGenerator.generateParagraph(element, '') + '\n';
+            }
+        }
+        
+        containerHtml += `            </div>`;
+        return containerHtml;
+    }
+
+    /**
+     * Handle fragment element containing multiple child elements
+     * @param line The fragment element
+     * @returns Generated HTML string
+     */
+    private async handleFragmentElement(line: any): Promise<string> {
+        const fragmentAttrs = this.fragmentParser.parseFragment(line.fragment);
+        const elements = line.elements || [];
+        
+        let containerHtml = `            <div${fragmentAttrs.class}${fragmentAttrs.dataAttrs}>\n`;
+        
+        for (const element of elements) {
+            if (isFragmentElement(element)) {
+                // Handle nested fragments
+                containerHtml += await this.handleFragmentElement(element) + '\n';
+            } else if (isStyledElement(element)) {
+                // Handle nested styled elements
+                containerHtml += await this.handleStyledElement(element) + '\n';
+            } else if (isHeader(element)) {
                 containerHtml += this.elementGenerator.generateHeading(element, '') + '\n';
             } else if (isUnorderedList(element)) {
                 containerHtml += this.elementGenerator.generatePointedList(element, '') + '\n';

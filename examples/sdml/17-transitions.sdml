@@ -1,0 +1,112 @@
+{
+    author: "SlideDeckML Team"
+    title: "Slide Transitions Demo"
+    theme: "black"
+    transition: "slide"
+}
+
+# Slide Transitions
+
+This presentation demonstrates **different slide transitions**.
+
+The global transition is set to **"slide"** in the metadata.
+
+===
+{transition: "fade"}
+
+# Fade Transition
+
+This slide uses the **fade** transition.
+
+Content smoothly fades in and out.
+
+===
+{transition: "convex"}
+
+# Convex Transition
+
+This slide uses the **convex** transition.
+
+Slides at a convex angle.
+
+===
+{transition: "concave"}
+
+# Concave Transition
+
+This slide uses the **concave** transition.
+
+Slides at a concave angle.
+
+===
+{transition: "zoom"}
+
+# Zoom Transition
+
+This slide uses the **zoom** transition.
+
+The incoming slide grows from the center!
+
+===
+{transition: "none"}
+
+# No Transition
+
+This slide uses **no transition**.
+
+It appears instantly.
+
+===
+{transition: "slide-in fade-out"}
+
+# Mixed Transitions (In)
+
+This slide uses **slide-in fade-out**.
+
+It slides in but fades out when leaving.
+
+===
+{transition: "fade-in slide-out"}
+
+# Mixed Transitions (Out)
+
+This slide uses **fade-in slide-out**.
+
+It fades in but slides out when leaving.
+
+===
+{transition: "fade-in zoom-out"}
+
+# Creative Combinations
+
+This slide uses **fade-in zoom-out**.
+
+Fades in, then zooms out!
+
+===
+
+# Back to Default
+
+This slide returns to the **default "slide"** transition set in metadata.
+
+No transition attribute specified = uses global setting.
+
+===
+::: {text-align: 'center'; color: '#3498db'; font-size: '64px'}
+# Available Transitions
+:::
+
+::: {text-align: 'center'; font-size: '20px'}
+**Basic:** none, fade, slide, convex, concave, zoom
+
+**Mixed:** slide-in fade-out, fade-in slide-out, etc.
+:::
+
+===
+::: {text-align: 'center'; color: '#3498db'}
+# Thank You!
+:::
+
+::: {text-align: 'center'; font-size: '18px'; color: '#7f8c8d'}
+Navigate through slides to see different transitions
+:::
