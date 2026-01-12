@@ -41,6 +41,8 @@ Thank you!
 
 ### 2. Compile to HTML
 
+**Manual compilation:**
+
 ```bash
 npm run compile examples/demo.sdml -o output.html
 ```
@@ -50,6 +52,38 @@ Or using the CLI directly:
 ```bash
 node out/cli/main.js compile examples/demo.sdml -o output.html
 ```
+
+**Using build scripts (recommended):**
+
+For PowerShell:
+```powershell
+# Compile a single file
+.\build-and-compile.ps1 -InputPath examples/demo.sdml
+
+# Compile all files in a directory
+.\build-and-compile.ps1 -InputPath examples -OutputPath output
+
+# Skip build step (if already built)
+.\build-and-compile.ps1 -InputPath examples/demo.sdml -SkipBuild
+```
+
+For Bash:
+```bash
+# Compile a single file
+./build-and-compile.sh examples/demo.sdml
+
+# Compile all files in a directory
+./build-and-compile.sh examples output
+
+# Skip build step (if already built)
+./build-and-compile.sh examples/demo.sdml "" --skip-build
+```
+
+The build scripts automatically:
+- Run `npm run langium:generate` to regenerate the parser
+- Run `npm run build` to compile TypeScript
+- Compile the specified .sdml file(s) to HTML
+- Show colored progress messages and error reporting
 
 ### 3. Open in browser
 

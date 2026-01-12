@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SlideDeckML - Live Preview</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Editor Panel (Left) -->
+        <div class="panel editor-panel">
+            <div class="panel-header">
+                <h3>📝 Editor</h3>
+                <div class="status">
+                    <span id="status-indicator" class="status-dot"></span>
+                    <span id="status-text">Ready</span>
+                </div>
+            </div>
+            <div id="editor-container"></div>
+        </div>
+
+        <!-- Resizer -->
+        <div class="resizer"></div>
+
+        <!-- Preview Panel (Right) -->
+        <div class="panel preview-panel">
+            <div class="panel-header">
+                <h3>👁️ Preview</h3>
+                <div class="slide-info">
+                    <span id="slide-count">Slide 1 / 1</span>
+                </div>
+            </div>
+            <div class="preview-container">
+                <div id="error-banner" class="error-banner" style="display: none;">
+                    <div class="error-header">
+                        <span class="error-icon">❌</span>
+                        <span class="error-title">Compilation Error</span>
+                        <button id="error-toggle" class="error-toggle">▼ Show Details</button>
+                    </div>
+                    <div id="error-details" class="error-details" style="display: none;"></div>
+                </div>
+                <iframe id="preview-iframe" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+            </div>
+            <div class="debug-panel" id="debug-panel" style="display: none;">
+                <strong>Debug Info:</strong><br>
+                <span id="debug-info"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Socket.IO client (served by the server) -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- Monaco Editor from CDN -->
+    <script src="https://unpkg.com/monaco-editor@0.44.0/min/vs/loader.js"></script>
+
+    <!-- Application Script -->
+    <script src="app.js"></script>
+</body>
+</html>

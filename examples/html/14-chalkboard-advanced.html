@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Jane Smith">
+    <meta name="title" content="Chalkboard Demo - Advanced">
+    <title>Chalkboard Demo - Advanced</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <!-- Font Awesome (required for chalkboard) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom controls plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/style.css">
+    <!-- Chalkboard plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/style.css">
+    <style> 
+        
+        
+
+        /* Default Reveal.js overrides */
+        .reveal {
+            font-size: 32px; /* Reduced from default 40px */
+        }
+        
+        .reveal .slides {
+            text-align: left; /* Remove default centering */
+        }
+        
+        .reveal h1 {
+            font-size: 2em; /* Reduced from default 2.5em */
+        }
+        
+        .reveal h2 {
+            font-size: 1.3em; /* Reduced from default 1.8em */
+        }
+        
+        .reveal h3 {
+            font-size: 1em; /* Reduced from default 1.5em */
+        }
+   
+        /* Synchronized fragments styling */
+        .sync-container {
+            position: relative;
+            min-height: 50px;
+            font-size: 0.9em;
+        }
+        .sync-item {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .sync-item.active {
+            display: block;
+            opacity: 1;
+        }
+        .sync-item p {
+            margin: 0.3em 0;
+        }
+        .sync-item img {
+            max-width: 100%;
+            height: auto;
+        }
+        /* Keep mode: stack items vertically */
+        .sync-container[data-keep="true"] {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3em;
+        }
+        .sync-container[data-keep="true"] .sync-item {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="reveal">
+        <div class="slides">
+        <section data-slide-index="0">
+            <h1>Advanced Chalkboard</h1>
+            <p>This presentation uses <strong>custom chalkboard settings</strong>:</p>
+            <ul>
+                <li><strong>Theme:</strong> Whiteboard (instead of chalkboard)</li>
+                <li><strong>Boardmarker Width:</strong> 5px (thicker than default 3px)</li>
+                <li><strong>Chalk Width:</strong> 10px (thicker than default 7px)</li>
+                <li><strong>Buttons:</strong> Enabled at bottom of slides</li>
+                <li><strong>Transition:</strong> 500ms (faster than default 800ms)</li>
+            </ul>
+        </section>
+        <section data-slide-index="0">
+            <h2>Whiteboard Theme</h2>
+            <p>The whiteboard theme gives you:</p>
+            <ul>
+                <li>White background for the board</li>
+                <li>Marker-style drawing instead of chalk</li>
+                <li>Better for professional presentations</li>
+                <li>Cleaner look for diagrams</li>
+            </ul>
+        </section>
+        <section data-slide-index="0">
+            <h2>Thicker Lines</h2>
+            <p>With increased line widths:</p>
+            <ul>
+                <li><strong>Boardmarker:</strong> 5px (default is 3px)</li>
+                <li><strong>Chalk:</strong> 10px (default is 7px)</li>
+            </ul>
+            <p>This makes drawings more visible in large rooms!</p>
+        </section>
+        <section data-slide-index="0">
+            <h2>Interactive Diagram</h2>
+            <p><strong>System Architecture:</strong></p>
+            <p>Draw your architecture diagram here using the whiteboard!</p>
+            <p>Components to include:</p>
+            <ul>
+                <li>Frontend</li>
+                <li>API Gateway</li>
+                <li>Backend Services</li>
+                <li>Database</li>
+                <li>Cache Layer</li>
+            </ul>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Font Awesome (required for chalkboard) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <!-- Custom controls plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/plugin.js"></script>
+    <!-- Chalkboard plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/plugin.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            progress: true,
+            center: true,
+            backgroundTransition: 'fade',
+            plugins: [ RevealHighlight, RevealChalkboard, RevealCustomControls ],
+            chalkboard: {
+          "theme": "whiteboard",
+          "boardmarkerWidth": 5,
+          "chalkWidth": 10,
+          "chalkEffect": 1,
+          "readOnly": false,
+          "buttons": true,
+          "transition": 500
+}
+        });
+
+        // Auto-render LaTeX when slides are ready
+        Reveal.on('ready', function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        });
+
+        // Synchronized fragments handler
+        let currentFragmentIndex = -1;
+
+        Reveal.on('fragmentshown', event => {
+            currentFragmentIndex++;
+            updateSyncItems();
+        });
+
+        Reveal.on('fragmenthidden', event => {
+            currentFragmentIndex--;
+            updateSyncItems();
+        });
+
+        Reveal.on('slidechanged', event => {
+            // Detect the current fragment state by checking visible fragments
+            const currentSlide = Reveal.getCurrentSlide();
+            if (currentSlide) {
+                const fragments = currentSlide.querySelectorAll('.fragment');
+                let maxVisibleIndex = -1;
+                
+                fragments.forEach(fragment => {
+                    if (fragment.classList.contains('visible')) {
+                        const fragmentIndex = parseInt(fragment.getAttribute('data-fragment-index') || '0');
+                        maxVisibleIndex = Math.max(maxVisibleIndex, fragmentIndex);
+                    }
+                });
+                
+                currentFragmentIndex = maxVisibleIndex;
+            } else {
+                currentFragmentIndex = -1;
+            }
+            updateSyncItems();
+        });
+
+        function updateSyncItems() {
+            const currentSlide = Reveal.getCurrentSlide();
+            if (!currentSlide) return;
+
+            const syncContainers = currentSlide.querySelectorAll('.sync-container');
+            syncContainers.forEach(container => {
+                const keepMode = container.getAttribute('data-keep') === 'true';
+                const items = container.querySelectorAll('.sync-item');
+                
+                items.forEach(item => {
+                    const syncIndex = parseInt(item.getAttribute('data-sync-index') || '0');
+                    
+                    if (keepMode) {
+                        // In keep mode, show all items up to and including current index
+                        if (syncIndex <= currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    } else {
+                        // Default mode: show only the current item
+                        if (syncIndex === currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Initialize on load
+        Reveal.on('ready', () => {
+            updateSyncItems();
+        });
+    </script>
+</body>
+</html>

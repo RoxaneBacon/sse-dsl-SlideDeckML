@@ -24,14 +24,21 @@ class SlideDeckMLTokenBuilder extends DefaultTokenBuilder {
                 t.name === 'CODE_BLOCK' ||
                 t.name === 'STYLE_DELIMITER' ||
                 t.name === 'STYLE_ATTRS' ||
+                t.name === 'SYNC_DELIMITER_KEEP' ||
+                t.name === 'SYNC_DELIMITER' ||
+                t.name === 'FRAGMENT_SEPARATOR' ||
                 t.name === 'SLIDE_SEPARATOR' ||
-                t.name === 'TEMPLATE_SEPARATOR' ||
                 // Include keyword tokens for metadata
                 t.name === '{' || t.name === '}' || t.name === ':' ||
-                t.name === 'author' || t.name === 'title'
+                t.name === 'author' || t.name === 'title'||
+                t.name === 'logo' || t.name === 'chalkboard' ||
+                t.name === 'chalkboard-theme' || t.name === 'chalkboard-boardmarker-width' ||
+                t.name === 'chalkboard-chalk-width' || t.name === 'chalkboard-chalk-effect' ||
+                t.name === 'chalkboard-src' || t.name === 'chalkboard-readonly' ||
+                t.name === 'chalkboard-buttons' || t.name === 'chalkboard-transition'
             );
         }
-        
+
         return tokens;
     }
 }
@@ -40,9 +47,7 @@ class SlideDeckMLTokenBuilder extends DefaultTokenBuilder {
  * Declaration of custom services - add your own service classes here.
  */
 export type SlideDeckMlAddedServices = {
-    validation: {
-
-    }
+    validation: {}
 }
 
 /**
@@ -56,16 +61,18 @@ export type SlideDeckMlServices = LangiumServices & SlideDeckMlAddedServices;
  * declared custom services. The Langium defaults can be partially specified to override only
  * selected services, while the custom services must be fully specified.
  */
-export const SlideDeckMLModule: Module<SlideDeckMlServices, PartialLangiumServices & SlideDeckMlAddedServices> = {
+export const SlideDeckMLModule: Module<
+    SlideDeckMlServices,
+    PartialLangiumServices & SlideDeckMlAddedServices
+> = {
     validation: {},
     parser: {
-        TokenBuilder: () => new SlideDeckMLTokenBuilder()
+        TokenBuilder: () => new SlideDeckMLTokenBuilder(),
     },
     lsp: {
         CompletionProvider: (services) => new SlideDeckMLCompletionProvider(services)
     }
 };
-
 
 /**
  * Create the full set of services required by Langium.
@@ -82,19 +89,21 @@ export const SlideDeckMLModule: Module<SlideDeckMlServices, PartialLangiumServic
  * @param context Optional module context with the LSP connection
  * @returns An object wrapping the shared services and the language-specific services
  */
-export function createSlideDeckMlServices(context: DefaultSharedModuleContext): {
-    shared: LangiumSharedServices,
+export function createSlideDeckMlServices(
+    context: DefaultSharedModuleContext
+): {
+    shared: LangiumSharedServices
     SlideDeckMl: SlideDeckMlServices
 } {
     const shared = inject(
         createDefaultSharedModule(context),
         SlideDeckMlGeneratedSharedModule
-    );
+    )
     const SlideDeckMl = inject(
         createDefaultModule({ shared }),
         SlideDeckMLGeneratedModule,
         SlideDeckMLModule
-    );
-    shared.ServiceRegistry.register(SlideDeckMl);
-    return { shared, SlideDeckMl };
+    )
+    shared.ServiceRegistry.register(SlideDeckMl)
+    return { shared, SlideDeckMl }
 }

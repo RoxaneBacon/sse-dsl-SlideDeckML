@@ -1,0 +1,98 @@
+{
+    author: "SlideDeckML Team"
+    title: "LaTeX Mathematical Equations Test"
+    theme: "black"
+}
+===
+# LaTeX Inline Math
+
+Inline equations use dollar signs: $E = mc^2$
+
+The quadratic formula $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$ is fundamental.
+
+===
+# LaTeX Display Math - Basic
+
+```latex
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+```
+
+===
+# LaTeX - Integrals
+
+```latex
+\int_{a}^{b} f(x) \, dx = F(b) - F(a)
+```
+
+===
+# LaTeX - Limits
+
+```latex
+\lim_{x \to \infty} \frac{1}{x} = 0
+```
+
+===
+# LaTeX - Summation
+
+```latex
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+```
+
+===
+# LaTeX - Product
+
+```latex
+\prod_{i=1}^{n} i = n!
+```
+
+===
+# LaTeX - Matrices
+
+```latex
+\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix}
+=
+\begin{pmatrix}
+ax + by \\
+cx + dy
+\end{pmatrix}
+```
+
+===
+# LaTeX - Greek Letters
+
+```latex
+\alpha, \beta, \gamma, \delta, \epsilon, \theta, \lambda, \mu, \pi, \sigma, \omega
+```
+
+```latex
+\Delta, \Gamma, \Lambda, \Sigma, \Omega
+```
+
+===
+# LaTeX - Complex Equations
+
+Euler's identity:
+
+```latex
+e^{i\pi} + 1 = 0
+```
+
+Schrödinger equation:
+
+```latex
+i\hbar\frac{\partial}{\partial t}\Psi = \hat{H}\Psi
+```
+
+===
+# LaTeX - Fractions and Roots
+
+```latex
+\frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+```

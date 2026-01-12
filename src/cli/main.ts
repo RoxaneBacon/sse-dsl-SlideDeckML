@@ -3,11 +3,13 @@
 import { Command } from 'commander';
 import * as fs from 'fs';
 import * as path from 'path';
+import open from 'open';
 import type { Presentation } from '../language/generated/ast';
 import { HtmlGenerator } from '../generator/html-generator';
 import {createSlideDeckMlServices} from "../language/slide-deck-module";
 import {NodeFileSystem} from "langium/node";
 import {URI} from "vscode-uri";
+import { DevServer } from '../dev-server/server';
 
 const program = new Command();
 
@@ -24,6 +26,50 @@ program
     .action(async (input: string, options: { output: string }) => {
         try {
             await compile(input, options.output);
+        } catch (error) {
+            console.error('Error:', error instanceof Error ? error.message : String(error));
+            process.exit(1);
+        }
+    });
+
+program
+    .command('dev')
+    .description('Start development server with live preview')
+    .argument('[input]', 'Optional input .sdml file to load')
+    .option('-p, --port <number>', 'Port number', '3000')
+    .option('--no-open', 'Do not open browser automatically')
+    .action(async (input: string | undefined, options: { port: string, open: boolean }) => {
+        try {
+            const port = parseInt(options.port, 10);
+            if (isNaN(port)) {
+                throw new Error('Port must be a valid number');
+            }
+
+            // Resolve input file path if provided
+            let inputFile: string | undefined;
+            if (input) {
+                inputFile = path.resolve(input);
+            }
+
+            const server = new DevServer({ port, initialFile: inputFile });
+            await server.start();
+
+            // Open browser if requested
+            if (options.open) {
+                try {
+                    await open(`http://localhost:${port}`);
+                } catch (error) {
+                    console.log('Could not open browser automatically. Please open http://localhost:' + port + ' manually.');
+                }
+            }
+
+            // Handle graceful shutdown
+            process.on('SIGINT', () => {
+                console.log('\nShutting down server...');
+                server.stop();
+                process.exit(0);
+            });
+
         } catch (error) {
             console.error('Error:', error instanceof Error ? error.message : String(error));
             process.exit(1);
@@ -75,7 +121,7 @@ async function compile(inputFile: string, outputFile: string): Promise<void> {
 
     // Generate HTML
     const htmlGenerator = new HtmlGenerator();
-    const html = htmlGenerator.generateHTML(presentation);
+    const html = await htmlGenerator.generateHTML(presentation, path.resolve(inputFile));
 
     // Write output file
     fs.writeFileSync(outputFile, html, 'utf-8');
