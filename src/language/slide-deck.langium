@@ -9,6 +9,7 @@ SlideSection:
 
 Metadata:
     '{' 'author' ':' author=STRING 'title' ':' title=STRING ('theme' ':' theme=STRING)? ('logo' ':' logo=STRING)? ('css' ':' css=STRING)? 
+    ('transition' ':' transition=STRING)?
     ('chalkboard' ':' chalkboard=STRING)? ('chalkboard-theme' ':' chalkboardTheme=STRING)? 
     ('chalkboard-boardmarker-width' ':' chalkboardBoardmarkerWidth=STRING)? ('chalkboard-chalk-width' ':' chalkboardChalkWidth=STRING)? 
     ('chalkboard-chalk-effect' ':' chalkboardChalkEffect=STRING)? ('chalkboard-src' ':' chalkboardSrc=STRING)? 
@@ -16,13 +17,13 @@ Metadata:
     ('chalkboard-transition' ':' chalkboardTransition=STRING)? '}';
 
 Slide:
-    blocks+=Block+;
+    (transition=TRANSITION_ATTR)? blocks+=Block+;
 
 Block:
     lines+=LineContent+;
 
 LineContent:
-    StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments;
+    FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments;
 
 CodeBlock:
     content=CODE_BLOCK;
@@ -33,8 +34,11 @@ SyncFragments:
 FragmentItem:
     text=PARAGRAPH_TEXT | media=MEDIA_LINE;
 
+FragmentElement:
+    STYLE_DELIMITER fragment=FRAGMENT_ATTRS elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments)+ STYLE_DELIMITER;
+
 StyledElement:
-    STYLE_DELIMITER style=STYLE_ATTRS elements+=(Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments)+ STYLE_DELIMITER;
+    STYLE_DELIMITER style=STYLE_ATTRS elements+=(FragmentElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments)+ STYLE_DELIMITER;
 
 UnorderedList:
     items+=UnorderedListItem+;
@@ -71,6 +75,12 @@ terminal FRAGMENT_SEPARATOR: /\[\-\-\-\]/;
 terminal MEDIA_LINE returns string:
     /!\[[^\]]+\]\([^\)]+\)/;
 
+terminal TRANSITION_ATTR returns string:
+    /\{transition:\s*["'][^"']+["']\}/;
+
+terminal FRAGMENT_ATTRS returns string:
+    /\{(?:\.[\w\-]+(?:\s+\.[\w\-]+)*(?:\s+fragment-index\s*=\s*\d+)?|fragment-index\s*=\s*\d+)\}/;
+
 terminal STYLE_ATTRS returns string:
     /\{[^\}\r\n]+\}/;
 
@@ -83,7 +93,7 @@ terminal HEADER_LEVEL: /###|##|#/;
 terminal LIST_MARKER: /[\-\*\+]/;
 
 terminal PARAGRAPH_TEXT returns string:
-    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!```)(?!===)(?!---)(?!\[\-\-\-\])(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*css)(?![\s]*logo)(?![\s]*theme)(?![\s]*chalkboard)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
+    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!```)(?!===)(?!---)(?!\[\-\-\-\])(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*css)(?![\s]*logo)(?![\s]*theme)(?![\s]*transition)(?![\s]*chalkboard)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
 
 terminal STRING returns string:
     /"(?:\\.|[^"\\])*"/;

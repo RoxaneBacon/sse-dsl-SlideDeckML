@@ -1,0 +1,173 @@
+{
+    author: "SlideDeckML Team"
+    title: "Fragment Animations Demo"
+    theme: "black"
+}
+
+# Fragment Animations
+
+This presentation demonstrates **fragment animations** for incremental reveals.
+
+===
+
+# Basic Fragments
+
+::: {.fragment}
+This text will fade in
+:::
+
+::: {.fragment}
+This text will also fade in (on next step)
+:::
+
+::: {.fragment}
+And this one too!
+:::
+
+===
+
+# Fragment Styles
+
+::: {.fragment .fade-out}
+This will fade out
+:::
+
+::: {.fragment .fade-up}
+This will slide up while fading in
+:::
+
+::: {.fragment .highlight-red}
+This will turn red
+:::
+
+::: {.fragment .grow}
+This will grow
+:::
+
+===
+
+# More Fragment Effects
+
+::: {.fragment .fade-in-then-out}
+Fade in, then out
+:::
+
+::: {.fragment .fade-in-then-semi-out}
+Fade in, then semi out
+:::
+
+::: {.fragment .shrink}
+This will shrink
+:::
+
+::: {.fragment .strike}
+This will be struck through
+:::
+
+===
+
+# Highlight Effects
+
+::: {.fragment .highlight-blue}
+Highlight blue
+:::
+
+::: {.fragment .highlight-green}
+Highlight green
+:::
+
+::: {.fragment .highlight-current-red}
+Highlight red, then back
+:::
+
+::: {.fragment .semi-fade-out}
+Semi fade out (50%)
+:::
+
+===
+
+# Nested Fragments
+
+::: {.fragment .fade-in}
+::: {.fragment .highlight-red}
+::: {.fragment .semi-fade-out}
+Fade in > Turn red > Semi fade out
+:::
+:::
+:::
+
+===
+
+# Custom Order
+
+::: {.fragment fragment-index=3}
+Appears last (index 3)
+:::
+
+::: {.fragment fragment-index=1}
+Appears first (index 1)
+:::
+
+::: {.fragment fragment-index=2}
+Appears second (index 2)
+:::
+
+===
+
+# Fragment Lists
+
+Unordered list with fragments:
+
+::: {.fragment}
+- First item
+- Second item
+:::
+
+::: {.fragment}
+- Third item
+- Fourth item
+:::
+
+===
+
+# Mixed Content
+
+::: {.fragment}
+## This header appears first
+:::
+
+::: {.fragment .highlight-blue}
+This paragraph appears second and turns blue
+:::
+
+::: {.fragment .fade-up}
+![Demo Image](https://placehold.co/400x300)
+:::
+
+===
+
+# Code with Fragments
+
+::: {.fragment}
+```javascript
+function hello() {
+    console.log("This code appears first");
+}
+```
+:::
+
+::: {.fragment .highlight-green}
+The code will appear, then this text turns green!
+:::
+
+===
+
+::: {text-align: 'center'; color: '#3498db'; font-size: '64px'}
+# Try It!
+:::
+
+::: {text-align: 'center'; font-size: '24px'; color: '#7f8c8d'}
+::: {.fragment}
+Press **Space** or **Arrow keys** to step through fragments
+:::
+:::

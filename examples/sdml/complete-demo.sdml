@@ -2,6 +2,7 @@
     author: "SlideDeckML Team"
     title: "Complete Feature Showcase"
     theme: "black"
+    transition: "slide"
     chalkboard: "true"
     chalkboard-theme: "chalkboard"
     chalkboard-buttons: "true"
@@ -26,6 +27,8 @@ Complete Feature Demonstration
 6. **Media** - Images and positioning
 7. **Absolute Positioning** - calque, margins
 8. **Chalkboard** - Interactive drawing and annotations
+9. **Fragment Animations** - Incremental reveals and transitions
+10. **Slide Transitions** - Visual effects between slides
 
 ===
 ::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
@@ -486,6 +489,127 @@ You can:
 - Underline key points
 
 Press **DEL** to clear when done.
+
+===
+::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
+## Part 9: Fragment Animations
+:::
+
+===
+# Fragment Animations
+
+::: {.fragment}
+Fragment animations let you **reveal content incrementally**
+:::
+
+::: {.fragment .fade-up}
+This text slides up while fading in
+:::
+
+::: {.fragment .highlight-blue}
+And this one highlights in blue!
+:::
+
+===
+# Various Fragment Effects
+
+::: {.fragment .fade-out}
+This will fade out
+:::
+
+::: {.fragment .grow}
+This will grow larger
+:::
+
+::: {.fragment .shrink}
+This will shrink
+:::
+
+::: {.fragment .strike}
+This gets struck through
+:::
+
+===
+# Nested Fragments
+
+::: {.fragment .fade-in}
+::: {.fragment .highlight-red}
+::: {.fragment .semi-fade-out}
+Fade in → Turn red → Semi fade out
+:::
+:::
+:::
+
+===
+# Custom Order
+
+::: {.fragment fragment-index=3}
+**Third**: This appears last
+:::
+
+::: {.fragment fragment-index=1}
+**First**: This appears first
+:::
+
+::: {.fragment fragment-index=2}
+**Second**: This appears in the middle
+:::
+
+===
+# Fragments with Lists
+
+::: {.fragment}
+- First batch of items
+- Appears together
+:::
+
+::: {.fragment .highlight-green}
+- Second batch
+- Highlights in green
+:::
+
+===
+::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
+## Part 10: Slide Transitions
+:::
+
+===
+{transition: "fade"}
+
+# Slide Transitions
+
+This presentation uses the **"slide"** transition globally (set in metadata).
+
+But **individual slides** can override it!
+
+This slide uses the **fade** transition.
+
+===
+{transition: "zoom"}
+
+# Zoom Effect
+
+This slide **zooms in** from the center!
+
+Different transitions add visual variety to presentations.
+
+===
+{transition: "convex"}
+
+# More Transitions
+
+This uses the **convex** transition.
+
+Available: `none`, `fade`, `slide`, `convex`, `concave`, `zoom`
+
+===
+{transition: "fade-in slide-out"}
+
+# Mixed Transitions
+
+You can even use **different in/out transitions**!
+
+This slide: **fade-in slide-out**
 
 ===
 ::: {text-align: 'center'; color: '#3498db'; font-size: '64px'; font-weight: 'bold'}
