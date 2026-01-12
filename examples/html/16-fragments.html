@@ -76,16 +76,17 @@
         <section data-slide-index="0">
             <h1>Fragment Animations</h1>
             <p>This presentation demonstrates <strong>fragment animations</strong> for incremental reveals.</p>
+            <p>Use the simple `{animate: &quot;effect&quot;}` syntax!</p>
         </section>
         <section data-slide-index="1">
             <h1>Basic Fragments</h1>
-            <div class="fragment">
+            <div class="fragment fade-in">
             <p>This text will fade in</p>
             </div>
-            <div class="fragment">
+            <div class="fragment fade-in">
             <p>This text will also fade in (on next step)</p>
             </div>
-            <div class="fragment">
+            <div class="fragment fade-in">
             <p>And this one too!</p>
             </div>
         </section>
@@ -134,7 +135,7 @@
             <p>Semi fade out (50%)</p>
             </div>
         </section>
-        <section data-slide-index="8">
+        <section data-slide-index="9">
             <h1>Nested Fragments</h1>
             <div class="fragment fade-in">
             <div class="fragment highlight-red">
@@ -145,36 +146,46 @@
             </div>
         </section>
         <section data-slide-index="1">
+            <h1>Multiple Effects</h1>
+            <p>You can combine multiple effects in one animation:</p>
+            <div class="fragment fade-up highlight-blue">
+            <p>This fades up AND turns blue!</p>
+            </div>
+            <div class="fragment grow highlight-green">
+            <p>This grows AND turns green!</p>
+            </div>
+        </section>
+        <section data-slide-index="1">
             <h1>Custom Order</h1>
-            <div class="fragment" data-fragment-index="3">
+            <div class="fragment fade-in" data-fragment-index="3">
             <p>Appears last (index 3)</p>
             </div>
-            <div class="fragment" data-fragment-index="1">
+            <div class="fragment fade-in" data-fragment-index="1">
             <p>Appears first (index 1)</p>
             </div>
-            <div class="fragment" data-fragment-index="2">
+            <div class="fragment fade-in" data-fragment-index="2">
             <p>Appears second (index 2)</p>
             </div>
         </section>
         <section data-slide-index="1">
             <h1>Fragment Lists</h1>
             <p>Unordered list with fragments:</p>
-            <div class="fragment">
+            <div class="fragment fade-in">
             <ul>
                 <li>First item</li>
                 <li>Second item</li>
             </ul>
             </div>
-            <div class="fragment">
+            <div class="fragment fade-in">
             <ul>
                 <li>Third item</li>
                 <li>Fourth item</li>
             </ul>
             </div>
         </section>
-        <section data-slide-index="10">
+        <section data-slide-index="11">
             <h1>Mixed Content</h1>
-            <div class="fragment">
+            <div class="fragment fade-in">
             <h2>This header appears first</h2>
             </div>
             <div class="fragment highlight-blue">
@@ -186,7 +197,7 @@
         </section>
         <section data-slide-index="1">
             <h1>Code with Fragments</h1>
-            <div class="fragment">
+            <div class="fragment fade-in">
             <pre><code class="language-javascript" data-trim data-noescape>function hello() {
     console.log(&quot;This code appears first&quot;);
 }
@@ -196,12 +207,12 @@
             <p>The code will appear, then this text turns green!</p>
             </div>
         </section>
-        <section data-slide-index="8">
+        <section data-slide-index="9">
             <div style="text-align: center; color: #3498db; font-size: 64px">
             <h1>Try It!</h1>
             </div>
             <div style="text-align: center; font-size: 24px; color: #7f8c8d">
-            <div class="fragment">
+            <div class="fragment fade-in">
             <p>Press <strong>Space</strong> or <strong>Arrow keys</strong> to step through fragments</p>
             </div>
             </div>

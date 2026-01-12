@@ -8,19 +8,21 @@
 
 This presentation demonstrates **fragment animations** for incremental reveals.
 
+Use the simple `{animate: "effect"}` syntax!
+
 ===
 
 # Basic Fragments
 
-::: {.fragment}
+::: {animate: "fade-in"}
 This text will fade in
 :::
 
-::: {.fragment}
+::: {animate: "fade-in"}
 This text will also fade in (on next step)
 :::
 
-::: {.fragment}
+::: {animate: "fade-in"}
 And this one too!
 :::
 
@@ -28,19 +30,19 @@ And this one too!
 
 # Fragment Styles
 
-::: {.fragment .fade-out}
+::: {animate: "fade-out"}
 This will fade out
 :::
 
-::: {.fragment .fade-up}
+::: {animate: "fade-up"}
 This will slide up while fading in
 :::
 
-::: {.fragment .highlight-red}
+::: {animate: "highlight-red"}
 This will turn red
 :::
 
-::: {.fragment .grow}
+::: {animate: "grow"}
 This will grow
 :::
 
@@ -48,19 +50,19 @@ This will grow
 
 # More Fragment Effects
 
-::: {.fragment .fade-in-then-out}
+::: {animate: "fade-in-then-out"}
 Fade in, then out
 :::
 
-::: {.fragment .fade-in-then-semi-out}
+::: {animate: "fade-in-then-semi-out"}
 Fade in, then semi out
 :::
 
-::: {.fragment .shrink}
+::: {animate: "shrink"}
 This will shrink
 :::
 
-::: {.fragment .strike}
+::: {animate: "strike"}
 This will be struck through
 :::
 
@@ -68,19 +70,19 @@ This will be struck through
 
 # Highlight Effects
 
-::: {.fragment .highlight-blue}
+::: {animate: "highlight-blue"}
 Highlight blue
 :::
 
-::: {.fragment .highlight-green}
+::: {animate: "highlight-green"}
 Highlight green
 :::
 
-::: {.fragment .highlight-current-red}
+::: {animate: "highlight-current-red"}
 Highlight red, then back
 :::
 
-::: {.fragment .semi-fade-out}
+::: {animate: "semi-fade-out"}
 Semi fade out (50%)
 :::
 
@@ -88,9 +90,9 @@ Semi fade out (50%)
 
 # Nested Fragments
 
-::: {.fragment .fade-in}
-::: {.fragment .highlight-red}
-::: {.fragment .semi-fade-out}
+::: {animate: "fade-in"}
+::: {animate: "highlight-red"}
+::: {animate: "semi-fade-out"}
 Fade in > Turn red > Semi fade out
 :::
 :::
@@ -98,17 +100,31 @@ Fade in > Turn red > Semi fade out
 
 ===
 
+# Multiple Effects
+
+You can combine multiple effects in one animation:
+
+::: {animate: "fade-up highlight-blue"}
+This fades up AND turns blue!
+:::
+
+::: {animate: "grow highlight-green"}
+This grows AND turns green!
+:::
+
+===
+
 # Custom Order
 
-::: {.fragment fragment-index=3}
+::: {animate: "fade-in" index: 3}
 Appears last (index 3)
 :::
 
-::: {.fragment fragment-index=1}
+::: {animate: "fade-in" index: 1}
 Appears first (index 1)
 :::
 
-::: {.fragment fragment-index=2}
+::: {animate: "fade-in" index: 2}
 Appears second (index 2)
 :::
 
@@ -118,12 +134,12 @@ Appears second (index 2)
 
 Unordered list with fragments:
 
-::: {.fragment}
+::: {animate: "fade-in"}
 - First item
 - Second item
 :::
 
-::: {.fragment}
+::: {animate: "fade-in"}
 - Third item
 - Fourth item
 :::
@@ -132,15 +148,15 @@ Unordered list with fragments:
 
 # Mixed Content
 
-::: {.fragment}
+::: {animate: "fade-in"}
 ## This header appears first
 :::
 
-::: {.fragment .highlight-blue}
+::: {animate: "highlight-blue"}
 This paragraph appears second and turns blue
 :::
 
-::: {.fragment .fade-up}
+::: {animate: "fade-up"}
 ![Demo Image](https://placehold.co/400x300)
 :::
 
@@ -148,7 +164,7 @@ This paragraph appears second and turns blue
 
 # Code with Fragments
 
-::: {.fragment}
+::: {animate: "fade-in"}
 ```javascript
 function hello() {
     console.log("This code appears first");
@@ -156,7 +172,7 @@ function hello() {
 ```
 :::
 
-::: {.fragment .highlight-green}
+::: {animate: "highlight-green"}
 The code will appear, then this text turns green!
 :::
 
@@ -167,7 +183,7 @@ The code will appear, then this text turns green!
 :::
 
 ::: {text-align: 'center'; font-size: '24px'; color: '#7f8c8d'}
-::: {.fragment}
+::: {animate: "fade-in"}
 Press **Space** or **Arrow keys** to step through fragments
 :::
 :::

@@ -498,43 +498,43 @@ Press **DEL** to clear when done.
 ===
 # Fragment Animations
 
-::: {.fragment}
+::: {animate: "fade-in"}
 Fragment animations let you **reveal content incrementally**
 :::
 
-::: {.fragment .fade-up}
+::: {animate: "fade-up"}
 This text slides up while fading in
 :::
 
-::: {.fragment .highlight-blue}
+::: {animate: "highlight-blue"}
 And this one highlights in blue!
 :::
 
 ===
 # Various Fragment Effects
 
-::: {.fragment .fade-out}
+::: {animate: "fade-out"}
 This will fade out
 :::
 
-::: {.fragment .grow}
+::: {animate: "grow"}
 This will grow larger
 :::
 
-::: {.fragment .shrink}
+::: {animate: "shrink"}
 This will shrink
 :::
 
-::: {.fragment .strike}
+::: {animate: "strike"}
 This gets struck through
 :::
 
 ===
 # Nested Fragments
 
-::: {.fragment .fade-in}
-::: {.fragment .highlight-red}
-::: {.fragment .semi-fade-out}
+::: {animate: "fade-in"}
+::: {animate: "highlight-red"}
+::: {animate: "semi-fade-out"}
 Fade in → Turn red → Semi fade out
 :::
 :::
@@ -543,27 +543,27 @@ Fade in → Turn red → Semi fade out
 ===
 # Custom Order
 
-::: {.fragment fragment-index=3}
+::: {animate: "fade-in" index: 3}
 **Third**: This appears last
 :::
 
-::: {.fragment fragment-index=1}
+::: {animate: "fade-in" index: 1}
 **First**: This appears first
 :::
 
-::: {.fragment fragment-index=2}
+::: {animate: "fade-in" index: 2}
 **Second**: This appears in the middle
 :::
 
 ===
 # Fragments with Lists
 
-::: {.fragment}
+::: {animate: "fade-in"}
 - First batch of items
 - Appears together
 :::
 
-::: {.fragment .highlight-green}
+::: {animate: "highlight-green"}
 - Second batch
 - Highlights in green
 :::

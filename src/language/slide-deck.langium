@@ -79,7 +79,7 @@ terminal TRANSITION_ATTR returns string:
     /\{transition:\s*["'][^"']+["']\}/;
 
 terminal FRAGMENT_ATTRS returns string:
-    /\{(?:\.[\w\-]+(?:\s+\.[\w\-]+)*(?:\s+fragment-index\s*=\s*\d+)?|fragment-index\s*=\s*\d+)\}/;
+    /\{animate:\s*["'][^"']+["'](?:\s+index:\s*\d+)?\}/;
 
 terminal STYLE_ATTRS returns string:
     /\{[^\}\r\n]+\}/;
