@@ -28,7 +28,26 @@ export class SectionGenerator {
         const blockPromises = slide.blocks.map(block => this.generateBlock(block));
         const contentHTML = (await Promise.all(blockPromises)).join('\n');
 
-        return `        <section data-slide-index="${this.currentSlideIndex}">\n${contentHTML}\n        </section>`;
+        // Parse transition if specified
+        let transitionAttr = '';
+        if (slide.transition) {
+            const transitionValue = this.parseTransition(slide.transition);
+            if (transitionValue) {
+                transitionAttr = ` data-transition="${transitionValue}"`;
+            }
+        }
+
+        return `        <section data-slide-index="${this.currentSlideIndex}"${transitionAttr}>\n${contentHTML}\n        </section>`;
+    }
+
+    /**
+     * Parse transition attribute
+     * @param transitionStr Transition string like {transition: "slide"} or {transition: "slide-in fade-out"}
+     * @returns Parsed transition value
+     */
+    private parseTransition(transitionStr: string): string {
+        const match = transitionStr.match(/\{transition:\s*["']([^"']+)["']\}/);
+        return match ? match[1] : '';
     }
 
     /**

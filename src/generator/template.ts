@@ -8,6 +8,7 @@ export class TemplateGenerator {
     private css: string = ''
     private logo: string = ''
     private theme: string = 'white'
+    private transition: string = 'slide'
     private sourceFilePath?: string;
     
     // Chalkboard configuration
@@ -41,6 +42,9 @@ export class TemplateGenerator {
         }
         if (metadata.theme) {
             this.theme = metadata.theme.replace(/^"|"$/g, '')
+        }
+        if (metadata.transition) {
+            this.transition = metadata.transition.replace(/^"|"$/g, '')
         }
         
         // Chalkboard configuration
@@ -228,7 +232,7 @@ ${slidesContent}
     <script>
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
+            transition: '${this.transition}',
             progress: true,
             center: true,
             backgroundTransition: 'fade',

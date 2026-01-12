@@ -83,7 +83,7 @@ export class ElementGenerator {
     }
 
     /**
-     * Generate a media element (image or video)
+     * Generate a media element (image, video, or YouTube embed)
      * @param media The media AST node
      * @returns The HTML string for the media
      */
@@ -96,6 +96,12 @@ export class ElementGenerator {
         
         const alt = match[1];
         const url = match[2];
+        
+        // Check if it's a YouTube link
+        const youtubeVideoId = this.extractYouTubeVideoId(url);
+        if (youtubeVideoId) {
+            return `            <iframe${style} width="560" height="315" src="https://www.youtube.com/embed/${youtubeVideoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        }
         
         // Determine if it's a video based on file extension
         const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
@@ -110,6 +116,31 @@ export class ElementGenerator {
             
             return `            <img src="${base64Url}" alt="${alt}"${style}>`;
         }
+    }
+
+    /**
+     * Extract YouTube video ID from various YouTube URL formats
+     * @param url The YouTube URL
+     * @returns The video ID or null if not a YouTube URL
+     */
+    private extractYouTubeVideoId(url: string): string | null {
+        // Handle youtube.com/watch?v=VIDEO_ID
+        let match = url.match(/(?:youtube\.com\/watch\?v=|youtube\.com\/watch\?.*&v=)([a-zA-Z0-9_-]{11})/);
+        if (match) return match[1];
+        
+        // Handle youtu.be/VIDEO_ID
+        match = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+        if (match) return match[1];
+        
+        // Handle youtube.com/embed/VIDEO_ID
+        match = url.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/);
+        if (match) return match[1];
+        
+        // Handle youtube.com/v/VIDEO_ID
+        match = url.match(/youtube\.com\/v\/([a-zA-Z0-9_-]{11})/);
+        if (match) return match[1];
+        
+        return null;
     }
 
         /**

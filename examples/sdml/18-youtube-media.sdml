@@ -1,0 +1,95 @@
+{
+    author: "SlideDeckML Team"
+    title: "YouTube & Media Demo"
+    theme: "black"
+}
+
+# YouTube & Media Support
+
+SlideDeckML supports **YouTube videos**, regular videos, and images!
+
+===
+
+# YouTube Videos
+
+Simply use the standard markdown image syntax with a YouTube URL:
+
+![YouTube Demo](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+
+===
+
+# YouTube Short URLs
+
+You can also use YouTube short URLs (youtu.be):
+
+![Another Video](https://youtu.be/dQw4w9WgXcQ)
+
+===
+
+# YouTube Embed URLs
+
+Or even direct embed URLs:
+
+![Embed Format](https://www.youtube.com/embed/dQw4w9WgXcQ)
+
+===
+
+# Styled YouTube Videos
+
+You can apply styling to YouTube embeds:
+
+::: {text-align: 'center'}
+![Centered Video](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+:::
+
+===
+
+# Multiple Videos
+
+You can add multiple videos to a slide:
+
+::: {display: 'inline-block'; width: '45%'; margin: '10px'}
+![Video 1](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+:::
+
+::: {display: 'inline-block'; width: '45%'; margin: '10px'}
+![Video 2](https://youtu.be/dQw4w9WgXcQ)
+:::
+
+===
+
+# Images Still Work
+
+Regular images work as before:
+
+![Placeholder Image](https://placehold.co/600x400)
+
+===
+
+# Mixed Media
+
+Combine images and YouTube videos:
+
+![Image](https://placehold.co/400x300)
+
+![YouTube](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+
+===
+
+# With Animations
+
+YouTube embeds work with fragment animations:
+
+::: {animate: "fade-up"}
+![Animated YouTube](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+:::
+
+===
+
+::: {text-align: 'center'; color: '#3498db'; font-size: '64px'}
+# All Media Formats!
+:::
+
+::: {text-align: 'center'; font-size: '24px'; color: '#7f8c8d'}
+Images • Videos • YouTube
+:::

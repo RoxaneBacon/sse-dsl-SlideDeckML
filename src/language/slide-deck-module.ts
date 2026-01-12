@@ -23,6 +23,8 @@ class SlideDeckMLTokenBuilder extends DefaultTokenBuilder {
                 t.name === 'CODE_BLOCK' ||
                 t.name === 'STYLE_DELIMITER' ||
                 t.name === 'STYLE_ATTRS' ||
+                t.name === 'TRANSITION_ATTR' ||
+                t.name === 'FRAGMENT_ATTRS' ||
                 t.name === 'SYNC_DELIMITER_KEEP' ||
                 t.name === 'SYNC_DELIMITER' ||
                 t.name === 'FRAGMENT_SEPARATOR' ||
@@ -30,7 +32,7 @@ class SlideDeckMLTokenBuilder extends DefaultTokenBuilder {
                 // Include keyword tokens for metadata
                 t.name === '{' || t.name === '}' || t.name === ':' ||
                 t.name === 'author' || t.name === 'title'||
-                t.name === 'logo' || t.name === 'chalkboard' ||
+                t.name === 'logo' || t.name === 'transition' || t.name === 'chalkboard' ||
                 t.name === 'chalkboard-theme' || t.name === 'chalkboard-boardmarker-width' ||
                 t.name === 'chalkboard-chalk-width' || t.name === 'chalkboard-chalk-effect' ||
                 t.name === 'chalkboard-src' || t.name === 'chalkboard-readonly' ||
