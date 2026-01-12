@@ -76,9 +76,8 @@ export class CompilerService {
                 sourceFilePath ? path.resolve(sourceFilePath) : undefined
             );
 
-            // Calculate slide count (template is not counted as a slide)
-            const slideCount = presentation.slides.length;
-            const hasTemplate = !!presentation.template;
+            // Calculate slide count
+            const slideCount = presentation.slides?.slides?.length || 0;
 
             // Determine which slide to display based on cursor position
             let slideIndex: number | undefined;
@@ -89,8 +88,7 @@ export class CompilerService {
             return {
                 html,
                 slideCount,
-                slideIndex,
-                hasTemplate
+                slideIndex
             };
 
         } catch (error) {

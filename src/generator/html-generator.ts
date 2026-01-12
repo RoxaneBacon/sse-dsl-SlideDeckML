@@ -42,24 +42,16 @@ export class HtmlGenerator {
         // Reset slide index counter
         this.sectionGenerator.resetSlideIndex();
 
-        // Generate template if it exists
-        let allSlidesHTML = '';
-        if (presentation.template) {
-            allSlidesHTML += await this.sectionGenerator.generateSection(presentation.template, true) + '\n';
-        }
-
-        // Generate regular slides with index tracking
-        const slidesPromises = presentation.slides.map(async (slide: Slide) => {
-            const html = await this.sectionGenerator.generateSection(slide, false);
+        // Generate slides with index tracking
+        const slidesPromises = (presentation.slides?.slides || []).map(async (slide: Slide) => {
+            const html = await this.sectionGenerator.generateSection(slide);
             this.sectionGenerator.incrementSlideIndex();
             return html;
         });
         
         const slidesHTML = (await Promise.all(slidesPromises)).join("\n");
 
-        allSlidesHTML += slidesHTML;
-
-        return this.templateGenerator.getHTMLTemplate(allSlidesHTML);
+        return this.templateGenerator.getHTMLTemplate(slidesHTML);
     }
 
     /**

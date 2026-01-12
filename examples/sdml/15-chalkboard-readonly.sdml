@@ -1,0 +1,42 @@
+{
+    author: "Professor Smith"
+    title: "Pre-recorded Lecture"
+    theme: "white"
+    chalkboard: "true"
+    chalkboard-readonly: "true"
+    chalkboard-buttons: "false"
+}
+
+# Read-Only Mode
+
+This presentation has **read-only chalkboard** enabled.
+
+- Drawings cannot be modified
+- Perfect for sharing pre-recorded lectures
+- Buttons are hidden to prevent confusion
+
+===
+
+## Use Cases
+
+**Read-only mode is ideal for:**
+
+1. **Recorded Lectures** - Share with annotations intact
+2. **Distribution** - Send presentations with preserved drawings
+3. **Review Sessions** - Show previous annotations without changes
+4. **Documentation** - Keep diagrams as created
+
+===
+
+## Loading Saved Drawings
+
+You can save drawings using the **D** key and reload them later with the `chalkboard-src` option:
+
+```
+chalkboard-src: "drawings.json"
+```
+
+This allows you to:
+- Prepare annotations in advance
+- Share presentations with drawings
+- Create tutorial videos with pre-drawn diagrams

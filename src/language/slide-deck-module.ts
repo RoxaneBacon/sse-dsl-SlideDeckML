@@ -27,11 +27,14 @@ class SlideDeckMLTokenBuilder extends DefaultTokenBuilder {
                 t.name === 'SYNC_DELIMITER' ||
                 t.name === 'FRAGMENT_SEPARATOR' ||
                 t.name === 'SLIDE_SEPARATOR' ||
-                t.name === 'TEMPLATE_SEPARATOR' ||
                 // Include keyword tokens for metadata
                 t.name === '{' || t.name === '}' || t.name === ':' ||
                 t.name === 'author' || t.name === 'title'||
-                t.name === 'logo'
+                t.name === 'logo' || t.name === 'chalkboard' ||
+                t.name === 'chalkboard-theme' || t.name === 'chalkboard-boardmarker-width' ||
+                t.name === 'chalkboard-chalk-width' || t.name === 'chalkboard-chalk-effect' ||
+                t.name === 'chalkboard-src' || t.name === 'chalkboard-readonly' ||
+                t.name === 'chalkboard-buttons' || t.name === 'chalkboard-transition'
             );
         }
 

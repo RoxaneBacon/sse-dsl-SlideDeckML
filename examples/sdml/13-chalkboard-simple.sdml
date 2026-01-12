@@ -1,0 +1,60 @@
+{
+    author: "John Doe"
+    title: "Chalkboard Demo - Simple"
+    theme: "white"
+    chalkboard: "true"
+}
+
+# Chalkboard Annotations
+
+This presentation demonstrates the **chalkboard plugin** with default settings.
+
+Press **C** to toggle the notes canvas (draw on slides).
+
+Press **B** to toggle the chalkboard (blank board for drawing).
+
+===
+
+## Drawing Controls
+
+**Keyboard Shortcuts:**
+
+- **C** - Toggle notes canvas
+- **B** - Toggle chalkboard
+- **BACKSPACE BACKSPACE** - Reset all drawings
+- **DEL** - Clear drawings on current slide
+- **X** - Cycle colors forward
+- **Y** - Cycle colors backward
+- **D** - Download drawings
+
+===
+
+## Mouse Controls
+
+**Drawing:**
+
+- Left click + drag to draw
+- Right click + drag to erase
+
+**Touch:**
+
+- Touch + move to draw
+- Touch and hold (0.5s) + move to erase
+
+===
+
+## Practice Slide
+
+Try drawing on this slide!
+
+**Math Example:**
+
+$$ E = mc^2 $$
+
+**Code Example:**
+
+```python
+def hello_world():
+    print("Hello, World!")
+    return True
+```

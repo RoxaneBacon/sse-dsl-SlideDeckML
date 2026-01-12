@@ -1,0 +1,58 @@
+{
+    author: "Jane Smith"
+    title: "Chalkboard Demo - Advanced"
+    theme: "black"
+    chalkboard: "true"
+    chalkboard-theme: "whiteboard"
+    chalkboard-boardmarker-width: "5"
+    chalkboard-chalk-width: "10"
+    chalkboard-buttons: "true"
+    chalkboard-transition: "500"
+}
+
+# Advanced Chalkboard
+
+This presentation uses **custom chalkboard settings**:
+
+- **Theme:** Whiteboard (instead of chalkboard)
+- **Boardmarker Width:** 5px (thicker than default 3px)
+- **Chalk Width:** 10px (thicker than default 7px)
+- **Buttons:** Enabled at bottom of slides
+- **Transition:** 500ms (faster than default 800ms)
+
+===
+
+## Whiteboard Theme
+
+The whiteboard theme gives you:
+
+- White background for the board
+- Marker-style drawing instead of chalk
+- Better for professional presentations
+- Cleaner look for diagrams
+
+===
+
+## Thicker Lines
+
+With increased line widths:
+
+- **Boardmarker:** 5px (default is 3px)
+- **Chalk:** 10px (default is 7px)
+
+This makes drawings more visible in large rooms!
+
+===
+
+## Interactive Diagram
+
+**System Architecture:**
+
+Draw your architecture diagram here using the whiteboard!
+
+Components to include:
+- Frontend
+- API Gateway
+- Backend Services
+- Database
+- Cache Layer
