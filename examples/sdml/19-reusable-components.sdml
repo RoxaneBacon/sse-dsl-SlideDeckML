@@ -1,0 +1,107 @@
+{
+author: "SlideDeckML"
+title: "Reusable Components Demo"
+theme: "black"
+transition: "slide"
+}
+
+@component arrayDisplay values highlight
+:::{ position: absolute; top: 100px; left: 100px; width: 600px; background: #1e1e1e; padding: 20px; border-radius: 10px; }
+# Array Visualization
+${values}
+:::{ background: #ffeb3b; color: #000; padding: 5px; border-radius: 5px; }
+Highlighted element: ${highlight}
+:::
+:::
+@end
+
+@component stepCard number title content
+:::{ background: #667eea; padding: 30px; border-radius: 15px; margin: 20px; }
+### Step ${number}: ${title}
+${content}
+:::
+@end
+
+===
+
+# Sorting Algorithms Lecture
+
+Welcome to our interactive demonstration of sorting algorithms using reusable components!
+
+===
+
+## Bubble Sort - Initial State
+
+@use arrayDisplay values="[5, 2, 8, 1, 9]" highlight="5"
+
+Below we see the unsorted array with the first element highlighted.
+
+===
+
+## Bubble Sort - After First Pass
+
+@use arrayDisplay values="[2, 5, 1, 8, 9]" highlight="9"
+
+After the first pass, the largest element (9) has bubbled to the end.
+
+===
+
+## Code Example: Bubble Sort
+
+This is the complete implementation of bubble sort algorithm.
+
+===
+
+## Quick Sort - Initial Array
+
+@use arrayDisplay values="[7, 3, 9, 2, 5]" highlight="7"
+
+The pivot element (7) is selected for partitioning.
+
+===
+
+## Algorithm Steps
+
+@use stepCard number="1" title="Choose Pivot" content="Select the first element as the pivot"
+
+@use stepCard number="2" title="Partition" content="Rearrange elements smaller than pivot to the left, larger to the right"
+
+@use stepCard number="3" title="Recursion" content="Recursively apply the same process to sub-arrays"
+
+===
+
+## Code Example: Quick Sort
+
+A recursive approach to sorting.
+
+===
+
+## Merge Sort - Divide Phase
+
+@use arrayDisplay values="[8, 3, 5, 4]" highlight="8"
+
+The array is divided into smaller sub-arrays.
+
+===
+
+## Multiple Arrays Comparison
+
+Comparing sorted sub-arrays before merging.
+
+===
+
+## Performance Analysis
+
+@use stepCard number="1" title="Bubble Sort" content="Time Complexity: O(n²) - Good for small datasets"
+
+@use stepCard number="2" title="Quick Sort" content="Time Complexity: O(n log n) - Fastest on average"
+
+@use stepCard number="3" title="Merge Sort" content="Time Complexity: O(n log n) - Stable and predictable"
+
+===
+
+
+# Thank You!
+
+Questions about reusable components and sorting algorithms?
+

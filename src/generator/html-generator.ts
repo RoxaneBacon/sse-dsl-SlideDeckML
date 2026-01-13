@@ -4,6 +4,7 @@ import { TemplateGenerator } from "./template";
 import { StyleParser } from "./style-parser";
 import { LineContentHandler } from "./line-content-handler";
 import { SectionGenerator } from "./section-generator";
+import { ComponentProcessor } from "./component-processor";
 
 /**
  * Main HTML generator that orchestrates the conversion of SlideDeckML to HTML
@@ -11,14 +12,16 @@ import { SectionGenerator } from "./section-generator";
 export class HtmlGenerator {
     private templateGenerator: TemplateGenerator;
     private sectionGenerator: SectionGenerator;
+    private componentProcessor: ComponentProcessor;
 
     constructor() {
         this.templateGenerator = new TemplateGenerator();
+        this.componentProcessor = new ComponentProcessor();
         
         // Initialize the dependency chain
         const elementGenerator = new ElementGenerator();
         const styleParser = new StyleParser();
-        const lineContentHandler = new LineContentHandler(elementGenerator, styleParser);
+        const lineContentHandler = new LineContentHandler(elementGenerator, styleParser, this.componentProcessor);
         this.sectionGenerator = new SectionGenerator(lineContentHandler);
     }
 
@@ -29,6 +32,11 @@ export class HtmlGenerator {
      * @returns Complete HTML document string
      */
     public async generateHTML(presentation: Presentation, sourceFilePath?: string): Promise<string> {
+        // Register components before processing slides
+        if (presentation.components && presentation.components.length > 0) {
+            this.componentProcessor.registerComponents(presentation.components);
+        }
+        
         if (presentation.metadata) {
             this.templateGenerator.setMetadata(presentation.metadata);
         }

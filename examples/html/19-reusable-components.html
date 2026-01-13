@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="SlideDeckML">
+    <meta name="title" content="Reusable Components Demo">
+    <title>Reusable Components Demo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+    <style> 
+        
+        
+
+        /* Default Reveal.js overrides */
+        .reveal {
+            font-size: 32px; /* Reduced from default 40px */
+        }
+        
+        .reveal .slides {
+            text-align: left; /* Remove default centering */
+        }
+        
+        .reveal h1 {
+            font-size: 2em; /* Reduced from default 2.5em */
+        }
+        
+        .reveal h2 {
+            font-size: 1.3em; /* Reduced from default 1.8em */
+        }
+        
+        .reveal h3 {
+            font-size: 1em; /* Reduced from default 1.5em */
+        }
+   
+        /* Synchronized fragments styling */
+        .sync-container {
+            position: relative;
+            min-height: 50px;
+            font-size: 0.9em;
+        }
+        .sync-item {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .sync-item.active {
+            display: block;
+            opacity: 1;
+        }
+        .sync-item p {
+            margin: 0.3em 0;
+        }
+        .sync-item img {
+            max-width: 100%;
+            height: auto;
+        }
+        /* Keep mode: stack items vertically */
+        .sync-container[data-keep="true"] {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3em;
+        }
+        .sync-container[data-keep="true"] .sync-item {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="reveal">
+        <div class="slides">
+        <section data-slide-index="0">
+            <h1>Sorting Algorithms Lecture</h1>
+            <p>Welcome to our interactive demonstration of sorting algorithms using reusable components!</p>
+        </section>
+        <section data-slide-index="5">
+            <h2>Bubble Sort - Initial State</h2>
+            <div style="position: absolute; top: 100px; left: 100px; width: 600px; background: #1e1e1e; padding: 20px; border-radius: 10px">
+            <h1>Array Visualization</h1>
+            <p>[5, 2, 8, 1, 9]</p>
+            </div>
+            <p>Below we see the unsorted array with the first element highlighted.</p>
+        </section>
+        <section data-slide-index="5">
+            <h2>Bubble Sort - After First Pass</h2>
+            <div style="position: absolute; top: 100px; left: 100px; width: 600px; background: #1e1e1e; padding: 20px; border-radius: 10px">
+            <h1>Array Visualization</h1>
+            <p>[2, 5, 1, 8, 9]</p>
+            </div>
+            <p>After the first pass, the largest element (9) has bubbled to the end.</p>
+        </section>
+        <section data-slide-index="0">
+            <h2>Code Example: Bubble Sort</h2>
+            <p>This is the complete implementation of bubble sort algorithm.</p>
+        </section>
+        <section data-slide-index="5">
+            <h2>Quick Sort - Initial Array</h2>
+            <div style="position: absolute; top: 100px; left: 100px; width: 600px; background: #1e1e1e; padding: 20px; border-radius: 10px">
+            <h1>Array Visualization</h1>
+            <p>[7, 3, 9, 2, 5]</p>
+            </div>
+            <p>The pivot element (7) is selected for partitioning.</p>
+        </section>
+        <section data-slide-index="5">
+            <h2>Algorithm Steps</h2>
+            <div style="background: #667eea; padding: 30px; border-radius: 15px; margin: 20px">
+            <h3>Step 1: Choose Pivot</h3>
+            <p>Select the first element as the pivot</p>
+            </div>
+            <div style="background: #667eea; padding: 30px; border-radius: 15px; margin: 20px">
+            <h3>Step 2: Partition</h3>
+            <p>Rearrange elements smaller than pivot to the left, larger to the right</p>
+            </div>
+            <div style="background: #667eea; padding: 30px; border-radius: 15px; margin: 20px">
+            <h3>Step 3: Recursion</h3>
+            <p>Recursively apply the same process to sub-arrays</p>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h2>Code Example: Quick Sort</h2>
+            <p>A recursive approach to sorting.</p>
+        </section>
+        <section data-slide-index="5">
+            <h2>Merge Sort - Divide Phase</h2>
+            <div style="position: absolute; top: 100px; left: 100px; width: 600px; background: #1e1e1e; padding: 20px; border-radius: 10px">
+            <h1>Array Visualization</h1>
+            <p>[8, 3, 5, 4]</p>
+            </div>
+            <p>The array is divided into smaller sub-arrays.</p>
+        </section>
+        <section data-slide-index="0">
+            <h2>Multiple Arrays Comparison</h2>
+            <p>Comparing sorted sub-arrays before merging.</p>
+        </section>
+        <section data-slide-index="5">
+            <h2>Performance Analysis</h2>
+            <div style="background: #667eea; padding: 30px; border-radius: 15px; margin: 20px">
+            <h3>Step 1: Bubble Sort</h3>
+            <p>Time Complexity: O(n²) - Good for small datasets</p>
+            </div>
+            <div style="background: #667eea; padding: 30px; border-radius: 15px; margin: 20px">
+            <h3>Step 2: Quick Sort</h3>
+            <p>Time Complexity: O(n log n) - Fastest on average</p>
+            </div>
+            <div style="background: #667eea; padding: 30px; border-radius: 15px; margin: 20px">
+            <h3>Step 3: Merge Sort</h3>
+            <p>Time Complexity: O(n log n) - Stable and predictable</p>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>Thank You!</h1>
+            <p>Questions about reusable components and sorting algorithms?</p>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            progress: true,
+            center: true,
+            backgroundTransition: 'fade',
+            plugins: [ RevealHighlight ]
+        });
+
+        // Auto-render LaTeX when slides are ready
+        Reveal.on('ready', function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        });
+
+        // Synchronized fragments handler
+        let currentFragmentIndex = -1;
+
+        Reveal.on('fragmentshown', event => {
+            currentFragmentIndex++;
+            updateSyncItems();
+        });
+
+        Reveal.on('fragmenthidden', event => {
+            currentFragmentIndex--;
+            updateSyncItems();
+        });
+
+        Reveal.on('slidechanged', event => {
+            // Detect the current fragment state by checking visible fragments
+            const currentSlide = Reveal.getCurrentSlide();
+            if (currentSlide) {
+                const fragments = currentSlide.querySelectorAll('.fragment');
+                let maxVisibleIndex = -1;
+                
+                fragments.forEach(fragment => {
+                    if (fragment.classList.contains('visible')) {
+                        const fragmentIndex = parseInt(fragment.getAttribute('data-fragment-index') || '0');
+                        maxVisibleIndex = Math.max(maxVisibleIndex, fragmentIndex);
+                    }
+                });
+                
+                currentFragmentIndex = maxVisibleIndex;
+            } else {
+                currentFragmentIndex = -1;
+            }
+            updateSyncItems();
+        });
+
+        function updateSyncItems() {
+            const currentSlide = Reveal.getCurrentSlide();
+            if (!currentSlide) return;
+
+            const syncContainers = currentSlide.querySelectorAll('.sync-container');
+            syncContainers.forEach(container => {
+                const keepMode = container.getAttribute('data-keep') === 'true';
+                const items = container.querySelectorAll('.sync-item');
+                
+                items.forEach(item => {
+                    const syncIndex = parseInt(item.getAttribute('data-sync-index') || '0');
+                    
+                    if (keepMode) {
+                        // In keep mode, show all items up to and including current index
+                        if (syncIndex <= currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    } else {
+                        // Default mode: show only the current item
+                        if (syncIndex === currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Initialize on load
+        Reveal.on('ready', () => {
+            updateSyncItems();
+        });
+    </script>
+</body>
+</html>

@@ -36,7 +36,10 @@ class SlideDeckMLTokenBuilder extends DefaultTokenBuilder {
                 t.name === 'chalkboard-theme' || t.name === 'chalkboard-boardmarker-width' ||
                 t.name === 'chalkboard-chalk-width' || t.name === 'chalkboard-chalk-effect' ||
                 t.name === 'chalkboard-src' || t.name === 'chalkboard-readonly' ||
-                t.name === 'chalkboard-buttons' || t.name === 'chalkboard-transition'
+                t.name === 'chalkboard-buttons' || t.name === 'chalkboard-transition' ||
+                // Include component keywords
+                t.name === 'COMPONENT_DECL' || t.name === 'COMPONENT_END' || t.name === 'COMPONENT_USAGE' ||
+                t.name === 'ID' || t.name === '='
             );
         }
 

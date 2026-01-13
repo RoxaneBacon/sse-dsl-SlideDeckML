@@ -10,11 +10,13 @@ import {
     isStyledElement,
     isFragmentElement,
     isCodeBlock, 
-    isSyncFragments 
+    isSyncFragments,
+    isComponentUsage 
 } from "../language/generated/ast";
 import { ElementGenerator } from "./element-generator";
 import { StyleParser } from "./style-parser";
 import { FragmentParser } from "./fragment-parser";
+import { ComponentProcessor } from "./component-processor";
 
 /**
  * Handles the generation of HTML for different types of line content
@@ -24,11 +26,13 @@ export class LineContentHandler {
     private styleParser: StyleParser;
     private fragmentParser: FragmentParser;
     private lastCodeBlock: CodeBlock | null = null;
+    private componentProcessor: ComponentProcessor;
 
-    constructor(elementGenerator: ElementGenerator, styleParser: StyleParser) {
+    constructor(elementGenerator: ElementGenerator, styleParser: StyleParser, componentProcessor: ComponentProcessor) {
         this.elementGenerator = elementGenerator;
         this.styleParser = styleParser;
         this.fragmentParser = new FragmentParser();
+        this.componentProcessor = componentProcessor;
     }
 
     /**
@@ -44,6 +48,11 @@ export class LineContentHandler {
      * @returns Generated HTML string
      */
     public async generateLine(line: LineContent): Promise<string> {
+        // Handle component usage
+        if (isComponentUsage(line)) {
+            return await this.handleComponentUsage(line);
+        }
+        
         // Handle fragment elements first
         if (isFragmentElement(line)) {
             return await this.handleFragmentElement(line);
@@ -169,5 +178,28 @@ export class LineContentHandler {
      */
     public resetLastCodeBlock(): void {
         this.lastCodeBlock = null;
+    }
+
+    /**
+     * Handle component usage by instantiating the component with parameters
+     * @param usage The component usage
+     * @returns Generated HTML string
+     */
+    private async handleComponentUsage(usage: any): Promise<string> {
+        // Instantiate the component with provided parameters
+        const instantiatedBlocks = this.componentProcessor.instantiateComponent(usage);
+        
+        // Generate HTML for each block
+        let html = '';
+        for (const block of instantiatedBlocks) {
+            for (const line of block.lines) {
+                const lineHtml = await this.generateLine(line);
+                if (lineHtml) {
+                    html += lineHtml + '\n';
+                }
+            }
+        }
+        
+        return html.trimEnd();
     }
 }

@@ -2,7 +2,23 @@ grammar SlideDeckML
 
 entry Presentation:
     (metadata=Metadata)?
+    (components+=ComponentDefinition)*
     (slides=SlideSection)?;
+
+ComponentDefinition:
+    COMPONENT_DECL body=ComponentBody COMPONENT_END;
+
+ComponentBody:
+    blocks+=Block+;
+
+terminal COMPONENT_DECL:
+    /@component\s+[a-zA-Z_][a-zA-Z0-9_\-]*(?:\s+[a-zA-Z_][a-zA-Z0-9_\-]*)*\s*[\r\n]+/;
+
+terminal COMPONENT_USAGE:
+    /@use\s+[a-zA-Z_][a-zA-Z0-9_\-]*(?:\s+[a-zA-Z_][a-zA-Z0-9_\-]*="[^"]*")*\s*/;
+
+terminal COMPONENT_END:
+    /@end/;
 
 SlideSection:
     (SLIDE_SEPARATOR)? slides+=Slide (SLIDE_SEPARATOR slides+=Slide)* (SLIDE_SEPARATOR)?;
@@ -23,7 +39,10 @@ Block:
     lines+=LineContent+;
 
 LineContent:
-    FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments;
+    FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments | ComponentUsage;
+
+ComponentUsage:
+    usage=COMPONENT_USAGE;
 
 CodeBlock:
     content=CODE_BLOCK;
@@ -38,7 +57,7 @@ FragmentElement:
     STYLE_DELIMITER fragment=FRAGMENT_ATTRS elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments)+ STYLE_DELIMITER;
 
 StyledElement:
-    STYLE_DELIMITER style=STYLE_ATTRS elements+=(FragmentElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments)+ STYLE_DELIMITER;
+    STYLE_DELIMITER style=STYLE_ATTRS elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments)+ STYLE_DELIMITER;
 
 UnorderedList:
     items+=UnorderedListItem+;
@@ -93,10 +112,13 @@ terminal HEADER_LEVEL: /###|##|#/;
 terminal LIST_MARKER: /[\-\*\+]/;
 
 terminal PARAGRAPH_TEXT returns string:
-    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!```)(?!===)(?!---)(?!\[\-\-\-\])(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*css)(?![\s]*logo)(?![\s]*theme)(?![\s]*transition)(?![\s]*chalkboard)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
+    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!```)(?!===)(?!---)(?!\[\-\-\-\])(?![\s]*\{)(?![\s]*\})(?![\s]*author)(?![\s]*title)(?![\s]*css)(?![\s]*logo)(?![\s]*theme)(?![\s]*transition)(?![\s]*chalkboard)(?![\s]*:)(?!")(?!@component)(?!@end)(?!@use)(?!=)(?!\.)[^\r\n]+/;
 
 terminal STRING returns string:
     /"(?:\\.|[^"\\])*"/;
+
+terminal ID:
+    /[a-zA-Z_][a-zA-Z0-9_\-]*/;
 
 terminal INT returns number:
     /[0-9]+/;
