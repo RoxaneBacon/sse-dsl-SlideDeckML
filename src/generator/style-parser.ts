@@ -15,12 +15,12 @@ export class StyleParser {
             const content = styleBlock.replace(/^\{|\}$/g, '').trim();
             if (!content) return '';
             
-            // Parse key-value pairs (support both semicolon and comma separators)
+            // Parse key-value pairs (support semicolon separators)
             const styles: string[] = [];
             let hasAbsoluteKeywords = false;
             
-            // Split by semicolon or comma
-            const pairs = content.split(/[;,]/).map(pair => pair.trim()).filter(pair => pair.length > 0);
+            // Split by semicolon only (commas can appear in CSS values like rgba, linear-gradient)
+            const pairs = content.split(/;/).map(pair => pair.trim()).filter(pair => pair.length > 0);
             
             const processedStyles = pairs.map(pair => {
                 const colonIndex = pair.indexOf(':');

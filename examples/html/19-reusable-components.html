@@ -77,35 +77,64 @@
             <h1>Sorting Algorithms Lecture</h1>
             <p>Welcome to our interactive demonstration of sorting algorithms using reusable components!</p>
         </section>
-        <section data-slide-index="5">
+        <section data-slide-index="7">
             <h2>Bubble Sort - Initial State</h2>
             <div style="position: absolute; top: 100px; left: 100px; width: 600px; background: #1e1e1e; padding: 20px; border-radius: 10px">
             <h1>Array Visualization</h1>
             <p>[5, 2, 8, 1, 9]</p>
+            <div style="background: #ffeb3b; color: #000; padding: 5px; border-radius: 5px">
+            <p>Highlighted element: 5</p>
+            </div>
             </div>
             <p>Below we see the unsorted array with the first element highlighted.</p>
         </section>
-        <section data-slide-index="5">
+        <section data-slide-index="7">
             <h2>Bubble Sort - After First Pass</h2>
             <div style="position: absolute; top: 100px; left: 100px; width: 600px; background: #1e1e1e; padding: 20px; border-radius: 10px">
             <h1>Array Visualization</h1>
             <p>[2, 5, 1, 8, 9]</p>
+            <div style="background: #ffeb3b; color: #000; padding: 5px; border-radius: 5px">
+            <p>Highlighted element: 9</p>
+            </div>
             </div>
             <p>After the first pass, the largest element (9) has bubbled to the end.</p>
         </section>
-        <section data-slide-index="0">
-            <h2>Code Example: Bubble Sort</h2>
-            <p>This is the complete implementation of bubble sort algorithm.</p>
+        <section data-slide-index="2">
+            <h2>Bubble Sort - Implementation</h2>
+            <div style="background: #2d2d2d; padding: 25px; border-radius: 10px; margin: 20px 0">
+            <h3>Bubble Sort Algorithm</h3>
+            <div style="background: #1e1e1e; padding: 15px; border-radius: 5px; font-family: monospace; white-space: pre-wrap">
+            <p>def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] &gt; arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr</p>
+            </div>
+            </div>
+            <p>The classic sorting algorithm with nested loops for comparison.</p>
+            <pre><code class="language-python" data-trim data-noescape data-line-numbers="1|2|3|4|5|6|7">def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] &gt; arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr
+</code></pre>
         </section>
-        <section data-slide-index="5">
+        <section data-slide-index="7">
             <h2>Quick Sort - Initial Array</h2>
             <div style="position: absolute; top: 100px; left: 100px; width: 600px; background: #1e1e1e; padding: 20px; border-radius: 10px">
             <h1>Array Visualization</h1>
             <p>[7, 3, 9, 2, 5]</p>
+            <div style="background: #ffeb3b; color: #000; padding: 5px; border-radius: 5px">
+            <p>Highlighted element: 7</p>
+            </div>
             </div>
             <p>The pivot element (7) is selected for partitioning.</p>
         </section>
-        <section data-slide-index="5">
+        <section data-slide-index="2">
             <h2>Algorithm Steps</h2>
             <div style="background: #667eea; padding: 30px; border-radius: 15px; margin: 20px">
             <h3>Step 1: Choose Pivot</h3>
@@ -120,36 +149,187 @@
             <p>Recursively apply the same process to sub-arrays</p>
             </div>
         </section>
-        <section data-slide-index="0">
-            <h2>Code Example: Quick Sort</h2>
-            <p>A recursive approach to sorting.</p>
+        <section data-slide-index="10">
+            <h2>Quick Sort - Complete Implementation</h2>
+            <div style="display: flex; flex-direction: column; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; margin: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3)">
+            <h2>Quick Sort</h2>
+            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 10px 0">
+            <p><strong>Time Complexity:</strong> O(n log n) average</p>
+            </div>
+            <div style="background: #1e1e1e; padding: 15px; border-radius: 5px; font-family: monospace; white-space: pre-wrap; color: #f8f8f2">
+            <p>def quick_sort(arr):
+    if len(arr) &lt;= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x &lt; pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x &gt; pivot]
+    return quick<em>sort(left) + middle + quick</em>sort(right)</p>
+            </div>
+            <div style="color: #ffffff; margin-top: 15px; font-size: 0.9em">
+            <p>Divide-and-conquer algorithm using a pivot element to partition the array</p>
+            </div>
+            </div>
         </section>
-        <section data-slide-index="5">
-            <h2>Merge Sort - Divide Phase</h2>
-            <div style="position: absolute; top: 100px; left: 100px; width: 600px; background: #1e1e1e; padding: 20px; border-radius: 10px">
-            <h1>Array Visualization</h1>
-            <p>[8, 3, 5, 4]</p>
+        <section data-slide-index="12">
+            <h2>Algorithm Comparison</h2>
+            <div style="background: #1e1e1e; padding: 20px; border-radius: 10px">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+            <div style="background: #2d2d2d; padding: 20px; border-radius: 8px">
+            <h3>Bubble Sort</h3>
+            <div style="color: #4CAF50">
+            <p>⏱ Time: O(n²)</p>
             </div>
-            <p>The array is divided into smaller sub-arrays.</p>
+            <div style="color: #2196F3">
+            <p>💾 Space: O(1)</p>
+            </div>
+            </div>
+            <div style="background: #2d2d2d; padding: 20px; border-radius: 8px">
+            <h3>Quick Sort</h3>
+            <div style="color: #4CAF50">
+            <p>⏱ Time: O(n log n)</p>
+            </div>
+            <div style="color: #2196F3">
+            <p>💾 Space: O(log n)</p>
+            </div>
+            </div>
+            </div>
+            </div>
+            <p>Side-by-side complexity analysis helps choose the right algorithm.</p>
         </section>
-        <section data-slide-index="0">
-            <h2>Multiple Arrays Comparison</h2>
-            <p>Comparing sorted sub-arrays before merging.</p>
+        <section data-slide-index="14">
+            <h2>Merge Sort - Visual Explanation</h2>
+            <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1)">
+            <h3>Merge Sort Process</h3>
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgNjAwIDMwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzY2N2VlYSIvPjxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Ik0xMzcuMjIgMTQ3LjY4cTAgMi4zLS43NyA0LjIzdC0yLjE2IDMuMzItMy4zNSAyLjE2LTQuMzUuNzdoLTcuOTl2LTIwLjk3aDcuOTlxMi4zOSAwIDQuMzUuNzggMS45Ni43NyAzLjM1IDIuMTYgMS4zOSAxLjM4IDIuMTYgMy4zMXQuNzcgNC4yNG0tNC4wMSAwcTAtMS43My0uNDUtMy4xLS40Ni0xLjM3LTEuMzItMi4zMnQtMi4wOS0xLjQ2cS0xLjIzLS41LTIuNzYtLjVoLTQuMDh2MTQuNzZoNC4wOHExLjUzIDAgMi43Ni0uNTF0Mi4wOS0xLjQ2IDEuMzItMi4zMnEuNDUtMS4zNy40NS0zLjA5bTYuOTktNC40aDMuNnYxNC44OGgtMy42em00LjA5LTQuMzNxMCAuNDYtLjE5Ljg3LS4xOC40LS41LjcxLS4zMS4zLS43My40OC0uNDIuMTktLjkuMTktLjQ2IDAtLjg4LS4xOS0uNDEtLjE4LS43MS0uNDgtLjMxLS4zMS0uNDktLjcxLS4xOC0uNDEtLjE4LS44NyAwLS40OC4xOC0uOXQuNDktLjczcS4zLS4zLjcxLS40OC40Mi0uMTguODgtLjE4LjQ4IDAgLjkuMTh0LjczLjQ4cS4zMi4zMS41LjczLjE5LjQyLjE5LjltMTMuNzUgNC4zM2gyLjgzbC01LjkxIDE0Ljg4aC0zLjI0bC01LjkxLTE0Ljg4aDIuOTZxLjQxIDAgLjY4LjE5dC4zNS40OGwyLjg3IDcuOTVxLjI0LjY5LjQxIDEuMzZ0LjMgMS4zM3EuMTUtLjY2LjMyLTEuMzMuMTgtLjY3LjQyLTEuMzZsMi45My03Ljk1cS4xLS4yOS4zNi0uNDguMjctLjE5LjYzLS4xOW00Ljg0IDBoMy42djE0Ljg4aC0zLjZ6bTQuMDktNC4zM3EwIC40Ni0uMTkuODctLjE5LjQtLjUuNzEtLjMxLjMtLjczLjQ4LS40Mi4xOS0uOS4xOS0uNDYgMC0uODgtLjE5LS40MS0uMTgtLjcxLS40OC0uMzEtLjMxLS40OS0uNzEtLjE4LS40MS0uMTgtLjg3IDAtLjQ4LjE4LS45dC40OS0uNzNxLjMtLjMuNzEtLjQ4LjQyLS4xOC44OC0uMTguNDggMCAuOS4xOHQuNzMuNDhxLjMxLjMxLjUuNzN0LjE5LjltMTIuNSAxNC44di02LjY3cS0uNjEtLjc0LTEuMzMtMS4wNC0uNzItLjMxLTEuNTQtLjMxLS44MSAwLTEuNDcuMzEtLjY1LjMtMS4xMS45Mi0uNDcuNjEtLjcxIDEuNTYtLjI1Ljk1LS4yNSAyLjI0IDAgMS4zMS4yMSAyLjIyLjIxLjkuNiAxLjQ4LjM5LjU3Ljk2LjgyLjU2LjI2IDEuMjYuMjYgMS4xMiAwIDEuOS0uNDcuNzgtLjQ2IDEuNDgtMS4zMm0wLTE3LjE0aDMuNTh2MjEuNTVoLTIuMTlxLS43MSAwLS45LS42NWwtLjMtMS40NHEtLjkgMS4wMy0yLjA3IDEuNjd0LTIuNzIuNjRxLTEuMjIgMC0yLjIzLS41MS0xLjAyLS41MS0xLjc1LTEuNDctLjczLS45Ny0xLjEzLTIuMzl0LS40LTMuMjVxMC0xLjY1LjQ1LTMuMDd0MS4yOS0yLjQ2cS44NC0xLjA1IDIuMDItMS42NCAxLjE3LS41OCAyLjY0LS41OCAxLjI0IDAgMi4xMy4zOS44OC4zOSAxLjU4IDEuMDZ6bTkuOTUgMTIuNGg2Ljc1cTAtLjctLjE5LTEuMzEtLjItLjYyLS41OS0xLjA4LS4zOS0uNDctLjk5LS43My0uNi0uMjctMS40LS4yNy0xLjU1IDAtMi40NS44OC0uODkuODktMS4xMyAyLjUxbTkuMTMgMi4xNmgtOS4yMXEuMDkgMS4xNS40MSAxLjk4dC44NCAxLjM4cS41Mi41NCAxLjI0LjgxdDEuNTkuMjcgMS41LS4yMXEuNjMtLjIgMS4xLS40NC40Ny0uMjUuODMtLjQ1LjM1LS4yMS42OS0uMjEuNDUgMCAuNjYuMzRsMS4wMyAxLjNxLS41OS43LTEuMzMgMS4xN3QtMS41NS43NXEtLjguMjktMS42My40LS44NC4xMi0xLjYyLjEyLTEuNTUgMC0yLjg5LS41Mi0xLjMzLS41MS0yLjMyLTEuNTItLjk4LTEuMDEtMS41NS0yLjQ5LS41Ni0xLjQ5LS41Ni0zLjQ1IDAtMS41Mi40OS0yLjg2dDEuNDEtMi4zNHEuOTItLjk5IDIuMjUtMS41N3QzLS41OHExLjQgMCAyLjU5LjQ1dDIuMDUgMS4zMXEuODUuODcgMS4zNCAyLjEyLjQ4IDEuMjUuNDggMi44NiAwIC44Mi0uMTcgMS4xLS4xOC4yOC0uNjcuMjhtMjcuOS0xMC44OSA4LjUxIDguNTMtOC41IDguNDctMS4yNC0xLjI3cS0uMzgtLjM3LS4zMS0uNzYuMDctLjM4LjQyLS43M2wzLjAyLTMuMDRxLjQyLS40My43OS0uNzUuMzctLjMzLjcyLS42LS45Ni4xMS0yLjAxLjE5LTEuMDUuMDctMi4xMS4wN2gtMTYuODF2LTMuMjFoMTYuODFxMS4wNyAwIDIuMTIuMDh0Mi4wMS4ycS0uNjktLjU1LTEuNTItMS4zNWwtMy4wMy0zLjA3cS0uMzYtLjM0LS40My0uNzItLjA2LS4zOS4zMS0uNzZ6bTMzLjY4IDEyLjk0cS4zMiAwIC41Ny4yNGwxLjU0IDEuNjdxLTEuMjggMS41OC0zLjE0IDIuNDItMS44Ny44NC00LjQ4Ljg0LTIuMzMgMC00LjE5LS44LTEuODctLjc5LTMuMTktMi4yMS0xLjMyLTEuNDMtMi4wMi0zLjR0LS43LTQuM3EwLTIuMzcuNzUtNC4zMy43NS0xLjk3IDIuMTItMy4zOXQzLjI3LTIuMjEgNC4yMS0uNzlxMi4yOSAwIDQuMDcuNzUgMS43Ny43NiAzLjAyIDEuOThsLTEuMzEgMS44MXEtLjExLjE3LS4yOS4zdC0uNS4xM3EtLjIyIDAtLjQ1LS4xMnQtLjUxLS4zLS42NC0uNC0uODQtLjQtMS4xMS0uMzFxLS42My0uMTItMS40Ni0uMTItMS40IDAtMi41Ny41dC0yLjAxIDEuNDUtMS4zIDIuMzJxLS40NyAxLjM3LS40NyAzLjEzIDAgMS43Ny41IDMuMTQuNSAxLjM4IDEuMzYgMi4zMi44Ni45NSAyLjAyIDEuNDV0Mi40OS41cS44IDAgMS40NC0uMDkuNjUtLjA5IDEuMTktLjI4dDEuMDMtLjQ4cS40OS0uMy45Ni0uNzMuMTUtLjE0LjMxLS4yMS4xNi0uMDguMzMtLjA4bTEwLjgxLTEwLjE3cTEuNjUgMCAzIC41NCAxLjM2LjUzIDIuMzIgMS41Mi45Ny45OSAxLjQ5IDIuNDF0LjUyIDMuMTdxMCAxLjc3LS41MiAzLjE5dC0xLjQ5IDIuNDJxLS45NiAxLTIuMzIgMS41NC0xLjM1LjU0LTMgLjU0LTEuNjcgMC0zLjA0LS41NC0xLjM2LS41NC0yLjMyLTEuNTQtLjk3LTEtMS41LTIuNDJ0LS41My0zLjE5cTAtMS43NS41My0zLjE3dDEuNS0yLjQxcS45Ni0uOTkgMi4zMi0xLjUyIDEuMzctLjU0IDMuMDQtLjU0bTAgMTIuNTdxMS44NSAwIDIuNzQtMS4yNC44OS0xLjI1Ljg5LTMuNjZ0LS44OS0zLjY3LTIuNzQtMS4yNnEtMS44OSAwLTIuOCAxLjI3LS45IDEuMjctLjkgMy42NnQuOSAzLjY1cS45MSAxLjI1IDIuOCAxLjI1bTEzLjE4LTExLjY4LjI0IDEuMTdxLjQ1LS40NS45NS0uODMuNS0uMzkgMS4wNi0uNjYuNTYtLjI2IDEuMi0uNDIuNjMtLjE1IDEuMzktLjE1IDEuMjIgMCAyLjE2LjQxLjk0LjQyIDEuNTcgMS4xNi42My43NS45NiAxLjc5LjMzIDEuMDMuMzMgMi4yOHY5LjQ3aC0zLjU5di05LjQ3cTAtMS4zNi0uNjItMi4xMXQtMS45LS43NXEtLjkzIDAtMS43NC40My0uODEuNDItMS41NCAxLjE0djEwLjc2aC0zLjU4di0xNC44OGgyLjE5cS43IDAgLjkyLjY2bTIyLjU5IDkuODF2LTYuNjdxLS42LS43NC0xLjMyLTEuMDQtLjczLS4zMS0xLjU1LS4zMXQtMS40Ny4zMXEtLjY1LjMtMS4xMi45Mi0uNDYuNjEtLjcxIDEuNTYtLjI0Ljk1LS4yNCAyLjI0IDAgMS4zMS4yMSAyLjIyLjIxLjkuNiAxLjQ4LjM5LjU3Ljk2LjgyLjU2LjI2IDEuMjYuMjYgMS4xMSAwIDEuOS0uNDcuNzgtLjQ2IDEuNDgtMS4zMm0xLjM5LTEwLjQ3aDIuMTl2MTkuNzRoLTMuNTh2LTYuNzVxLS44OS45NS0yIDEuNTMtMS4xMi41OC0yLjYuNTgtMS4yMiAwLTIuMjMtLjUxLTEuMDItLjUxLTEuNzUtMS40Ny0uNzMtLjk3LTEuMTMtMi4zOXQtLjQtMy4yNXEwLTEuNjUuNDUtMy4wN3QxLjI5LTIuNDZxLjg0LTEuMDUgMi4wMi0xLjY0IDEuMTctLjU4IDIuNjMtLjU4IDEuNCAwIDIuMzQuNDguOTQuNDcgMS42OCAxLjI5bC4xOS0uODRxLjE5LS42Ni45LS42Nm0xNC45NiAwaDMuNTh2MTQuODhoLTIuMTlxLS43MSAwLS44OS0uNjVsLS4yNS0xLjE5cS0uOTEuOTMtMi4wMiAxLjUtMS4xLjU3LTIuNTkuNTctMS4yMiAwLTIuMTUtLjQxLS45NC0uNDEtMS41OC0xLjE3LS42NC0uNzUtLjk2LTEuNzktLjMzLTEuMDQtLjMzLTIuMjh2LTkuNDZoMy41OHY5LjQ2cTAgMS4zNi42MyAyLjExLjYzLjc0IDEuOS43NC45MiAwIDEuNzQtLjQxLjgxLS40MSAxLjUzLTEuMTR6bTkuOTUgNS43M2g2Ljc2cTAtLjctLjItMS4zMS0uMTktLjYyLS41OS0xLjA4LS4zOS0uNDctLjk5LS43My0uNi0uMjctMS40LS4yNy0xLjU1IDAtMi40NC44OC0uODkuODktMS4xNCAyLjUxbTkuMTMgMi4xNmgtOS4ycS4wOCAxLjE1LjQgMS45OHQuODQgMS4zOHEuNTMuNTQgMS4yNC44MS43Mi4yNyAxLjU5LjI3dDEuNS0uMjFxLjYzLS4yIDEuMS0uNDQuNDgtLjI1LjgzLS40NS4zNi0uMjEuNjktLjIxLjQ1IDAgLjY3LjM0bDEuMDMgMS4zcS0uNi43LTEuMzQgMS4xN3QtMS41NC43NXEtLjgxLjI5LTEuNjQuNC0uODMuMTItMS42Mi4xMi0xLjU1IDAtMi44OC0uNTItMS4zNC0uNTEtMi4zMi0xLjUyLS45OS0xLjAxLTEuNTUtMi40OS0uNTctMS40OS0uNTctMy40NSAwLTEuNTIuNDktMi44Ni41LTEuMzQgMS40Mi0yLjM0LjkyLS45OSAyLjI0LTEuNTcgMS4zMy0uNTggMy0uNTggMS40MSAwIDIuNTkuNDUgMS4xOS40NSAyLjA1IDEuMzEuODUuODcgMS4zNCAyLjEydC40OSAyLjg2cTAgLjgyLS4xOCAxLjEtLjE3LjI4LS42Ny4yOG02LjY5LTYuOTkuMjIgMS42OHEuNjktMS4zMyAxLjY1LTIuMDl0Mi4yNi0uNzZxMS4wMyAwIDEuNjUuNDVsLS4yMyAyLjY4cS0uMDcuMjYtLjIxLjM3dC0uMzcuMTFxLS4yMSAwLS42NC0uMDctLjQzLS4wOC0uODQtLjA4LS41OSAwLTEuMDUuMTgtLjQ3LjE3LS44NC41LS4zNy4zMi0uNjUuNzktLjI4LjQ2LS41MyAxLjA2djkuMTZoLTMuNTh2LTE0Ljg4aDIuMXEuNTUgMCAuNzcuMi4yMi4xOS4yOS43bTMyLjAzLTMuOSA4LjUxIDguNTMtOC41IDguNDctMS4yNC0xLjI3cS0uMzgtLjM3LS4zMS0uNzYuMDgtLjM4LjQyLS43M2wzLjAyLTMuMDRxLjQyLS40My43OS0uNzUuMzctLjMzLjcyLS42LS45Ni4xMS0yLjAxLjE5LTEuMDUuMDctMi4xMS4wN2gtMTYuODF2LTMuMjFoMTYuODFxMS4wNyAwIDIuMTIuMDh0Mi4wMS4ycS0uNjktLjU1LTEuNTItMS4zNWwtMy4wMy0zLjA3cS0uMzYtLjM0LS40My0uNzItLjA2LS4zOS4zMS0uNzZ6bTM5LjA4LTMuMDloMi45NHYyMC45N2gtMy40NHYtMTMuNTRxMC0uODIuMDktMS43NmwtNi4zNCAxMS45MXEtLjQ0Ljg1LTEuMzcuODVoLS41NXEtLjkzIDAtMS4zOC0uODVsLTYuNDEtMTEuOTVxLjA0LjQ4LjA3Ljk0LjAzLjQ3LjAzLjg2djEzLjU0aC0zLjQ0di0yMC45N2gyLjk1cS4yNiAwIC40NS4wMi4xOS4wMS4zNC4wN3QuMjcuMTlxLjEzLjEzLjI0LjM1bDYuMjggMTEuNjRxLjI1LjQ2LjQ2Ljk2LjIxLjQ5LjQxIDEuMDEuMi0uNTMuNDItMS4wMy4yMi0uNTEuNDctLjk3bDYuMTktMTEuNjFxLjExLS4yMi4yNC0uMzV0LjI5LS4xOXEuMTUtLjA2LjM0LS4wNy4xOS0uMDIuNDUtLjAybTkuODcgMTEuODJoNi43NnEwLS43LS4yLTEuMzEtLjE5LS42Mi0uNTgtMS4wOC0uNC0uNDctMS0uNzMtLjYtLjI3LTEuNC0uMjctMS41NSAwLTIuNDQuODgtLjg5Ljg5LTEuMTQgMi41MW05LjE0IDIuMTZoLTkuMjFxLjA5IDEuMTUuNDEgMS45OC4zMS44My44NCAxLjM4LjUyLjU0IDEuMjQuODEuNzEuMjcgMS41OC4yN3QxLjUtLjIxcS42NC0uMiAxLjExLS40NC40Ny0uMjUuODItLjQ1LjM2LS4yMS42OS0uMjEuNDUgMCAuNjcuMzRsMS4wMyAxLjNxLS42LjctMS4zNCAxLjE3dC0xLjU0Ljc1cS0uOC4yOS0xLjY0LjQtLjgzLjEyLTEuNjIuMTItMS41NSAwLTIuODgtLjUyLTEuMzMtLjUxLTIuMzItMS41MnQtMS41NS0yLjQ5cS0uNTctMS40OS0uNTctMy40NSAwLTEuNTIuNS0yLjg2LjQ5LTEuMzQgMS40MS0yLjM0LjkyLS45OSAyLjI1LTEuNTcgMS4zMi0uNTggMi45OS0uNTggMS40MSAwIDIuNi40NXQyLjA0IDEuMzFxLjg2Ljg3IDEuMzQgMi4xMi40OSAxLjI1LjQ5IDIuODYgMCAuODItLjE4IDEuMS0uMTcuMjgtLjY2LjI4bTYuNjgtNi45OS4yMiAxLjY4cS42OS0xLjMzIDEuNjUtMi4wOXQyLjI2LS43NnExLjAzIDAgMS42Ni40NWwtLjI0IDIuNjhxLS4wNy4yNi0uMjEuMzctLjEzLjExLS4zNy4xMS0uMjEgMC0uNjQtLjA3LS40My0uMDgtLjgzLS4wOC0uNiAwLTEuMDYuMTgtLjQ3LjE3LS44NC41LS4zNy4zMi0uNjUuNzktLjI4LjQ2LS41MyAxLjA2djkuMTZoLTMuNTh2LTE0Ljg4aDIuMXEuNTUgMCAuNzcuMi4yMi4xOS4yOS43bTEzLjA5IDYuMThxLjY3IDAgMS4xNi0uMTguNS0uMTguODItLjUuMzMtLjMyLjUtLjc3LjE2LS40NS4xNi0uOTkgMC0xLjEtLjY2LTEuNzQtLjY2LS42NS0xLjk4LS42NS0xLjMxIDAtMS45Ny42NS0uNjYuNjQtLjY2IDEuNzQgMCAuNTMuMTYuOTcuMTcuNDUuNS43OC4zMi4zMy44Mi41MXQxLjE1LjE4bTQuMDUgOC40N3EwLS40NC0uMjYtLjcxLS4yNi0uMjgtLjcxLS40M3QtMS4wNS0uMjNxLS42LS4wNy0xLjI4LS4xLS42Ny0uMDQtMS4zOS0uMDd0LTEuNC0uMTJxLS41OS4zNC0uOTYuNzl0LS4zNyAxLjA0cTAgLjM5LjE5LjczLjIuMzQuNjMuNTkuNDIuMjUgMS4xLjM4LjY5LjE0IDEuNjcuMTQgMSAwIDEuNzMtLjE1LjcyLS4xNSAxLjE5LS40Mi40OC0uMjcuNjktLjY0LjIyLS4zNy4yMi0uOG0tLjcxLTE1LjA0aDQuMjh2MS4zM3EwIC42NC0uNzcuNzlsLTEuMzQuMjRxLjMxLjc3LjMxIDEuNjkgMCAxLjEtLjQ0IDEuOTktLjQ1Ljg5LTEuMjMgMS41MS0uNzguNjMtMS44NS45Ny0xLjA2LjM0LTIuMy4zNC0uNDMgMC0uODQtLjA0LS40LS4wNS0uNzktLjEyLS43LjQyLS43Ljk0IDAgLjQ1LjQxLjY2LjQyLjIxIDEuMS4zdDEuNTUuMTEgMS43OC4wOXEuOTIuMDggMS43OS4yNnQxLjU1LjU3IDEuMDkgMS4wN3EuNDIuNjcuNDIgMS43MyAwIC45OC0uNDkgMS45MXQtMS40MSAxLjY2cS0uOTIuNzItMi4yNiAxLjE2dC0zLjA1LjQ0cS0xLjY4IDAtMi45My0uMzItMS4yNS0uMzMtMi4wNy0uODctLjgzLS41NS0xLjI0LTEuMjYtLjQtLjcxLS40LTEuNDcgMC0xLjA1LjYzLTEuNzUuNjMtLjcxIDEuNzMtMS4xMy0uNTktLjMtLjk0LS44MXQtLjM1LTEuMzNxMC0uMzQuMTMtLjY5LjEyLS4zNi4zNi0uNy4yNC0uMzUuNi0uNjYuMzYtLjMyLjg1LS41Ni0xLjEzLS42MS0xLjc3LTEuNjMtLjY1LTEuMDEtLjY1LTIuMzcgMC0xLjExLjQ1LTIgLjQ0LS44OSAxLjIzLTEuNTJ0MS44Ny0uOTZxMS4wOC0uMzQgMi4zNS0uMzQuOTYgMCAxLjguMi44NC4xOSAxLjU0LjU3bTkuMzcgNS4yMmg2Ljc1cTAtLjctLjE5LTEuMzEtLjItLjYyLS41OS0xLjA4LS4zOS0uNDctLjk5LS43My0uNi0uMjctMS40LS4yNy0xLjU1IDAtMi40NC44OC0uOS44OS0xLjE0IDIuNTFtOS4xMyAyLjE2aC05LjIxcS4wOSAxLjE1LjQxIDEuOTh0Ljg0IDEuMzhxLjUyLjU0IDEuMjQuODF0MS41OS4yNyAxLjUtLjIxcS42My0uMiAxLjEtLjQ0LjQ3LS4yNS44My0uNDUuMzUtLjIxLjY5LS4yMS40NSAwIC42Ni4zNGwxLjAzIDEuM3EtLjU5LjctMS4zMyAxLjE3dC0xLjU0Ljc1cS0uODEuMjktMS42NC40LS44NC4xMi0xLjYyLjEyLTEuNTUgMC0yLjg5LS41Mi0xLjMzLS41MS0yLjMyLTEuNTItLjk4LTEuMDEtMS41NS0yLjQ5LS41Ni0xLjQ5LS41Ni0zLjQ1IDAtMS41Mi40OS0yLjg2dDEuNDEtMi4zNHEuOTItLjk5IDIuMjUtMS41N3QzLS41OHExLjQgMCAyLjU5LjQ1dDIuMDUgMS4zMXEuODUuODcgMS4zNCAyLjEyLjQ4IDEuMjUuNDggMi44NiAwIC44Mi0uMTcgMS4xLS4xOC4yOC0uNjcuMjgiLz48L3N2Zz4=" alt="Merge Sort Diagram">
+            <div style="font-style: italic; color: #666; margin-top: 10px">
+            <p>The array is recursively divided, sorted, and merged back together</p>
+            </div>
+            </div>
         </section>
-        <section data-slide-index="5">
-            <h2>Performance Analysis</h2>
-            <div style="background: #667eea; padding: 30px; border-radius: 15px; margin: 20px">
-            <h3>Step 1: Bubble Sort</h3>
-            <p>Time Complexity: O(n²) - Good for small datasets</p>
+        <section data-slide-index="3">
+            <h2>Merge Sort - Implementation</h2>
+            <div style="background: #2d2d2d; padding: 25px; border-radius: 10px; margin: 20px 0">
+            <h3>Merge Sort with Helper Function</h3>
+            <div style="background: #1e1e1e; padding: 15px; border-radius: 5px; font-family: monospace; white-space: pre-wrap">
+            <p>def merge_sort(arr):
+    if len(arr) &lt;= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i &lt; len(left) and j &lt; len(right):
+        if left[i] &lt; right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result</p>
             </div>
-            <div style="background: #667eea; padding: 30px; border-radius: 15px; margin: 20px">
-            <h3>Step 2: Quick Sort</h3>
-            <p>Time Complexity: O(n log n) - Fastest on average</p>
             </div>
-            <div style="background: #667eea; padding: 30px; border-radius: 15px; margin: 20px">
-            <h3>Step 3: Merge Sort</h3>
-            <p>Time Complexity: O(n log n) - Stable and predictable</p>
+        </section>
+        <section data-slide-index="12">
+            <h2>Advanced Comparison</h2>
+            <div style="background: #1e1e1e; padding: 20px; border-radius: 10px">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+            <div style="background: #2d2d2d; padding: 20px; border-radius: 8px">
+            <h3>Merge Sort</h3>
+            <div style="color: #4CAF50">
+            <p>⏱ Time: O(n log n)</p>
             </div>
+            <div style="color: #2196F3">
+            <p>💾 Space: O(n)</p>
+            </div>
+            </div>
+            <div style="background: #2d2d2d; padding: 20px; border-radius: 8px">
+            <h3>Heap Sort</h3>
+            <div style="color: #4CAF50">
+            <p>⏱ Time: O(n log n)</p>
+            </div>
+            <div style="color: #2196F3">
+            <p>💾 Space: O(1)</p>
+            </div>
+            </div>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="10">
+            <h2>Complete Algorithm Showcase</h2>
+            <div style="display: flex; flex-direction: column; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; margin: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3)">
+            <h2>Insertion Sort</h2>
+            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 10px 0">
+            <p><strong>Time Complexity:</strong> O(n²) worst case, O(n) best case</p>
+            </div>
+            <div style="background: #1e1e1e; padding: 15px; border-radius: 5px; font-family: monospace; white-space: pre-wrap; color: #f8f8f2">
+            <p>def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j &gt;= 0 and arr[j] &gt; key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr</p>
+            </div>
+            <div style="color: #ffffff; margin-top: 15px; font-size: 0.9em">
+            <p>Efficient for small datasets and nearly sorted arrays</p>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="15">
+            <h2>Real-World Performance</h2>
+            <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1)">
+            <h3>Benchmark Results</h3>
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3MDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgNzAwIDQwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzc2NGJhMiIvPjxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Ik0xNDMuNDM1IDE5OC42NzVoMi4xMXEuNzggMCAxLjM2LS4xOS41OC0uMi45Ni0uNTZ0LjU3LS44OC4xOS0xLjE2cTAtLjYxLS4xOS0xLjExLS4xOS0uNDktLjU3LS44NC0uMzctLjM0LS45NS0uNTMtLjU4LS4xOC0xLjM3LS4xOGgtMi4xMXptLTIuODItNy42M2g0LjkzcTEuNTMgMCAyLjY0LjM1IDEuMTEuMzYgMS44NCAxIC43Mi42NCAxLjA3IDEuNTMuMzUuOS4zNSAxLjk2IDAgMS4xLS4zNiAyLjAyLS4zNy45Mi0xLjExIDEuNTgtLjczLjY2LTEuODQgMS4wM3QtMi41OS4zN2gtMi4xMXY1LjM0aC0yLjgyem0xNC42NCA4LjU1aDQuODlxMC0uNS0uMTQtLjk1LS4xNC0uNDQtLjQzLS43OC0uMjgtLjMzLS43Mi0uNTMtLjQzLS4xOS0xLjAxLS4xOS0xLjEyIDAtMS43Ny42NHQtLjgyIDEuODFtNi42MSAxLjU3aC02LjY3cS4wNy44My4zIDEuNDMuMjMuNjEuNjEgMSAuMzcuMzkuODkuNTkuNTIuMTkgMS4xNS4xOXQxLjA5LS4xNXEuNDYtLjE0LjgtLjMydC42LS4zM3EuMjUtLjE0LjUtLjE0LjMyIDAgLjQ4LjI0bC43NC45NHEtLjQzLjUxLS45Ni44NS0uNTQuMzQtMS4xMi41NC0uNTguMjEtMS4xOS4yOS0uNi4wOS0xLjE3LjA5LTEuMTIgMC0yLjA5LS4zOC0uOTYtLjM3LTEuNjgtMS4xLS43MS0uNzMtMS4xMi0xLjgtLjQxLTEuMDgtLjQxLTIuNSAwLTEuMS4zNi0yLjA3LjM1LS45NyAxLjAyLTEuNjl0MS42My0xLjE0IDIuMTctLjQycTEuMDIgMCAxLjg4LjMyLjg2LjMzIDEuNDguOTUuNjIuNjMuOTcgMS41NHQuMzUgMi4wN3EwIC41OS0uMTMuNzktLjEyLjIxLS40OC4yMW00Ljg0LTUuMDYuMTYgMS4yMnEuNS0uOTcgMS4yLTEuNTIuNjktLjU1IDEuNjMtLjU1Ljc1IDAgMS4yLjMybC0uMTcgMS45NXEtLjA1LjE4LS4xNS4yNnQtLjI3LjA4cS0uMTUgMC0uNDYtLjA1dC0uNjEtLjA1cS0uNDMgMC0uNzYuMTItLjM0LjEzLS42MS4zNy0uMjcuMjMtLjQ3LjU3LS4yMS4zMy0uMzguNzZ2Ni42NGgtMi42di0xMC43N2gxLjUycS40IDAgLjU2LjE0dC4yMS41MW04Ljg5IDEwLjEyaC0yLjU5di04LjgybC0uOTMtLjE1cS0uMzEtLjA2LS40OS0uMjEtLjE5LS4xNS0uMTktLjQ0di0xLjA2aDEuNjF2LS44cTAtLjkyLjI4LTEuNjYuMjgtLjczLjgtMS4yNS41Mi0uNTEgMS4yNi0uNzguNzUtLjI4IDEuNjgtLjI4Ljc1IDAgMS4zOS4ybC0uMDUgMS4zMXEtLjAxLjE0LS4wOS4yMy0uMDcuMDktLjE5LjE0dC0uMjguMDZxLS4xNi4wMi0uMzQuMDItLjQ2IDAtLjgyLjF0LS42MS4zNHEtLjI2LjI1LS4zOS42NS0uMTMuNDEtLjEzIDEuMDF2LjcxaDIuOHYxLjg1aC0yLjcyem04Ljk1LTEwLjk0cTEuMiAwIDIuMTguMzl0MS42OCAxLjEgMS4wOCAxLjc0cS4zNyAxLjAzLjM3IDIuMyAwIDEuMjgtLjM3IDIuMzEtLjM4IDEuMDMtMS4wOCAxLjc2LS43LjcyLTEuNjggMS4xMXQtMi4xOC4zOXEtMS4yMSAwLTIuMTktLjM5LS45OS0uMzktMS42OS0xLjExLS43LS43My0xLjA4LTEuNzZ0LS4zOC0yLjMxcTAtMS4yNy4zOC0yLjN0MS4wOC0xLjc0IDEuNjktMS4xcS45OC0uMzkgMi4xOS0uMzltMCA5LjFxMS4zNCAwIDEuOTktLjl0LjY1LTIuNjVxMC0xLjc0LS42NS0yLjY1LS42NS0uOTItMS45OS0uOTItMS4zNiAwLTIuMDIuOTJ0LS42NiAyLjY1cTAgMS43NC42NiAyLjY0LjY2LjkxIDIuMDIuOTFtOS41OS04LjI4LjE1IDEuMjJxLjUxLS45NyAxLjItMS41MnQxLjY0LS41NXEuNzUgMCAxLjIuMzJsLS4xNyAxLjk1cS0uMDUuMTgtLjE1LjI2dC0uMjcuMDhxLS4xNiAwLS40Ny0uMDV0LS42LS4wNXEtLjQzIDAtLjc3LjEyLS4zMy4xMy0uNi4zNy0uMjcuMjMtLjQ4LjU3LS4yLjMzLS4zOC43NnY2LjY0aC0yLjU5di0xMC43N2gxLjUycS40IDAgLjU2LjE0LjE1LjE0LjIxLjUxbTguMTMgMTAuMTJoLTIuNTl2LTEwLjc3aDEuNTlxLjUgMCAuNjYuNDdsLjE3LjhxLjI4LS4zMi41OS0uNTh0LjY2LS40NS43Ni0uM3EuNC0uMTEuODgtLjExIDEuMDIgMCAxLjY4LjU1dC45OCAxLjQ2cS4yNS0uNTMuNjMtLjkxLjM4LS4zOS44My0uNjN0Ljk2LS4zNnEuNTEtLjExIDEuMDItLjExLjkgMCAxLjU5LjI3dDEuMTcuOHEuNDcuNTIuNzEgMS4yOC4yNS43Ni4yNSAxLjczdjYuODZoLTIuNTl2LTYuODZxMC0xLjAzLS40NS0xLjU1dC0xLjMzLS41MnEtLjQgMC0uNzQuMTR0LS42LjRxLS4yNS4yNS0uNC42NHQtLjE1Ljg5djYuODZoLTIuNnYtNi44NnEwLTEuMDgtLjQ0LTEuNTctLjQzLS41LTEuMjctLjUtLjU3IDAtMS4wNi4yOHQtLjkxLjc2em0yMC42OS0yLjc4di0xLjgycS0xLjEyLjA1LTEuODkuMi0uNzcuMTQtMS4yMy4zNnQtLjY2LjUxcS0uMi4zLS4yLjY0IDAgLjY4LjQuOTguNDEuMjkgMS4wNi4yOS44IDAgMS4zOC0uMjkuNTgtLjI4IDEuMTQtLjg3bS01LjQ4LTUuNjYtLjQ2LS44M3ExLjg2LTEuNyA0LjQ3LTEuNy45NCAwIDEuNjkuMzF0MS4yNi44Ni43OCAxLjMycS4yNy43Ni4yNyAxLjY4djYuOGgtMS4xOHEtLjM2IDAtLjU2LS4xMXQtLjMyLS40NWwtLjIzLS43N3EtLjQxLjM2LS44LjY0dC0uODEuNDctLjg5LjI5cS0uNDguMS0xLjA2LjEtLjY4IDAtMS4yNi0uMTktLjU4LS4xOC0xLS41NS0uNDItLjM2LS42NS0uOTF0LS4yMy0xLjI3cTAtLjQxLjE0LS44MS4xNC0uNDEuNDQtLjc4LjMxLS4zNi44MS0uNjkuNDktLjMzIDEuMjEtLjU3dDEuNjgtLjM5cS45NS0uMTUgMi4xOC0uMTh2LS42M3EwLTEuMDktLjQ2LTEuNjF0LTEuMzQtLjUycS0uNjMgMC0xLjA0LjE1LS40Mi4xNS0uNzMuMzMtLjMyLjE5LS41Ny4zMy0uMjYuMTUtLjU3LjE1LS4yOCAwLS40Ny0uMTR0LS4zLS4zM20xMi42OS0xLjg2LjE4Ljg1cS4zMy0uMzMuNjktLjYuMzYtLjI4Ljc3LS40OC40LS4xOS44Ni0uM3QxLjAxLS4xMXEuODggMCAxLjU2LjMuNjkuMyAxLjE0Ljg0LjQ2LjU0LjcgMS4yOS4yMy43NS4yMyAxLjY1djYuODZoLTIuNTl2LTYuODZxMC0uOTgtLjQ1LTEuNTItLjQ1LS41NS0xLjM4LS41NS0uNjcgMC0xLjI2LjMxLS41OS4zLTEuMTEuODN2Ny43OWgtMi41OXYtMTAuNzdoMS41OHEuNTEgMCAuNjYuNDdtMTggLjg2LS42OC45NXEtLjEyLjE0LS4yMy4yMy0uMTEuMDgtLjMyLjA4LS4yIDAtLjM5LS4xMnQtLjQ1LS4yN3EtLjI2LS4xNi0uNjItLjI4LS4zNy0uMTItLjktLjEyLS42OCAwLTEuMi4yNS0uNTEuMjUtLjg1LjcxdC0uNTEgMS4xMnEtLjE3LjY1LS4xNyAxLjQ4IDAgLjg2LjE4IDEuNTQuMTkuNjcuNTMgMS4xMi4zNS40Ni44NC43LjUuMjMgMS4xMi4yM3QxLS4xNS42NC0uMzNxLjI3LS4xOS40Ni0uMzQuMi0uMTUuNDQtLjE1LjMxIDAgLjQ3LjI0bC43NS45NHEtLjQ0LjUxLS45NC44NXQtMS4wNC41NHEtLjU0LjIxLTEuMTIuMjktLjU3LjA5LTEuMTQuMDktLjk5IDAtMS44OC0uMzgtLjg4LS4zNy0xLjU0LTEuMDgtLjY2LS43Mi0xLjA0LTEuNzUtLjM5LTEuMDMtLjM5LTIuMzYgMC0xLjE4LjM0LTIuMi4zNS0xLjAxIDEuMDEtMS43NXQxLjYzLTEuMTZxLjk4LS40MiAyLjI1LS40MiAxLjIxIDAgMi4xMi4zOXQxLjYzIDEuMTFtMy43NyAyLjgxaDQuODlxMC0uNS0uMTQtLjk1LS4xNC0uNDQtLjQyLS43OC0uMjktLjMzLS43Mi0uNTMtLjQ0LS4xOS0xLjAyLS4xOS0xLjEyIDAtMS43Ny42NC0uNjQuNjQtLjgyIDEuODFtNi42MSAxLjU3aC02LjY2cS4wNi44My4yOSAxLjQzLjIzLjYxLjYxIDF0LjkuNTlxLjUyLjE5IDEuMTUuMTl0MS4wOC0uMTVxLjQ2LS4xNC44LS4zMnQuNi0uMzNxLjI2LS4xNC41LS4xNC4zMyAwIC40OC4yNGwuNzUuOTRxLS40My41MS0uOTcuODUtLjUzLjM0LTEuMTIuNTQtLjU4LjIxLTEuMTguMjktLjYxLjA5LTEuMTcuMDktMS4xMyAwLTIuMDktLjM4LS45Ny0uMzctMS42OC0xLjEtLjcyLS43My0xLjEzLTEuOC0uNDEtMS4wOC0uNDEtMi41IDAtMS4xLjM2LTIuMDd0MS4wMi0xLjY5cS42Ny0uNzIgMS42My0xLjE0dDIuMTctLjQycTEuMDIgMCAxLjg4LjMyLjg2LjMzIDEuNDguOTUuNjIuNjMuOTcgMS41NHQuMzUgMi4wN3EwIC41OS0uMTIuNzktLjEzLjIxLS40OS4yMW0xOC41IDEuNDhxLjIzIDAgLjQuMThsMS4xMiAxLjIxcS0uOTMgMS4xNC0yLjI4IDEuNzUtMS4zNC42MS0zLjIzLjYxLTEuNyAwLTMuMDQtLjU4LTEuMzUtLjU4LTIuMzEtMS42MS0uOTUtMS4wMy0xLjQ2LTIuNDUtLjUxLTEuNDMtLjUxLTMuMTIgMC0xLjcxLjU0LTMuMTQuNTUtMS40MiAxLjU0LTIuNDV0Mi4zNy0xLjZxMS4zNy0uNTcgMy4wNC0uNTcgMS42NiAwIDIuOTUuNTQgMS4yOS41NSAyLjE5IDEuNDNsLS45NSAxLjMycS0uMDguMTItLjIxLjIyLS4xMy4wOS0uMzYuMDktLjE2IDAtLjMzLS4wOXQtLjM3LS4yMi0uNDYtLjI5LS42MS0uMjlxLS4zNC0uMTMtLjgtLjIydC0xLjA2LS4wOXEtMS4wMiAwLTEuODYuMzctLjg1LjM2LTEuNDUgMS4wNS0uNjEuNjgtLjk1IDEuNjgtLjM0Ljk5LS4zNCAyLjI2IDAgMS4yOC4zNyAyLjI4LjM2Ljk5Ljk4IDEuNjguNjIuNjggMS40NiAxLjA0dDEuOC4zNnEuNTggMCAxLjA1LS4wNnQuODYtLjIuNzQtLjM1cS4zNi0uMjIuNy0uNTMuMTEtLjEuMjItLjE1LjEyLS4wNi4yNS0uMDZtNS42NC0xMi4wMnY1Ljk4cS42My0uNTkgMS4zOS0uOTUuNzYtLjM3IDEuNzctLjM3Ljg5IDAgMS41Ny4zdDEuMTQuODQuNjkgMS4yOXEuMjQuNzUuMjQgMS42NXY2Ljg2aC0yLjZ2LTYuODZxMC0uOTgtLjQ1LTEuNTItLjQ1LS41NS0xLjM3LS41NS0uNjcgMC0xLjI2LjMxLS41OS4zLTEuMTIuODN2Ny43OWgtMi41OXYtMTUuNnptMTQuOTUgMTIuODJ2LTEuODJxLTEuMTMuMDUtMS44OS4yLS43Ny4xNC0xLjIzLjM2dC0uNjYuNTFxLS4yLjMtLjIuNjQgMCAuNjguNC45OC40LjI5IDEuMDYuMjkuNzkgMCAxLjM4LS4yOS41OC0uMjggMS4xNC0uODdtLTUuNDktNS42Ni0uNDYtLjgzcTEuODYtMS43IDQuNDgtMS43Ljk0IDAgMS42OS4zMS43NC4zMSAxLjI2Ljg2LjUxLjU1Ljc4IDEuMzIuMjcuNzYuMjcgMS42OHY2LjhoLTEuMThxLS4zNyAwLS41Ny0uMTF0LS4zMS0uNDVsLS4yMy0uNzdxLS40MS4zNi0uOC42NHQtLjgxLjQ3LS45LjI5cS0uNDcuMS0xLjA1LjEtLjY4IDAtMS4yNi0uMTktLjU4LS4xOC0xLS41NS0uNDItLjM2LS42NS0uOTF0LS4yMy0xLjI3cTAtLjQxLjEzLS44MS4xNC0uNDEuNDUtLjc4LjMxLS4zNi44LS42OS41LS4zMyAxLjIyLS41N3QxLjY3LS4zOXEuOTYtLjE1IDIuMTktLjE4di0uNjNxMC0xLjA5LS40Ny0xLjYxLS40Ni0uNTItMS4zMy0uNTItLjYzIDAtMS4wNC4xNS0uNDIuMTUtLjczLjMzLS4zMi4xOS0uNTguMzMtLjI1LjE1LS41Ny4xNS0uMjcgMC0uNDYtLjE0dC0uMzEtLjMzbTEyLjc0LTEuNjguMTYgMS4yMnEuNS0uOTcgMS4yLTEuNTIuNjktLjU1IDEuNjMtLjU1Ljc1IDAgMS4yLjMybC0uMTcgMS45NXEtLjA1LjE4LS4xNS4yNnQtLjI3LjA4cS0uMTUgMC0uNDYtLjA1dC0uNjEtLjA1cS0uNDMgMC0uNzYuMTItLjM0LjEzLS42MS4zNy0uMjcuMjMtLjQ3LjU3LS4yMS4zMy0uMzguNzZ2Ni42NGgtMi42di0xMC43N2gxLjUycS40IDAgLjU2LjE0dC4yMS41MW05LjE0IDEwLjI5cS0xLjQxIDAtMi4xNi0uNzktLjc1LS44LS43NS0yLjE5di02LjAyaC0xLjFxLS4yMSAwLS4zNi0uMTQtLjE1LS4xMy0uMTUtLjQxdi0xLjAzbDEuNzMtLjI4LjU1LTIuOTRxLjA1LS4yMS4yLS4zMi4xNS0uMTIuMzgtLjEyaDEuMzR2My4zOWgyLjg4djEuODVoLTIuODh2NS44NHEwIC41LjI1Ljc4LjI0LjI5LjY4LjI5LjI0IDAgLjQtLjA2dC4yOC0uMTIuMjItLjEycS4wOS0uMDYuMTktLjA2LjExIDAgLjE5LjA2LjA3LjA2LjE1LjE3bC43OCAxLjI2cS0uNTcuNDctMS4zLjcyLS43NC4yNC0xLjUyLjI0bTkuNzcgMy40NHYtMTkuODVoMi4wMnYxOS44NXptMTIuNTQtMTEuMnEwIDEuMjUuMzMgMi4yNC4zNC45OS45NyAxLjY4LjYyLjY5IDEuNTEgMS4wNi44OC4zNiAyIC4zNiAxLjExIDAgMi0uMzYuODktLjM3IDEuNS0xLjA2LjYyLS42OS45Ni0xLjY4dC4zNC0yLjI0LS4zNC0yLjI0cS0uMzQtMS0uOTYtMS42OS0uNjEtLjY5LTEuNS0xLjA2dC0yLS4zN3EtMS4xMiAwLTIgLjM3LS44OS4zNy0xLjUxIDEuMDYtLjYzLjY5LS45NyAxLjY5LS4zMy45OS0uMzMgMi4yNG05LjQzIDYuMzYgMy44NSA0LjJoLTIuMzNxLS41IDAtLjkxLS4xNC0uNC0uMTMtLjc0LS41bC0yLjIyLTIuNDZxLS41NC4xNS0xLjEuMjItLjU2LjA4LTEuMTcuMDgtMS43MiAwLTMuMTQtLjU4LTEuNDItLjU5LTIuNDMtMS42My0xLjAyLTEuMDQtMS41Ny0yLjQ2LS41Ni0xLjQyLS41Ni0zLjA5dC41Ni0zLjA5cS41NS0xLjQzIDEuNTctMi40NyAxLjAxLTEuMDQgMi40My0xLjYydDMuMTQtLjU4cTEuMTUgMCAyLjE3LjI3IDEuMDIuMjYgMS44Ny43NXQxLjUzIDEuMTkgMS4xNSAxLjU2LjcyIDEuODdxLjI0IDEuMDEuMjQgMi4xMiAwIDEuMDItLjIxIDEuOTV0LS42IDEuNzNxLS4zOS44MS0uOTYgMS40OXQtMS4yOSAxLjE5bTExLjgyLTkuNTRoMi41OXYxMC43N2gtMS41OHEtLjUyIDAtLjY1LS40N2wtLjE4LS44NnEtLjY2LjY3LTEuNDYgMS4wOC0uOC40Mi0xLjg4LjQyLS44OCAwLTEuNTYtLjN0LTEuMTQtLjg1cS0uNDYtLjU0LS43LTEuMjktLjIzLS43NS0uMjMtMS42NnYtNi44NGgyLjU5djYuODRxMCAuOTkuNDYgMS41My40NS41NCAxLjM3LjU0LjY3IDAgMS4yNi0uM3QxLjExLS44MnptNS4yNCAwaDIuNnYxMC43N2gtMi42em0yLjk2LTMuMTRxMCAuMzMtLjE0LjYzLS4xMy4yOS0uMzYuNTEtLjIyLjIyLS41My4zNS0uMy4xMy0uNjUuMTMtLjMzIDAtLjYzLS4xM3QtLjUyLS4zNS0uMzYtLjUxcS0uMTMtLjMtLjEzLS42MyAwLS4zNS4xMy0uNjUuMTQtLjMxLjM2LS41M3QuNTItLjM1LjYzLS4xM3EuMzUgMCAuNjUuMTMuMzEuMTMuNTMuMzUuMjMuMjIuMzYuNTMuMTQuMy4xNC42NW0xMC42OSA0LjQ3LS42OC45NXEtLjEyLjE0LS4yMy4yMy0uMTEuMDgtLjMyLjA4LS4yIDAtLjM5LS4xMnQtLjQ1LS4yN3EtLjI2LS4xNi0uNjItLjI4LS4zNy0uMTItLjktLjEyLS42OCAwLTEuMi4yNS0uNTEuMjUtLjg1LjcxdC0uNTEgMS4xMnEtLjE3LjY1LS4xNyAxLjQ4IDAgLjg2LjE4IDEuNTQuMTkuNjcuNTMgMS4xMi4zNS40Ni44NC43LjUuMjMgMS4xMi4yM3QxLS4xNS42NC0uMzNxLjI3LS4xOS40Ni0uMzQuMi0uMTUuNDQtLjE1LjMxIDAgLjQ3LjI0bC43NS45NHEtLjQ0LjUxLS45NC44NXQtMS4wNC41NHEtLjU0LjIxLTEuMTIuMjktLjU3LjA5LTEuMTQuMDktLjk5IDAtMS44OC0uMzgtLjg4LS4zNy0xLjU0LTEuMDgtLjY2LS43Mi0xLjA0LTEuNzUtLjM5LTEuMDMtLjM5LTIuMzYgMC0xLjE4LjM0LTIuMi4zNS0xLjAxIDEuMDEtMS43NXQxLjYzLTEuMTZxLjk4LS40MiAyLjI1LS40MiAxLjIxIDAgMi4xMi4zOXQxLjYzIDEuMTFtMS43Mi02LjE2aDIuNnY4LjkzaC40OHEuMjYgMCAuNDEtLjA3LjE2LS4wNi4zMS0uMjdsMi42OC0zLjMxcS4xNy0uMjIuMzctLjM0LjIxLS4xMS41My0uMTFoMi4zOGwtMy4zNSA0cS0uMzYuNDctLjc4LjcyLjIyLjE2LjM5LjM3LjE4LjIxLjMzLjQ1bDMuNiA1LjIzaC0yLjM1cS0uMyAwLS41Mi0uMXQtLjM3LS4zNmwtMi43NS00LjA5cS0uMTUtLjI0LS4zLS4zMS0uMTYtLjA4LS40OC0uMDhoLS41OHY0Ljk0aC0yLjZ6bTE3LjMyIDMuNjYgOC4zMiA0LjM0djEuMDVsLTguMzIgNC4zNHYtMS44NHEwLS4yMS4xLS4zOS4xMS0uMTguMzUtLjNsMy44MS0xLjk2cS40OS0uMjQgMS4wOC0uMzgtLjU5LS4xMy0xLjA4LS4zOGwtMy44MS0xLjk1cS0uMjQtLjEyLS4zNS0uMy0uMS0uMTctLjEtLjM4em0zMS4wMy0zLjI0aDIuMTR2MTUuMThoLTIuNDl2LTkuODFxMC0uNTkuMDYtMS4yN2wtNC41OSA4LjYycS0uMzIuNjItMSAuNjJoLS4zOXEtLjY4IDAtMS0uNjJsLTQuNjQtOC42NXEuMDMuMzUuMDUuNjguMDIuMzQuMDIuNjJ2OS44MWgtMi40OXYtMTUuMThoMi4xM3EuMTkgMCAuMzMuMDF0LjI1LjA1LjIuMTRxLjA4LjA5LjE3LjI1bDQuNTUgOC40M3EuMTcuMzQuMzMuNjkuMTUuMzYuMy43NC4xNC0uMzkuMy0uNzUuMTYtLjM3LjM0LS43bDQuNDgtOC40MXEuMDgtLjE2LjE4LS4yNS4wOS0uMS4yLS4xNHQuMjUtLjA1LjMyLS4wMW03LjE2IDguNTVoNC44OXEwLS41LS4xNC0uOTUtLjE1LS40NC0uNDMtLjc4LS4yOC0uMzMtLjcyLS41My0uNDMtLjE5LTEuMDEtLjE5LTEuMTIgMC0xLjc3LjY0dC0uODIgMS44MW02LjYxIDEuNTdoLTYuNjdxLjA3LjgzLjMgMS40My4yMy42MS42MSAxIC4zNy4zOS44OS41OS41Mi4xOSAxLjE1LjE5dDEuMDktLjE1cS40Ni0uMTQuOC0uMzJ0LjYtLjMzcS4yNS0uMTQuNS0uMTQuMzIgMCAuNDguMjRsLjc0Ljk0cS0uNDMuNTEtLjk2Ljg1LS41NC4zNC0xLjEyLjU0LS41OC4yMS0xLjE5LjI5LS42LjA5LTEuMTcuMDktMS4xMiAwLTIuMDktLjM4LS45Ni0uMzctMS42OC0xLjEtLjcxLS43My0xLjEyLTEuOC0uNDEtMS4wOC0uNDEtMi41IDAtMS4xLjM2LTIuMDcuMzUtLjk3IDEuMDItMS42OXQxLjYzLTEuMTQgMi4xNy0uNDJxMS4wMSAwIDEuODguMzIuODYuMzMgMS40OC45NS42Mi42My45NyAxLjU0dC4zNSAyLjA3cTAgLjU5LS4xMy43OS0uMTIuMjEtLjQ4LjIxbTQuODQtNS4wNi4xNiAxLjIycS41LS45NyAxLjItMS41Mi42OS0uNTUgMS42My0uNTUuNzUgMCAxLjIuMzJsLS4xNyAxLjk1cS0uMDUuMTgtLjE1LjI2dC0uMjcuMDhxLS4xNiAwLS40Ny0uMDUtLjMtLjA1LS42LS4wNS0uNDMgMC0uNzcuMTItLjMzLjEzLS42LjM3LS4yNy4yMy0uNDcuNTctLjIxLjMzLS4zOC43NnY2LjY0aC0yLjZ2LTEwLjc3aDEuNTJxLjQgMCAuNTYuMTR0LjIxLjUxbTkuNDggNC40N3EuNDkgMCAuODQtLjEzLjM2LS4xMy42LS4zNi4yMy0uMjMuMzUtLjU2LjEyLS4zMi4xMi0uNzEgMC0uOC0uNDctMS4yNy0uNDgtLjQ3LTEuNDQtLjQ3LS45NSAwLTEuNDMuNDd0LS40OCAxLjI3cTAgLjM3LjEyLjd0LjM2LjU2cS4yNC4yNC42LjM3dC44My4xM20yLjkzIDYuMTNxMC0uMzEtLjE5LS41MXQtLjUxLS4zMXEtLjMzLS4xMS0uNzYtLjE2LS40NC0uMDYtLjkzLS4wOC0uNDktLjAzLTEuMDEtLjA1LS41MS0uMDItMS4wMS0uMDgtLjQzLjI0LS43LjU2LS4yNi4zMy0uMjYuNzYgMCAuMjguMTQuNTN0LjQ1LjQycS4zMS4xOC44LjI4LjUuMSAxLjIxLjEuNzIgMCAxLjI1LS4xMS41Mi0uMTEuODctLjMuMzQtLjIuNDktLjQ2LjE2LS4yNy4xNi0uNTltLS41MS0xMC44OWgzLjA5di45N3EwIC40Ni0uNTUuNTdsLS45Ny4xOHEuMjIuNTUuMjIgMS4yMSAwIC44LS4zMiAxLjQ1LS4zMi42NC0uODggMS4wOS0uNTcuNDYtMS4zNC43LS43OC4yNS0xLjY3LjI1LS4zMSAwLS42MS0uMDMtLjI5LS4wMy0uNTctLjA5LS41MS4zMS0uNTEuNjkgMCAuMzIuMy40Ny4zLjE2Ljc5LjIyLjUuMDYgMS4xMy4wOC42My4wMSAxLjI5LjA3LjY2LjA1IDEuMjkuMTh0MS4xMi40MnEuNS4yOC44Ljc3dC4zIDEuMjVxMCAuNzItLjM2IDEuMzktLjM1LjY3LTEuMDEgMS4yLS42Ny41Mi0xLjY0Ljg0dC0yLjIxLjMycS0xLjIyIDAtMi4xMi0uMjQtLjkxLS4yMy0xLjUxLS42My0uNTktLjM5LS44OS0uOS0uMjktLjUyLS4yOS0xLjA3IDAtLjc2LjQ1LTEuMjcuNDYtLjUxIDEuMjYtLjgxLS40My0uMjItLjY4LS41OXQtLjI1LS45N3EwLS4yNC4wOC0uNS4wOS0uMjUuMjctLjUxLjE3LS4yNS40My0uNDcuMjctLjIzLjYyLS40MS0uODItLjQ0LTEuMjgtMS4xNy0uNDctLjc0LS40Ny0xLjczIDAtLjc5LjMyLTEuNDR0Ljg5LTEuMXEuNTctLjQ2IDEuMzYtLjcuNzgtLjI0IDEuNy0uMjQuNyAwIDEuMy4xNC42MS4xNCAxLjEyLjQxbTYuNzggMy43OGg0Ljg5cTAtLjUtLjE0LS45NS0uMTQtLjQ0LS40Mi0uNzgtLjI5LS4zMy0uNzItLjUzLS40NC0uMTktMS4wMi0uMTktMS4xMiAwLTEuNzcuNjQtLjY0LjY0LS44MiAxLjgxbTYuNjIgMS41N2gtNi42N3EuMDYuODMuMjkgMS40My4yMy42MS42MSAxdC45LjU5cS41Mi4xOSAxLjE1LjE5dDEuMDgtLjE1cS40Ni0uMTQuOC0uMzJ0LjYtLjMzcS4yNi0uMTQuNS0uMTQuMzMgMCAuNDguMjRsLjc1Ljk0cS0uNDMuNTEtLjk3Ljg1LS41My4zNC0xLjEyLjU0LS41OC4yMS0xLjE4LjI5LS42MS4wOS0xLjE3LjA5LTEuMTMgMC0yLjA5LS4zOC0uOTctLjM3LTEuNjgtMS4xLS43Mi0uNzMtMS4xMy0xLjgtLjQxLTEuMDgtLjQxLTIuNSAwLTEuMS4zNi0yLjA3dDEuMDMtMS42OXEuNjYtLjcyIDEuNjItMS4xNHQyLjE3LS40MnExLjAyIDAgMS44OC4zMi44Ni4zMyAxLjQ4Ljk1LjYyLjYzLjk3IDEuNTR0LjM1IDIuMDdxMCAuNTktLjEyLjc5LS4xMy4yMS0uNDguMjFtOC42NC02Ljg4IDguMzIgNC4zNHYxLjA1bC04LjMyIDQuMzR2LTEuODRxMC0uMjEuMS0uMzkuMTEtLjE4LjM1LS4zbDMuODEtMS45NnEuNDktLjI0IDEuMDgtLjM4LS41OS0uMTMtMS4wOC0uMzhsLTMuODEtMS45NXEtLjI0LS4xMi0uMzUtLjMtLjEtLjE3LS4xLS4zOHptMTkuNTMgOS43M2gyLjg1cS43OSAwIDEuMzMtLjE4LjUzLS4xOS44NS0uNTEuMzItLjMxLjQ2LS43My4xNS0uNDIuMTUtLjkgMC0uNDktLjE2LS44OC0uMTYtLjQtLjUtLjY3LS4zMy0uMjgtLjg2LS40M3QtMS4yOC0uMTVoLTIuODR6bTIuNC0xMC43OWgtMi40djQuMzloMi4yNHExLjQ1IDAgMi4xOS0uNTIuNzQtLjUzLjc0LTEuNjcgMC0xLjE5LS42Ny0xLjctLjY3LS41LTIuMS0uNW0tNS4yMy0yLjE4aDUuMjNxMS40OSAwIDIuNTUuMjh0MS43NC44MXEuNjguNTIuOTkgMS4yNy4zMi43NC4zMiAxLjY4IDAgLjUzLS4xNiAxLjAydC0uNDkuOTJxLS4zMy40Mi0uODQuNzctLjUxLjM0LTEuMjEuNTkgMy4xMy43IDMuMTMgMy4zOCAwIC45Ni0uMzcgMS43OHQtMS4wNyAxLjQxcS0uNy42LTEuNzMuOTMtMS4wMy4zNC0yLjM1LjM0aC01Ljc0em0yMC4xMSA0LjQxaDIuNTl2MTAuNzdoLTEuNThxLS41MiAwLS42NS0uNDdsLS4xOC0uODZxLS42Ni42Ny0xLjQ2IDEuMDgtLjguNDItMS44OC40Mi0uODggMC0xLjU2LS4zdC0xLjE0LS44NXEtLjQ2LS41NC0uNy0xLjI5LS4yMy0uNzUtLjIzLTEuNjZ2LTYuODRoMi41OXY2Ljg0cTAgLjk5LjQ2IDEuNTMuNDUuNTQgMS4zNy41NC42NyAwIDEuMjYtLjMuNTgtLjMgMS4xMS0uODJ6bTcuNzUgMy4xNXY0LjgzcS40NC41My45Ni43NXQxLjEuMjJxLjYgMCAxLjA3LS4yMS40OC0uMjIuODItLjY3LjMzLS40Ni41MS0xLjE3dC4xOC0xLjdxMC0xLjc3LS41OS0yLjU2LS41OS0uOC0xLjY5LS44LS43NCAwLTEuMy4zNS0uNTYuMzQtMS4wNi45Nm0wLTcuOTh2Ni4xNXEuNjUtLjY4IDEuNDQtMS4wOS44LS40IDEuODEtLjQuOTQgMCAxLjY5LjM3Ljc1LjM2IDEuMjggMS4wNXQuODEgMS42N3EuMjkuOTcuMjkgMi4xOSAwIDEuMzEtLjMzIDIuMzgtLjMyIDEuMDctLjkzIDEuODQtLjYuNzYtMS40NSAxLjE4dC0xLjg5LjQycS0uNTEgMC0uOTItLjEtLjQtLjEtLjc1LS4yOHQtLjY0LS40NHEtLjI5LS4yNS0uNTUtLjU3bC0uMTEuNzNxLS4wNy4yNy0uMjIuMzgtLjE1LjEyLS40MS4xMmgtMS43MXYtMTUuNnptMTEuOTIgNy45OHY0LjgzcS40NC41My45Ni43NXQxLjA5LjIycS42IDAgMS4wOC0uMjEuNDgtLjIyLjgxLS42Ny4zNC0uNDYuNTItMS4xN3QuMTgtMS43cTAtMS43Ny0uNTktMi41Ni0uNTktLjgtMS42OS0uOC0uNzUgMC0xLjMuMzUtLjU2LjM0LTEuMDYuOTZtMC03Ljk4djYuMTVxLjY1LS42OCAxLjQ0LTEuMDkuNzktLjQgMS44MS0uNC45NCAwIDEuNjkuMzcuNzUuMzYgMS4yOCAxLjA1dC44MSAxLjY3cS4yOC45Ny4yOCAyLjE5IDAgMS4zMS0uMzIgMi4zOC0uMzMgMS4wNy0uOTMgMS44NC0uNi43Ni0xLjQ1IDEuMTh0LTEuODkuNDJxLS41MSAwLS45Mi0uMXQtLjc1LS4yOHEtLjM1LS4xOC0uNjQtLjQ0LS4yOS0uMjUtLjU1LS41N2wtLjEyLjczcS0uMDYuMjctLjIxLjM4LS4xNS4xMi0uNDIuMTJoLTEuNzF2LTE1LjZ6bTkuMzUgMGgyLjZ2MTUuNmgtMi42em03LjI0IDguOTdoNC44OXEwLS41LS4xNC0uOTUtLjE0LS40NC0uNDMtLjc4LS4yOC0uMzMtLjcyLS41My0uNDMtLjE5LTEuMDEtLjE5LTEuMTIgMC0xLjc3LjY0dC0uODIgMS44MW02LjYxIDEuNTdoLTYuNjdxLjA3LjgzLjMgMS40My4yMy42MS42MSAxIC4zNy4zOS44OS41OS41Mi4xOSAxLjE1LjE5dDEuMDktLjE1cS40Ni0uMTQuOC0uMzJ0LjYtLjMzcS4yNS0uMTQuNS0uMTQuMzIgMCAuNDguMjRsLjc0Ljk0cS0uNDMuNTEtLjk2Ljg1LS41NC4zNC0xLjEyLjU0LS41OC4yMS0xLjE5LjI5LS42LjA5LTEuMTcuMDktMS4xMiAwLTIuMDktLjM4LS45Ni0uMzctMS42OC0xLjEtLjcxLS43My0xLjEyLTEuOC0uNDEtMS4wOC0uNDEtMi41IDAtMS4xLjM2LTIuMDcuMzUtLjk3IDEuMDItMS42OXQxLjYzLTEuMTQgMi4xNy0uNDJxMS4wMiAwIDEuODguMzIuODYuMzMgMS40OC45NS42Mi42My45NyAxLjU0dC4zNSAyLjA3cTAgLjU5LS4xMy43OS0uMTIuMjEtLjQ4LjIxIi8+PC9zdmc+" alt="Performance Chart">
+            <div style="font-style: italic; color: #666; margin-top: 10px">
+            <p>Average execution time across 1000 random arrays (n=1000)</p>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="3">
+            <h2>Quick Sort with Line Highlighting</h2>
+            <div style="background: #2d2d2d; padding: 25px; border-radius: 10px; margin: 20px 0">
+            <h3>Quick Sort Implementation</h3>
+            <pre><code class="language-python" data-line-numbers></code></pre>
+            <p>def quick_sort(arr):
+    if len(arr) &lt;= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x &lt; pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x &gt; pivot]
+    return quick<em>sort(left) + middle + quick</em>sort(right)</p>
+            </div>
+            <p>Click through to see line-by-line code execution!</p>
+        </section>
+        <section data-slide-index="3">
+            <h2>Binary Search with Specific Line Highlighting</h2>
+            <div style="background: #2d2d2d; padding: 25px; border-radius: 10px; margin: 20px 0">
+            <h3>Binary Search Algorithm</h3>
+            <pre><code class="language-javascript" data-line-numbers="2-5"></code></pre>
+            <p>function binarySearch(arr, target) {
+    let left = 0;
+    let right = arr.length - 1;
+    while (left &lt;= right) {
+        const mid = Math.floor((left + right) / 2);
+        if (arr[mid] === target) return mid;
+        if (arr[mid] &lt; target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}</p>
+            </div>
+            <p>Lines 2-5 (the main loop) are highlighted automatically.</p>
         </section>
         <section data-slide-index="0">
             <h1>Thank You!</h1>

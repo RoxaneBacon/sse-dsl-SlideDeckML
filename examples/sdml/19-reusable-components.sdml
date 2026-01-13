@@ -22,6 +22,65 @@ ${content}
 :::
 @end
 
+@component codeSnippet language title code
+:::{ background: #2d2d2d; padding: 25px; border-radius: 10px; margin: 20px 0; }
+### ${title}
+:::{ background: #1e1e1e; padding: 15px; border-radius: 5px; font-family: monospace; white-space: pre-wrap; }
+${code}
+:::
+:::
+@end
+
+@component algorithmCard name complexity code description
+:::{ display: flex; flex-direction: column; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; margin: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+## ${name}
+:::{ background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 10px 0; }
+**Time Complexity:** ${complexity}
+:::
+:::{ background: #1e1e1e; padding: 15px; border-radius: 5px; font-family: monospace; white-space: pre-wrap; color: #f8f8f2; }
+${code}
+:::
+:::{ color: #ffffff; margin-top: 15px; font-size: 0.9em; }
+${description}
+:::
+:::
+@end
+
+@component visualCard title image caption
+:::{ text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+### ${title}
+${image}
+:::{ font-style: italic; color: #666; margin-top: 10px; }
+${caption}
+:::
+:::
+@end
+
+@component comparisonTable algorithm1 time1 space1 algorithm2 time2 space2
+:::{ background: #1e1e1e; padding: 20px; border-radius: 10px; }
+:::{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+:::{ background: #2d2d2d; padding: 20px; border-radius: 8px; }
+### ${algorithm1}
+:::{ color: #4CAF50; }
+⏱ Time: ${time1}
+:::
+:::{ color: #2196F3; }
+💾 Space: ${space1}
+:::
+:::
+:::{ background: #2d2d2d; padding: 20px; border-radius: 8px; }
+### ${algorithm2}
+:::{ color: #4CAF50; }
+⏱ Time: ${time2}
+:::
+:::{ color: #2196F3; }
+💾 Space: ${space2}
+:::
+:::
+:::
+:::
+@end
+
 ===
 
 # Sorting Algorithms Lecture
@@ -46,9 +105,27 @@ After the first pass, the largest element (9) has bubbled to the end.
 
 ===
 
-## Code Example: Bubble Sort
+## Bubble Sort - Implementation
 
-This is the complete implementation of bubble sort algorithm.
+@use codeSnippet language="python" title="Bubble Sort Algorithm" code="def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr"
+
+The classic sorting algorithm with nested loops for comparison.
+
+```python [highlight:line-by-line]
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr
+```
 
 ===
 
@@ -70,36 +147,86 @@ The pivot element (7) is selected for partitioning.
 
 ===
 
-## Code Example: Quick Sort
+## Quick Sort - Complete Implementation
 
-A recursive approach to sorting.
-
-===
-
-## Merge Sort - Divide Phase
-
-@use arrayDisplay values="[8, 3, 5, 4]" highlight="8"
-
-The array is divided into smaller sub-arrays.
-
-===
-
-## Multiple Arrays Comparison
-
-Comparing sorted sub-arrays before merging.
+@use algorithmCard name="Quick Sort" complexity="O(n log n) average" code="def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quick_sort(left) + middle + quick_sort(right)" description="Divide-and-conquer algorithm using a pivot element to partition the array"
 
 ===
 
-## Performance Analysis
+## Algorithm Comparison
 
-@use stepCard number="1" title="Bubble Sort" content="Time Complexity: O(n²) - Good for small datasets"
+@use comparisonTable algorithm1="Bubble Sort" time1="O(n²)" space1="O(1)" algorithm2="Quick Sort" time2="O(n log n)" space2="O(log n)"
 
-@use stepCard number="2" title="Quick Sort" content="Time Complexity: O(n log n) - Fastest on average"
-
-@use stepCard number="3" title="Merge Sort" content="Time Complexity: O(n log n) - Stable and predictable"
+Side-by-side complexity analysis helps choose the right algorithm.
 
 ===
 
+## Merge Sort - Visual Explanation
+
+@use visualCard title="Merge Sort Process" image="![Merge Sort Diagram](https://placehold.co/600x300/667eea/ffffff?text=Divide+%E2%86%92+Conquer+%E2%86%92+Merge)" caption="The array is recursively divided, sorted, and merged back together"
+
+===
+
+## Merge Sort - Implementation
+
+@use codeSnippet language="python" title="Merge Sort with Helper Function" code="def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result"
+
+===
+
+## Advanced Comparison
+
+@use comparisonTable algorithm1="Merge Sort" time1="O(n log n)" space1="O(n)" algorithm2="Heap Sort" time2="O(n log n)" space2="O(1)"
+
+===
+
+## Complete Algorithm Showcase
+
+@use algorithmCard name="Insertion Sort" complexity="O(n²) worst case, O(n) best case" code="def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr" description="Efficient for small datasets and nearly sorted arrays"
+
+===
+
+## Real-World Performance
+
+@use visualCard title="Benchmark Results" image="![Performance Chart](https://placehold.co/700x400/764ba2/ffffff?text=Performance+Chart+%7C+Quick+%3E+Merge+%3E+Bubble)" caption="Average execution time across 1000 random arrays (n=1000)"
+
+===
 
 # Thank You!
 

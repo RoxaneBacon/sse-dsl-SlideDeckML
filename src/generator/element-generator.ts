@@ -36,8 +36,29 @@ export class ElementGenerator {
      * @param paragraph The paragraph AST node
      * @returns The HTML string for the paragraph
      */
-    public generateParagraph(paragraph: any, style: string = ''): string {
-        return `            <p${style}>${this.textProcessor.processInlineText(paragraph.text)}</p>`;
+    public async generateParagraph(paragraph: any, style: string = ''): Promise<string> {
+        const text = paragraph.text;
+        
+        // Check if the entire paragraph is just an image markdown
+        const imageMatch = text.match(/^!\[([^\]]+)\]\(([^\)]+)\)$/);
+        if (imageMatch) {
+            // Generate as an image instead of paragraph
+            return await this.generateMediaFromText(text, style);
+        }
+        
+        return `            <p${style}>${this.textProcessor.processInlineText(text)}</p>`;
+    }
+
+    /**
+     * Generate media from markdown text
+     * @param mediaText The media markdown text
+     * @param style Optional style attribute
+     * @returns The HTML string for the media
+     */
+    private async generateMediaFromText(mediaText: string, style: string = ''): Promise<string> {
+        // Create a fake media object
+        const fakeMedia = { content: mediaText };
+        return await this.generateMedia(fakeMedia, style);
     }
 
     /**

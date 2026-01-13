@@ -87,7 +87,7 @@ export class LineContentHandler {
             return await this.elementGenerator.generateSyncFragments(line, this.lastCodeBlock);
         }
         if (isParagraph(line)) {
-            return this.elementGenerator.generateParagraph(line);
+            return await this.elementGenerator.generateParagraph(line);
         }
         return '';
     }
@@ -107,6 +107,9 @@ export class LineContentHandler {
             if (isFragmentElement(element)) {
                 // Handle nested fragments
                 containerHtml += await this.handleFragmentElement(element) + '\n';
+            } else if (isStyledElement(element)) {
+                // Handle nested styled elements
+                containerHtml += await this.handleStyledElement(element) + '\n';
             } else if (isHeader(element)) {
                 containerHtml += this.elementGenerator.generateHeading(element, '') + '\n';
             } else if (isUnorderedList(element)) {
@@ -123,7 +126,7 @@ export class LineContentHandler {
             } else if (isSyncFragments(element)) {
                 containerHtml += await this.elementGenerator.generateSyncFragments(element, this.lastCodeBlock) + '\n';
             } else if (isParagraph(element)) {
-                containerHtml += this.elementGenerator.generateParagraph(element, '') + '\n';
+                containerHtml += await this.elementGenerator.generateParagraph(element, '') + '\n';
             }
         }
         
@@ -165,7 +168,7 @@ export class LineContentHandler {
             } else if (isSyncFragments(element)) {
                 containerHtml += await this.elementGenerator.generateSyncFragments(element, this.lastCodeBlock) + '\n';
             } else if (isParagraph(element)) {
-                containerHtml += this.elementGenerator.generateParagraph(element, '') + '\n';
+                containerHtml += await this.elementGenerator.generateParagraph(element, '') + '\n';
             }
         }
         

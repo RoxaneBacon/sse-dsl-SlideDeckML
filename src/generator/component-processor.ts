@@ -109,8 +109,8 @@ export class ComponentProcessor {
      * @returns Cloned line with substitutions
      */
     private cloneAndSubstituteLine(line: any, paramMap: Map<string, string>): any {
-        // Create a shallow copy and substitute text properties
-        const cloned = { ...line };
+        // Create a shallow copy and preserve the $type property
+        const cloned = { ...line, $type: line.$type };
         
         // Recursively process nested elements
         if (cloned.elements) {
@@ -119,6 +119,7 @@ export class ComponentProcessor {
         if (cloned.items) {
             cloned.items = cloned.items.map((item: any) => ({ 
                 ...item, 
+                $type: item.$type,
                 text: this.substituteText(item.text, paramMap)
             }));
         }
@@ -132,6 +133,9 @@ export class ComponentProcessor {
         }
         if (cloned.style) {
             cloned.style = this.substituteText(cloned.style, paramMap);
+        }
+        if (cloned.usage) {
+            cloned.usage = this.substituteText(cloned.usage, paramMap);
         }
         
         return cloned;
