@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Researcher Name">
+    <meta name="title" content="Conference Presentation">
+    <title>Conference Presentation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+    <style> 
+        
+        .reveal h1 {
+                color: #c0392b;
+                font-weight: 700;
+                text-transform: none;
+                border-bottom: 4px solid #c0392b;
+                padding-bottom: 20px;
+            }
+            .reveal h2 {
+                color: #2c3e50;
+                font-weight: 600;
+                margin-top: 0.8em;
+            }
+            .reveal h3 {
+                color: #7f8c8d;
+                font-weight: 500;
+                font-style: italic;
+            }
+            .header-banner {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 70px;
+                background: linear-gradient(to right, #c0392b 0%, #8e44ad 100%);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                z-index: 1000;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            }
+            .header-author {
+                color: #ffffff;
+                font-size: 16px;
+                font-weight: 600;
+                margin-left: 30px;
+            }
+            .header-logo {
+                height: 50px;
+                width: auto;
+                margin-right: 30px;
+            }
+            .reveal {
+                margin-top: 70px;
+            }
+            .reveal .slides section {
+                text-align: left;
+            }
+            .reveal blockquote {
+                background: #f8f9fa;
+                border-left: 5px solid #c0392b;
+                padding: 20px;
+                font-style: italic;
+                color: #2c3e50;
+            }
+            .reveal .footer-note {
+                position: fixed;
+                bottom: 10px;
+                right: 20px;
+                font-size: 14px;
+                color: #7f8c8d;
+            }
+
+        /* Default Reveal.js overrides */
+        .reveal {
+            font-size: 32px; /* Reduced from default 40px */
+        }
+        
+        .reveal .slides {
+            text-align: left; /* Remove default centering */
+        }
+        
+        .reveal h1 {
+            font-size: 2em; /* Reduced from default 2.5em */
+        }
+        
+        .reveal h2 {
+            font-size: 1.3em; /* Reduced from default 1.8em */
+        }
+        
+        .reveal h3 {
+            font-size: 1em; /* Reduced from default 1.5em */
+        }
+   
+        /* Synchronized fragments styling */
+        .sync-container {
+            position: relative;
+            min-height: 50px;
+            font-size: 0.9em;
+        }
+        .sync-item {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .sync-item.active {
+            display: block;
+            opacity: 1;
+        }
+        .sync-item p {
+            margin: 0.3em 0;
+        }
+        .sync-item img {
+            max-width: 100%;
+            height: auto;
+        }
+        /* Keep mode: stack items vertically */
+        .sync-container[data-keep="true"] {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3em;
+        }
+        .sync-container[data-keep="true"] .sync-item {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <header class="header-banner">
+        <div class="header-author">Researcher Name</div>
+        
+    </header>
+    <div class="reveal">
+        <div class="slides">
+        <section data-slide-index="0">
+            <h1>Outline</h1>
+            <ol>
+                <li><strong>Motivation</strong> - Why this research matters</li>
+                <li><strong>Background</strong> - Related work and context</li>
+                <li><strong>Methodology</strong> - Our approach</li>
+                <li><strong>Results</strong> - Key findings</li>
+                <li><strong>Discussion</strong> - Analysis and implications</li>
+                <li><strong>Conclusion</strong> - Summary and future work</li>
+            </ol>
+        </section>
+        <section data-slide-index="1">
+            <h1>Motivation</h1>
+            <h2>Research Problem</h2>
+            <p>Description of the problem you&#39;re addressing</p>
+            <div style="background: #ecf0f1; padding: 20px; border-radius: 10px">
+            <h3>Research Questions</h3>
+            <ol>
+                <li>Question 1?</li>
+                <li>Question 2?</li>
+                <li>Question 3?</li>
+            </ol>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>Background</h1>
+            <h2>Related Work</h2>
+            <h3>Previous Research</h3>
+            <ul>
+                <li>Study 1: Key findings</li>
+                <li>Study 2: Key findings</li>
+                <li>Study 3: Key findings</li>
+            </ul>
+            <h3>Research Gap</h3>
+            <blockquote>Quote or statement highlighting the gap in current research</blockquote>
+        </section>
+        <section data-slide-index="2">
+            <h1>Methodology</h1>
+            <h2>Our Approach</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em">
+            <h3>Data Collection</h3>
+            <ul>
+                <li>Source 1</li>
+                <li>Source 2</li>
+                <li>Sample size: N=XXX</li>
+            </ul>
+            <h3>Analysis Methods</h3>
+            <ul>
+                <li>Method 1</li>
+                <li>Method 2</li>
+                <li>Statistical tests used</li>
+            </ul>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>Methodology</h1>
+            <h2>Experimental Setup</h2>
+            <pre><code class="language-python" data-trim data-noescape data-line-numbers="1|2|3|4|5|6|7|8|9">def experiment(data, parameters):
+    # Data preprocessing
+    processed = preprocess(data)
+    
+    # Apply model
+    results = model.fit(processed, parameters)
+    
+    # Evaluate
+    return evaluate(results)
+</code></pre>
+        </section>
+        <section data-slide-index="3">
+            <h1>Results</h1>
+            <h2>Key Findings</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em">
+            <h3>Finding 1</h3>
+            <ul>
+                <li>Observation A</li>
+                <li>Statistical significance: p &lt; 0.05</li>
+                <li>Effect size: Cohen&#39;s d = X.XX</li>
+            </ul>
+            <h3>Finding 2</h3>
+            <ul>
+                <li>Observation B</li>
+                <li>Statistical significance: p &lt; 0.01</li>
+                <li>Effect size: Cohen&#39;s d = X.XX</li>
+            </ul>
+            </div>
+        </section>
+        <section data-slide-index="11">
+            <h1>Results</h1>
+            <h2>Visualization</h2>
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNTAwIiB2aWV3Qm94PSIwIDAgODAwIDUwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2MwMzkyYiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xNjcuNTUgMjQ5LjM5aDQuNDZxMi4wMSAwIDMuNTEtLjV0Mi40Ni0xLjM5cS45Ny0uODkgMS40NS0yLjExLjQ3LTEuMjIuNDctMi42OCAwLTIuOTEtMS45Mi00LjQ3LTEuOTItMS41Ny01Ljg3LTEuNTdoLTQuNTZ6bTEzLjIgNS45NCA5LjU5IDE0LjE1aC02LjQzcS0xLjgzIDAtMi42NS0xLjQzbC04LjA2LTEyLjI3cS0uNDUtLjY5LS45OS0uOTgtLjU1LS4yOS0xLjYxLS4yOWgtMy4wNXYxNC45N2gtNy4xMnYtMzguMzJoMTEuNjhxMy45IDAgNi42OS44MSAyLjguODEgNC41OSAyLjI3IDEuNzkgMS40NSAyLjY0IDMuNDguODQgMi4wMy44NCA0LjQ3IDAgMS45My0uNTcgMy42NXQtMS42NCAzLjEzcS0xLjA3IDEuNC0yLjY1IDIuNDZ0LTMuNTkgMS42N3EuNjkuNCAxLjI3Ljk0LjU4LjU1IDEuMDYgMS4yOW0xNy44OS0yLjU3aDEyLjM1cTAtMS4yNy0uMzYtMi40dC0xLjA3LTEuOTdxLS43Mi0uODUtMS44Mi0xLjM0dC0yLjU2LS40OXEtMi44MyAwLTQuNDYgMS42MS0xLjYzIDEuNjItMi4wOCA0LjU5bTE2LjY5IDMuOTVoLTE2LjgycS4xNiAyLjA5Ljc0IDMuNjEuNTggMS41MyAxLjU0IDIuNTIuOTUgMSAyLjI2IDEuNDl0Mi45LjQ5IDIuNzUtLjM4cTEuMTUtLjM3IDIuMDEtLjgydDEuNTEtLjgyIDEuMjYtLjM3cS44MiAwIDEuMjIuNjFsMS44OCAyLjM5cS0xLjA5IDEuMjctMi40NCAyLjEzdC0yLjgyIDEuMzhxLTEuNDcuNTEtMyAuNzMtMS41Mi4yMS0yLjk1LjIxLTIuODQgMC01LjI3LS45NC0yLjQ0LS45NC00LjI0LTIuNzktMS44MS0xLjg0LTIuODQtNC41NS0xLjAzLTIuNzItMS4wMy02LjMgMC0yLjc4LjktNS4yM3QyLjU4LTQuMjdxMS42OS0xLjgxIDQuMTEtMi44N3Q1LjQ3LTEuMDZxMi41NyAwIDQuNzUuODIgMi4xNy44MiAzLjczIDIuNCAxLjU3IDEuNTcgMi40NSAzLjg3Ljg5IDIuMjkuODkgNS4yMyAwIDEuNDgtLjMyIDItLjMxLjUyLTEuMjIuNTJtMjQuNTItMTEuNDgtMS40OSAyLjM2cS0uMjYuNDMtLjU1LjYtLjMuMTctLjc1LjE3LS40NyAwLTEuMDItLjI3LS41NC0uMjYtMS4yNS0uNTktLjcyLS4zMy0xLjYzLS42LS45Mi0uMjYtMi4xNi0uMjYtMS45NCAwLTMuMDQuODJ0LTEuMSAyLjE0cTAgLjg4LjU3IDEuNDguNTcuNTkgMS41MSAxLjA0dDIuMTQuODFxMS4xOS4zNiAyLjQyLjc4IDEuMjMuNDMgMi40Mi45NyAxLjIuNTQgMi4xNCAxLjM4Ljk0LjgzIDEuNTEgMiAuNTcgMS4xNi41NyAyLjgxIDAgMS45Ni0uNyAzLjYxLS43MSAxLjY2LTIuMDggMi44Ny0xLjM4IDEuMi0zLjQxIDEuODgtMi4wMy42Ny00LjY4LjY3LTEuNCAwLTIuNzQtLjI1dC0yLjU3LS43LTIuMjgtMS4wNi0xLjg0LTEuMzNsMS41MS0yLjQ5cS4yOS0uNDUuNjktLjY4LjQtLjI0IDEuMDEtLjI0dDEuMTUuMzRxLjU0LjM1IDEuMjYuNzQuNzEuNCAxLjY4Ljc1Ljk3LjM0IDIuNDUuMzQgMS4xNyAwIDItLjI4Ljg0LS4yOCAxLjM4LS43M3QuNzktMS4wNHEuMjYtLjYuMjYtMS4yNCAwLS45NS0uNTctMS41NnQtMS41MS0xLjA2LTIuMTUtLjgxLTIuNDYtLjc4cS0xLjI2LS40Mi0yLjQ3LS45OS0xLjItLjU3LTIuMTUtMS40NS0uOTQtLjg3LTEuNTEtMi4xNC0uNTctMS4yOC0uNTctMy4wOCAwLTEuNjcuNjctMy4xOC42Ni0xLjUxIDEuOTQtMi42NCAxLjI5LTEuMTIgMy4yMS0xLjggMS45Mi0uNjcgNC40NC0uNjcgMi44MSAwIDUuMTEuOTIgMi4zMS45MyAzLjg1IDIuNDRtMjIuMS0yLjk0aDYuNTR2MjcuMTloLTRxLTEuMyAwLTEuNjQtMS4xOWwtLjQ1LTIuMThxLTEuNjcgMS43LTMuNjkgMi43NS0yLjAxIDEuMDQtNC43NCAxLjA0LTIuMjIgMC0zLjkzLS43NS0xLjcxLS43Ni0yLjg4LTIuMTMtMS4xNy0xLjM4LTEuNzYtMy4yOC0uNi0xLjg5LS42LTQuMTd2LTE3LjI4aDYuNTV2MTcuMjhxMCAyLjQ5IDEuMTUgMy44NSAxLjE1IDEuMzcgMy40NiAxLjM3IDEuNjkgMCAzLjE4LS43NiAxLjQ4LS43NSAyLjgxLTIuMDh6bTEzLjA5LTEyLjE5aDYuNTR2MzkuMzhoLTYuNTR6bTIyLjE1IDM5LjhxLTMuNTUgMC01LjQ0LTItMS45LTItMS45LTUuNTJ2LTE1LjE5aC0yLjc4cS0uNTMgMC0uOS0uMzQtLjM3LS4zNS0uMzctMS4wM3YtMi42bDQuMzctLjcyIDEuMzgtNy40MnEuMTMtLjUzLjUtLjgydC45Ni0uMjloMy4zOXY4LjU2aDcuMjZ2NC42NmgtNy4yNnYxNC43NHEwIDEuMjcuNjIgMS45OS42Mi43MSAxLjcxLjcxLjYxIDAgMS4wMi0uMTUuNDEtLjE0LjcyLS4zLjMtLjE2LjU0LS4zLjI0LS4xNS40OC0uMTUuMjkgMCAuNDcuMTUuMTkuMTQuNC40M2wxLjk2IDMuMThxLTEuNDMgMS4yLTMuMjggMS44LTEuODYuNjEtMy44NS42MW0yOC43My0yNC42Ny0xLjQ5IDIuMzZxLS4yNi40My0uNTUuNnQtLjc0LjE3cS0uNDggMC0xLjAyLS4yNy0uNTUtLjI2LTEuMjYtLjU5LS43Mi0uMzMtMS42My0uNi0uOTItLjI2LTIuMTYtLjI2LTEuOTQgMC0zLjA0LjgydC0xLjEgMi4xNHEwIC44OC41NyAxLjQ4LjU3LjU5IDEuNTEgMS4wNHQyLjE0LjgxcTEuMTkuMzYgMi40Mi43OCAxLjIzLjQzIDIuNDMuOTcgMS4xOS41NCAyLjEzIDEuMzguOTQuODMgMS41MSAyIC41NyAxLjE2LjU3IDIuODEgMCAxLjk2LS43IDMuNjEtLjcgMS42Ni0yLjA4IDIuODctMS4zOCAxLjItMy40MSAxLjg4LTIuMDIuNjctNC42Ny42Ny0xLjQxIDAtMi43NS0uMjV0LTIuNTctLjctMi4yOC0xLjA2cS0xLjA0LS42MS0xLjg0LTEuMzNsMS41MS0yLjQ5cS4yOS0uNDUuNjktLjY4LjQtLjI0IDEuMDEtLjI0dDEuMTUuMzRxLjU0LjM1IDEuMjYuNzQuNzEuNCAxLjY4Ljc1Ljk3LjM0IDIuNDUuMzQgMS4xNyAwIDItLjI4Ljg0LS4yOCAxLjM4LS43My41NS0uNDUuOC0xLjA0LjI1LS42LjI1LTEuMjQgMC0uOTUtLjU3LTEuNTZ0LTEuNTEtMS4wNi0yLjE1LS44MXEtMS4yLS4zNi0yLjQ2LS43OHQtMi40Ny0uOTlxLTEuMi0uNTctMi4xNC0xLjQ1LS45NC0uODctMS41MS0yLjE0LS41Ny0xLjI4LS41Ny0zLjA4IDAtMS42Ny42Ni0zLjE4dDEuOTUtMi42NHExLjI4LTEuMTIgMy4yLTEuOCAxLjkyLS42NyA0LjQ0LS42NyAyLjgxIDAgNS4xMi45MiAyLjMuOTMgMy44NCAyLjQ0bTQ2LjIxLTE0LjA3aDUuNzZsLTE1LjQ4IDM4LjMyaC02LjQ0bC0xNS40OC0zOC4zMmg1LjczcS45MyAwIDEuNTEuNDV0Ljg3IDEuMTdsOS4wNCAyMy4zN3EuNDUgMS4xNC44NiAyLjUuNDEgMS4zNy43OCAyLjg1LjMyLTEuNDguNjktMi44NS4zNy0xLjM2LjgyLTIuNWw4Ljk5LTIzLjM3cS4yMS0uNjEuODMtMS4xMi42Mi0uNSAxLjUyLS41bTguOTEgMTEuMTNoNi41N3YyNy4xOWgtNi41N3ptNy40Ny03LjkycTAgLjg1LS4zNCAxLjU5LS4zNS43NC0uOTIgMS4zLS41Ny41NS0xLjM0Ljg4LS43Ni4zNC0xLjY0LjM0LS44NSAwLTEuNi0uMzQtLjc2LS4zMy0xLjMxLS44OC0uNTYtLjU2LS44OS0xLjN0LS4zMy0xLjU5cTAtLjg4LjMzLTEuNjUuMzMtLjc2Ljg5LTEuMzIuNTUtLjU2IDEuMzEtLjg5Ljc1LS4zMyAxLjYtLjMzLjg4IDAgMS42NC4zMy43Ny4zMyAxLjM0Ljg5dC45MiAxLjMycS4zNC43Ny4zNCAxLjY1bTIzLjg1IDEwLjg2LTEuNDggMi4zNnEtLjI3LjQzLS41Ni42dC0uNzQuMTdxLS40OCAwLTEuMDItLjI3LS41NC0uMjYtMS4yNi0uNTl0LTEuNjMtLjZxLS45MS0uMjYtMi4xNi0uMjYtMS45MyAwLTMuMDMuODJ0LTEuMSAyLjE0cTAgLjg4LjU3IDEuNDguNTcuNTkgMS41MSAxLjA0dDIuMTMuODEgMi40Mi43OHExLjI0LjQzIDIuNDMuOTd0Mi4xMyAxLjM4cS45NC44MyAxLjUxIDIgLjU3IDEuMTYuNTcgMi44MSAwIDEuOTYtLjcgMy42MS0uNyAxLjY2LTIuMDggMi44Ny0xLjM4IDEuMi0zLjQgMS44OC0yLjAzLjY3LTQuNjguNjctMS40MSAwLTIuNzQtLjI1LTEuMzQtLjI1LTIuNTgtLjctMS4yMy0uNDUtMi4yNy0xLjA2LTEuMDUtLjYxLTEuODUtMS4zM2wxLjUxLTIuNDlxLjMtLjQ1LjY5LS42OC40LS4yNCAxLjAxLS4yNHQxLjE1LjM0cS41NS4zNSAxLjI2Ljc0LjcyLjQgMS42OC43NS45Ny4zNCAyLjQ2LjM0IDEuMTYgMCAyLS4yOC44My0uMjggMS4zNy0uNzMuNTUtLjQ1LjgtMS4wNC4yNS0uNi4yNS0xLjI0IDAtLjk1LS41Ny0xLjU2dC0xLjUxLTEuMDYtMi4xNS0uODFxLTEuMi0uMzYtMi40Ni0uNzh0LTIuNDYtLjk5cS0xLjIxLS41Ny0yLjE1LTEuNDUtLjk0LS44Ny0xLjUxLTIuMTQtLjU3LTEuMjgtLjU3LTMuMDggMC0xLjY3LjY2LTMuMTh0MS45NS0yLjY0cTEuMjgtMS4xMiAzLjIxLTEuOCAxLjkyLS42NyA0LjQzLS42NyAyLjgxIDAgNS4xMi45MiAyLjMuOTMgMy44NCAyLjQ0bTIyLjEtMi45NGg2LjU1djI3LjE5aC00cS0xLjMgMC0xLjY1LTEuMTlsLS40NS0yLjE4cS0xLjY3IDEuNy0zLjY4IDIuNzUtMi4wMSAxLjA0LTQuNzQgMS4wNC0yLjIzIDAtMy45NC0uNzUtMS43MS0uNzYtMi44Ny0yLjEzLTEuMTctMS4zOC0xLjc3LTMuMjgtLjU5LTEuODktLjU5LTQuMTd2LTE3LjI4aDYuNTR2MTcuMjhxMCAyLjQ5IDEuMTYgMy44NSAxLjE1IDEuMzcgMy40NSAxLjM3IDEuNyAwIDMuMTgtLjc2IDEuNDktLjc1IDIuODEtMi4wOHptMjcuMzggMjAuMTd2LTQuNTlxLTIuODQuMTQtNC43Ny40OS0xLjk0LjM2LTMuMS45Mi0xLjE3LjU1LTEuNjcgMS4zLS41MS43NC0uNTEgMS42MSAwIDEuNzMgMS4wMiAyLjQ3dDIuNjcuNzRxMi4wMSAwIDMuNDgtLjczdDIuODgtMi4yMU00NDggMjQ4LjE3bC0xLjE2LTIuMDlxNC42OS00LjI5IDExLjI5LTQuMjkgMi4zOCAwIDQuMjYuNzggMS44OS43OCAzLjE4IDIuMTcgMS4zIDEuMzkgMS45OCAzLjMzLjY3IDEuOTMuNjcgNC4yNHYxNy4xN2gtMi45NnEtLjkzIDAtMS40NC0uMjgtLjUtLjI4LS43OS0xLjEybC0uNTgtMS45N3EtMS4wNC45My0yLjAyIDEuNjMtLjk4LjcxLTIuMDQgMS4xOC0xLjA2LjQ4LTIuMjYuNzMtMS4yMS4yNS0yLjY3LjI1LTEuNzIgMC0zLjE4LS40Ni0xLjQ1LS40Ni0yLjUxLTEuMzl0LTEuNjUtMi4zMXEtLjU4LTEuMzctLjU4LTMuMiAwLTEuMDQuMzQtMi4wNi4zNS0xLjAyIDEuMTMtMS45NC43OC0uOTMgMi4wMy0xLjc1IDEuMjQtLjgyIDMuMDYtMS40MyAxLjgxLS42MSA0LjIzLTEgMi40MS0uMzggNS41MS0uNDZ2LTEuNTlxMC0yLjczLTEuMTctNC4wNC0xLjE2LTEuMzEtMy4zNi0xLjMxLTEuNTkgMC0yLjY0LjM3dC0xLjg0LjgzcS0uOC40Ni0xLjQ1Ljg0LS42NS4zNy0xLjQ0LjM3LS42OSAwLTEuMTctLjM2LS40Ny0uMzYtLjc3LS44NG0yNi40NS0xOC4wN0g0ODF2MzkuMzhoLTYuNTV6bTEzLjMgMTIuMTloNi41OHYyNy4xOWgtNi41OHptNy40OC03LjkycTAgLjg1LS4zNSAxLjU5LS4zNC43NC0uOTEgMS4zLS41Ny41NS0xLjM0Ljg4LS43Ny4zNC0xLjY0LjM0LS44NSAwLTEuNjEtLjM0LS43NS0uMzMtMS4zMS0uODgtLjU1LS41Ni0uODktMS4zLS4zMy0uNzQtLjMzLTEuNTkgMC0uODguMzMtMS42NS4zNC0uNzYuODktMS4zMi41Ni0uNTYgMS4zMS0uODkuNzYtLjMzIDEuNjEtLjMzLjg3IDAgMS42NC4zM3QxLjM0Ljg5LjkxIDEuMzJxLjM1Ljc3LjM1IDEuNjVtMjUuMyA3LjkydjIuN3EwIC42OS0uMjMgMS4zNi0uMjQuNjYtLjY0IDEuMDhsLTEyLjkxIDE3LjAxaDEzLjM5djUuMDRoLTIwLjk5di0yLjczcTAtLjQ1LjIxLTEuMDcuMjEtLjYzLjY0LTEuMThsMTMuMDQtMTcuMmgtMTMuMTJ2LTUuMDF6bTE5LjE5IDIwLjE3di00LjU5cS0yLjg0LjE0LTQuNzcuNDktMS45My4zNi0zLjEuOTItMS4xNy41NS0xLjY3IDEuMy0uNS43NC0uNSAxLjYxIDAgMS43MyAxLjAyIDIuNDd0Mi42Ni43NHEyLjAxIDAgMy40OS0uNzMgMS40Ny0uNzMgMi44Ny0yLjIxbS0xMy44My0xNC4yOS0xLjE3LTIuMDlxNC42OS00LjI5IDExLjI5LTQuMjkgMi4zOSAwIDQuMjcuNzh0My4xOCAyLjE3IDEuOTcgMy4zM3EuNjggMS45My42OCA0LjI0djE3LjE3aC0yLjk3cS0uOTMgMC0xLjQzLS4yOC0uNTEtLjI4LS44LTEuMTJsLS41OC0xLjk3cS0xLjAzLjkzLTIuMDEgMS42My0uOTguNzEtMi4wNCAxLjE4LTEuMDYuNDgtMi4yNy43M3QtMi42Ni4yNXEtMS43MyAwLTMuMTgtLjQ2LTEuNDYtLjQ2LTIuNTItMS4zOXQtMS42NC0yLjMxcS0uNTktMS4zNy0uNTktMy4yIDAtMS4wNC4zNS0yLjA2LjM0LTEuMDIgMS4xMi0xLjk0Ljc5LS45MyAyLjAzLTEuNzUgMS4yNS0uODIgMy4wNi0xLjQzIDEuODItLjYxIDQuMjMtMSAyLjQxLS4zOCA1LjUxLS40NnYtMS41OXEwLTIuNzMtMS4xNy00LjA0LTEuMTYtMS4zMS0zLjM2LTEuMzEtMS41OSAwLTIuNjQuMzctMS4wNC4zNy0xLjg0LjgzbC0xLjQ0Ljg0cS0uNjUuMzctMS40NS4zNy0uNjkgMC0xLjE2LS4zNi0uNDgtLjM2LS43Ny0uODRtMzUuNDMgMjEuNzNxLTMuNTUgMC01LjQ1LTItMS44OS0yLTEuODktNS41MnYtMTUuMTloLTIuNzlxLS41MyAwLS45LS4zNC0uMzctLjM1LS4zNy0xLjAzdi0yLjZsNC4zOC0uNzIgMS4zNy03LjQycS4xNC0uNTMuNTEtLjgydC45NS0uMjloMy4zOXY4LjU2aDcuMjZ2NC42NmgtNy4yNnYxNC43NHEwIDEuMjcuNjMgMS45OS42Mi43MSAxLjcuNzEuNjEgMCAxLjAzLS4xNS40MS0uMTQuNzEtLjMuMzEtLjE2LjU0LS4zLjI0LS4xNS40OC0uMTUuMjkgMCAuNDguMTUuMTguMTQuNC40M2wxLjk2IDMuMThxLTEuNDMgMS4yLTMuMjkgMS44LTEuODUuNjEtMy44NC42MW0xMC44Ni0yNy42MWg2LjU4djI3LjE5aC02LjU4em03LjQ4LTcuOTJxMCAuODUtLjM1IDEuNTktLjM0Ljc0LS45MSAxLjMtLjU3LjU1LTEuMzQuODgtLjc3LjM0LTEuNjQuMzQtLjg1IDAtMS42MS0uMzQtLjc1LS4zMy0xLjMxLS44OC0uNTYtLjU2LS44OS0xLjN0LS4zMy0xLjU5cTAtLjg4LjMzLTEuNjUuMzMtLjc2Ljg5LTEuMzJ0MS4zMS0uODlxLjc2LS4zMyAxLjYxLS4zMy44NyAwIDEuNjQuMzN0MS4zNC44OS45MSAxLjMycS4zNS43Ny4zNSAxLjY1bTE3LjggNy41cTMuMDIgMCA1LjUuOTh0NC4yNCAyLjc4cTEuNzcgMS44IDIuNzIgNC40dC45NSA1LjhxMCAzLjI0LS45NSA1LjgzLS45NSAyLjYtMi43MiA0LjQzLTEuNzYgMS44My00LjI0IDIuODF0LTUuNS45OHEtMy4wNCAwLTUuNTMtLjk4LTIuNS0uOTgtNC4yNi0yLjgxdC0yLjczLTQuNDNxLS45Ni0yLjU5LS45Ni01LjgzIDAtMy4yLjk2LTUuOC45Ny0yLjYgMi43My00LjR0NC4yNi0yLjc4cTIuNDktLjk4IDUuNTMtLjk4bTAgMjIuOTdxMy40IDAgNS4wMy0yLjI4dDEuNjMtNi42N3EwLTQuNC0xLjYzLTYuNzEtMS42My0yLjMtNS4wMy0yLjMtMy40NCAwLTUuMSAyLjMxLTEuNjUgMi4zMi0xLjY1IDYuNyAwIDQuMzcgMS42NSA2LjY2IDEuNjYgMi4yOSA1LjEgMi4yOW0yNC4wOS0yMS4zNi40NSAyLjE1cS44Mi0uODIgMS43NC0xLjUyLjkxLS43MSAxLjkzLTEuMnQyLjE5LS43NnExLjE3LS4yOCAyLjU0LS4yOCAyLjIzIDAgMy45NS43NSAxLjcyLjc2IDIuODggMi4xMiAxLjE1IDEuMzcgMS43NSAzLjI2LjU5IDEuOS41OSA0LjE4djE3LjNoLTYuNTR2LTE3LjNxMC0yLjUtMS4xNC0zLjg2dC0zLjQ3LTEuMzZxLTEuNyAwLTMuMTguNzYtMS40OS43Ny0yLjgxIDIuMXYxOS42NmgtNi41NXYtMjcuMTloNHExLjI3IDAgMS42NyAxLjE5Ii8+PC9zdmc+" alt="Main Results Graph">
+            <p><em>Figure 1: Description of the results shown</em></p>
+        </section>
+        <section data-slide-index="0">
+            <h1>Discussion</h1>
+            <h2>Interpretation</h2>
+            <h3>What Our Results Mean</h3>
+            <ul>
+                <li>Implication 1: Explanation</li>
+                <li>Implication 2: Explanation</li>
+                <li>Implication 3: Explanation</li>
+            </ul>
+            <h3>Limitations</h3>
+            <ul>
+                <li>Limitation 1</li>
+                <li>Limitation 2</li>
+            </ul>
+        </section>
+        <section data-slide-index="4">
+            <h1>Conclusion</h1>
+            <h2>Summary</h2>
+            <div style="background: #fff5f5; padding: 25px; border-radius: 10px; border-left: 5px solid #c0392b">
+            <h3>Key Contributions</h3>
+            <ol>
+                <li><strong>Contribution 1</strong> - Brief description</li>
+                <li><strong>Contribution 2</strong> - Brief description</li>
+                <li><strong>Contribution 3</strong> - Brief description</li>
+            </ol>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>Future Work</h1>
+            <h2>Next Steps</h2>
+            <ul>
+                <li>Direction 1: Description</li>
+                <li>Direction 2: Description</li>
+                <li>Direction 3: Description</li>
+            </ul>
+            <h3>Broader Impact</h3>
+            <p>This research can be applied to...</p>
+        </section>
+        <section data-slide-index="5">
+            <div style="text-align: center; padding: 50px">
+            <h1>Thank You</h1>
+            <h2>Questions?</h2>
+            <p>[Your Email]</p>
+            <p>[Lab/Institution Website]</p>
+            <p>[Paper DOI/Link]</p>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>References</h1>
+            <h2>Selected Bibliography</h2>
+            <ol>
+                <li>Author et al. (2024). &quot;Title of Paper&quot;. <em>Journal Name</em>.</li>
+                <li>Author et al. (2023). &quot;Title of Paper&quot;. <em>Conference Name</em>.</li>
+                <li>Author et al. (2022). &quot;Title of Paper&quot;. <em>Journal Name</em>.</li>
+            </ol>
+            <p><em>Full bibliography available in the paper</em></p>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            progress: true,
+            center: true,
+            backgroundTransition: 'fade',
+            plugins: [ RevealHighlight ]
+        });
+
+        // Auto-render LaTeX when slides are ready
+        Reveal.on('ready', function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        });
+
+        // Synchronized fragments handler
+        let currentFragmentIndex = -1;
+
+        Reveal.on('fragmentshown', event => {
+            currentFragmentIndex++;
+            updateSyncItems();
+        });
+
+        Reveal.on('fragmenthidden', event => {
+            currentFragmentIndex--;
+            updateSyncItems();
+        });
+
+        Reveal.on('slidechanged', event => {
+            // Detect the current fragment state by checking visible fragments
+            const currentSlide = Reveal.getCurrentSlide();
+            if (currentSlide) {
+                const fragments = currentSlide.querySelectorAll('.fragment');
+                let maxVisibleIndex = -1;
+                
+                fragments.forEach(fragment => {
+                    if (fragment.classList.contains('visible')) {
+                        const fragmentIndex = parseInt(fragment.getAttribute('data-fragment-index') || '0');
+                        maxVisibleIndex = Math.max(maxVisibleIndex, fragmentIndex);
+                    }
+                });
+                
+                currentFragmentIndex = maxVisibleIndex;
+            } else {
+                currentFragmentIndex = -1;
+            }
+            updateSyncItems();
+        });
+
+        function updateSyncItems() {
+            const currentSlide = Reveal.getCurrentSlide();
+            if (!currentSlide) return;
+
+            const syncContainers = currentSlide.querySelectorAll('.sync-container');
+            syncContainers.forEach(container => {
+                const keepMode = container.getAttribute('data-keep') === 'true';
+                const items = container.querySelectorAll('.sync-item');
+                
+                items.forEach(item => {
+                    const syncIndex = parseInt(item.getAttribute('data-sync-index') || '0');
+                    
+                    if (keepMode) {
+                        // In keep mode, show all items up to and including current index
+                        if (syncIndex <= currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    } else {
+                        // Default mode: show only the current item
+                        if (syncIndex === currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Initialize on load
+        Reveal.on('ready', () => {
+            updateSyncItems();
+        });
+    </script>
+</body>
+</html>
