@@ -20,7 +20,7 @@ Slide:
     (transition=TRANSITION_ATTR)? blocks+=Block+;
 
 Block:
-    Quiz | LivePoll | lines+=LineContent+;
+    Quiz | lines+=LineContent+;
 
 LineContent:
     FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments;
@@ -81,22 +81,11 @@ Quiz:
     questions+=QuizQuestion+
     STYLE_DELIMITER;
 
-LivePoll:
-    POLL_START title=STRING
-    questions+=PollQuestion+
-    STYLE_DELIMITER;
-
 QuizQuestion:
     'question' ':' text=STRING
         choices+=Choice+
-        'correct' ':'
-            correctAnswers+=[Choice:STRING]+
-    ('showResultsOnDemand' ':' showResultsOnDemand=BOOLEAN)?
-    ('visualization' ':' visualizationType=VisualizationType)?;
-
-PollQuestion:
-    'question' ':' text=STRING
-        choices+=Choice+
+        ('correct' ':'
+            correctAnswers+=[Choice:STRING]+)?
     ('showResultsOnDemand' ':' showResultsOnDemand=BOOLEAN)?
     ('visualization' ':' visualizationType=VisualizationType)?;
 
@@ -110,7 +99,6 @@ terminal CODE_BLOCK returns string:
     /```[a-zA-Z0-9_\-]*(?:\s*\[(?:(?:highlight:\s*(?:block|function|class|line-by-line|all|none))|(?:lines:\s*["'][^"']+["'])|(?:start:\s*\d+)|\s)+\])?[\r\n]([\s\S]*?)```/;
 
 terminal QUIZ_START: /:::quiz/;
-terminal POLL_START: /:::poll/;
 terminal SYNC_DELIMITER_KEEP: /:::\[sync-fragments\s+keep\]/;
 terminal SYNC_DELIMITER: /:::\[sync-fragments\]/;
 

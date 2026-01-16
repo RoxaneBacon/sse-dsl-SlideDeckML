@@ -43,7 +43,7 @@ showResultsOnDemand : true
 
 ===
 
-:::poll
+:::quiz
 "Language Preferences"
 
 question : "Which programming language do you prefer for performance-critical tasks?"

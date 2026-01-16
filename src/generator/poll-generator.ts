@@ -1,7 +1,7 @@
-import { Quiz, LivePoll, QuizQuestion, PollQuestion } from "../language/generated/ast";
+import { Quiz, QuizQuestion } from "../language/generated/ast";
 
 /**
- * Generates HTML for Quiz and LivePoll blocks
+ * Generates HTML for Quiz blocks
  */
 export class PollGenerator {
     private pollCounter = 0;
@@ -25,7 +25,7 @@ export class PollGenerator {
         // Create a slide for each question
         quiz.questions.forEach((question) => {
             html += `        <section>\n`;
-            html += this.generateQuestion(question, true);
+            html += this.generateQuestion(question);
             html += `        </section>\n`;
         });
 
@@ -33,37 +33,12 @@ export class PollGenerator {
     }
 
     /**
-     * Generate HTML for a LivePoll block
-     * Creates nested sections for navigation between questions
+     * Generate HTML for a single question
      */
-    public generateLivePoll(poll: LivePoll): string {
-        const title = poll.title.replace(/^"|"$/g, '');
-
-        // Create intro slide with QR code
-        let html = `        <section>\n`;
-        html += `            <h2>${title}</h2>\n`;
-        html += `            <div class="qr-code-container">\n`;
-        html += `                <img class="qr-code" alt="QR Code to join" />\n`;
-        html += `                <p>Scan to join and participate</p>\n`;
-        html += `            </div>\n`;
-        html += `        </section>\n`;
-
-        // Create a slide for each question
-        poll.questions.forEach((question) => {
-            html += `        <section>\n`;
-            html += this.generateQuestion(question, false);
-            html += `        </section>\n`;
-        });
-
-        return html;
-    }
-
-    /**
-     * Generate HTML for a single question (Quiz or Poll)
-     */
-    private generateQuestion(question: QuizQuestion | PollQuestion, isQuiz: boolean): string {
+    private generateQuestion(question: QuizQuestion): string {
         const pollId = `poll-${this.pollCounter++}`;
-        return this.generateMultipleChoiceQuestion(question, pollId, isQuiz);
+        const hasCorrectAnswers = question.correctAnswers && question.correctAnswers.length > 0;
+        return this.generateMultipleChoiceQuestion(question, pollId, hasCorrectAnswers);
     }
 
     /**
