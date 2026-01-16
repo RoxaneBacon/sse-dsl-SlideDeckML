@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+    
+    
     
     <!-- Poll plugin -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/poll/style.css">
@@ -38,9 +40,14 @@
             width: 100%;
         }
 
+        .reveal section h2 {
+            text-align: center;
+        }
+
         .reveal section h3 {
             font-size: 1em;
             margin: 0.2em 0 1.0em 0;
+            text-align: center;
         }
 
         .results {
@@ -107,49 +114,49 @@
         
 
         
+
+        /* Default Reveal.js overrides */
+        .reveal {
+            font-size: 32px; /* Reduced from default 40px */
+        }
+
+        .reveal .slides {
+            text-align: left; /* Remove default centering */
+        }
+
+        .reveal h1 {
+            font-size: 2em; /* Reduced from default 2.5em */
+        }
+
+        .reveal h2 {
+            font-size: 1.3em; /* Reduced from default 1.8em */
+        }
+
+        .reveal h3 {
+            font-size: 1em; /* Reduced from default 1.5em */
+        }
    
-        /* Synchronized fragments styling */
-        .sync-container {
-            position: relative;
-            min-height: 50px;
-            font-size: 0.9em;
-        }
-        .sync-item {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-        .sync-item.active {
-            display: block;
-            opacity: 1;
-        }
-        .sync-item p {
-            margin: 0.3em 0;
-        }
-        .sync-item img {
-            max-width: 100%;
-            height: auto;
-        }
-        /* Keep mode: stack items vertically */
-        .sync-container[data-keep="true"] {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3em;
-        }
-        .sync-container[data-keep="true"] .sync-item {
-            position: relative;
-        }
+
     </style>
 </head>
 <body>
     
     <div class="reveal">
         <div class="slides">
-        <section data-slide-index="0">
+        <section data-slide-index="1">
             <h1>Welcome to the Workshop</h1>
             <p>Today we&#39;ll explore software performance optimization</p>
         </section>
         <section data-slide-index="1">
+            <h1>How to setup the quiz</h1>
+            <p><strong>Start the quiz server</strong></p>
+            <pre><code class="language-typescript" data-trim data-noescape>npm run start
+</code></pre>
+            <p><strong>Expose your server to participants</strong></p>
+            <pre><code class="language-typescript" data-trim data-noescape>npx http-server -p 3000 -a 0.0.0.0
+</code></pre>
+        </section>
+        <section data-slide-index="0">
         <section>
             <h2>Software Performance Workshop Quiz</h2>
             <div class="qr-code-container">
@@ -218,60 +225,7 @@
         </section>
 
         </section>
-        <section data-slide-index="2">
-        <section>
-            <h2>Language Preferences</h2>
-            <div class="qr-code-container">
-                <img class="qr-code" alt="QR Code to join" />
-                <p>Scan to join and participate</p>
-            </div>
-        </section>
-        <section>
-            <h3>Which programming language do you prefer for performance-critical tasks?</h3>
-            <div class="poll" data-poll="poll-3" data-auto-show-results="true">
-                <button data-value="cpp">C++</button>
-                <button data-value="rust">Rust</button>
-                <button data-value="go">Go</button>
-                <button data-value="java">Java</button>
-                <button data-value="c">C</button>
-            </div>
-            <div class="results" data-poll="poll-3" data-visualization="barChart" data-is-quiz="false" style="display: none;">
-                <p><strong>Results:</strong> <span class="voters" data-poll="poll-3">0</span> votes</p>
-                <canvas id="chart-poll-3" width="400" height="300"></canvas>
-                <div style="display: none;">
-                    <p data-correct="false">C++: <span data-value="cpp">0</span></p>
-                    <p data-correct="false">Rust: <span data-value="rust">0</span></p>
-                    <p data-correct="false">Go: <span data-value="go">0</span></p>
-                    <p data-correct="false">Java: <span data-value="java">0</span></p>
-                    <p data-correct="false">C: <span data-value="c">0</span></p>
-                </div>
-            </div>
-        </section>
-        <section>
-            <h3>What profiling tool do you use most often?</h3>
-            <div class="poll" data-poll="poll-4" data-auto-show-results="false">
-                <button data-value="perf">perf (Linux)</button>
-                <button data-value="vtune">Intel VTune</button>
-                <button data-value="valgrind">Valgrind</button>
-                <button data-value="xcode">Xcode Instruments</button>
-                <button data-value="visualstudio">Visual Studio Profiler</button>
-            </div>
-            <button class="toggle-results-btn" data-poll="poll-4">Show Results</button>
-            <div class="results" data-poll="poll-4" data-visualization="pieChart" data-is-quiz="false" style="display: none;">
-                <p><strong>Results:</strong> <span class="voters" data-poll="poll-4">0</span> votes</p>
-                <canvas id="chart-poll-4" width="400" height="300"></canvas>
-                <div style="display: none;">
-                    <p data-correct="false">perf (Linux): <span data-value="perf">0</span></p>
-                    <p data-correct="false">Intel VTune: <span data-value="vtune">0</span></p>
-                    <p data-correct="false">Valgrind: <span data-value="valgrind">0</span></p>
-                    <p data-correct="false">Xcode Instruments: <span data-value="xcode">0</span></p>
-                    <p data-correct="false">Visual Studio Profiler: <span data-value="visualstudio">0</span></p>
-                </div>
-            </div>
-        </section>
-
-        </section>
-        <section data-slide-index="3">
+        <section data-slide-index="1">
             <h1>Thank You!</h1>
             <p>Your feedback helps us improve our workshops</p>
         </section>
@@ -279,23 +233,36 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
     
-    <!-- ResizeObserver polyfill for older browsers/mobile -->
-    <script src="https://cdn.jsdelivr.net/npm/@juggle/resize-observer@3.4.0/lib/exports/resize-observer.umd.js"></script>
+    
+    
+    
+    
     <!-- Chart.js for visualizations -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Socket.io (must be before Monaco) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+    
+    <!-- ResizeObserver polyfill for older browsers/mobile -->
+    <script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.1/dist/ResizeObserver.js"></script>
+    
+    
     <!-- Seminar plugin -->
     <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/seminar/plugin.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
     <!-- Poll plugin requires seminar plugin -->
     <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/poll/plugin.js"></script>
     
     <script>
+        
+
+        const originalUrl = window.location.href;
+        const guestParam = new URL(originalUrl).searchParams.get('guest');
+        
         Reveal.initialize({
             hash: true,
             transition: 'slide',
+            progress: true,
+            center: true,
             backgroundTransition: 'fade',
             
             seminar: {
@@ -309,86 +276,15 @@
             plugins: [ RevealHighlight, RevealSeminar, RevealPoll ]
         });
 
-        // Auto-render LaTeX when slides are ready
-        Reveal.on('ready', function() {
-            renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$$', right: '$$', display: true},
-                    {left: '$', right: '$', display: false}
-                ],
-                throwOnError: false
-            });
-        });
-
-        // Synchronized fragments handler
-        let currentFragmentIndex = -1;
-
-        Reveal.on('fragmentshown', event => {
-            currentFragmentIndex++;
-            updateSyncItems();
-        });
-
-        Reveal.on('fragmenthidden', event => {
-            currentFragmentIndex--;
-            updateSyncItems();
-        });
-
-        Reveal.on('slidechanged', event => {
-            // Detect the current fragment state by checking visible fragments
-            const currentSlide = Reveal.getCurrentSlide();
-            if (currentSlide) {
-                const fragments = currentSlide.querySelectorAll('.fragment');
-                let maxVisibleIndex = -1;
-                
-                fragments.forEach(fragment => {
-                    if (fragment.classList.contains('visible')) {
-                        const fragmentIndex = parseInt(fragment.getAttribute('data-fragment-index') || '0');
-                        maxVisibleIndex = Math.max(maxVisibleIndex, fragmentIndex);
-                    }
-                });
-                
-                currentFragmentIndex = maxVisibleIndex;
-            } else {
-                currentFragmentIndex = -1;
-            }
-            updateSyncItems();
-        });
-
-        function updateSyncItems() {
-            const currentSlide = Reveal.getCurrentSlide();
-            if (!currentSlide) return;
-
-            const syncContainers = currentSlide.querySelectorAll('.sync-container');
-            syncContainers.forEach(container => {
-                const keepMode = container.getAttribute('data-keep') === 'true';
-                const items = container.querySelectorAll('.sync-item');
-                
-                items.forEach(item => {
-                    const syncIndex = parseInt(item.getAttribute('data-sync-index') || '0');
-                    
-                    if (keepMode) {
-                        // In keep mode, show all items up to and including current index
-                        if (syncIndex <= currentFragmentIndex) {
-                            item.classList.add('active');
-                        } else {
-                            item.classList.remove('active');
-                        }
-                    } else {
-                        // Default mode: show only the current item
-                        if (syncIndex === currentFragmentIndex) {
-                            item.classList.add('active');
-                        } else {
-                            item.classList.remove('active');
-                        }
-                    }
-                });
+        if (guestParam === 'true') {
+            Reveal.on('slidechanged', function() {
+                const currentUrl = new URL(window.location.href);
+                if (!currentUrl.searchParams.has('guest')) {
+                    currentUrl.searchParams.set('guest', 'true');
+                    window.history.replaceState({}, '', currentUrl.toString());
+                }
             });
         }
-
-        // Initialize on load
-        Reveal.on('ready', () => {
-            updateSyncItems();
-        });
 
         
         // Detect guest mode and apply CSS class early
@@ -419,12 +315,14 @@
             if (url.startsWith('file://')) {
                 const hostname = window.location.hostname || 'localhost';
                 const port = 3000;
-                const path = window.location.pathname.split('/').pop() || 'index.html';
-                url = 'http://' + hostname + ':' + port + '/' + path;
+                const pathname = window.location.pathname;
+                const pathMatch = pathname.match(/sse-dsl-SlideDeckML(.+)/) || pathname.match(/([^/]+.html)$/);
+                const path = pathMatch ? (pathMatch[1] || '/' + pathMatch[0]) : 'index.html';
+                url = 'http://' + hostname + ':' + port + path;
             }
 
-            // Add ?guest=true to URL for participants (QR code)
-            const guestUrl = url.split('?')[0] + '?guest=true';
+            const baseUrl = url.split('?')[0];
+            const guestUrl = baseUrl + '?guest=true';
 
             const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(guestUrl);
             document.querySelectorAll('img.qr-code').forEach(function(img) {

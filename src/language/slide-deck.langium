@@ -23,7 +23,7 @@ Block:
     Quiz | lines+=LineContent+;
 
 LineContent:
-    FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments;
+    FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments | Editor | Output | QrCode;
 
 CodeBlock:
     content=CODE_BLOCK;
@@ -35,10 +35,10 @@ FragmentItem:
     text=PARAGRAPH_TEXT | media=MEDIA_LINE;
 
 FragmentElement:
-    STYLE_DELIMITER fragment=FRAGMENT_ATTRS elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments)+ STYLE_DELIMITER;
+    STYLE_DELIMITER fragment=FRAGMENT_ATTRS elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments | Editor | Output | QrCode)+ STYLE_DELIMITER;
 
 StyledElement:
-    STYLE_DELIMITER style=STYLE_ATTRS elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments | Editor | Output)+ STYLE_DELIMITER;
+    STYLE_DELIMITER style=STYLE_ATTRS elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments | Editor | Output | QrCode)+ STYLE_DELIMITER;
 
 UnorderedList:
     items+=UnorderedListItem+;
@@ -76,8 +76,12 @@ Output:
 EditorLanguage returns string:
     'python' | 'sql' | 'javascript';
 
+QrCode:
+    '![QR]' data=STRING;
+
 Quiz:
     QUIZ_START title=STRING
+    ('showJoinQrCode' ':' showJoinQrCode=BOOLEAN)?
     questions+=QuizQuestion+
     STYLE_DELIMITER;
 
@@ -130,7 +134,7 @@ terminal BOOLEAN returns boolean:
     /true|false/;
 
 terminal PARAGRAPH_TEXT returns string:
-    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!```)(?!,,,)(?!===)(?!---)(?!\[\-\-\-\])(?![\s]*\{)(?![\s]*\})(?![\s]*true)(?![\s]*false)(?![\s]*author)(?![\s]*title)(?![\s]*css)(?![\s]*logo)(?![\s]*theme)(?![\s]*transition)(?![\s]*chalkboard)(?![\s]*python)(?![\s]*sql)(?![\s]*javascript)(?![\s]*output)(?![\s]*question)(?![\s]*freeText)(?![\s]*choice)(?![\s]*choices)(?![\s]*correct)(?![\s]*results)(?![\s]*showResultsOnDemand)(?![\s]*visualization)(?![\s]*maxLength)(?![\s]*barChart)(?![\s]*pieChart)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
+    /(?!(###|##|#)[ \t]+)(?![\-\*\+][ \t]+)(?![0-9]+\.[ \t]+)(?!>)(?!\!\[)(?!:::)(?!```)(?!,,,)(?!===)(?!---)(?!\[\-\-\-\])(?![\s]*\{)(?![\s]*\})(?![\s]*![QR])(?![\s]*true)(?![\s]*false)(?![\s]*author)(?![\s]*title)(?![\s]*css)(?![\s]*logo)(?![\s]*theme)(?![\s]*transition)(?![\s]*chalkboard)(?![\s]*python)(?![\s]*sql)(?![\s]*javascript)(?![\s]*output)(?![\s]*question)(?![\s]*freeText)(?![\s]*choice)(?![\s]*choices)(?![\s]*correct)(?![\s]*results)(?![\s]*showResultsOnDemand)(?![\s]*showJoinQrCode)(?![\s]*visualization)(?![\s]*maxLength)(?![\s]*barChart)(?![\s]*pieChart)(?![\s]*:)(?!")(?!\.)[^\r\n]+/;
 
 terminal STRING returns string:
     /"(?:\\.|[^"\\])*"/;

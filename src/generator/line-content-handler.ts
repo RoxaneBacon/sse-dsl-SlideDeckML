@@ -12,7 +12,8 @@ import {
     isCodeBlock,
     isSyncFragments,
     isEditor,
-    isOutput
+    isOutput,
+    isQrCode
 } from "../language/generated/ast";
 import { ElementGenerator } from "./element-generator";
 import { StyleParser } from "./style-parser";
@@ -78,6 +79,9 @@ export class LineContentHandler {
         if (isMedia(line)) {
             return await this.elementGenerator.generateMedia(line);
         }
+        if (isQrCode(line)) {
+            return this.elementGenerator.generateQrCode(line);
+        }
         if (isCodeBlock(line)) {
             this.lastCodeBlock = line;
             return this.elementGenerator.generateCodeBlock(line);
@@ -119,6 +123,8 @@ export class LineContentHandler {
                 containerHtml += this.elementGenerator.generateQuote(element, '') + '\n';
             } else if (isMedia(element)) {
                 containerHtml += await this.elementGenerator.generateMedia(element, '') + '\n';
+            } else if (isQrCode(element)) {
+                containerHtml += this.elementGenerator.generateQrCode(element, '') + '\n';
             } else if (isCodeBlock(element)) {
                 this.lastCodeBlock = element;
                 containerHtml += this.elementGenerator.generateCodeBlock(element, '') + '\n';

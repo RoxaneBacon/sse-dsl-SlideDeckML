@@ -12,15 +12,20 @@ export class PollGenerator {
      */
     public generateQuiz(quiz: Quiz): string {
         const title = quiz.title.replace(/^"|"$/g, '');
+        const showJoinQrCode = quiz.showJoinQrCode ?? true; // Default to true if not specified
 
-        // Create intro slide with QR code
-        let html = `        <section>\n`;
-        html += `            <h2>${title}</h2>\n`;
-        html += `            <div class="qr-code-container">\n`;
-        html += `                <img class="qr-code" alt="QR Code to join" />\n`;
-        html += `                <p>Scan to join and participate</p>\n`;
-        html += `            </div>\n`;
-        html += `        </section>\n`;
+        let html = '';
+
+        // Create intro slide with QR code only if showJoinQrCode is true
+        if (showJoinQrCode) {
+            html += `        <section>\n`;
+            html += `            <h2>${title}</h2>\n`;
+            html += `            <div class="qr-code-container">\n`;
+            html += `                <img class="qr-code" alt="QR Code to join" />\n`;
+            html += `                <p>Scan to join and participate</p>\n`;
+            html += `            </div>\n`;
+            html += `        </section>\n`;
+        }
 
         // Create a slide for each question
         quiz.questions.forEach((question) => {
@@ -119,9 +124,14 @@ export class PollGenerator {
             width: 100%;
         }
 
+        .reveal section h2 {
+            text-align: center;
+        }
+
         .reveal section h3 {
             font-size: 1em;
             margin: 0.2em 0 1.0em 0;
+            text-align: center;
         }
 
         .results {
@@ -221,12 +231,14 @@ export class PollGenerator {
             if (url.startsWith('file://')) {
                 const hostname = window.location.hostname || 'localhost';
                 const port = 3000;
-                const path = window.location.pathname.split('/').pop() || 'index.html';
-                url = 'http://' + hostname + ':' + port + '/' + path;
+                const pathname = window.location.pathname;
+                const pathMatch = pathname.match(/sse-dsl-SlideDeckML(.+)/) || pathname.match(/([^/]+\.html)$/);
+                const path = pathMatch ? (pathMatch[1] || '/' + pathMatch[0]) : 'index.html';
+                url = 'http://' + hostname + ':' + port + path;
             }
 
-            // Add ?guest=true to URL for participants (QR code)
-            const guestUrl = url.split('?')[0] + '?guest=true';
+            const baseUrl = url.split('?')[0];
+            const guestUrl = baseUrl + '?guest=true';
 
             const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(guestUrl);
             document.querySelectorAll('img.qr-code').forEach(function(img) {

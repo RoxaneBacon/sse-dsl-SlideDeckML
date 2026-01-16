@@ -11,8 +11,23 @@ Today we'll explore software performance optimization
 
 ===
 
+# How to setup the quiz
+
+**Start the quiz server**
+```typescript
+npm run start
+```
+
+**Expose your server to participants**
+```typescript
+npx http-server -p 3000 -a 0.0.0.0
+```
+
+===
+
 :::quiz
 "Software Performance Workshop Quiz"
+showJoinQrCode : true
 
 question : "What is the average time complexity of QuickSort?"
 choice "n" : "O(n)"
@@ -39,30 +54,6 @@ choice "on" : "O(n)"
 choice "on2" : "O(n²)"
 correct : "on"
 showResultsOnDemand : true
-:::
-
-===
-
-:::quiz
-"Language Preferences"
-
-question : "Which programming language do you prefer for performance-critical tasks?"
-choice "cpp" : "C++"
-choice "rust" : "Rust"
-choice "go" : "Go"
-choice "java" : "Java"
-choice "c" : "C"
-showResultsOnDemand : false
-visualization : barChart
-
-question : "What profiling tool do you use most often?"
-choice "perf" : "perf (Linux)"
-choice "vtune" : "Intel VTune"
-choice "valgrind" : "Valgrind"
-choice "xcode" : "Xcode Instruments"
-choice "visualstudio" : "Visual Studio Profiler"
-showResultsOnDemand : true
-visualization : pieChart
 :::
 
 ===

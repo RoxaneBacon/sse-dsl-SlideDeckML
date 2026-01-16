@@ -1,0 +1,32 @@
+{
+    author: "QR Code Test"
+    title: "QR Code Demo"
+}
+
+===
+
+# QR Code Examples
+
+Here are some examples of QR codes in slides
+
+===
+
+## Simple QR Code
+
+Visit our GitHub repository:
+
+![QR] "https://github.com/RoxaneBacon/sse-dsl-SlideDeckML"
+
+===
+
+::: {calque: 1, vertical-margin: 0}
+## Multiple QR Code with positioning
+:::
+
+::: {calque: 1, horizontal-margin: 200, vertical-margin: 200}
+![QR] "https://github.com/RoxaneBacon/sse-dsl-SlideDeckML"
+:::
+
+::: {calque: 1, horizontal-margin: 600, vertical-margin: 200}
+![QR] "https://github.com/RoxaneBacon/sse-dsl-SlideDeckML"
+:::

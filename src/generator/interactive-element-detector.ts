@@ -1,4 +1,4 @@
-import { Presentation, Slide, Template, isQuiz } from "../language/generated/ast";
+import { Presentation, Slide, isQuiz } from "../language/generated/ast";
 
 /**
  * Detects interactive elements (Quiz) in presentations
@@ -10,14 +10,10 @@ export class InteractiveElementDetector {
      * @returns true if Quiz detected
      */
     public static hasInteractiveElements(presentation: Presentation): boolean {
-        // Check template if it exists
-        if (presentation.template && this.checkSlideOrTemplate(presentation.template)) {
-            return true;
-        }
-
         // Check all slides
-        for (const slide of presentation.slides) {
-            if (this.checkSlideOrTemplate(slide)) {
+        const slides = presentation.slides?.slides || [];
+        for (const slide of slides) {
+            if (this.checkSlide(slide)) {
                 return true;
             }
         }
@@ -26,12 +22,12 @@ export class InteractiveElementDetector {
     }
 
     /**
-     * Check if a slide or template contains Quiz elements
-     * @param slideOrTemplate The slide or template to check
+     * Check if a slide contains Quiz elements
+     * @param slide The slide to check
      * @returns true if Quiz found
      */
-    private static checkSlideOrTemplate(slideOrTemplate: Slide | Template): boolean {
-        for (const block of slideOrTemplate.blocks) {
+    private static checkSlide(slide: Slide): boolean {
+        for (const block of slide.blocks) {
             if (isQuiz(block)) {
                 return true;
             }

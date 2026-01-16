@@ -490,6 +490,17 @@ export class ElementGenerator {
     }
 
     /**
+     * Generate a QR code element
+     * @param qrCode The QR code AST node
+     * @returns The HTML string for the QR code
+     */
+    public generateQrCode(qrCode: any, style: string = ''): string {
+        const data = qrCode.data.replace(/^"|"$/g, ''); // Remove quotes
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(data)}`;
+        return `            <img src="${qrUrl}" alt="QR Code"${style} class="qr-code-standalone">`;
+    }
+
+    /**
      * Get video MIME type from file extension
      * @param url The video URL
      * @returns The MIME type

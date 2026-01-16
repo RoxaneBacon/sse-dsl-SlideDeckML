@@ -1,4 +1,4 @@
-import { Block, Slide, Template, isQuiz } from "../language/generated/ast";
+import { Block, Slide, isQuiz } from "../language/generated/ast";
 import { LineContentHandler } from "./line-content-handler";
 import { PollGenerator } from "./poll-generator";
 

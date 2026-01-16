@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="QR Code Test">
+    <meta name="title" content="QR Code Demo">
+    <title>QR Code Demo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    
+    
+    
+    
+    <style>
+        
+
+        
+
+        /* Default Reveal.js overrides */
+        .reveal {
+            font-size: 32px; /* Reduced from default 40px */
+        }
+
+        .reveal .slides {
+            text-align: left; /* Remove default centering */
+        }
+
+        .reveal h1 {
+            font-size: 2em; /* Reduced from default 2.5em */
+        }
+
+        .reveal h2 {
+            font-size: 1.3em; /* Reduced from default 1.8em */
+        }
+
+        .reveal h3 {
+            font-size: 1em; /* Reduced from default 1.5em */
+        }
+   
+
+    </style>
+</head>
+<body>
+    
+    <div class="reveal">
+        <div class="slides">
+        <section data-slide-index="0">
+            <h1>QR Code Examples</h1>
+            <p>Here are some examples of QR codes in slides</p>
+        </section>
+        <section data-slide-index="0">
+            <h2>Simple QR Code</h2>
+            <p>Visit our GitHub repository:</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fgithub.com%2FRoxaneBacon%2Fsse-dsl-SlideDeckML" alt="QR Code" class="qr-code-standalone">
+        </section>
+        <section data-slide-index="2">
+            <div style="position: absolute; z-index: 1; top: 0px">
+            <h2>Multiple QR Code with positioning</h2>
+            </div>
+            <div style="position: absolute; z-index: 1; left: 200px; top: 200px">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fgithub.com%2FRoxaneBacon%2Fsse-dsl-SlideDeckML" alt="QR Code" class="qr-code-standalone">
+            </div>
+            <div style="position: absolute; z-index: 1; left: 600px; top: 200px">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fgithub.com%2FRoxaneBacon%2Fsse-dsl-SlideDeckML" alt="QR Code" class="qr-code-standalone">
+            </div>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    
+    
+    
+    
+    
+    <script>
+        
+        
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            progress: true,
+            center: true,
+            backgroundTransition: 'fade',
+            
+            plugins: [ RevealHighlight ]
+        });
+
+        
+    </script>
+</body>
+</html>
