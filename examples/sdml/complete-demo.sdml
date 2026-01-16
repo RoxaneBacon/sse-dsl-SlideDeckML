@@ -27,9 +27,11 @@ Complete Feature Demonstration
 6. **Media** - Images and positioning
 7. **Absolute Positioning** - calque, margins
 8. **Chalkboard** - Interactive drawing and annotations
-9. **Integrated IDE** - Compile and run Python / Javascript / SQL
-10. **Fragment Animations** - Incremental reveals and transitions
-11. **Slide Transitions** - Visual effects between slides
+9. **QR Code** Generate custom QR codes
+10. **Integrated IDE** - Compile and run Python / Javascript / SQL
+11. **Interactive Quiz** - Interactive question and answer
+12. **Fragment Animations** - Incremental reveals and transitions
+13. **Slide Transitions** - Visual effects between slides
 
 ===
 ::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
@@ -492,8 +494,22 @@ You can:
 Press **DEL** to clear when done.
 
 ===
+
 ::: {background: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
-## Part 9: Integrated IDE
+## Part 9: QR Code
+:::
+
+===
+
+# Simple QR Code
+
+Visit our GitHub repository:
+
+![QR] "https://github.com/RoxaneBacon/sse-dsl-SlideDeckML"
+
+===
+::: {background: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
+## Part 10: Integrated IDE
 :::
 
 ===
@@ -597,8 +613,60 @@ output : "sql-output"
 :::
 
 ===
+::: {background: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
+## Part 11: Interactive Quiz
+:::
+
+===
+
+# How to setup the quiz
+
+**Start the quiz server**
+```typescript
+npm run start
+```
+
+**Expose your server to participants**
+```typescript
+npx http-server -p 3000 -a 0.0.0.0
+```
+
+===
+
+:::quiz
+"Software Performance Workshop Quiz"
+showJoinQrCode : true
+
+question : "What is the average time complexity of QuickSort?"
+choice "n" : "O(n)"
+choice "nlogn" : "O(n log n)"
+choice "n2" : "O(n²)"
+choice "logn" : "O(log n)"
+correct : "nlogn"
+showResultsOnDemand : true
+visualization : barChart
+
+question : "Which sorting algorithm is most efficient for nearly sorted data?"
+choice "bubble" : "Bubble Sort"
+choice "insertion" : "Insertion Sort"
+choice "merge" : "Merge Sort"
+choice "quick" : "Quick Sort"
+correct : "insertion"
+showResultsOnDemand : false
+visualization : pieChart
+
+question : "What is the space complexity of Merge Sort?"
+choice "o1" : "O(1)"
+choice "ologn" : "O(log n)"
+choice "on" : "O(n)"
+choice "on2" : "O(n²)"
+correct : "on"
+showResultsOnDemand : true
+:::
+
+===
 ::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
-## Part 10: Fragment Animations
+## Part 12: Fragment Animations
 :::
 
 ===
@@ -676,10 +744,11 @@ Fade in → Turn red → Semi fade out
 
 ===
 ::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
-## Part 11: Slide Transitions
+## Part 13: Slide Transitions
 :::
 
 ===
+
 {transition: "fade"}
 
 # Slide Transitions

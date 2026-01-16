@@ -98,22 +98,32 @@ export class IdeRuntimeGenerator {
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
 
     <!-- SQL.js for SQL execution -->
-    <script src="https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/sql-wasm.js"></script>
-
-    <!-- Monaco Editor-->
-    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>`;
+    <script src="https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/sql-wasm.js"></script>`;
     }
 
     /**
-     * Generate the complete IDE runtime JavaScript code
+     * Generate the Monaco Editor loader script tag
+     * @returns HTML string with Monaco loader script tag only
+     */
+    public generateMonacoLoaderScript(): string {
+        if (!this.hasIdeElements) return '';
+        return `    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>`;
+    }
+
+    /**
+     * Generate the Monaco Editor initialization code
      * @returns JavaScript code as a string
      */
-    public generateRuntimeScript(): string {
+    public generateMonacoEditorScript(): string {
         if (!this.hasIdeElements) return '';
-        return `
-        require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' }});
+        
+        return `        require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' }});
 
         window.monacoEditors = {};
+
+        if (!window.ResizeObserver && typeof ResizeObserver !== 'undefined') {
+            window.ResizeObserver = ResizeObserver;
+        }
 
         require(['vs/editor/editor.main'], function() {
             document.querySelectorAll('.monaco-editor-wrapper').forEach(editorElement => {
@@ -394,7 +404,6 @@ figures_data
             table.appendChild(tbody);
 
             return table;
-        }
-        `;
+        }`;
     }
 }

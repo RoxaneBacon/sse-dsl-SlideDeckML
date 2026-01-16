@@ -275,19 +275,26 @@ ${slidesContent}
     ${this.useLatex ? '<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>' : ''}
     ${this.chalkboardEnabled ? chalkboardCDN.js : ''}
     ${this.ideRuntime.generateScriptTags()}
-    <script>${this.ideRuntime.generateRuntimeScript()}</script>
     ${this.hasInteractiveElements ? `
-    <!-- ResizeObserver polyfill for older browsers/mobile -->
-    <script src="https://cdn.jsdelivr.net/npm/@juggle/resize-observer@3.4.0/lib/exports/resize-observer.umd.js"></script>
     <!-- Chart.js for visualizations -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Socket.io (must be before Monaco) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+    
+    <!-- ResizeObserver polyfill for older browsers/mobile -->
+    <script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.1/dist/ResizeObserver.js"></script>
+    
+    ${this.ideRuntime.generateMonacoLoaderScript()}
     <!-- Seminar plugin -->
     <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/seminar/plugin.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
     <!-- Poll plugin requires seminar plugin -->
     <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/poll/plugin.js"></script>
     ` : ''}
     <script>
+        ${this.hasInteractiveElements ? this.ideRuntime.generateMonacoEditorScript() + '\n' : ''}
+        ${this.hasInteractiveElements ? `const originalUrl = window.location.href;
+        const guestParam = new URL(originalUrl).searchParams.get('guest');
+        ` : ''}
         Reveal.initialize({
             hash: true,
             transition: 'slide',
@@ -315,7 +322,17 @@ ${slidesContent}
                 ],
                 throwOnError: false
             });
-        });` : ''}${this.useSyncFragments ? `
+        });` : ''}${this.hasInteractiveElements ? `
+
+        if (guestParam === 'true') {
+            Reveal.on('slidechanged', function() {
+                const currentUrl = new URL(window.location.href);
+                if (!currentUrl.searchParams.has('guest')) {
+                    currentUrl.searchParams.set('guest', 'true');
+                    window.history.replaceState({}, '', currentUrl.toString());
+                }
+            });
+        }` : ''}${this.useSyncFragments ? `
 
         // Synchronized fragments handler
         let currentFragmentIndex = -1;

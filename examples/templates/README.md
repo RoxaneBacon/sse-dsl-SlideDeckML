@@ -163,3 +163,21 @@ Or compile directly:
 ```bash
 node ./out/cli/main.js compile your-presentation.sdml -o output.html
 ```
+
+## Running the standalone quiz server
+
+The project includes a **standalone-quiz-server** folder.
+You can move or deploy this folder wherever you want to host the quiz server.
+From inside the **standalone-quiz-server directory**, run:
+
+```powershell
+npm install
+```
+Then start the server with:
+```powershell
+npm run start-server
+```
+To make the server accessible to participants, expose it on your network:
+```powershell
+npx http-server -p 3000 -a 0.0.0.0
+```
