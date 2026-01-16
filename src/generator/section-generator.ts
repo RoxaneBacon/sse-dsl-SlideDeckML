@@ -1,4 +1,4 @@
-import { Block, Slide, Template, isQuiz, isLivePoll } from "../language/generated/ast";
+import { Block, Slide, Template, isQuiz } from "../language/generated/ast";
 import { LineContentHandler } from "./line-content-handler";
 import { PollGenerator } from "./poll-generator";
 
@@ -71,10 +71,6 @@ export class SectionGenerator {
         // Handle Quiz blocks
         if (isQuiz(block)) {
             html += this.pollGenerator.generateQuiz(block);
-        }
-        // Handle LivePoll blocks
-        else if (isLivePoll(block)) {
-            html += this.pollGenerator.generateLivePoll(block);
         }
         // Handle regular content blocks
         else if (block.lines.length > 0) {
