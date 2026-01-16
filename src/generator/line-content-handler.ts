@@ -98,6 +98,9 @@ export class LineContentHandler {
             if (isFragmentElement(element)) {
                 // Handle nested fragments
                 containerHtml += await this.handleFragmentElement(element) + '\n';
+            } else if (isStyledElement(element)) {
+                // Handle nested styled elements
+                containerHtml += await this.handleStyledElement(element) + '\n';
             } else if (isHeader(element)) {
                 containerHtml += this.elementGenerator.generateHeading(element, '') + '\n';
             } else if (isUnorderedList(element)) {

@@ -38,7 +38,7 @@ FragmentElement:
     STYLE_DELIMITER fragment=FRAGMENT_ATTRS elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments)+ STYLE_DELIMITER;
 
 StyledElement:
-    STYLE_DELIMITER style=STYLE_ATTRS elements+=(FragmentElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments)+ STYLE_DELIMITER;
+    STYLE_DELIMITER style=STYLE_ATTRS elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments)+ STYLE_DELIMITER;
 
 UnorderedList:
     items+=UnorderedListItem+;
