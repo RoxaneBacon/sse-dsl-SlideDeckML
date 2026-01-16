@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
     
     <style> 
         
@@ -143,7 +143,7 @@ function multiply(a: number, b: number): number {
         <section data-slide-index="0">
             <h1>Sync with class highlighting</h1>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start">
-            <pre><code class="language-python" data-trim data-noescape data-line-numbers="1">class Animal:
+            <pre><code class="language-python" data-trim data-noescape data-line-numbers="1-7|8-10">class Animal:
     def __init__(self, name):
         self.name = name
     
@@ -221,8 +221,8 @@ console.log(&quot;Total:&quot;, total);
     </div>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    
+    
     
     <script>
         Reveal.initialize({
@@ -232,17 +232,6 @@ console.log(&quot;Total:&quot;, total);
             center: true,
             backgroundTransition: 'fade',
             plugins: [ RevealHighlight ]
-        });
-
-        // Auto-render LaTeX when slides are ready
-        Reveal.on('ready', function() {
-            renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$$', right: '$$', display: true},
-                    {left: '$', right: '$', display: false}
-                ],
-                throwOnError: false
-            });
         });
 
         // Synchronized fragments handler
