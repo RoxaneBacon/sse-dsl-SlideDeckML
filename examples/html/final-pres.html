@@ -16,8 +16,108 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/style.css">
     <!-- Chalkboard plugin -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/style.css">
-    <style> 
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/editor/editor.main.css">
+    
+    <!-- Poll plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/poll/style.css">
+    
+    <style>
         
+        /* Poll/Quiz responsive styling */
+        .reveal .slides section {
+            padding: 20px 0 !important;
+        }
+
+        .poll {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15em;
+            max-width: 700px;
+            margin: 0.12em auto 0.1em auto;
+        }
+
+        .poll button {
+            font-size: 0.7em !important;
+            padding: 0.35em 0.7em !important;
+            margin: 0 !important;
+            white-space: normal;
+            text-align: left;
+            width: 100%;
+        }
+
+        .reveal section h2 {
+            text-align: center;
+        }
+
+        .reveal section h3 {
+            font-size: 1em;
+            margin: 0.2em 0 1.0em 0;
+            text-align: center;
+        }
+
+        .results {
+            font-size: 0.85em;
+            margin-top: 0.5em !important;
+            text-align: center;
+        }
+
+        .results canvas {
+            max-height: 250px;
+        }
+
+        .qr-code-container {
+            text-align: center;
+            margin: 2em auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-code-container .qr-code {
+            display: inline-block;
+            margin: 1em auto;
+        }
+
+        .qr-code img,
+        .qr-code-container img {
+            margin: 0 auto;
+            display: block !important;
+        }
+
+        .qr-code-container p {
+            font-size: 0.9em;
+            font-style: italic;
+            margin-top: 1em;
+        }
+
+        .toggle-results-btn {
+            background-color: #2a76dd;
+            color: white;
+            border: none;
+            padding: 0.25em 0.8em;
+            font-size: 0.65em;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 1.0em auto;
+            display: block;
+        }
+
+        .toggle-results-btn:hover {
+            background-color: #1e5bb8;
+        }
+
+        .results canvas {
+            margin: 0.5em auto;
+            display: block;
+        }
+
+        /* Hide show results button for guests */
+        body.guest-mode .toggle-results-btn {
+            display: none !important;
+        }
+        
+
         .reveal h1 {
                 color: #0055A4;
                 font-weight: 700;
@@ -77,19 +177,19 @@
         .reveal {
             font-size: 32px; /* Reduced from default 40px */
         }
-        
+
         .reveal .slides {
             text-align: left; /* Remove default centering */
         }
-        
+
         .reveal h1 {
             font-size: 2em; /* Reduced from default 2.5em */
         }
-        
+
         .reveal h2 {
             font-size: 1.3em; /* Reduced from default 1.8em */
         }
-        
+
         .reveal h3 {
             font-size: 1em; /* Reduced from default 1.5em */
         }
@@ -125,6 +225,57 @@
         .sync-container[data-keep="true"] .sync-item {
             position: relative;
         }
+
+        .ide-editor-container, .ide-output-container {
+            display: inline-block;
+            vertical-align: top;
+            margin: 0.5em;
+            position: relative;
+        }
+
+        [style*="position: absolute"] > .ide-editor-container,
+        [style*="position: absolute"] > .ide-output-container {
+            margin: 0;
+        }
+        .monaco-editor-wrapper {
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .run-button {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #007acc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            padding: 8px 16px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .run-button:hover {
+            background: #005a9e;
+        }
+        .output-header {
+            border-radius: 4px 4px 0 0;
+        }
+        .output-content {
+            border-radius: 4px;
+            border: 1px solid #3c3c3c;
+            overflow-y: auto;
+            overflow-x: auto;
+            max-height: 350px;
+        }
+        .output-content:empty::before {
+            content: 'Output';
+            color: #6c6c6c;
+            font-style: italic;
+        }
+        section:not([style*="position: absolute"]) .ide-editor-container,
+        section:not([style*="position: absolute"]) .ide-output-container {
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -134,7 +285,7 @@
     </header>
     <div class="reveal">
         <div class="slides">
-        <section data-slide-index="0">
+        <section data-slide-index="1">
             <div style="text-align: center">
             <h1>SlideDeckML</h1>
             <h2>A Domain-Specific Language for Creating Beautiful Slide Decks</h2>
@@ -142,7 +293,7 @@
             <p><em>SI5 - Software Engineering</em></p>
             </div>
         </section>
-        <section data-slide-index="0" data-transition="zoom">
+        <section data-slide-index="1" data-transition="zoom">
             <h1>Why SlideDeckML?</h1>
             <h2>The Problem</h2>
             <div class="fragment fade-in">
@@ -160,7 +311,7 @@
             <p>A <strong>Domain-Specific Language</strong> that combines simplicity with power!</p>
             </div>
         </section>
-        <section data-slide-index="0">
+        <section data-slide-index="1">
             <h1>What is SlideDeckML?</h1>
             <div class="fragment fade-up">
             <blockquote>A high-level DSL built with <strong>Langium</strong> that compiles to <strong>Reveal.js</strong> presentations</blockquote>
@@ -179,7 +330,7 @@
             </ul>
             </div>
         </section>
-        <section data-slide-index="0" data-transition="convex">
+        <section data-slide-index="1" data-transition="convex">
             <h1>Feature 1: Simple Markdown</h1>
             <p>Writing content should be effortless</p>
             <div class="fragment fade-in">
@@ -197,7 +348,7 @@
             <p><strong>Text styling:</strong> <em>italic</em>, <strong>bold</strong>, <em>underline</em>, and <strong><em>combinations</em></strong></p>
             </div>
         </section>
-        <section data-slide-index="0">
+        <section data-slide-index="1">
             <h1>Feature 2: Code Highlighting</h1>
             <p>Our most powerful feature for technical presentations</p>
             <h2>Mode: line-by-line</h2>
@@ -211,7 +362,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
 </code></pre>
             <p>Each line appears progressively - perfect for teaching!</p>
         </section>
-        <section data-slide-index="27">
+        <section data-slide-index="33">
             <h1>All 6 Code Highlighting Modes</h1>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
             <div style="background: #0055A4; color: white; padding: 15px; border-radius: 8px; animate: fade-in">
@@ -240,7 +391,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             </div>
             </div>
         </section>
-        <section data-slide-index="0">
+        <section data-slide-index="1">
             <h1>Manual Line Numbers</h1>
             <p>Specify exact lines to highlight:</p>
             <pre><code class="language-python" data-trim data-noescape data-line-numbers="1-2|4"># This is line 1
@@ -250,7 +401,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
 # This is line 5
 </code></pre>
         </section>
-        <section data-slide-index="7">
+        <section data-slide-index="10">
             <h1>Synchronized Code Fragments</h1>
             <p>Show code and explanation side-by-side with perfect synchronization</p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start">
@@ -269,7 +420,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             </div>
             </div>
         </section>
-        <section data-slide-index="7">
+        <section data-slide-index="10">
             <h1>Advanced Code Explanations</h1>
             <p>Build complex explanations step by step:</p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em">
@@ -288,7 +439,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             </div>
             </div>
         </section>
-        <section data-slide-index="2" data-transition="fade">
+        <section data-slide-index="3" data-transition="fade">
             <h1>Feature 3: LaTeX Support</h1>
             <p>Perfect for mathematical and scientific presentations</p>
             <div class="fragment fade-in">
@@ -307,7 +458,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             </div>
             </div>
         </section>
-        <section data-slide-index="21">
+        <section data-slide-index="27">
             <h1>Feature 4: Custom Styling</h1>
             <p>Make your slides truly unique</p>
             <div style="display: flex; justify-content: space-around; gap: 20px">
@@ -325,23 +476,23 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             </div>
             </div>
         </section>
-        <section data-slide-index="2">
+        <section data-slide-index="3">
             <h1>Feature 5: Absolute Positioning</h1>
             <p>Create professional diagrams and overlays</p>
-            <div style="position: absolute; z-index: 1; left: 100px; top: 150px; background: rgba(0; color: white; padding: 25px; border-radius: 12px; animate: fade-in">
+            <div style="position: absolute; z-index: 1; left: 100px; top: 150px; background: rgba(0, 85, 164, 0.9); color: white; padding: 25px; border-radius: 12px; animate: fade-in">
             <p><strong>Layer 1</strong></p>
             <p>Base content at z-index 1</p>
             </div>
-            <div style="position: absolute; z-index: 5; left: 300px; top: 200px; background: rgba(30; color: white; padding: 25px; border-radius: 12px; animate: fade-up">
+            <div style="position: absolute; z-index: 5; left: 300px; top: 200px; background: rgba(30, 136, 229, 0.9); color: white; padding: 25px; border-radius: 12px; animate: fade-up">
             <p><strong>Layer 2</strong></p>
             <p>Overlaid at z-index 5</p>
             </div>
-            <div style="position: absolute; z-index: 10; left: 500px; top: 250px; background: rgba(66; color: white; padding: 25px; border-radius: 12px; animate: fade-right">
+            <div style="position: absolute; z-index: 10; left: 500px; top: 250px; background: rgba(66, 165, 245, 0.9); color: white; padding: 25px; border-radius: 12px; animate: fade-right">
             <p><strong>Layer 3</strong></p>
             <p>Top layer at z-index 10</p>
             </div>
         </section>
-        <section data-slide-index="2" data-transition="zoom">
+        <section data-slide-index="3" data-transition="zoom">
             <h1>Feature 6: Interactive Chalkboard</h1>
             <p>Perfect for teaching and live presentations</p>
             <div class="fragment fade-in">
@@ -360,7 +511,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             <p><strong>Try it now!</strong> Press B to open the chalkboard</p>
             </div>
         </section>
-        <section data-slide-index="2">
+        <section data-slide-index="3">
             <h1>Feature 7: Fragment Animations</h1>
             <p>Control information flow for better engagement</p>
             <div class="fragment fade-in">
@@ -376,7 +527,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             <p><strong>And finish with impact!</strong></p>
             </div>
         </section>
-        <section data-slide-index="29">
+        <section data-slide-index="35">
             <h1>Feature 8: Rich Media Support</h1>
             <p>Embed images, videos, and YouTube content seamlessly</p>
             <div class="fragment fade-in">
@@ -384,7 +535,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzUwIiB2aWV3Qm94PSIwIDAgNjAwIDM1MCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzM0OThkYiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xMjYuODk1IDE4My42MzVoNi42N3ExLjgzIDAgMy4wOC0uNDR0Mi0xLjE3cS43NS0uNzQgMS4wOC0xLjcydC4zMy0yLjA4cTAtMS4xNS0uMzctMi4wN3QtMS4xNS0xLjU3LTIuMDItLjk5LTIuOTgtLjM0aC02LjY0em01LjYxLTI1LjE4aC01LjYxdjEwLjI0aDUuMjVxMy4zOCAwIDUuMS0xLjIzIDEuNzMtMS4yMiAxLjczLTMuODkgMC0yLjc3LTEuNTctMy45NS0xLjU2LTEuMTctNC45LTEuMTdtLTEyLjItNS4xaDEyLjJxMy40OCAwIDUuOTYuNjYgMi40Ny42NyA0LjA1IDEuODkgMS41OCAxLjIzIDIuMzIgMi45Ny43MyAxLjczLjczIDMuOTIgMCAxLjI0LS4zNyAyLjM4LS4zNiAxLjE0LTEuMTMgMi4xNC0uNzguOTktMS45NiAxLjgtMS4xOS44LTIuODMgMS4zNyA3LjMgMS42NCA3LjMgNy44OSAwIDIuMjUtLjg2IDQuMTZ0LTIuNSAzLjNxLTEuNjQgMS4zOC00LjA0IDIuMTctMi40Ljc4LTUuNDkuNzhoLTEzLjM4em0zNi4wOSAxOS45N2gxMS40MnEwLTEuMTgtLjMzLTIuMjJ0LS45OS0xLjgycS0uNjctLjc5LTEuNjgtMS4yNC0xLjAyLS40NS0yLjM3LS40NS0yLjYyIDAtNC4xMyAxLjQ5LTEuNSAxLjUtMS45MiA0LjI0bTE1LjQ0IDMuNjVoLTE1LjU2cS4xNSAxLjk0LjY4IDMuMzUuNTQgMS40IDEuNDMgMi4zMi44OC45MiAyLjA5IDEuMzcgMS4yMS40NiAyLjY4LjQ2dDIuNTQtLjM1cTEuMDYtLjM0IDEuODYtLjc1LjgtLjQyIDEuNC0uNzYuNi0uMzUgMS4xNi0uMzUuNzYgMCAxLjEzLjU3bDEuNzQgMi4ycS0xLjAxIDEuMTgtMi4yNiAxLjk3LTEuMjUuOC0yLjYxIDEuMjh0LTIuNzYuNjdxLTEuNDEuMi0yLjc0LjItMi42MiAwLTQuODctLjg3LTIuMjYtLjg3LTMuOTItMi41Ny0xLjY3LTEuNzEtMi42Mi00LjIyLS45Ni0yLjUxLS45Ni01LjgyIDAtMi41Ny44My00Ljg0Ljg0LTIuMjYgMi4zOS0zLjk0IDEuNTYtMS42OCAzLjgtMi42NnQ1LjA2LS45OHEyLjM4IDAgNC4zOS43NiAyIC43NiAzLjQ1IDIuMjJ0Mi4yNyAzLjU3cS44MiAyLjEyLjgyIDQuODQgMCAxLjM4LS4zIDEuODUtLjI5LjQ4LTEuMTIuNDhtMTkuMjMgNS4zMnYtNC4yNHEtMi42Mi4xMi00LjQxLjQ1dC0yLjg3Ljg1cS0xLjA4LjUxLTEuNTQgMS4yLS40Ny42OC0uNDcgMS40OSAwIDEuNTkuOTUgMi4yOC45NC42OSAyLjQ2LjY5IDEuODYgMCAzLjIyLS42OCAxLjM2LS42NyAyLjY2LTIuMDRtLTEyLjc5LTEzLjIxLTEuMDgtMS45M3E0LjM0LTMuOTcgMTAuNDQtMy45NyAyLjIgMCAzLjk0LjcydDIuOTQgMi4wMSAxLjgzIDMuMDdxLjYyIDEuNzkuNjIgMy45MnYxNS44OGgtMi43NHEtLjg2IDAtMS4zMi0uMjYtLjQ3LS4yNS0uNzQtMS4wNGwtLjU0LTEuODFxLS45NS44Ni0xLjg2IDEuNTEtLjkxLjY0LTEuODkgMS4wOS0uOTguNDQtMi4wOS42Ny0xLjEyLjIzLTIuNDYuMjMtMS42IDAtMi45NC0uNDMtMS4zNS0uNDMtMi4zMy0xLjI4LS45OC0uODYtMS41Mi0yLjEzLS41NC0xLjI4LS41NC0yLjk3IDAtLjk1LjMyLTEuOS4zMi0uOTQgMS4wNC0xLjh0MS44OC0xLjYycTEuMTUtLjc2IDIuODMtMS4zMiAxLjY3LS41NiAzLjktLjkyIDIuMjMtLjM1IDUuMS0uNDN2LTEuNDdxMC0yLjUyLTEuMDgtMy43M3QtMy4xMS0xLjIxcS0xLjQ3IDAtMi40NC4zNHQtMS43Ljc3cS0uNzQuNDMtMS4zNC43N3QtMS4zMy4zNHEtLjY0IDAtMS4wOC0uMzN0LS43MS0uNzdtMzkuOTgtNS40NGg2LjA2djI1LjE0aC0zLjdxLTEuMiAwLTEuNTItMS4xbC0uNDItMi4wMXEtMS41NCAxLjU3LTMuNDEgMi41My0xLjg2Ljk3LTQuMzguOTctMi4wNiAwLTMuNjQtLjctMS41OC0uNjktMi42Ni0xLjk3LTEuMDgtMS4yNy0xLjYzLTMuMDItLjU1LTEuNzYtLjU1LTMuODZ2LTE1Ljk4aDYuMDV2MTUuOThxMCAyLjMgMS4wNyAzLjU2dDMuMiAxLjI2cTEuNTYgMCAyLjk0LS42OSAxLjM3LS43IDIuNTktMS45M3ptMjAuNDEgMjUuNTNxLTMuMjggMC01LjAzLTEuODV0LTEuNzUtNS4xMXYtMTQuMDNoLTIuNThxLS40OSAwLS44My0uMzJ0LS4zNC0uOTZ2LTIuNGw0LjA0LS42NiAxLjI3LTYuODZxLjEzLS40OS40Ny0uNzZ0Ljg4LS4yN2gzLjE0djcuOTFoNi43MXY0LjMyaC02LjcxdjEzLjYycTAgMS4xNy41NyAxLjgzLjU4LjY3IDEuNTguNjcuNTcgMCAuOTUtLjE0LjM4LS4xMy42Ni0uMjh0LjUtLjI4cS4yMi0uMTQuNDQtLjE0LjI3IDAgLjQ0LjE0LjE3LjEzLjM3LjRsMS44MSAyLjk0cS0xLjMyIDEuMTEtMy4wNCAxLjY3LTEuNzEuNTYtMy41NS41Nm0xMC4wNS0yNS41M2g2LjA3djI1LjE0aC02LjA3em02LjkxLTcuMzJxMCAuNzgtLjMyIDEuNDctLjMyLjY4LS44NSAxLjItLjUyLjUxLTEuMjMuODItLjcyLjMtMS41Mi4zLS43OSAwLTEuNDktLjMtLjY5LS4zMS0xLjIxLS44Mi0uNTEtLjUyLS44Mi0xLjItLjMxLS42OS0uMzEtMS40NyAwLS44MS4zMS0xLjUydC44Mi0xLjIzcS41Mi0uNTEgMS4yMS0uODIuNy0uMyAxLjQ5LS4zLjggMCAxLjUyLjMuNzEuMzEgMS4yMy44Mi41My41Mi44NSAxLjIzdC4zMiAxLjUybTEzLjE1IDMyLjQ2aC02LjA1di0yMC41OGwtMi4xOC0uMzRxLS43MS0uMTUtMS4xNC0uNTEtLjQzLS4zNS0uNDMtMS4wMXYtMi40OGgzLjc1di0xLjg2cTAtMi4xNS42NS0zLjg3LjY1LTEuNzEgMS44Ni0yLjkyIDEuMjItMS4yIDIuOTUtMS44MyAxLjc0LS42NCAzLjkyLS42NCAxLjc0IDAgMy4yNC40N2wtLjEyIDMuMDNxLS4wMy4zNS0uMi41Ni0uMTcuMi0uNDUuMzF0LS42NS4xNS0uNzkuMDRxLTEuMDcgMC0xLjkyLjIzLS44NC4yMy0xLjQzLjgxLS41OS41Ny0uOSAxLjUyLS4zLjk0LS4zIDIuMzR2MS42Nmg2LjU0djQuMzJoLTYuMzV6bTI1LjM2LTI1LjE0aDYuMDV2MjUuMTRoLTMuN3EtMS4yIDAtMS41Mi0xLjFsLS40MS0yLjAxcS0xLjU1IDEuNTctMy40MSAyLjUzLTEuODYuOTctNC4zOC45Ny0yLjA2IDAtMy42NC0uNy0xLjU4LS42OS0yLjY2LTEuOTctMS4wOC0xLjI3LTEuNjMtMy4wMi0uNTUtMS43Ni0uNTUtMy44NnYtMTUuOThoNi4wNXYxNS45OHEwIDIuMyAxLjA3IDMuNTYgMS4wNiAxLjI2IDMuMTkgMS4yNiAxLjU3IDAgMi45NC0uNjkgMS4zOC0uNyAyLjYtMS45M3ptMTIuMS0xMS4yN2g2LjA1djM2LjQxaC02LjA1em0zMS41OC45OHYzNS40M2gtNi42MXYtMzUuNDN6bTEzLjAxIDM1LjQzaC02LjA1di0yNS4xNGgzLjdxMS4xOCAwIDEuNTQgMS4xMWwuNCAxLjg2cS42Ni0uNzQgMS4zOC0xLjM1dDEuNTQtMS4wNXEuODMtLjQ0IDEuNzctLjd0Mi4wNy0uMjZxMi4zOCAwIDMuOTEgMS4yOSAxLjUzIDEuMjggMi4yOSAzLjQyLjU5LTEuMjUgMS40Ny0yLjE1Ljg4LS44OSAxLjkzLTEuNDYgMS4wNi0uNTYgMi4yNC0uODMgMS4xOS0uMjcgMi4zOS0uMjcgMi4wOSAwIDMuNy42NCAxLjYyLjYzIDIuNzIgMS44NnQxLjY4IDIuOTkuNTggNC4wNHYxNmgtNi4wNnYtMTZxMC0yLjQtMS4wNS0zLjYxdC0zLjA5LTEuMjFxLS45MyAwLTEuNzIuMzEtLjguMzItMS40LjkydC0uOTQgMS41MXEtLjM1LjkxLS4zNSAyLjA4djE2aC02LjA3di0xNnEwLTIuNTItMS4wMi0zLjY3dC0yLjk4LTEuMTVxLTEuMzIgMC0yLjQ2LjY0LTEuMTQuNjUtMi4xMiAxLjc4em00OC4yNy02LjQ5di00LjI0cS0yLjYyLjEyLTQuNDEuNDV0LTIuODcuODVxLTEuMDguNTEtMS41NCAxLjItLjQ3LjY4LS40NyAxLjQ5IDAgMS41OS45NSAyLjI4Ljk0LjY5IDIuNDYuNjkgMS44NiAwIDMuMjItLjY4IDEuMzYtLjY3IDIuNjYtMi4wNG0tMTIuNzktMTMuMjEtMS4wOC0xLjkzcTQuMzQtMy45NyAxMC40NC0zLjk3IDIuMiAwIDMuOTQuNzJ0Mi45NCAyLjAxIDEuODMgMy4wN3EuNjIgMS43OS42MiAzLjkydjE1Ljg4aC0yLjc0cS0uODYgMC0xLjMyLS4yNi0uNDctLjI1LS43NC0xLjA0bC0uNTQtMS44MXEtLjk1Ljg2LTEuODYgMS41MS0uOTEuNjQtMS44OSAxLjA5LS45OC40NC0yLjA5LjY3LTEuMTIuMjMtMi40Ni4yMy0xLjYgMC0yLjk0LS40My0xLjM1LS40My0yLjMzLTEuMjgtLjk4LS44Ni0xLjUyLTIuMTMtLjU0LTEuMjgtLjU0LTIuOTcgMC0uOTUuMzItMS45LjMyLS45NCAxLjA0LTEuOHQxLjg3LTEuNjJxMS4xNi0uNzYgMi44My0xLjMyIDEuNjgtLjU2IDMuOTEtLjkyIDIuMjMtLjM1IDUuMS0uNDN2LTEuNDdxMC0yLjUyLTEuMDgtMy43M3QtMy4xMS0xLjIxcS0xLjQ3IDAtMi40NC4zNHQtMS43Ljc3cS0uNzQuNDMtMS4zNC43N3QtMS4zMy4zNHEtLjY0IDAtMS4wOC0uMzN0LS43MS0uNzdtMzMuNTYgNi41MnExLjEzIDAgMS45Ni0uMzEuODQtLjMgMS4zOS0uODR0LjgzLTEuMy4yOC0xLjY3cTAtMS44Ni0xLjExLTIuOTUtMS4xMi0xLjA5LTMuMzUtMS4wOXQtMy4zNCAxLjA5LTEuMTEgMi45NXEwIC44OS4yOCAxLjY0LjI4Ljc2LjgzIDEuMzIuNTUuNTUgMS40Ljg1Ljg0LjMxIDEuOTQuMzFtNi44NCAxNC4zMXEwLS43NC0uNDQtMS4yLS40NC0uNDctMS4yLS43My0uNzYtLjI1LTEuNzgtLjM4LTEuMDEtLjEyLTIuMTUtLjE4dC0yLjM2LS4xMXEtMS4yMS0uMDUtMi4zNi0uMi0xIC41Ny0xLjYzIDEuMzMtLjYyLjc2LS42MiAxLjc2IDAgLjY2LjMzIDEuMjQuMzMuNTcgMS4wNS45OXQxLjg3LjY1cTEuMTYuMjMgMi44Mi4yMyAxLjY5IDAgMi45Mi0uMjUgMS4yMi0uMjYgMi4wMi0uNzIuNzktLjQ1IDEuMTYtMS4wNy4zNy0uNjMuMzctMS4zNm0tMS4yLTI1LjQxaDcuMjN2Mi4yNXEwIDEuMDgtMS4zIDEuMzNsLTIuMjYuNDFxLjUyIDEuMy41MiAyLjg1IDAgMS44Ni0uNzUgMy4zNi0uNzUgMS41MS0yLjA3IDIuNTYtMS4zMiAxLjA2LTMuMTIgMS42My0xLjguNTgtMy44OS41OC0uNzMgMC0xLjQyLS4wNy0uNjgtLjA4LTEuMzQtLjItMS4xOC43MS0xLjE4IDEuNTkgMCAuNzYuNyAxLjEyLjcuMzUgMS44NS41dDIuNjIuMThxMS40Ny4wNCAzLjAxLjE2IDEuNTUuMTMgMy4wMi40MyAxLjQ3LjMxIDIuNjIuOTd0MS44NSAxLjguNyAyLjkzcTAgMS42Ni0uODIgMy4yMy0uODMgMS41Ny0yLjM4IDIuOC0xLjU2IDEuMjItMy44MiAxLjk3LTIuMjcuNzQtNS4xNi43NC0yLjg0IDAtNC45NS0uNTV0LTMuNS0xLjQ3cS0xLjQtLjkyLTIuMDktMi4xMi0uNjgtMS4yLS42OC0yLjQ5IDAtMS43NyAxLjA2LTIuOTYgMS4wNy0xLjE5IDIuOTMtMS45LTEtLjUxLTEuNTktMS4zN3QtLjU5LTIuMjVxMC0uNTcuMjEtMS4xN3QuNjEtMS4xOHEuNDEtLjU5IDEuMDItMS4xMnQxLjQ0LS45NHEtMS45MS0xLjAzLTMtMi43NS0xLjA5LTEuNzEtMS4wOS00LjAxIDAtMS44Ny43NS0zLjM3Ljc1LTEuNTEgMi4wOC0yLjU4IDEuMzQtMS4wNiAzLjE2LTEuNjIgMS44My0uNTcgMy45OC0uNTcgMS42MiAwIDMuMDQuMzN0Mi42Ljk3bTE1LjgzIDguODJoMTEuNDFxMC0xLjE4LS4zMy0yLjIydC0uOTktMS44MnEtLjY2LS43OS0xLjY4LTEuMjQtMS4wMS0uNDUtMi4zNi0uNDUtMi42MiAwLTQuMTMgMS40OS0xLjUxIDEuNS0xLjkyIDQuMjRtMTUuNDMgMy42NWgtMTUuNTZxLjE1IDEuOTQuNjkgMy4zNS41NCAxLjQgMS40MiAyLjMydDIuMSAxLjM3cTEuMjEuNDYgMi42OC40NnQyLjUzLS4zNXExLjA3LS4zNCAxLjg3LS43NS43OS0uNDIgMS4zOS0uNzYuNi0uMzUgMS4xNy0uMzUuNzYgMCAxLjEyLjU3bDEuNzQgMi4ycS0xIDEuMTgtMi4yNSAxLjk3LTEuMjUuOC0yLjYxIDEuMjh0LTIuNzcuNjdxLTEuNDEuMi0yLjczLjItMi42MiAwLTQuODgtLjg3LTIuMjUtLjg3LTMuOTItMi41Ny0xLjY2LTEuNzEtMi42Mi00LjIyLS45NS0yLjUxLS45NS01LjgyIDAtMi41Ny44My00Ljg0LjgzLTIuMjYgMi4zOS0zLjk0IDEuNTUtMS42OCAzLjgtMi42NiAyLjI0LS45OCA1LjA2LS45OCAyLjM3IDAgNC4zOC43NnQzLjQ2IDIuMjJxMS40NCAxLjQ2IDIuMjYgMy41Ny44MiAyLjEyLjgyIDQuODQgMCAxLjM4LS4yOSAxLjg1LS4zLjQ4LTEuMTMuNDhtMjIuNjYtMTAuNjEtMS4zNyAyLjE4cS0uMjQuMzktLjUxLjU1dC0uNjkuMTZxLS40NCAwLS45NC0uMjQtLjUtLjI1LTEuMTctLjU1LS42Ni0uMzEtMS41LS41NS0uODUtLjI1LTItLjI1LTEuNzkgMC0yLjguNzYtMS4wMi43Ni0xLjAyIDEuOTggMCAuODEuNTMgMS4zNi41Mi41NiAxLjM5Ljk3Ljg3LjQyIDEuOTcuNzUgMS4xMS4zMyAyLjI1LjcydDIuMjQuOXExLjEuNSAxLjk3IDEuMjd0MS40IDEuODVxLjUyIDEuMDguNTIgMi42IDAgMS44MS0uNjUgMy4zNC0uNjQgMS41My0xLjkyIDIuNjUtMS4yNyAxLjExLTMuMTUgMS43NC0xLjg3LjYyLTQuMzIuNjItMS4zIDAtMi41NC0uMjMtMS4yMy0uMjMtMi4zNy0uNjV0LTIuMTEtLjk4LTEuNy0xLjIzbDEuMzktMi4zcS4yNy0uNDEuNjQtLjYzLjM3LS4yMy45My0uMjN0MS4wNy4zMnEuNS4zMiAxLjE2LjY5dDEuNTYuNjhxLjg5LjMyIDIuMjYuMzIgMS4wOCAwIDEuODUtLjI1Ljc3LS4yNiAxLjI4LS42OC41LS40MS43My0uOTcuMjMtLjU1LjIzLTEuMTMgMC0uODktLjUyLTEuNDUtLjUzLS41Ni0xLjQtLjk4dC0xLjk4LS43NXEtMS4xMi0uMzMtMi4yOC0uNzItMS4xNy0uMzktMi4yOC0uOTItMS4xMi0uNTMtMS45OS0xLjMzLS44Ni0uODEtMS4zOS0xLjk5LS41My0xLjE3LS41My0yLjg0IDAtMS41NC42MS0yLjk0LjYyLTEuNCAxLjgtMi40NCAxLjE5LTEuMDQgMi45Ny0xLjY2IDEuNzgtLjYzIDQuMS0uNjMgMi42IDAgNC43My44NnQzLjU1IDIuMjUiLz48L3N2Zz4=" alt="Demo Image">
             </div>
         </section>
-        <section data-slide-index="23">
+        <section data-slide-index="29">
             <h1>Video Integration</h1>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px">
             <div class="fragment fade-in">
@@ -402,14 +553,177 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             </div>
             </div>
         </section>
-        <section data-slide-index="2">
+        <section data-slide-index="1">
+            <h1>Feature 9: Integrated IDE</h1>
+            <p>This presentation includes <strong>integrated IDE</strong> functionality!</p>
+            <ul>
+                <li>Compile and run Python / JavaScript / SQL</li>
+                <li>Monaco editor with VS Code-like syntax highlighting</li>
+                <li>Customize editor and output positions for better layout</li>
+                <li>Perfect for live coding demonstrations</li>
+            </ul>
+        </section>
+        <section data-slide-index="4">
+            <div style="position: absolute; z-index: 1; left: 0px; top: 50px">
+            <div class="ide-editor-container">
+                <button class="run-button" data-editor-id="editor-0">▶ Run</button>
+                <div id="editor-0"
+                     class="monaco-editor-wrapper"
+                     data-language="python"
+                     data-output-id="python-output"
+                     data-initial-code="def fibonacci(n):&#10;    if n &lt;= 1:&#10;        return n&#10;    return fibonacci(n-1) + fibonacci(n-2)&#10;&#10;print(fibonacci(5))    &#10;"
+                     style="width: 500px; height: 350px; border: 1px solid #ccc;"></div>
+            </div>
+            </div>
+            <div style="position: absolute; z-index: 1; left: 0px; top: 420px">
+            <div class="ide-output-container">
+                <div id="python-output" class="output-content" style="width: 500px; box-sizing: border-box; background: #1e1e1e; color: #d4d4d4; padding: 12px; margin: 0; min-height: 100px; max-height: 350px; overflow-y: auto; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.4; white-space: pre-wrap;"></div>
+            </div>
+            </div>
+            <div style="position: absolute; z-index: 1; left: 570px; top: 100px">
+            <h3>Python editor with output at bottom for small exemples</h3>
+            </div>
+        </section>
+        <section data-slide-index="4">
+            <h3>Side to side for better graphical view</h3>
+            <div style="position: absolute; z-index: 1; left: -50px; top: 200px">
+            <div class="ide-editor-container">
+                <button class="run-button" data-editor-id="editor-1">▶ Run</button>
+                <div id="editor-1"
+                     class="monaco-editor-wrapper"
+                     data-language="python"
+                     data-output-id="python-output-2"
+                     data-initial-code="#!/usr/bin/env python3&#10;import matplotlib.pyplot as plt&#10;import numpy as np&#10;&#10;x = np.linspace(0, 10, 100)&#10;y = np.sin(x)&#10;&#10;plt.plot(x, y, &#39;b-&#39;, linewidth=2)&#10;plt.title(&#39;Simple Sinus&#39;)&#10;plt.xlabel(&#39;x&#39;)&#10;plt.ylabel(&#39;sin(x)&#39;)&#10;plt.grid(True, alpha=0.3)&#10;plt.show()&#10;"
+                     style="width: 500px; height: 350px; border: 1px solid #ccc;"></div>
+            </div>
+            </div>
+            <div style="position: absolute; z-index: 1; left: 500px; top: 200px">
+            <div class="ide-output-container">
+                <div id="python-output-2" class="output-content" style="width: 500px; box-sizing: border-box; background: #1e1e1e; color: #d4d4d4; padding: 12px; margin: 0; min-height: 100px; max-height: 350px; overflow-y: auto; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.4; white-space: pre-wrap;"></div>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="4">
+            <h3>Handle Javascript and SQL too !</h3>
+            <div style="position: absolute; z-index: 1; left: -50px; top: 130px">
+            <div class="ide-editor-container">
+                <button class="run-button" data-editor-id="editor-2">▶ Run</button>
+                <div id="editor-2"
+                     class="monaco-editor-wrapper"
+                     data-language="javascript"
+                     data-output-id="javascript-output"
+                     data-initial-code="#!/usr/bin/env node&#10;&#10;function fibonacci(n) {&#10;  if (n &lt;= 1) return n;&#10;  return fibonacci(n - 1) + fibonacci(n - 2);&#10;}&#10;&#10;for (let i = 0; i &lt; 5; i++) {&#10;  console.log(`F(${i}) = ${fibonacci(i)}`);&#10;}&#10;"
+                     style="width: 500px; height: 350px; border: 1px solid #ccc;"></div>
+            </div>
+            </div>
+            <div style="position: absolute; z-index: 1; left: -50px; top: 500px">
+            <div class="ide-output-container">
+                <div id="javascript-output" class="output-content" style="width: 500px; box-sizing: border-box; background: #1e1e1e; color: #d4d4d4; padding: 12px; margin: 0; min-height: 100px; max-height: 350px; overflow-y: auto; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.4; white-space: pre-wrap;"></div>
+            </div>
+            </div>
+            <div style="position: absolute; z-index: 1; left: 500px; top: 130px">
+            <div class="ide-editor-container">
+                <button class="run-button" data-editor-id="editor-3">▶ Run</button>
+                <div id="editor-3"
+                     class="monaco-editor-wrapper"
+                     data-language="sql"
+                     data-output-id="sql-output"
+                     data-initial-code="CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(50));&#10;INSERT INTO users (id, name) VALUES (1, &#39;Alice&#39;);&#10;SELECT * FROM users;&#10;"
+                     style="width: 500px; height: 350px; border: 1px solid #ccc;"></div>
+            </div>
+            </div>
+            <div style="position: absolute; z-index: 1; left: 500px; top: 500px">
+            <div class="ide-output-container">
+                <div id="sql-output" class="output-content" style="width: 500px; box-sizing: border-box; background: #1e1e1e; color: #d4d4d4; padding: 12px; margin: 0; min-height: 100px; max-height: 350px; overflow-y: auto; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.4; white-space: pre-wrap;"></div>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h1>Feature 10: Interactive quiz</h1>
+            <p><strong>Start the quiz server</strong></p>
+            <pre><code class="language-typescript" data-trim data-noescape>npm run start
+</code></pre>
+            <p><strong>Expose your server to participants</strong></p>
+            <pre><code class="language-typescript" data-trim data-noescape>npx http-server -p 3000 -a 0.0.0.0
+</code></pre>
+        </section>
+        <section data-slide-index="0">
+        <section>
+            <h2>Software Performance Workshop Quiz</h2>
+            <div class="qr-code-container">
+                <img class="qr-code" alt="QR Code to join" />
+                <p>Scan to join and participate</p>
+            </div>
+        </section>
+        <section>
+            <h3>What is the average time complexity of QuickSort?</h3>
+            <div class="poll" data-poll="poll-0" data-auto-show-results="false">
+                <button data-value="n">O(n)</button>
+                <button data-value="nlogn">O(n log n)</button>
+                <button data-value="n2">O(n²)</button>
+                <button data-value="logn">O(log n)</button>
+            </div>
+            <button class="toggle-results-btn" data-poll="poll-0">Show Results</button>
+            <div class="results" data-poll="poll-0" data-visualization="barChart" data-is-quiz="true" style="display: none;">
+                <p><strong>Results:</strong> <span class="voters" data-poll="poll-0">0</span> votes</p>
+                <canvas id="chart-poll-0" width="400" height="300"></canvas>
+                <div style="display: none;">
+                    <p data-correct="false">O(n): <span data-value="n">0</span></p>
+                    <p data-correct="true">O(n log n): <span data-value="nlogn">0</span></p>
+                    <p data-correct="false">O(n²): <span data-value="n2">0</span></p>
+                    <p data-correct="false">O(log n): <span data-value="logn">0</span></p>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>Which sorting algorithm is most efficient for nearly sorted data?</h3>
+            <div class="poll" data-poll="poll-1" data-auto-show-results="true">
+                <button data-value="bubble">Bubble Sort</button>
+                <button data-value="insertion">Insertion Sort</button>
+                <button data-value="merge">Merge Sort</button>
+                <button data-value="quick">Quick Sort</button>
+            </div>
+            <div class="results" data-poll="poll-1" data-visualization="pieChart" data-is-quiz="true" style="display: none;">
+                <p><strong>Results:</strong> <span class="voters" data-poll="poll-1">0</span> votes</p>
+                <canvas id="chart-poll-1" width="400" height="300"></canvas>
+                <div style="display: none;">
+                    <p data-correct="false">Bubble Sort: <span data-value="bubble">0</span></p>
+                    <p data-correct="true">Insertion Sort: <span data-value="insertion">0</span></p>
+                    <p data-correct="false">Merge Sort: <span data-value="merge">0</span></p>
+                    <p data-correct="false">Quick Sort: <span data-value="quick">0</span></p>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>What is the space complexity of Merge Sort?</h3>
+            <div class="poll" data-poll="poll-2" data-auto-show-results="false">
+                <button data-value="o1">O(1)</button>
+                <button data-value="ologn">O(log n)</button>
+                <button data-value="on">O(n)</button>
+                <button data-value="on2">O(n²)</button>
+            </div>
+            <button class="toggle-results-btn" data-poll="poll-2">Show Results</button>
+            <div class="results" data-poll="poll-2" data-visualization="barChart" data-is-quiz="true" style="display: none;">
+                <p><strong>Results:</strong> <span class="voters" data-poll="poll-2">0</span> votes</p>
+                <canvas id="chart-poll-2" width="400" height="300"></canvas>
+                <div style="display: none;">
+                    <p data-correct="false">O(1): <span data-value="o1">0</span></p>
+                    <p data-correct="false">O(log n): <span data-value="ologn">0</span></p>
+                    <p data-correct="true">O(n): <span data-value="on">0</span></p>
+                    <p data-correct="false">O(n²): <span data-value="on2">0</span></p>
+                </div>
+            </div>
+        </section>
+
+        </section>
+        <section data-slide-index="5">
             <h1>Feature 9: Professional Templates</h1>
             <p>Choose from 5 pre-built templates to get started instantly</p>
             <div class="fragment fade-in">
             <p>Each template includes complete styling, structure, and example content</p>
             </div>
         </section>
-        <section data-slide-index="30">
+        <section data-slide-index="34">
             <h1>Academic Template</h1>
             <p>Perfect for university lectures and educational presentations</p>
             <div class="fragment fade-in">
@@ -425,7 +739,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzUwIiB2aWV3Qm94PSIwIDAgNjAwIDM1MCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzM0OThkYiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xMjkuODIgMTc1LjYwNWg5LjQzbC0zLjYxLTkuODZxLS4yNi0uNjYtLjU1LTEuNTZ0LS41Ny0xLjk1cS0uMjcgMS4wNS0uNTYgMS45NnQtLjU1IDEuNTl6bTcuNTItMTguNDUgMTEuNjUgMjkuNjRoLTQuMjdxLS43MSAwLTEuMTYtLjM2LS40Ni0uMzYtLjY4LS44OWwtMi4yMS02LjA1aC0xMi4yOGwtMi4yMiA2LjA1cS0uMTYuNDctLjYzLjg2LS40OC4zOS0xLjE3LjM5aC00LjMxbDExLjY3LTI5LjY0em0zMC4zMiAxMS4yMS0xLjMzIDEuODVxLS4yMi4yOC0uNDQuNDUtLjIxLjE2LS42Mi4xNi0uMzkgMC0uNzYtLjI0LS4zNy0uMjMtLjg4LS41My0uNTItLjMtMS4yMi0uNTMtLjcxLS4yNC0xLjc2LS4yNC0xLjMzIDAtMi4zMy40OC0xLjAxLjQ5LTEuNjcgMS4zOS0uNjcuOS0xIDIuMTh0LS4zMyAyLjlxMCAxLjY4LjM2IDMgLjM2IDEuMzEgMS4wNCAyLjIuNjcuODkgMS42NCAxLjM1Ljk2LjQ2IDIuMTcuNDZ0MS45Ni0uMjlxLjc1LS4zIDEuMjYtLjY2dC44OS0uNjZxLjM4LS4yOS44NS0uMjkuNjIgMCAuOTIuNDdsMS40NiAxLjg0cS0uODQuOTktMS44MyAxLjY1LS45OC42Ny0yLjA0IDEuMDctMS4wNS40LTIuMTcuNTYtMS4xMi4xNy0yLjIyLjE3LTEuOTUgMC0zLjY3LS43M3QtMy4wMi0yLjEycS0xLjI5LTEuNC0yLjA0LTMuNDItLjc0LTIuMDEtLjc0LTQuNiAwLTIuMzEuNjYtNC4yOS42Ny0xLjk4IDEuOTYtMy40MyAxLjI5LTEuNDQgMy4yLTIuMjYgMS45LS44MiA0LjM5LS44MiAyLjM1IDAgNC4xMy43NiAxLjc3Ljc2IDMuMTggMi4xN20xNC40OCAxM3YtMy41NXEtMi4yLjEtMy42OS4zOC0xLjUuMjgtMi40LjcxdC0xLjI5IDFxLS4zOS41OC0uMzkgMS4yNSAwIDEuMzMuNzkgMS45MS43OS41NyAyLjA2LjU3IDEuNTUgMCAyLjY5LS41NnQyLjIzLTEuNzFtLTEwLjctMTEuMDUtLjkxLTEuNjJxMy42My0zLjMyIDguNzQtMy4zMiAxLjg0IDAgMy4zLjYgMS40NS42MSAyLjQ2IDEuNjggMSAxLjA4IDEuNTIgMi41OC41MyAxLjQ5LjUzIDMuMjh2MTMuMjhoLTIuM3EtLjcyIDAtMS4xMS0uMjItLjM5LS4yMS0uNjEtLjg3bC0uNDUtMS41MXEtLjguNzEtMS41NiAxLjI2LS43Ni41NC0xLjU4LjkxdC0xLjc1LjU2cS0uOTMuMi0yLjA2LjItMS4zMyAwLTIuNDYtLjM2dC0xLjk1LTEuMDhxLS44Mi0uNzEtMS4yNy0xLjc4dC0uNDUtMi40OHEwLS44LjI3LTEuNTkuMjYtLjc5Ljg3LTEuNTEuNi0uNzEgMS41Ny0xLjM1Ljk2LS42NCAyLjM2LTEuMTEgMS40MS0uNDcgMy4yNy0uNzcgMS44Ny0uMjkgNC4yNy0uMzV2LTEuMjNxMC0yLjEyLS45MS0zLjEzLS45LTEuMDItMi42LTEuMDItMS4yMyAwLTIuMDQuMjl0LTEuNDIuNjVxLS42Mi4zNi0xLjEyLjY0LS41LjI5LTEuMTIuMjktLjUzIDAtLjktLjI4LS4zNy0uMjctLjU5LS42NG0zMy42IDEwLjI1di05LjQzcS0uODctMS4wNS0xLjg4LTEuNDgtMS4wMi0uNDMtMi4xOC0uNDMtMS4xNSAwLTIuMDcuNDMtLjkzLjQzLTEuNTggMS4zLS42Ni44OC0xLjAxIDIuMjJ0LS4zNSAzLjE2cTAgMS44NS4zIDMuMTN0Ljg1IDIuMDlxLjU2LjgxIDEuMzYgMS4xNy43OS4zNiAxLjc4LjM2IDEuNTggMCAyLjY4LS42NiAxLjExLS42NSAyLjEtMS44Nm0wLTI0LjIzaDUuMDZ2MzAuNDZIMjA3cS0xIDAtMS4yNy0uOTJsLS40My0yLjAzcS0xLjI3IDEuNDUtMi45MiAyLjM2LTEuNjUuOS0zLjg0LjktMS43MyAwLTMuMTYtLjcyLTEuNDQtLjcyLTIuNDctMi4wOC0xLjA0LTEuMzYtMS42LTMuMzd0LS41Ni00LjZxMC0yLjMzLjYzLTQuMzQuNjQtMi4wMSAxLjgzLTMuNDkgMS4xOS0xLjQ3IDIuODUtMi4zdDMuNzMtLjgzcTEuNzYgMCAzLjAxLjU1dDIuMjQgMS41em0xNC4wNiAxNy41Mmg5LjU1cTAtLjk4LS4yOC0xLjg1LS4yNy0uODctLjgzLTEuNTMtLjU1LS42NS0xLjQtMS4wM3QtMS45OC0uMzhxLTIuMTkgMC0zLjQ1IDEuMjV0LTEuNjEgMy41NG0xMi45MSAzLjA2SDIxOXEuMTIgMS42Mi41NyAyLjh0MS4xOSAxLjk0cS43NC43NyAxLjc1IDEuMTUgMS4wMi4zOCAyLjI1LjM4dDIuMTItLjI5cS44OS0uMjggMS41Ni0uNjMuNjYtLjM1IDEuMTYtLjY0LjUxLS4yOC45OC0uMjguNjMgMCAuOTQuNDdsMS40NiAxLjg0cS0uODQuOTktMS44OSAxLjY1LTEuMDQuNjctMi4xOCAxLjA3dC0yLjMyLjU2cS0xLjE4LjE3LTIuMjguMTctMi4yIDAtNC4wOC0uNzMtMS44OS0uNzMtMy4yOC0yLjE1LTEuNC0xLjQzLTIuMi0zLjUzdC0uOC00Ljg3cTAtMi4xNS43LTQuMDUuNy0xLjg5IDItMy4zIDEuMy0xLjQgMy4xOC0yLjIyIDEuODctLjgyIDQuMjMtLjgyIDEuOTkgMCAzLjY3LjYzIDEuNjguNjQgMi44OSAxLjg2dDEuOSAyLjk5cS42OCAxLjc4LjY4IDQuMDUgMCAxLjE1LS4yNCAxLjU1LS4yNS40LS45NS40bTEwLjA1IDkuODhoLTUuMDd2LTIxLjAzaDMuMXEuOTggMCAxLjI5LjkybC4zMyAxLjU2cS41NS0uNjIgMS4xNi0xLjEzLjYtLjUxIDEuMjktLjg4dDEuNDgtLjU5cS43OC0uMjEgMS43My0uMjEgMS45OSAwIDMuMjcgMS4wOCAxLjI4IDEuMDcgMS45MSAyLjg1LjUtMS4wNCAxLjIzLTEuNzkuNzQtLjc1IDEuNjItMS4yMi44OS0uNDcgMS44OC0uNy45OS0uMjIgMi0uMjIgMS43NCAwIDMuMDkuNTMgMS4zNi41MyAyLjI4IDEuNTYuOTIgMS4wMiAxLjQgMi41LjQ5IDEuNDguNDkgMy4zOHYxMy4zOWgtNS4wN3YtMTMuMzlxMC0yLjAxLS44OC0zLjAyLS44OC0xLjAyLTIuNTgtMS4wMi0uNzggMC0xLjQ1LjI3LS42Ni4yNy0xLjE3Ljc3LS41LjUtLjc5IDEuMjYtLjI4Ljc2LS4yOCAxLjc0djEzLjM5aC01LjA5di0xMy4zOXEwLTIuMTEtLjg1LTMuMDctLjg1LS45Ny0yLjQ5LS45Ny0xLjExIDAtMi4wNi41NS0uOTUuNTQtMS43NyAxLjQ4em0yOS40NC0yMS4wM2g1LjA4djIxLjAzaC01LjA4em01Ljc4LTYuMTNxMCAuNjUtLjI3IDEuMjMtLjI3LjU3LS43MSAxdC0xLjAzLjY5cS0uNi4yNi0xLjI3LjI2LS42NiAwLTEuMjQtLjI2LS41OS0uMjYtMS4wMi0uNjl0LS42OC0xcS0uMjYtLjU4LS4yNi0xLjIzIDAtLjY4LjI2LTEuMjcuMjUtLjYuNjgtMS4wM3QxLjAyLS42OXEuNTgtLjI1IDEuMjQtLjI1LjY3IDAgMS4yNy4yNS41OS4yNiAxLjAzLjY5dC43MSAxLjAzcS4yNy41OS4yNyAxLjI3bTIwLjg3IDguNzMtMS4zNCAxLjg1cS0uMjIuMjgtLjQ0LjQ1LS4yMS4xNi0uNjIuMTYtLjM5IDAtLjc2LS4yNC0uMzctLjIzLS44OC0uNTN0LTEuMjItLjUzcS0uNzEtLjI0LTEuNzUtLjI0LTEuMzQgMC0yLjM0LjQ4LTEuMDEuNDktMS42NyAxLjM5LS42Ny45LTEgMi4xOC0uMzIgMS4yOC0uMzIgMi45IDAgMS42OC4zNSAzIC4zNiAxLjMxIDEuMDQgMi4ydDEuNjQgMS4zNSAyLjE3LjQ2IDEuOTYtLjI5cS43NS0uMyAxLjI2LS42NnQuODktLjY2cS4zOC0uMjkuODUtLjI5LjYyIDAgLjkzLjQ3bDEuNDUgMS44NHEtLjg0Ljk5LTEuODIgMS42NS0uOTkuNjctMi4wNCAxLjA3LTEuMDYuNC0yLjE4LjU2LTEuMTEuMTctMi4yMi4xNy0xLjk1IDAtMy42Ny0uNzN0LTMuMDEtMi4xMnEtMS4yOS0xLjQtMi4wNC0zLjQyLS43NS0yLjAxLS43NS00LjYgMC0yLjMxLjY3LTQuMjkuNjYtMS45OCAxLjk1LTMuNDMgMS4yOS0xLjQ0IDMuMi0yLjI2dDQuMzktLjgycTIuMzYgMCA0LjEzLjc2dDMuMTkgMi4xN20zNC44My0xMS4yMXY0LjUzaC04Ljk0djI1LjExaC01LjUydi0yNS4xMWgtOC45M3YtNC41M3ptNy4wOSAxNi43aDkuNTVxMC0uOTgtLjI3LTEuODUtLjI4LS44Ny0uODQtMS41My0uNTUtLjY1LTEuNC0xLjAzdC0xLjk4LS4zOHEtMi4xOSAwLTMuNDUgMS4yNXQtMS42MSAzLjU0bTEyLjkxIDMuMDZoLTEzLjAxcS4xMiAxLjYyLjU3IDIuOHQxLjE5IDEuOTRxLjc0Ljc3IDEuNzUgMS4xNSAxLjAyLjM4IDIuMjUuMzh0Mi4xMi0uMjlxLjg5LS4yOCAxLjU2LS42My42Ni0uMzUgMS4xNy0uNjQuNS0uMjguOTctLjI4LjYzIDAgLjk0LjQ3bDEuNDYgMS44NHEtLjg0Ljk5LTEuODkgMS42NS0xLjA0LjY3LTIuMTggMS4wN3QtMi4zMi41NnEtMS4xOC4xNy0yLjI4LjE3LTIuMiAwLTQuMDgtLjczLTEuODktLjczLTMuMjgtMi4xNS0xLjQtMS40My0yLjItMy41M3QtLjgtNC44N3EwLTIuMTUuNy00LjA1LjctMS44OSAyLTMuMyAxLjMtMS40IDMuMTgtMi4yMiAxLjg3LS44MiA0LjIzLS44MiAxLjk5IDAgMy42Ny42MyAxLjY4LjY0IDIuODkgMS44NnQxLjkgMi45OXEuNjggMS43OC42OCA0LjA1IDAgMS4xNS0uMjQgMS41NS0uMjUuNC0uOTUuNG0xMC4wNSA5Ljg4aC01LjA2di0yMS4wM2gzLjA5cS45OCAwIDEuMjkuOTJsLjMzIDEuNTZxLjU1LS42MiAxLjE2LTEuMTMuNi0uNTEgMS4yOS0uODh0MS40OC0uNTlxLjc5LS4yMSAxLjczLS4yMSAxLjk5IDAgMy4yNyAxLjA4IDEuMjggMS4wNyAxLjkxIDIuODUuNS0xLjA0IDEuMjMtMS43OS43NC0uNzUgMS42Mi0xLjIyLjg5LS40NyAxLjg4LS43Ljk5LS4yMiAyLS4yMiAxLjc0IDAgMy4wOS41MyAxLjM2LjUzIDIuMjggMS41Ni45MiAxLjAyIDEuNCAyLjUuNDkgMS40OC40OSAzLjM4djEzLjM5aC01LjA3di0xMy4zOXEwLTIuMDEtLjg4LTMuMDItLjg4LTEuMDItMi41OC0xLjAyLS43OCAwLTEuNDUuMjctLjY2LjI3LTEuMTcuNzctLjUuNS0uNzkgMS4yNi0uMjguNzYtLjI4IDEuNzR2MTMuMzloLTUuMDl2LTEzLjM5cTAtMi4xMS0uODUtMy4wNy0uODUtLjk3LTIuNDktLjk3LTEuMSAwLTIuMDYuNTUtLjk1LjU0LTEuNzcgMS40OHptMzQuMzQtMTQuODh2OS40M3EuODYgMS4wNCAxLjg3IDEuNDcgMS4wMi40MyAyLjIxLjQzIDEuMTQgMCAyLjA3LS40My45Mi0uNDMgMS41Ni0xLjMxLjY1LS44OCAxLTIuMjIuMzUtMS4zNS4zNS0zLjE3IDAtMS44NS0uMy0zLjEzdC0uODUtMi4wOC0xLjM0LTEuMTctMS44LS4zN3EtMS41OCAwLTIuNjguNjctMS4xMS42Ny0yLjA5IDEuODhtLS42OC01LjIzLjQxIDEuOTVxMS4yOS0xLjQ2IDIuOTMtMi4zNnQzLjg2LS45cTEuNzIgMCAzLjE0LjcxIDEuNDMuNzIgMi40NiAyLjA5IDEuMDQgMS4zNiAxLjYgMy4zNnQuNTYgNC41OHEwIDIuMzYtLjYzIDQuMzctLjY0IDItMS44MSAzLjQ4LTEuMTggMS40OC0yLjg1IDIuMzEtMS42OC44My0zLjc1LjgzLTEuNzYgMC0zLjAxLS41NS0xLjI1LS41NC0yLjIzLTEuNXY4LjYxaC01LjA3di0yNy45aDMuMXEuOTggMCAxLjI5LjkybTE4Ljk2LTEwLjM1aDUuMDd2MzAuNDZoLTUuMDd6bTIxLjI0IDI1LjAzdi0zLjU1cS0yLjE5LjEtMy42OS4zOHQtMi40LjcxLTEuMjkgMXEtLjM5LjU4LS4zOSAxLjI1IDAgMS4zMy43OSAxLjkxLjc5LjU3IDIuMDYuNTcgMS41NiAwIDIuNy0uNTYgMS4xMy0uNTYgMi4yMi0xLjcxbS0xMC43LTExLjA1LS45LTEuNjJxMy42My0zLjMyIDguNzMtMy4zMiAxLjg1IDAgMy4zLjYgMS40Ni42MSAyLjQ2IDEuNjggMS4wMSAxLjA4IDEuNTMgMi41OC41MiAxLjQ5LjUyIDMuMjh2MTMuMjhoLTIuM3EtLjcxIDAtMS4xLS4yMi0uMzktLjIxLS42Mi0uODdsLS40NS0xLjUxcS0uOC43MS0xLjU2IDEuMjYtLjc1LjU0LTEuNTcuOTF0LTEuNzYuNTZxLS45My4yLTIuMDYuMi0xLjMzIDAtMi40Ni0uMzZ0LTEuOTUtMS4wOHEtLjgyLS43MS0xLjI3LTEuNzh0LS40NS0yLjQ4cTAtLjguMjctMS41OXQuODctMS41MXEuNjEtLjcxIDEuNTctMS4zNXQyLjM3LTEuMTFxMS40LS40NyAzLjI3LS43NyAxLjg2LS4yOSA0LjI2LS4zNXYtMS4yM3EwLTIuMTItLjktMy4xMy0uOS0xLjAyLTIuNjEtMS4wMi0xLjIzIDAtMi4wMy4yOS0uODEuMjktMS40My42NS0uNjEuMzYtMS4xMi42NC0uNS4yOS0xLjExLjI5LS41NCAwLS45MS0uMjgtLjM3LS4yNy0uNTktLjY0bTI3LjQxIDE2LjgxcS0yLjc1IDAtNC4yMS0xLjU1LTEuNDctMS41NS0xLjQ3LTQuMjd2LTExLjc1aC0yLjE1cS0uNDEgMC0uNy0uMjctLjI5LS4yNi0uMjktLjh2LTIuMDFsMy4zOS0uNTUgMS4wNi01Ljc0cS4xLS40MS4zOS0uNjMuMjktLjIzLjc0LS4yM2gyLjYydjYuNjJoNS42MnYzLjYxaC01LjYydjExLjRxMCAuOTguNDggMS41My40OS41NiAxLjMzLjU2LjQ3IDAgLjc5LS4xMS4zMS0uMTIuNTUtLjI0dC40Mi0uMjRxLjE4LS4xMS4zNy0uMTEuMjIgMCAuMzcuMTEuMTQuMTIuMzEuMzRsMS41MSAyLjQ2cS0xLjEuOTMtMi41NCAxLjQtMS40My40Ny0yLjk3LjQ3bTEyLjI0LTEzLjI3aDkuNTVxMC0uOTgtLjI4LTEuODUtLjI3LS44Ny0uODMtMS41My0uNTUtLjY1LTEuNC0xLjAzdC0xLjk4LS4zOHEtMi4xOSAwLTMuNDUgMS4yNS0xLjI3IDEuMjUtMS42MSAzLjU0bTEyLjkxIDMuMDZoLTEzLjAycS4xMyAxLjYyLjU4IDIuOHQxLjE5IDEuOTRxLjczLjc3IDEuNzUgMS4xNSAxLjAxLjM4IDIuMjQuMzh0Mi4xMy0uMjlxLjg5LS4yOCAxLjU1LS42My42Ny0uMzUgMS4xNy0uNjQuNS0uMjguOTgtLjI4LjYzIDAgLjk0LjQ3bDEuNDUgMS44NHEtLjg0Ljk5LTEuODggMS42NS0xLjA1LjY3LTIuMTggMS4wNy0xLjE0LjQtMi4zMi41Ni0xLjE4LjE3LTIuMjkuMTctMi4xOSAwLTQuMDgtLjczLTEuODgtLjczLTMuMjgtMi4xNS0xLjM5LTEuNDMtMi4xOS0zLjUzdC0uOC00Ljg3cTAtMi4xNS43LTQuMDUuNjktMS44OSAyLTMuMyAxLjMtMS40IDMuMTctMi4yMiAxLjg4LS44MiA0LjI0LS44MiAxLjk5IDAgMy42Ny42MyAxLjY4LjY0IDIuODkgMS44NnQxLjg5IDIuOTlxLjY5IDEuNzguNjkgNC4wNSAwIDEuMTUtLjI1IDEuNTUtLjI0LjQtLjk0LjQiLz48L3N2Zz4=" alt="Demo Image">
             </div>
         </section>
-        <section data-slide-index="28">
+        <section data-slide-index="36">
             <h1>Business Template</h1>
             <p>Corporate presentations made easy</p>
             <div class="fragment fade-in">
@@ -441,7 +755,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzUwIiB2aWV3Qm94PSIwIDAgNjAwIDM1MCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzM0OThkYiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xMjkuODIgMTc1LjYwNWg5LjQzbC0zLjYxLTkuODZxLS4yNi0uNjYtLjU1LTEuNTZ0LS41Ny0xLjk1cS0uMjcgMS4wNS0uNTYgMS45NnQtLjU1IDEuNTl6bTcuNTItMTguNDUgMTEuNjUgMjkuNjRoLTQuMjdxLS43MSAwLTEuMTYtLjM2LS40Ni0uMzYtLjY4LS44OWwtMi4yMS02LjA1aC0xMi4yOGwtMi4yMiA2LjA1cS0uMTYuNDctLjYzLjg2LS40OC4zOS0xLjE3LjM5aC00LjMxbDExLjY3LTI5LjY0em0zMC4zMiAxMS4yMS0xLjMzIDEuODVxLS4yMi4yOC0uNDQuNDUtLjIxLjE2LS42Mi4xNi0uMzkgMC0uNzYtLjI0LS4zNy0uMjMtLjg4LS41My0uNTItLjMtMS4yMi0uNTMtLjcxLS4yNC0xLjc2LS4yNC0xLjMzIDAtMi4zMy40OC0xLjAxLjQ5LTEuNjcgMS4zOS0uNjcuOS0xIDIuMTh0LS4zMyAyLjlxMCAxLjY4LjM2IDMgLjM2IDEuMzEgMS4wNCAyLjIuNjcuODkgMS42NCAxLjM1Ljk2LjQ2IDIuMTcuNDZ0MS45Ni0uMjlxLjc1LS4zIDEuMjYtLjY2dC44OS0uNjZxLjM4LS4yOS44NS0uMjkuNjIgMCAuOTIuNDdsMS40NiAxLjg0cS0uODQuOTktMS44MyAxLjY1LS45OC42Ny0yLjA0IDEuMDctMS4wNS40LTIuMTcuNTYtMS4xMi4xNy0yLjIyLjE3LTEuOTUgMC0zLjY3LS43M3QtMy4wMi0yLjEycS0xLjI5LTEuNC0yLjA0LTMuNDItLjc0LTIuMDEtLjc0LTQuNiAwLTIuMzEuNjYtNC4yOS42Ny0xLjk4IDEuOTYtMy40MyAxLjI5LTEuNDQgMy4yLTIuMjYgMS45LS44MiA0LjM5LS44MiAyLjM1IDAgNC4xMy43NiAxLjc3Ljc2IDMuMTggMi4xN20xNC40OCAxM3YtMy41NXEtMi4yLjEtMy42OS4zOC0xLjUuMjgtMi40LjcxdC0xLjI5IDFxLS4zOS41OC0uMzkgMS4yNSAwIDEuMzMuNzkgMS45MS43OS41NyAyLjA2LjU3IDEuNTUgMCAyLjY5LS41NnQyLjIzLTEuNzFtLTEwLjctMTEuMDUtLjkxLTEuNjJxMy42My0zLjMyIDguNzQtMy4zMiAxLjg0IDAgMy4zLjYgMS40NS42MSAyLjQ2IDEuNjggMSAxLjA4IDEuNTIgMi41OC41MyAxLjQ5LjUzIDMuMjh2MTMuMjhoLTIuM3EtLjcyIDAtMS4xMS0uMjItLjM5LS4yMS0uNjEtLjg3bC0uNDUtMS41MXEtLjguNzEtMS41NiAxLjI2LS43Ni41NC0xLjU4LjkxdC0xLjc1LjU2cS0uOTMuMi0yLjA2LjItMS4zMyAwLTIuNDYtLjM2dC0xLjk1LTEuMDhxLS44Mi0uNzEtMS4yNy0xLjc4dC0uNDUtMi40OHEwLS44LjI3LTEuNTkuMjYtLjc5Ljg3LTEuNTEuNi0uNzEgMS41Ny0xLjM1Ljk2LS42NCAyLjM2LTEuMTEgMS40MS0uNDcgMy4yNy0uNzcgMS44Ny0uMjkgNC4yNy0uMzV2LTEuMjNxMC0yLjEyLS45MS0zLjEzLS45LTEuMDItMi42LTEuMDItMS4yMyAwLTIuMDQuMjl0LTEuNDIuNjVxLS42Mi4zNi0xLjEyLjY0LS41LjI5LTEuMTIuMjktLjUzIDAtLjktLjI4LS4zNy0uMjctLjU5LS42NG0zMy42IDEwLjI1di05LjQzcS0uODctMS4wNS0xLjg4LTEuNDgtMS4wMi0uNDMtMi4xOC0uNDMtMS4xNSAwLTIuMDcuNDMtLjkzLjQzLTEuNTggMS4zLS42Ni44OC0xLjAxIDIuMjJ0LS4zNSAzLjE2cTAgMS44NS4zIDMuMTN0Ljg1IDIuMDlxLjU2LjgxIDEuMzYgMS4xNy43OS4zNiAxLjc4LjM2IDEuNTggMCAyLjY4LS42NiAxLjExLS42NSAyLjEtMS44Nm0wLTI0LjIzaDUuMDZ2MzAuNDZIMjA3cS0xIDAtMS4yNy0uOTJsLS40My0yLjAzcS0xLjI3IDEuNDUtMi45MiAyLjM2LTEuNjUuOS0zLjg0LjktMS43MyAwLTMuMTYtLjcyLTEuNDQtLjcyLTIuNDctMi4wOC0xLjA0LTEuMzYtMS42LTMuMzd0LS41Ni00LjZxMC0yLjMzLjYzLTQuMzQuNjQtMi4wMSAxLjgzLTMuNDkgMS4xOS0xLjQ3IDIuODUtMi4zdDMuNzMtLjgzcTEuNzYgMCAzLjAxLjU1dDIuMjQgMS41em0xNC4wNiAxNy41Mmg5LjU1cTAtLjk4LS4yOC0xLjg1LS4yNy0uODctLjgzLTEuNTMtLjU1LS42NS0xLjQtMS4wM3QtMS45OC0uMzhxLTIuMTkgMC0zLjQ1IDEuMjV0LTEuNjEgMy41NG0xMi45MSAzLjA2SDIxOXEuMTIgMS42Mi41NyAyLjh0MS4xOSAxLjk0cS43NC43NyAxLjc1IDEuMTUgMS4wMi4zOCAyLjI1LjM4dDIuMTItLjI5cS44OS0uMjggMS41Ni0uNjMuNjYtLjM1IDEuMTYtLjY0LjUxLS4yOC45OC0uMjguNjMgMCAuOTQuNDdsMS40NiAxLjg0cS0uODQuOTktMS44OSAxLjY1LTEuMDQuNjctMi4xOCAxLjA3dC0yLjMyLjU2cS0xLjE4LjE3LTIuMjguMTctMi4yIDAtNC4wOC0uNzMtMS44OS0uNzMtMy4yOC0yLjE1LTEuNC0xLjQzLTIuMi0zLjUzdC0uOC00Ljg3cTAtMi4xNS43LTQuMDUuNy0xLjg5IDItMy4zIDEuMy0xLjQgMy4xOC0yLjIyIDEuODctLjgyIDQuMjMtLjgyIDEuOTkgMCAzLjY3LjYzIDEuNjguNjQgMi44OSAxLjg2dDEuOSAyLjk5cS42OCAxLjc4LjY4IDQuMDUgMCAxLjE1LS4yNCAxLjU1LS4yNS40LS45NS40bTEwLjA1IDkuODhoLTUuMDd2LTIxLjAzaDMuMXEuOTggMCAxLjI5LjkybC4zMyAxLjU2cS41NS0uNjIgMS4xNi0xLjEzLjYtLjUxIDEuMjktLjg4dDEuNDgtLjU5cS43OC0uMjEgMS43My0uMjEgMS45OSAwIDMuMjcgMS4wOCAxLjI4IDEuMDcgMS45MSAyLjg1LjUtMS4wNCAxLjIzLTEuNzkuNzQtLjc1IDEuNjItMS4yMi44OS0uNDcgMS44OC0uNy45OS0uMjIgMi0uMjIgMS43NCAwIDMuMDkuNTMgMS4zNi41MyAyLjI4IDEuNTYuOTIgMS4wMiAxLjQgMi41LjQ5IDEuNDguNDkgMy4zOHYxMy4zOWgtNS4wN3YtMTMuMzlxMC0yLjAxLS44OC0zLjAyLS44OC0xLjAyLTIuNTgtMS4wMi0uNzggMC0xLjQ1LjI3LS42Ni4yNy0xLjE3Ljc3LS41LjUtLjc5IDEuMjYtLjI4Ljc2LS4yOCAxLjc0djEzLjM5aC01LjA5di0xMy4zOXEwLTIuMTEtLjg1LTMuMDctLjg1LS45Ny0yLjQ5LS45Ny0xLjExIDAtMi4wNi41NS0uOTUuNTQtMS43NyAxLjQ4em0yOS40NC0yMS4wM2g1LjA4djIxLjAzaC01LjA4em01Ljc4LTYuMTNxMCAuNjUtLjI3IDEuMjMtLjI3LjU3LS43MSAxdC0xLjAzLjY5cS0uNi4yNi0xLjI3LjI2LS42NiAwLTEuMjQtLjI2LS41OS0uMjYtMS4wMi0uNjl0LS42OC0xcS0uMjYtLjU4LS4yNi0xLjIzIDAtLjY4LjI2LTEuMjcuMjUtLjYuNjgtMS4wM3QxLjAyLS42OXEuNTgtLjI1IDEuMjQtLjI1LjY3IDAgMS4yNy4yNS41OS4yNiAxLjAzLjY5dC43MSAxLjAzcS4yNy41OS4yNyAxLjI3bTIwLjg3IDguNzMtMS4zNCAxLjg1cS0uMjIuMjgtLjQ0LjQ1LS4yMS4xNi0uNjIuMTYtLjM5IDAtLjc2LS4yNC0uMzctLjIzLS44OC0uNTN0LTEuMjItLjUzcS0uNzEtLjI0LTEuNzUtLjI0LTEuMzQgMC0yLjM0LjQ4LTEuMDEuNDktMS42NyAxLjM5LS42Ny45LTEgMi4xOC0uMzIgMS4yOC0uMzIgMi45IDAgMS42OC4zNSAzIC4zNiAxLjMxIDEuMDQgMi4ydDEuNjQgMS4zNSAyLjE3LjQ2IDEuOTYtLjI5cS43NS0uMyAxLjI2LS42NnQuODktLjY2cS4zOC0uMjkuODUtLjI5LjYyIDAgLjkzLjQ3bDEuNDUgMS44NHEtLjg0Ljk5LTEuODIgMS42NS0uOTkuNjctMi4wNCAxLjA3LTEuMDYuNC0yLjE4LjU2LTEuMTEuMTctMi4yMi4xNy0xLjk1IDAtMy42Ny0uNzN0LTMuMDEtMi4xMnEtMS4yOS0xLjQtMi4wNC0zLjQyLS43NS0yLjAxLS43NS00LjYgMC0yLjMxLjY3LTQuMjkuNjYtMS45OCAxLjk1LTMuNDMgMS4yOS0xLjQ0IDMuMi0yLjI2dDQuMzktLjgycTIuMzYgMCA0LjEzLjc2dDMuMTkgMi4xN20zNC44My0xMS4yMXY0LjUzaC04Ljk0djI1LjExaC01LjUydi0yNS4xMWgtOC45M3YtNC41M3ptNy4wOSAxNi43aDkuNTVxMC0uOTgtLjI3LTEuODUtLjI4LS44Ny0uODQtMS41My0uNTUtLjY1LTEuNC0xLjAzdC0xLjk4LS4zOHEtMi4xOSAwLTMuNDUgMS4yNXQtMS42MSAzLjU0bTEyLjkxIDMuMDZoLTEzLjAxcS4xMiAxLjYyLjU3IDIuOHQxLjE5IDEuOTRxLjc0Ljc3IDEuNzUgMS4xNSAxLjAyLjM4IDIuMjUuMzh0Mi4xMi0uMjlxLjg5LS4yOCAxLjU2LS42My42Ni0uMzUgMS4xNy0uNjQuNS0uMjguOTctLjI4LjYzIDAgLjk0LjQ3bDEuNDYgMS44NHEtLjg0Ljk5LTEuODkgMS42NS0xLjA0LjY3LTIuMTggMS4wN3QtMi4zMi41NnEtMS4xOC4xNy0yLjI4LjE3LTIuMiAwLTQuMDgtLjczLTEuODktLjczLTMuMjgtMi4xNS0xLjQtMS40My0yLjItMy41M3QtLjgtNC44N3EwLTIuMTUuNy00LjA1LjctMS44OSAyLTMuMyAxLjMtMS40IDMuMTgtMi4yMiAxLjg3LS44MiA0LjIzLS44MiAxLjk5IDAgMy42Ny42MyAxLjY4LjY0IDIuODkgMS44NnQxLjkgMi45OXEuNjggMS43OC42OCA0LjA1IDAgMS4xNS0uMjQgMS41NS0uMjUuNC0uOTUuNG0xMC4wNSA5Ljg4aC01LjA2di0yMS4wM2gzLjA5cS45OCAwIDEuMjkuOTJsLjMzIDEuNTZxLjU1LS42MiAxLjE2LTEuMTMuNi0uNTEgMS4yOS0uODh0MS40OC0uNTlxLjc5LS4yMSAxLjczLS4yMSAxLjk5IDAgMy4yNyAxLjA4IDEuMjggMS4wNyAxLjkxIDIuODUuNS0xLjA0IDEuMjMtMS43OS43NC0uNzUgMS42Mi0xLjIyLjg5LS40NyAxLjg4LS43Ljk5LS4yMiAyLS4yMiAxLjc0IDAgMy4wOS41MyAxLjM2LjUzIDIuMjggMS41Ni45MiAxLjAyIDEuNCAyLjUuNDkgMS40OC40OSAzLjM4djEzLjM5aC01LjA3di0xMy4zOXEwLTIuMDEtLjg4LTMuMDItLjg4LTEuMDItMi41OC0xLjAyLS43OCAwLTEuNDUuMjctLjY2LjI3LTEuMTcuNzctLjUuNS0uNzkgMS4yNi0uMjguNzYtLjI4IDEuNzR2MTMuMzloLTUuMDl2LTEzLjM5cTAtMi4xMS0uODUtMy4wNy0uODUtLjk3LTIuNDktLjk3LTEuMSAwLTIuMDYuNTUtLjk1LjU0LTEuNzcgMS40OHptMzQuMzQtMTQuODh2OS40M3EuODYgMS4wNCAxLjg3IDEuNDcgMS4wMi40MyAyLjIxLjQzIDEuMTQgMCAyLjA3LS40My45Mi0uNDMgMS41Ni0xLjMxLjY1LS44OCAxLTIuMjIuMzUtMS4zNS4zNS0zLjE3IDAtMS44NS0uMy0zLjEzdC0uODUtMi4wOC0xLjM0LTEuMTctMS44LS4zN3EtMS41OCAwLTIuNjguNjctMS4xMS42Ny0yLjA5IDEuODhtLS42OC01LjIzLjQxIDEuOTVxMS4yOS0xLjQ2IDIuOTMtMi4zNnQzLjg2LS45cTEuNzIgMCAzLjE0LjcxIDEuNDMuNzIgMi40NiAyLjA5IDEuMDQgMS4zNiAxLjYgMy4zNnQuNTYgNC41OHEwIDIuMzYtLjYzIDQuMzctLjY0IDItMS44MSAzLjQ4LTEuMTggMS40OC0yLjg1IDIuMzEtMS42OC44My0zLjc1LjgzLTEuNzYgMC0zLjAxLS41NS0xLjI1LS41NC0yLjIzLTEuNXY4LjYxaC01LjA3di0yNy45aDMuMXEuOTggMCAxLjI5LjkybTE4Ljk2LTEwLjM1aDUuMDd2MzAuNDZoLTUuMDd6bTIxLjI0IDI1LjAzdi0zLjU1cS0yLjE5LjEtMy42OS4zOHQtMi40LjcxLTEuMjkgMXEtLjM5LjU4LS4zOSAxLjI1IDAgMS4zMy43OSAxLjkxLjc5LjU3IDIuMDYuNTcgMS41NiAwIDIuNy0uNTYgMS4xMy0uNTYgMi4yMi0xLjcxbS0xMC43LTExLjA1LS45LTEuNjJxMy42My0zLjMyIDguNzMtMy4zMiAxLjg1IDAgMy4zLjYgMS40Ni42MSAyLjQ2IDEuNjggMS4wMSAxLjA4IDEuNTMgMi41OC41MiAxLjQ5LjUyIDMuMjh2MTMuMjhoLTIuM3EtLjcxIDAtMS4xLS4yMi0uMzktLjIxLS42Mi0uODdsLS40NS0xLjUxcS0uOC43MS0xLjU2IDEuMjYtLjc1LjU0LTEuNTcuOTF0LTEuNzYuNTZxLS45My4yLTIuMDYuMi0xLjMzIDAtMi40Ni0uMzZ0LTEuOTUtMS4wOHEtLjgyLS43MS0xLjI3LTEuNzh0LS40NS0yLjQ4cTAtLjguMjctMS41OXQuODctMS41MXEuNjEtLjcxIDEuNTctMS4zNXQyLjM3LTEuMTFxMS40LS40NyAzLjI3LS43NyAxLjg2LS4yOSA0LjI2LS4zNXYtMS4yM3EwLTIuMTItLjktMy4xMy0uOS0xLjAyLTIuNjEtMS4wMi0xLjIzIDAtMi4wMy4yOS0uODEuMjktMS40My42NS0uNjEuMzYtMS4xMi42NC0uNS4yOS0xLjExLjI5LS41NCAwLS45MS0uMjgtLjM3LS4yNy0uNTktLjY0bTI3LjQxIDE2LjgxcS0yLjc1IDAtNC4yMS0xLjU1LTEuNDctMS41NS0xLjQ3LTQuMjd2LTExLjc1aC0yLjE1cS0uNDEgMC0uNy0uMjctLjI5LS4yNi0uMjktLjh2LTIuMDFsMy4zOS0uNTUgMS4wNi01Ljc0cS4xLS40MS4zOS0uNjMuMjktLjIzLjc0LS4yM2gyLjYydjYuNjJoNS42MnYzLjYxaC01LjYydjExLjRxMCAuOTguNDggMS41My40OS41NiAxLjMzLjU2LjQ3IDAgLjc5LS4xMS4zMS0uMTIuNTUtLjI0dC40Mi0uMjRxLjE4LS4xMS4zNy0uMTEuMjIgMCAuMzcuMTEuMTQuMTIuMzEuMzRsMS41MSAyLjQ2cS0xLjEuOTMtMi41NCAxLjQtMS40My40Ny0yLjk3LjQ3bTEyLjI0LTEzLjI3aDkuNTVxMC0uOTgtLjI4LTEuODUtLjI3LS44Ny0uODMtMS41My0uNTUtLjY1LTEuNC0xLjAzdC0xLjk4LS4zOHEtMi4xOSAwLTMuNDUgMS4yNS0xLjI3IDEuMjUtMS42MSAzLjU0bTEyLjkxIDMuMDZoLTEzLjAycS4xMyAxLjYyLjU4IDIuOHQxLjE5IDEuOTRxLjczLjc3IDEuNzUgMS4xNSAxLjAxLjM4IDIuMjQuMzh0Mi4xMy0uMjlxLjg5LS4yOCAxLjU1LS42My42Ny0uMzUgMS4xNy0uNjQuNS0uMjguOTgtLjI4LjYzIDAgLjk0LjQ3bDEuNDUgMS44NHEtLjg0Ljk5LTEuODggMS42NS0xLjA1LjY3LTIuMTggMS4wNy0xLjE0LjQtMi4zMi41Ni0xLjE4LjE3LTIuMjkuMTctMi4xOSAwLTQuMDgtLjczLTEuODgtLjczLTMuMjgtMi4xNS0xLjM5LTEuNDMtMi4xOS0zLjUzdC0uOC00Ljg3cTAtMi4xNS43LTQuMDUuNjktMS44OSAyLTMuMyAxLjMtMS40IDMuMTctMi4yMiAxLjg4LS44MiA0LjI0LS44MiAxLjk5IDAgMy42Ny42MyAxLjY4LjY0IDIuODkgMS44NnQxLjg5IDIuOTlxLjY5IDEuNzguNjkgNC4wNSAwIDEuMTUtLjI1IDEuNTUtLjI0LjQtLjk0LjQiLz48L3N2Zz4=" alt="Demo Image">
             </div>
         </section>
-        <section data-slide-index="2">
+        <section data-slide-index="5">
             <h1>Technical Template</h1>
             <p>Built for developers and architects</p>
             <div class="fragment fade-in">
@@ -454,7 +768,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             </ul>
             </div>
         </section>
-        <section data-slide-index="21">
+        <section data-slide-index="27">
             <h1>More Templates Available</h1>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px">
             <div style="background: #1976D2; color: white; padding: 20px; border-radius: 8px; animate: fade-in">
@@ -470,7 +784,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             <p>All templates are fully customizable - just update the metadata and content!</p>
             </div>
         </section>
-        <section data-slide-index="2">
+        <section data-slide-index="5">
             <h1>How It Works</h1>
             <h2>SlideDeckML Architecture</h2>
             <div class="fragment fade-in">
@@ -486,7 +800,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             <p><strong>4. Present</strong> - Open in any browser and present!</p>
             </div>
         </section>
-        <section data-slide-index="23">
+        <section data-slide-index="29">
             <h1>Technology Stack</h1>
             <p>Built with modern, proven technologies</p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px">
@@ -508,7 +822,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             </div>
             </div>
         </section>
-        <section data-slide-index="2">
+        <section data-slide-index="5">
             <h1>Use Cases</h1>
             <p>Who benefits from SlideDeckML?</p>
             <div class="fragment fade-in">
@@ -531,7 +845,7 @@ print(f&quot;Fibonacci(10) = {result}&quot;)
             <p><strong>Anyone who values efficiency over complexity!</strong></p>
             </div>
         </section>
-        <section data-slide-index="0" data-transition="concave">
+        <section data-slide-index="1" data-transition="concave">
             <h1>Quick Example</h1>
             <p>Creating a slide deck is this simple:</p>
             <pre><code class="language-plaintext" data-trim data-noescape data-line-numbers="1|2|3|4|5|6|7|8|9|10|11|12">{
@@ -549,7 +863,7 @@ This is my first slide!
 </code></pre>
             <p>Compile with: `slidedeckml compile presentation.sdml`</p>
         </section>
-        <section data-slide-index="3">
+        <section data-slide-index="6">
             <h1>Benefits Summary</h1>
             <div style="background: #ecf0f1; padding: 20px; border-radius: 10px">
             <p><strong>vs. PowerPoint/Keynote:</strong></p>
@@ -571,7 +885,7 @@ This is my first slide!
             </ul>
             </div>
         </section>
-        <section data-slide-index="23">
+        <section data-slide-index="29">
             <h1>Project Statistics</h1>
             <p>What we accomplished together</p>
             <div style="display: flex; justify-content: space-around; text-align: center; margin: 40px 0">
@@ -593,28 +907,28 @@ This is my first slide!
             </div>
             </div>
         </section>
-        <section data-slide-index="23">
+        <section data-slide-index="29">
             <h1>Team Members</h1>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 40px 0">
-            <div style="background: linear-gradient(135deg; color: white; padding: 25px; border-radius: 10px; text-align: center">
+            <div style="background: linear-gradient(135deg, #0055A4 0%, #1565C0 100%); color: white; padding: 25px; border-radius: 10px; text-align: center">
             <p><strong>Roxane</strong></p>
             <p>DSL Design &amp; Architecture</p>
             </div>
-            <div style="background: linear-gradient(135deg; color: white; padding: 25px; border-radius: 10px; text-align: center">
+            <div style="background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%); color: white; padding: 25px; border-radius: 10px; text-align: center">
             <p><strong>Baptiste L.</strong></p>
             <p>Parser &amp; Compiler</p>
             </div>
-            <div style="background: linear-gradient(135deg; color: white; padding: 25px; border-radius: 10px; text-align: center">
+            <div style="background: linear-gradient(135deg, #1976D2 0%, #1E88E5 100%); color: white; padding: 25px; border-radius: 10px; text-align: center">
             <p><strong>Baptiste R.</strong></p>
             <p>Code Generation &amp; Testing</p>
             </div>
-            <div style="background: linear-gradient(135deg; color: white; padding: 25px; border-radius: 10px; text-align: center">
+            <div style="background: linear-gradient(135deg, #1E88E5 0%, #42A5F5 100%); color: white; padding: 25px; border-radius: 10px; text-align: center">
             <p><strong>Theo V.</strong></p>
             <p>VS Code Extension &amp; UX</p>
             </div>
             </div>
         </section>
-        <section data-slide-index="3" data-transition="zoom">
+        <section data-slide-index="6" data-transition="zoom">
             <h1>Future Roadmap</h1>
             <p>Where we&#39;re heading next</p>
             <div class="fragment fade-in">
@@ -643,7 +957,7 @@ This is my first slide!
             </ul>
             </div>
         </section>
-        <section data-slide-index="3">
+        <section data-slide-index="6">
             <h1>Try It Yourself!</h1>
             <p>Getting started is easy</p>
             <div class="fragment fade-in">
@@ -666,7 +980,7 @@ This is my first slide!
             <p>Open the generated HTML in your browser</p>
             </div>
         </section>
-        <section data-slide-index="3">
+        <section data-slide-index="6">
             <div style="text-align: center">
             <h1>Thank You!</h1>
             <h2>Questions?</h2>
@@ -691,14 +1005,335 @@ This is my first slide!
     <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/plugin.js"></script>
     <!-- Chalkboard plugin -->
     <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/plugin.js"></script>
+        <!-- Pyodide -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+
+    <!-- SQL.js for SQL execution -->
+    <script src="https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/sql-wasm.js"></script>
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Socket.io (must be before Monaco) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+    
+    <!-- ResizeObserver polyfill for older browsers/mobile -->
+    <script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.1/dist/ResizeObserver.js"></script>
+    
+        <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+    <!-- Seminar plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/seminar/plugin.js"></script>
+    <!-- Poll plugin requires seminar plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/poll/plugin.js"></script>
+    
     <script>
+                require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' }});
+
+        window.monacoEditors = {};
+
+        if (!window.ResizeObserver && typeof ResizeObserver !== 'undefined') {
+            window.ResizeObserver = ResizeObserver;
+        }
+
+        require(['vs/editor/editor.main'], function() {
+            document.querySelectorAll('.monaco-editor-wrapper').forEach(editorElement => {
+                const editorId = editorElement.id;
+                const language = editorElement.getAttribute('data-language') || 'python';
+                const initialCode = editorElement.getAttribute('data-initial-code') || '# Write your ' + language + ' code here\n';
+
+                // Unescape HTML entities from the attribute
+                const textarea = document.createElement('textarea');
+                textarea.innerHTML = initialCode;
+                const unescapedCode = textarea.value;
+
+                window.monacoEditors[editorId] = monaco.editor.create(editorElement, {
+                    value: unescapedCode,
+                    language: language,
+                    theme: 'vs-dark',
+                    minimap: { enabled: false },
+                    fontSize: 14,
+                    lineNumbers: 'on',
+                    automaticLayout: true
+                });
+            });
+
+            document.querySelectorAll('.run-button').forEach(button => {
+                button.addEventListener('click', async function() {
+                    const editorId = this.getAttribute('data-editor-id');
+                    const editor = window.monacoEditors[editorId];
+
+                    if (!editor) {
+                        console.error('Editor not found:', editorId);
+                        return;
+                    }
+
+                    const code = editor.getValue();
+                    const editorElement = document.getElementById(editorId);
+                    const language = editorElement.getAttribute('data-language');
+                    const outputId = editorElement.getAttribute('data-output-id');
+                    const outputElement = document.getElementById(outputId);
+
+                    if (!outputElement) {
+                        console.error('Output element not found:', outputId);
+                        return;
+                    }
+
+                    if (language === 'python') {
+                        await runPythonCode(code, outputElement);
+                    } else if (language === 'javascript') {
+                        runJavaScriptCode(code, outputElement);
+                    } else if (language === 'sql') {
+                        await runSQLCode(code, outputElement);
+                    }
+                });
+            });
+        });
+
+        async function runPythonCode(code, outputElement) {
+            try {
+                if (!window.pyodideReady) {
+                    outputElement.textContent = 'Loading Pyodide...\n';
+
+                    if (!window.pyodideLoading) {
+                        window.pyodideLoading = loadPyodide({
+                            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+                        }).then(async pyodide => {
+                            // Load common packages
+                            await pyodide.loadPackage(['numpy', 'matplotlib']);
+                            window.pyodide = pyodide;
+                            window.pyodideReady = true;
+                            return pyodide;
+                        });
+                    }
+
+                    await window.pyodideLoading;
+                }
+
+                const pyodide = window.pyodide;
+
+                pyodide.runPython(`
+import sys
+from io import StringIO, BytesIO
+import matplotlib
+import matplotlib.pyplot as plt
+import base64
+
+matplotlib.use('Agg')
+
+sys.stdout = StringIO()
+
+plt.close('all')
+                `);
+
+                await pyodide.runPythonAsync(code);
+
+                const textOutput = pyodide.runPython('sys.stdout.getvalue()');
+
+                const figures = pyodide.runPython(`
+import matplotlib.pyplot as plt
+figures_data = []
+for i in plt.get_fignums():
+    fig = plt.figure(i)
+    buf = BytesIO()
+    fig.savefig(buf, format='png', bbox_inches='tight', dpi=100)
+    buf.seek(0)
+    img_base64 = base64.b64encode(buf.read()).decode('utf-8')
+    figures_data.append(img_base64)
+    buf.close()
+figures_data
+                `);
+
+                outputElement.innerHTML = '';
+                outputElement.style.color = '#d4d4d4';
+
+                if (textOutput) {
+                    const textNode = document.createTextNode(textOutput);
+                    outputElement.appendChild(textNode);
+                }
+
+                if (figures && figures.length > 0) {
+                    figures.forEach(imgData => {
+                        const img = document.createElement('img');
+                        img.src = 'data:image/png;base64,' + imgData;
+                        img.style.maxWidth = '100%';
+                        img.style.height = 'auto';
+                        img.style.display = 'block';
+                        img.style.margin = '10px 0';
+                        outputElement.appendChild(img);
+                    });
+                } else if (!textOutput) {
+                    outputElement.textContent = '(No output)';
+                }
+
+            } catch (error) {
+                outputElement.textContent = 'Error: ' + error.message;
+                outputElement.style.color = '#ff6b6b';
+            }
+        }
+
+        function runJavaScriptCode(code, outputElement) {
+            try {
+                const logs = [];
+                const originalLog = console.log;
+                console.log = (...args) => {
+                    logs.push(args.map(a => String(a)).join(' '));
+                    originalLog.apply(console, args);
+                };
+
+                const result = eval(code);
+                console.log = originalLog;
+
+                let output = logs.join('\n');
+                if (result !== undefined && logs.length === 0) {
+                    output = String(result);
+                }
+                outputElement.textContent = output || '(No output)';
+                outputElement.style.color = '#d4d4d4';
+
+            } catch (error) {
+                outputElement.textContent = 'Error: ' + error.message;
+                outputElement.style.color = '#ff6b6b';
+            }
+        }
+
+        async function runSQLCode(code, outputElement) {
+            try {
+                if (!window.sqlReady) {
+                    outputElement.textContent = 'Loading SQL.js...\n';
+
+                    if (!window.sqlLoading) {
+                        window.sqlLoading = initSqlJs({
+                            locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/${file}`
+                        }).then(SQL => {
+                            window.SQL = SQL;
+                            window.sqlReady = true;
+                            return SQL;
+                        });
+                    }
+
+                    await window.sqlLoading;
+                }
+
+                const SQL = window.SQL;
+
+                const db = new SQL.Database();
+
+                const statements = code.trim().split(';').filter(stmt => stmt.trim());
+
+                outputElement.innerHTML = '';
+                outputElement.style.color = '#d4d4d4';
+
+                let hasResults = false;
+
+                for (let i = 0; i < statements.length; i++) {
+                    const stmt = statements[i].trim();
+                    if (!stmt) continue;
+
+                    try {
+                        const results = db.exec(stmt);
+
+                        if (results.length > 0) {
+                            hasResults = true;
+                            results.forEach(result => {
+                                const table = formatSQLResults(result);
+                                outputElement.appendChild(table);
+                            });
+                        } else if (stmt.toUpperCase().startsWith('SELECT')) {
+                            hasResults = true;
+                            const emptyMsg = document.createElement('div');
+                            emptyMsg.textContent = 'Query returned 0 rows';
+                            emptyMsg.style.marginBottom = '10px';
+                            outputElement.appendChild(emptyMsg);
+                        } else {
+                            hasResults = true;
+                            const successMsg = document.createElement('div');
+                            successMsg.textContent = 'Query executed successfully';
+                            successMsg.style.marginBottom = '10px';
+                            successMsg.style.color = '#4CAF50';
+                            outputElement.appendChild(successMsg);
+                        }
+                    } catch (stmtError) {
+                        hasResults = true;
+                        const errorMsg = document.createElement('div');
+                        errorMsg.textContent = 'Error: ' + stmtError.message;
+                        errorMsg.style.color = '#ff6b6b';
+                        errorMsg.style.marginBottom = '10px';
+                        outputElement.appendChild(errorMsg);
+                    }
+                }
+
+                if (!hasResults) {
+                    outputElement.textContent = '(No output)';
+                }
+
+                db.close();
+
+            } catch (error) {
+                outputElement.textContent = 'Error: ' + error.message;
+                outputElement.style.color = '#ff6b6b';
+            }
+        }
+
+        function formatSQLResults(result) {
+            const table = document.createElement('table');
+            table.style.borderCollapse = 'collapse';
+            table.style.marginBottom = '10px';
+            table.style.width = '100%';
+            table.style.fontSize = '0.9em';
+
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            result.columns.forEach(col => {
+                const th = document.createElement('th');
+                th.textContent = col;
+                th.style.border = '1px solid #555';
+                th.style.padding = '8px';
+                th.style.backgroundColor = '#2d2d2d';
+                th.style.textAlign = 'left';
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            const tbody = document.createElement('tbody');
+            result.values.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.textContent = cell !== null ? cell : 'NULL';
+                    td.style.border = '1px solid #555';
+                    td.style.padding = '8px';
+                    if (cell === null) {
+                        td.style.fontStyle = 'italic';
+                        td.style.color = '#888';
+                    }
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+
+            return table;
+        }
+
+        const originalUrl = window.location.href;
+        const guestParam = new URL(originalUrl).searchParams.get('guest');
+        
         Reveal.initialize({
             hash: true,
             transition: 'slide',
             progress: true,
             center: true,
             backgroundTransition: 'fade',
-            plugins: [ RevealHighlight, RevealChalkboard, RevealCustomControls ],
+            
+            seminar: {
+                server: window.location.protocol + '//' + window.location.hostname + ':4433',
+                venue: 'slidedeckml',
+                room: 'slidedeckml-room',
+                hash: '$2a$05$hhgakVn1DWBfgfSwMihABeYToIBEiQGJ.ONa.HWEiNGNI6mxFCy8S',
+                autoJoin: false
+            },
+            
+            plugins: [ RevealHighlight, RevealChalkboard, RevealCustomControls, RevealSeminar, RevealPoll ],
             chalkboard: {
           "theme": "chalkboard",
           "boardmarkerWidth": 3,
@@ -720,6 +1355,16 @@ This is my first slide!
                 throwOnError: false
             });
         });
+
+        if (guestParam === 'true') {
+            Reveal.on('slidechanged', function() {
+                const currentUrl = new URL(window.location.href);
+                if (!currentUrl.searchParams.has('guest')) {
+                    currentUrl.searchParams.set('guest', 'true');
+                    window.history.replaceState({}, '', currentUrl.toString());
+                }
+            });
+        }
 
         // Synchronized fragments handler
         let currentFragmentIndex = -1;
@@ -790,6 +1435,191 @@ This is my first slide!
         Reveal.on('ready', () => {
             updateSyncItems();
         });
+
+        
+        // Detect guest mode and apply CSS class early
+        const urlParams = new URLSearchParams(window.location.search);
+        const isGuest = urlParams.get('guest') === 'true';
+        if (isGuest) {
+            document.body.classList.add('guest-mode');
+        }
+
+        // Join seminar room (host or participant)
+        Reveal.on('ready', function() {
+            console.log('Current URL:', window.location.href);
+            console.log('isGuest:', isGuest);
+            console.log('RevealSeminar available:', typeof RevealSeminar !== 'undefined');
+
+            if (isGuest) {
+                console.log('Joining as GUEST/PARTICIPANT without password');
+                RevealSeminar.join_room();
+            } else {
+                console.log('Joining as HOST with password');
+                RevealSeminar.open_or_join_room('123456');
+            }
+        });
+
+        // Generate QR code once and set it for all quiz/poll
+        Reveal.on('ready', function() {
+            let url = window.location.href;
+            if (url.startsWith('file://')) {
+                const hostname = window.location.hostname || 'localhost';
+                const port = 3000;
+                const pathname = window.location.pathname;
+                const pathMatch = pathname.match(/sse-dsl-SlideDeckML(.+)/) || pathname.match(/([^/]+.html)$/);
+                const path = pathMatch ? (pathMatch[1] || '/' + pathMatch[0]) : 'index.html';
+                url = 'http://' + hostname + ':' + port + path;
+            }
+
+            const baseUrl = url.split('?')[0];
+            const guestUrl = baseUrl + '?guest=true';
+
+            const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(guestUrl);
+            document.querySelectorAll('img.qr-code').forEach(function(img) {
+                img.src = qrUrl;
+            });
+        });
+
+        // Store chart instances
+        const chartInstances = {};
+
+        // Toggle results button handler (host only)
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('toggle-results-btn')) {
+                const pollId = e.target.dataset.poll;
+                const pollDiv = document.querySelector('.poll[data-poll="' + pollId + '"]');
+                const resultsDiv = document.querySelector('.results[data-poll="' + pollId + '"]');
+
+                if (resultsDiv.style.display === 'none') {
+                    if (pollDiv) pollDiv.style.display = 'none';
+                    resultsDiv.style.display = 'block';
+                    e.target.textContent = 'Hide Results';
+                    updateChart(pollId);
+                } else {
+                    if (pollDiv) pollDiv.style.display = 'flex';
+                    resultsDiv.style.display = 'none';
+                    e.target.textContent = 'Show Results';
+                }
+            }
+        });
+
+        // Auto-show results when voting (for showResultsOnDemand: false, host only)
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('.poll[data-auto-show-results="true"] button')) {
+                const pollDiv = e.target.closest('.poll');
+                const pollId = pollDiv.dataset.poll;
+                const resultsDiv = document.querySelector('.results[data-poll="' + pollId + '"]');
+
+                // Wait a bit for the vote to be registered
+                setTimeout(function() {
+                    pollDiv.style.display = 'none';
+                    resultsDiv.style.display = 'block';
+                    updateChart(pollId);
+                }, 500);
+            }
+        });
+
+        // Listen for vote updates from the poll plugin (host only)
+        if (!isGuest) {
+            Reveal.on('received', function(event) {
+                if (event.content && event.content.type === 'poll') {
+                    // A vote was received, update all visible charts
+                    document.querySelectorAll('.results').forEach(function(resultsDiv) {
+                        const displayStyle = window.getComputedStyle(resultsDiv).display;
+                        if (displayStyle !== 'none') {
+                            const pollId = resultsDiv.dataset.poll;
+                            setTimeout(function() {
+                                updateChart(pollId);
+                            }, 300); // Small delay to let the poll plugin update the data
+                        }
+                    });
+                }
+            });
+
+            // Refresh charts periodically when visible (host only)
+            setInterval(function() {
+                document.querySelectorAll('.results').forEach(function(resultsDiv) {
+                    const displayStyle = window.getComputedStyle(resultsDiv).display;
+                    if (displayStyle !== 'none') {
+                        const pollId = resultsDiv.dataset.poll;
+                        updateChart(pollId);
+                    }
+                });
+            }, 1000); // Check every seconds for updates
+        }
+
+        // Update or create chart for a poll
+        function updateChart(pollId) {
+            const resultsDiv = document.querySelector('.results[data-poll="' + pollId + '"]');
+            const visualization = resultsDiv.dataset.visualization;
+            const isQuiz = resultsDiv.dataset.isQuiz === 'true';
+            const canvas = document.querySelector('#chart-' + pollId);
+
+            // Get data from results spans
+            const valueSpans = resultsDiv.querySelectorAll('span[data-value]');
+            const labels = [];
+            const data = [];
+            const defaultColors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'];
+            const colors = [];
+
+            valueSpans.forEach(function(span, index) {
+                const parentP = span.parentElement;
+                const label = parentP.textContent.split(':')[0].trim();
+                const value = parseInt(span.textContent) || 0;
+                labels.push(label);
+                data.push(value);
+
+                // Determine color based on quiz/poll and correct/incorrect
+                if (isQuiz) {
+                    const isCorrect = parentP.dataset.correct === 'true';
+                    colors.push(isCorrect ? '#4CAF50' : '#F44336'); // Green for correct, red for incorrect
+                } else {
+                    colors.push(defaultColors[index % defaultColors.length]);
+                }
+            });
+
+            // Destroy existing chart if it exists
+            if (chartInstances[pollId]) {
+                chartInstances[pollId].destroy();
+            }
+
+            // Create new chart
+            const ctx = canvas.getContext('2d');
+            const chartType = visualization === 'pieChart' ? 'pie' : 'bar';
+
+            chartInstances[pollId] = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Votes',
+                        data: data,
+                        backgroundColor: colors,
+                        borderColor: colors.map(c => c + 'CC'),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: chartType === 'pie',
+                            position: 'bottom'
+                        }
+                    },
+                    scales: chartType === 'bar' ? {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    } : {}
+                }
+            });
+        }
+        
     </script>
 </body>
 </html>
