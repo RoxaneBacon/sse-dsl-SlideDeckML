@@ -27,12 +27,10 @@
 
 ## Structure de base
 
-Une présentation SlideDeckML se compose de trois parties optionnelles :
+Une présentation SlideDeckML se compose de deux parties :
 
 ```
 {métadonnées}
----
-{template}
 ===
 {slides}
 ```
@@ -60,13 +58,23 @@ Les métadonnées définissent les informations générales de votre présentati
 
 ### Propriétés disponibles
 
-| Propriété | Obligatoire | Description                              |
-| --------- | ----------- | ---------------------------------------- |
-| `author`  | Oui         | Nom de l'auteur                          |
-| `title`   | Oui         | Titre de la présentation                 |
-| `theme`   | Non         | Thème visuel (ex: "dark", "light")       |
-| `logo`    | Non         | URL du logo                              |
-| `css`     | Non         | URL d'une feuille de style personnalisée |
+| Propriété                      | Obligatoire | Description                                                 |
+| ------------------------------ | ----------- | ----------------------------------------------------------- |
+| `author`                       | Oui         | Nom de l'auteur                                             |
+| `title`                        | Oui         | Titre de la présentation                                    |
+| `theme`                        | Non         | Thème visuel (ex: "dark", "light")                          |
+| `logo`                         | Non         | URL du logo                                                 |
+| `css`                          | Non         | URL d'une feuille de style personnalisée                    |
+| `transition`                   | Non         | Transition souhaitée au travers des slides                  |
+| `chalkboard`                   | Non         | Activer le tableau blanc (ex: "true", "false")              |
+| `chalkboard-theme`             | Non         | Thème du tableau blanc (ex: "chalkboard", "whiteboard")     |
+| `chalkboard-boardmarker-width` | Non         | Largeur du marqueur pour tableau blanc                      |
+| `chalkboard-chalk-width`       | Non         | Largeur de la craie                                         |
+| `chalkboard-chalk-effect`      | Non         | Effet de la craie (ex: "0.5", "1.0")                        |
+| `chalkboard-src`               | Non         | Source de données du tableau blanc                          |
+| `chalkboard-readonly`          | Non         | Mode lecture seule (ex: "true", "false")                    |
+| `chalkboard-buttons`           | Non         | Afficher les boutons du tableau blanc (ex: "true", "false") |
+| `chalkboard-transition`        | Non         | Durée de transition du tableau blanc                        |
 
 ### Exemple
 
@@ -76,15 +84,13 @@ Les métadonnées définissent les informations générales de votre présentati
     title: "SlideDeckML - Guide Complet"
     theme: "dark"
     logo: "https://example.com/logo.png"
-    css: "https://example.com/custom.css"
+    css: "h1{ color: blue}"
 }
 ```
 
 ---
 
-## Séparateurs
-
-### `===` - Séparateur de slides
+## Séparateur de slides
 
 Ce symbole sépare les différentes slides de votre présentation. Chaque slide est indépendante.
 
@@ -98,18 +104,6 @@ Contenu de la première slide
 # Slide 2
 
 Contenu de la deuxième slide
-```
-
-### `---` - Séparateur de template
-
-Ce symbole délimite la section du template (modèle qui apparaît sur chaque slide).
-
-```sdml
----
-Template commun à toutes les slides
----
-===
-# Ma première slide
 ```
 
 ---
@@ -199,9 +193,9 @@ Tous ces symboles créent des puces. Ils sont interchangeables.
 
 **Rendu :**
 
--   Premier élément
--   Deuxième élément
--   Troisième élément
+- Premier élément
+- Deuxième élément
+- Troisième élément
 
 ### Listes ordonnées
 
@@ -326,7 +320,7 @@ def factorial(n):
 #### 2. Numéros de ligne personnalisés
 
 ````sdml
-```typescript ['lines:1,2-3']
+```typescript [lines:'1,2-3']
 interface User {
     id: number;
     name: string;
@@ -337,7 +331,7 @@ interface User {
 #### 3. Numérotation à partir d'un nombre
 
 ````sdml
-```java ['start:10']
+```java [start:10]
 public class Example {
     private int value;
 }
@@ -371,7 +365,7 @@ function greet(name) {
 
 ## Python avec numéros de ligne
 
-```python ['lines:1,2-4']
+```python [lines:'1,2-4']
 def calculate(a, b):
     result = a + b
     print(f"Result: {result}")
@@ -380,7 +374,7 @@ def calculate(a, b):
 
 ## TypeScript avec début personnalisé
 
-```typescript ['start:42']
+```typescript [start:'42']
 interface Config {
     apiUrl: string;
     timeout: number;
@@ -489,46 +483,69 @@ Paragraphe dans un encadré gris clair avec coins arrondis
 
 ---
 
-## Templates
+## Templates de présentation
 
-### Symbole : `---`
+SlideDeckML propose des **templates de présentation** prêts à l'emploi dans le dossier `examples/templates/`. Ce sont des fichiers `.sdml` complets que vous pouvez copier et personnaliser pour différents types de présentations.
 
-Un template est un contenu qui apparaît sur **toutes les slides** de votre présentation. Très utile pour les logos, pieds de page, ou éléments récurrents.
+### Templates disponibles
 
-### Syntaxe
+| Template       | Usage                          | Caractéristiques                           |
+| -------------- | ------------------------------ | ------------------------------------------ |
+| **Academic**   | Cours universitaires, thèses   | Header avec gradient, structure académique |
+| **Business**   | Présentations d'entreprise     | Style corporate, métriques financières     |
+| **Technical**  | Talks techniques, code reviews | Thème sombre, optimisé pour le code        |
+| **Conference** | Conférences professionnelles   | Design moderne et épuré                    |
+| **Minimal**    | Présentations simples          | Style minimaliste et léger                 |
 
-```sdml
-{métadonnées}
----
-Contenu du template (apparaît sur chaque slide)
----
-===
-# Slide 1
-===
-# Slide 2
-```
+### Comment utiliser un template
 
-### Exemple
+1. Copiez le fichier template désiré depuis `examples/templates/`
+2. Modifiez les métadonnées (author, title, etc.)
+3. Remplacez le contenu des slides par votre contenu
+4. Compilez le fichier
+
+### Exemple - Utilisation du template Academic
 
 ```sdml
 {
-    author: "Jean Dupont"
-    title: "Présentation avec Template"
+    author: "Dr. Marie Dupont"
+    title: "Introduction aux Algorithmes"
+    theme: "white"
+    css: "... (styles du template academic) ..."
 }
----
-::: {color: 'blue', font-size: '14px', position: 'absolute', bottom: '20px', right: '20px'}
+===
+# Introduction
+
+Bienvenue dans ce cours sur les algorithmes
+
+===
+# Chapitre 1
+
+Les structures de données fondamentales
+```
+
+### Éléments récurrents avec styles absolus
+
+Si vous voulez ajouter un élément qui apparaît sur chaque slide (logo, pied de page), utilisez le positionnement absolu avec CSS :
+
+```sdml
+===
+::: {position: 'fixed'; bottom: '20px'; right: '20px'; font-size: '14px'; color: '#666'}
 © 2026 - Mon Entreprise
 :::
----
+
+# Ma première slide
+
+Contenu...
+
 ===
-# Slide 1
+::: {position: 'fixed'; bottom: '20px'; right: '20px'; font-size: '14px'; color: '#666'}
+© 2026 - Mon Entreprise
+:::
 
-Cette slide a le copyright en bas à droite
+# Ma deuxième slide
 
-===
-# Slide 2
-
-Cette slide aussi !
+Contenu...
 ```
 
 ---
@@ -579,10 +596,10 @@ Output: 10
 
 **Comportement :**
 
--   Étape 1 : affiche "x = 0"
--   Étape 2 : **remplace** par "x = 5"
--   Étape 3 : **remplace** par "x = 10"
--   Étape 4 : **remplace** par "Output: 10"
+- Étape 1 : affiche "x = 0"
+- Étape 2 : **remplace** par "x = 5"
+- Étape 3 : **remplace** par "x = 10"
+- Étape 4 : **remplace** par "Output: 10"
 
 ### Exemple - Mode Keep (Accumulation)
 
@@ -613,10 +630,10 @@ Output: 10
 
 **Comportement :**
 
--   Étape 1 : affiche "x = 0"
--   Étape 2 : affiche "x = 0" **ET** "x = 5"
--   Étape 3 : affiche "x = 0", "x = 5" **ET** "x = 10"
--   Étape 4 : affiche tout + "Output: 10"
+- Étape 1 : affiche "x = 0"
+- Étape 2 : affiche "x = 0" **ET** "x = 5"
+- Étape 3 : affiche "x = 0", "x = 5" **ET** "x = 10"
+- Étape 4 : affiche tout + "Output: 10"
 
 ### Exemple avec images
 
@@ -653,7 +670,6 @@ save(img)
 | --------------------- | ---------------------- | --------------------------------- |
 | `{ }`                 | Métadonnées            | `{author: "Nom", title: "Titre"}` |
 | `===`                 | Séparateur de slides   | `===`                             |
-| `---`                 | Séparateur de template | `---`                             |
 | `#`                   | Titre H1               | `# Mon Titre`                     |
 | `##`                  | Titre H2               | `## Sous-titre`                   |
 | `###`                 | Titre H3               | `### Section`                     |
@@ -676,33 +692,33 @@ save(img)
 
 ### 1. Organisation
 
--   **Une idée par slide** : ne surchargez pas vos slides
--   **Utilisez les templates** pour les éléments récurrents
--   **Structurez avec des titres** hiérarchiques
+- **Une idée par slide** : ne surchargez pas vos slides
+- **Utilisez les templates** pour les éléments récurrents
+- **Structurez avec des titres** hiérarchiques
 
 ### 2. Formatage
 
--   **Soyez cohérent** dans vos choix de formatage
--   **Utilisez le gras** pour les mots-clés importants
--   **Les listes** rendent le contenu plus lisible
+- **Soyez cohérent** dans vos choix de formatage
+- **Utilisez le gras** pour les mots-clés importants
+- **Les listes** rendent le contenu plus lisible
 
 ### 3. Code
 
--   **Spécifiez le langage** pour une meilleure coloration
--   **Utilisez les fragments synchronisés** pour les explications pas à pas
--   **Limitez la longueur** des blocs de code (10-15 lignes max)
+- **Spécifiez le langage** pour une meilleure coloration
+- **Utilisez les fragments synchronisés** pour les explications pas à pas
+- **Limitez la longueur** des blocs de code (10-15 lignes max)
 
 ### 4. Styles
 
--   **Restez simple** : trop de styles nuisent à la lisibilité
--   **Utilisez une palette cohérente** de couleurs
--   **Testez la lisibilité** (contraste texte/fond)
+- **Restez simple** : trop de styles nuisent à la lisibilité
+- **Utilisez une palette cohérente** de couleurs
+- **Testez la lisibilité** (contraste texte/fond)
 
 ### 5. Médias
 
--   **Optimisez la taille** des images
--   **Utilisez des URLs absolues** pour les ressources externes
--   **Ajoutez toujours une description** dans `![description](url)`
+- **Optimisez la taille** des images
+- **Utilisez des URLs absolues** pour les ressources externes
+- **Ajoutez toujours une description** dans `![description](url)`
 
 ---
 
@@ -710,13 +726,29 @@ save(img)
 
 Consultez les exemples fournis dans le dossier `examples/sdml/` :
 
--   `minimal.sdml` - Exemple minimal pour débuter
--   `comprehensive-demo.sdml` - Toutes les fonctionnalités
--   `demo-with-styles.sdml` - Styles CSS personnalisés
--   `code-demo.sdml` - Blocs de code avec options
--   `highlight-demo.sdml` - Modes de surlignage
--   `sync-demo.sdml` - Fragments synchronisés
+- `01-simple-markdown.sdml` - Markdown de base (titres, listes, formatage)
+- `02-code-highlighting.sdml` - Blocs de code avec coloration syntaxique
+- `03-code-sync.sdml` - Fragments synchronisés avec le code
+- `04-latex.sdml` - Formules mathématiques LaTeX
+- `05-styling.sdml` - Styles CSS personnalisés
+- `06-media.sdml` - Images et vidéos
+- `07-absolute-positioning.sdml` - Positionnement absolu
+- `08-template-academic.sdml` - Template académique complet
+- `13-chalkboard-simple.sdml` - Fonctionnalité tableau blanc
+- `16-fragments.sdml` - Animations de fragments
+- `17-transitions.sdml` - Transitions entre slides
+- `complete-demo.sdml` - Démonstration complète de toutes les fonctionnalités
+
+### Templates prêts à l'emploi
+
+Dans `examples/templates/`, vous trouverez des templates complets :
+
+- `academic/` - Template pour présentations académiques
+- `business/` - Template pour présentations d'entreprise
+- `technical/` - Template pour talks techniques
+- `conference/` - Template pour conférences
+- `minimal/` - Template minimaliste
 
 ---
 
-**Bonne création de présentations avec SlideDeckML ! 🎉**
+**Bonne création de présentations avec SlideDeckML !**
