@@ -1,4 +1,6 @@
-import { Metadata } from '../language/generated/ast'
+import { Metadata } from '../language/generated/ast';
+import { ImageConverter } from './image-converter';
+import * as path from 'path';
 
 export class TemplateGenerator {
     private title: string = 'SlideDeckML Presentation'
@@ -6,6 +8,27 @@ export class TemplateGenerator {
     private css: string = ''
     private logo: string = ''
     private theme: string = 'white'
+    private transition: string = 'slide'
+    private sourceFilePath?: string;
+    
+    // Chalkboard configuration
+    private chalkboardEnabled: boolean = false;
+    private chalkboardTheme: string = 'chalkboard';
+    private chalkboardBoardmarkerWidth: number = 3;
+    private chalkboardChalkWidth: number = 7;
+    private chalkboardChalkEffect: number = 1.0;
+    private chalkboardSrc: string = '';
+    private chalkboardReadonly: boolean = false;
+    private chalkboardButtons: boolean = true;
+    private chalkboardTransition: number = 800;
+
+    /**
+     * Set the source file path for resolving relative paths
+     * @param filePath Absolute path to the .sdml file
+     */
+    public setSourceFilePath(filePath: string): void {
+        this.sourceFilePath = filePath;
+    }
 
     public setMetadata(metadata: Metadata): void {
         // Access author and title directly from the metadata object
@@ -20,8 +43,93 @@ export class TemplateGenerator {
         if (metadata.theme) {
             this.theme = metadata.theme.replace(/^"|"$/g, '')
         }
+        if (metadata.transition) {
+            this.transition = metadata.transition.replace(/^"|"$/g, '')
+        }
+        
+        // Chalkboard configuration
+        if (metadata.chalkboard) {
+            const enabled = metadata.chalkboard.replace(/^"|"$/g, '').toLowerCase();
+            this.chalkboardEnabled = enabled === 'true' || enabled === 'yes' || enabled === '1';
+        }
+        if (metadata.chalkboardTheme) {
+            this.chalkboardTheme = metadata.chalkboardTheme.replace(/^"|"$/g, '');
+        }
+        if (metadata.chalkboardBoardmarkerWidth) {
+            this.chalkboardBoardmarkerWidth = parseFloat(metadata.chalkboardBoardmarkerWidth.replace(/^"|"$/g, ''));
+        }
+        if (metadata.chalkboardChalkWidth) {
+            this.chalkboardChalkWidth = parseFloat(metadata.chalkboardChalkWidth.replace(/^"|"$/g, ''));
+        }
+        if (metadata.chalkboardChalkEffect) {
+            this.chalkboardChalkEffect = parseFloat(metadata.chalkboardChalkEffect.replace(/^"|"$/g, ''));
+        }
+        if (metadata.chalkboardSrc) {
+            this.chalkboardSrc = metadata.chalkboardSrc.replace(/^"|"$/g, '');
+        }
+        if (metadata.chalkboardReadonly) {
+            const readonly = metadata.chalkboardReadonly.replace(/^"|"$/g, '').toLowerCase();
+            this.chalkboardReadonly = readonly === 'true' || readonly === 'yes' || readonly === '1';
+        }
+        if (metadata.chalkboardButtons) {
+            const buttons = metadata.chalkboardButtons.replace(/^"|"$/g, '').toLowerCase();
+            this.chalkboardButtons = buttons === 'true' || buttons === 'yes' || buttons === '1';
+        }
+        if (metadata.chalkboardTransition) {
+            this.chalkboardTransition = parseFloat(metadata.chalkboardTransition.replace(/^"|"$/g, ''));
+        }
     }
+    
+    /**
+     * Get chalkboard plugin CDN links
+     * @returns HTML string with CDN links for chalkboard dependencies
+     */
+    private getChalkboardCDNLinks(): { css: string; js: string } {
+        return {
+            css: `<!-- Font Awesome (required for chalkboard) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom controls plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/style.css">
+    <!-- Chalkboard plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/style.css">`,
+            js: `<!-- Font Awesome (required for chalkboard) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <!-- Custom controls plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/plugin.js"></script>
+    <!-- Chalkboard plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/plugin.js"></script>`
+        };
+    }
+    
+    /**
+     * Generate chalkboard configuration object
+     * @returns Configuration object for RevealChalkboard
+     */
+    private getChalkboardConfig(): string {
+        if (!this.chalkboardEnabled) {
+            return '';
+        }
+        
+        const config: any = {
+            theme: this.chalkboardTheme,
+            boardmarkerWidth: this.chalkboardBoardmarkerWidth,
+            chalkWidth: this.chalkboardChalkWidth,
+            chalkEffect: this.chalkboardChalkEffect,
+            readOnly: this.chalkboardReadonly,
+            buttons: this.chalkboardButtons,
+            transition: this.chalkboardTransition
+        };
+        
+        if (this.chalkboardSrc) {
+            config.src = this.chalkboardSrc;
+        }
+        
+        return JSON.stringify(config, null, 12);
+    }
+    
     public getHTMLTemplate(slidesContent: string): string {
+        const chalkboardCDN = this.chalkboardEnabled ? this.getChalkboardCDNLinks() : { css: '', js: '' };
+        
         return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,9 +144,31 @@ export class TemplateGenerator {
     }.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    ${this.chalkboardEnabled ? chalkboardCDN.css : ''}
     <style> 
         
         ${this.css}
+
+        /* Default Reveal.js overrides */
+        .reveal {
+            font-size: 32px; /* Reduced from default 40px */
+        }
+        
+        .reveal .slides {
+            text-align: left; /* Remove default centering */
+        }
+        
+        .reveal h1 {
+            font-size: 2em; /* Reduced from default 2.5em */
+        }
+        
+        .reveal h2 {
+            font-size: 1.3em; /* Reduced from default 1.8em */
+        }
+        
+        .reveal h3 {
+            font-size: 1em; /* Reduced from default 1.5em */
+        }
    
         /* Synchronized fragments styling */
         .sync-container {
@@ -80,7 +210,10 @@ export class TemplateGenerator {
         <div class="header-author">${this.author}</div>
         ${
             this.logo
-                ? `<img src="${this.logo}" alt="Logo" class="header-logo">`
+                ? `<img src="${ImageConverter.convertToBase64Sync(
+                    this.logo, 
+                    this.sourceFilePath ? path.dirname(this.sourceFilePath) : undefined
+                )}" alt="Logo" class="header-logo">`
                 : ''
         }
     </header>`
@@ -95,12 +228,15 @@ ${slidesContent}
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    ${this.chalkboardEnabled ? chalkboardCDN.js : ''}
     <script>
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
+            transition: '${this.transition}',
+            progress: true,
+            center: true,
             backgroundTransition: 'fade',
-            plugins: [ RevealHighlight ]
+            plugins: [ RevealHighlight${this.chalkboardEnabled ? ', RevealChalkboard, RevealCustomControls' : ''} ]${this.chalkboardEnabled ? ',\n            chalkboard: ' + this.getChalkboardConfig() : ''}
         });
 
         // Auto-render LaTeX when slides are ready

@@ -63,6 +63,517 @@ class SlideDeckMLApp {
                 // Define SlideDeckML language
                 monaco.languages.register({ id: 'slidedeckml' });
 
+                // Language configuration for auto-closing and formatting
+                monaco.languages.setLanguageConfiguration('slidedeckml', {
+                    comments: {
+                        lineComment: '//',
+                        blockComment: ['/*', '*/']
+                    },
+                    brackets: [
+                        ['{', '}'],
+                        ['[', ']'],
+                        ['(', ')']
+                    ],
+                    autoClosingPairs: [
+                        { open: '{', close: '}' },
+                        { open: '[', close: ']' },
+                        { open: '(', close: ')' },
+                        { open: '"', close: '"' },
+                        { open: '**', close: '**' },
+                        { open: '*', close: '*' },
+                        { open: '__', close: '__' },
+                        { open: '```', close: '```' },
+                        { open: ':::', close: ':::' }
+                    ],
+                    surroundingPairs: [
+                        { open: '{', close: '}' },
+                        { open: '[', close: ']' },
+                        { open: '(', close: ')' },
+                        { open: '"', close: '"' },
+                        { open: '**', close: '**' },
+                        { open: '*', close: '*' },
+                        { open: '__', close: '__' }
+                    ]
+                });
+
+                // Register completion provider
+                monaco.languages.registerCompletionItemProvider('slidedeckml', {
+                    provideCompletionItems: (model, position) => {
+                        const word = model.getWordUntilPosition(position);
+                        const range = {
+                            startLineNumber: position.lineNumber,
+                            endLineNumber: position.lineNumber,
+                            startColumn: word.startColumn,
+                            endColumn: word.endColumn
+                        };
+
+                        const line = model.getLineContent(position.lineNumber);
+                        const lineUpToCursor = line.substring(0, position.column - 1);
+                        const isLineStart = lineUpToCursor.trim() === '';
+
+                        const suggestions = [];
+
+                        // Helper function to check if we're inside metadata block
+                        const isInsideMetadata = () => {
+                            let openBraceFound = false;
+                            let closeBraceFound = false;
+                            
+                            // Scan backwards from current position
+                            for (let i = position.lineNumber; i >= 1; i--) {
+                                const content = model.getLineContent(i);
+                                const checkContent = i === position.lineNumber ? 
+                                    content.substring(0, position.column - 1) : content;
+                                
+                                if (checkContent.includes('}')) {
+                                    closeBraceFound = true;
+                                    break;
+                                }
+                                if (checkContent.includes('{')) {
+                                    openBraceFound = true;
+                                    break;
+                                }
+                                
+                                // If we see slide separator, we're not in metadata
+                                if (content.trim() === '===') break;
+                                
+                                // Don't scan too far
+                                if (i < position.lineNumber - 20) break;
+                            }
+                            
+                            return openBraceFound && !closeBraceFound;
+                        };
+
+                        // Helper to check if we're inside a slide (after ===)
+                        const isInsideSlide = () => {
+                            // Scan backwards to see if we've encountered a slide separator
+                            for (let i = position.lineNumber - 1; i >= 1; i--) {
+                                const content = model.getLineContent(i).trim();
+                                if (content === '===') {
+                                    return true;
+                                }
+                                // Don't scan too far
+                                if (i < position.lineNumber - 50) break;
+                            }
+                            return false;
+                        };
+
+                        // Helper to get already used metadata fields
+                        const getUsedMetadataFields = () => {
+                            const usedFields = new Set();
+                            if (!isInsideMetadata()) return usedFields;
+                            
+                            for (let i = Math.max(1, position.lineNumber - 20); i <= Math.min(model.getLineCount(), position.lineNumber + 20); i++) {
+                                const content = model.getLineContent(i);
+                                const match = content.match(/^\s*(author|title|theme|logo|css|chalkboard(?:-[a-z-]+)?)\s*:/);
+                                if (match) {
+                                    usedFields.add(match[1]);
+                                }
+                            }
+                            return usedFields;
+                        };
+
+                        // If inside metadata, ONLY show metadata field completions
+                        const insideMetadata = isInsideMetadata();
+                        const insideSlide = isInsideSlide();
+
+                        // Metadata fields (in curly braces context)
+                        // RESTRICTION: Only show metadata fields when inside metadata block
+                        if (insideMetadata) {
+                            const usedFields = getUsedMetadataFields();
+                            
+                            const metadataFields = [
+                                { 
+                                    label: 'author', 
+                                    detail: 'Author of the presentation', 
+                                    documentation: 'The name of the presentation author\n\nExample: author: "John Doe"',
+                                    insertText: 'author: "$1"',
+                                    kind: monaco.languages.CompletionItemKind.Property,
+                                    sortText: '01'
+                                },
+                                { 
+                                    label: 'title', 
+                                    detail: 'Title of the presentation', 
+                                    documentation: 'The main title of your presentation\n\nExample: title: "My Awesome Presentation"',
+                                    insertText: 'title: "$1"',
+                                    kind: monaco.languages.CompletionItemKind.Property,
+                                    sortText: '02'
+                                },
+                                { 
+                                    label: 'theme', 
+                                    detail: 'Theme name (optional)', 
+                                    documentation: 'Visual theme for the presentation\n\nCommon values: "dark", "light"\n\nExample: theme: "dark"',
+                                    insertText: 'theme: "$1"',
+                                    kind: monaco.languages.CompletionItemKind.Property,
+                                    sortText: '03'
+                                },
+                                { 
+                                    label: 'logo', 
+                                    detail: 'Logo image path (optional)', 
+                                    documentation: 'Path to your logo image file\n\nExample: logo: "assets/logo.png"',
+                                    insertText: 'logo: "$1"',
+                                    kind: monaco.languages.CompletionItemKind.Property,
+                                    sortText: '04'
+                                },
+                                { 
+                                    label: 'css', 
+                                    detail: 'Custom CSS file path (optional)', 
+                                    documentation: 'Path to custom CSS file for styling\n\nExample: css: "styles/custom.css"',
+                                    insertText: 'css: "$1"',
+                                    kind: monaco.languages.CompletionItemKind.Property,
+                                    sortText: '05'
+                                },
+                                { 
+                                    label: 'chalkboard', 
+                                    detail: 'Enable chalkboard plugin (optional)', 
+                                    documentation: 'Enable or disable the chalkboard drawing feature\n\nValues: "true" or "false"\n\nExample: chalkboard: "true"',
+                                    insertText: 'chalkboard: "${1|true,false|}"',
+                                    kind: monaco.languages.CompletionItemKind.Property,
+                                    sortText: '10'
+                                },
+                                { 
+                                    label: 'chalkboard-theme', 
+                                    detail: 'Chalkboard theme (optional)', 
+                                    documentation: 'Visual theme for the chalkboard\n\nExample: chalkboard-theme: "whiteboard"',
+                                    insertText: 'chalkboard-theme: "$1"',
+                                    kind: monaco.languages.CompletionItemKind.Property,
+                                    sortText: '11'
+                                },
+                                { 
+                                    label: 'chalkboard-boardmarker-width', 
+                                    detail: 'Board marker width (optional)', 
+                                    documentation: 'Width of the board marker in pixels\n\nExample: chalkboard-boardmarker-width: "3"',
+                                    insertText: 'chalkboard-boardmarker-width: "$1"',
+                                    kind: monaco.languages.CompletionItemKind.Property,
+                                    sortText: '12'
+                                },
+                                { 
+                                    label: 'chalkboard-chalk-width', 
+                                    detail: 'Chalk width (optional)', 
+                                    documentation: 'Width of the chalk in pixels\n\nExample: chalkboard-chalk-width: "5"',
+                                    insertText: 'chalkboard-chalk-width: "$1"',
+                                    kind: monaco.languages.CompletionItemKind.Property,
+                                    sortText: '13'
+                                },
+                                { 
+                                    label: 'chalkboard-chalk-effect', 
+                                    detail: 'Chalk effect intensity (optional)', 
+                                    documentation: 'Intensity of the chalk effect (0.0 to 1.0)\n\nExample: chalkboard-chalk-effect: "0.5"',
+                                    insertText: 'chalkboard-chalk-effect: "$1"',
+                                    kind: monaco.languages.CompletionItemKind.Property,
+                                    sortText: '14'
+                                },
+                                { 
+                                    label: 'chalkboard-src', 
+                                    detail: 'Chalkboard source file (optional)', 
+                                    documentation: 'Path to saved chalkboard data\n\nExample: chalkboard-src: "chalkboard.json"',
+                                    insertText: 'chalkboard-src: "$1"',
+                                    kind: monaco.languages.CompletionItemKind.Property,
+                                    sortText: '15'
+                                },
+                                { 
+                                    label: 'chalkboard-readonly', 
+                                    detail: 'Chalkboard readonly mode (optional)', 
+                                    documentation: 'Make chalkboard read-only\n\nValues: "true" or "false"\n\nExample: chalkboard-readonly: "false"',
+                                    insertText: 'chalkboard-readonly: "${1|true,false|}"',
+                                    kind: monaco.languages.CompletionItemKind.Property,
+                                    sortText: '16'
+                                },
+                                { 
+                                    label: 'chalkboard-buttons', 
+                                    detail: 'Show chalkboard buttons (optional)', 
+                                    documentation: 'Display chalkboard control buttons\n\nValues: "true" or "false"\n\nExample: chalkboard-buttons: "true"',
+                                    insertText: 'chalkboard-buttons: "${1|true,false|}"',
+                                    kind: monaco.languages.CompletionItemKind.Property,
+                                    sortText: '17'
+                                },
+                                { 
+                                    label: 'chalkboard-transition', 
+                                    detail: 'Chalkboard transition duration (optional)', 
+                                    documentation: 'Duration of chalkboard transitions in milliseconds\n\nExample: chalkboard-transition: "300"',
+                                    insertText: 'chalkboard-transition: "$1"',
+                                    kind: monaco.languages.CompletionItemKind.Property,
+                                    sortText: '18'
+                                }
+                            ];
+
+                            // Filter out already used fields
+                            const availableFields = metadataFields.filter(field => !usedFields.has(field.label));
+                            
+                            suggestions.push(...availableFields.map(field => ({
+                                ...field,
+                                range: range,
+                                insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+                            })));
+                            
+                            // RESTRICTION: Return early - only metadata fields allowed inside metadata
+                            return { suggestions: suggestions };
+                        }
+
+                        // RESTRICTION: Don't allow metadata inside slides
+                        // Metadata template (only at document start, NOT after slide separators)
+                        if (position.lineNumber <= 5 && isLineStart && !insideSlide) {
+                            suggestions.push({
+                                label: '{metadata}',
+                                kind: monaco,
+                                sortText: '100'
+                            });
+                        }
+
+                        // Headers (ordered: # first, ## second, ### third)
+                        if (isLineStart || lineUpToCursor.trim().startsWith('#')) {
+                            suggestions.push(
+                                {
+                                    label: '# Heading 1',
+                                    kind: monaco.languages.CompletionItemKind.Keyword,
+                                    detail: 'Level 1 heading',
+                                    insertText: '# ',
+                                    range: range,
+                                    sortText: '101'
+                                },
+                                {
+                                    label: '## Heading 2',
+                                    kind: monaco.languages.CompletionItemKind.Keyword,
+                                    detail: 'Level 2 heading',
+                                    insertText: '## ',
+                                    range: range,
+                                    sortText: '102'
+                                },
+                                {
+                                    label: '### Heading 3',
+                                    kind: monaco.languages.CompletionItemKind.Keyword,
+                                    detail: 'Level 3 heading',
+                                    insertText: '### ',
+                                    range: range,
+                                    sortText: '103'
+                                }
+                            );
+                        }
+
+                        // Lists (ordered list first, then unordered)
+                        if (isLineStart) {
+                            suggestions.push(
+                                {
+                                    label: '1. Ordered item',
+                                    kind: monaco.languages.CompletionItemKind.Keyword,
+                                    detail: 'Ordered list item',
+                                    insertText: '1. ',
+                                    range: range,
+                                    sortText: '104'
+                                },
+                                {
+                                    label: '- Unordered item',
+                                    kind: monaco.languages.CompletionItemKind.Keyword,
+                                    detail: 'Unordered list item',
+                                    insertText: '- ',
+                                    range: range,
+                                    sortText: '105'
+                                },
+                                {
+                                    label: '* Unordered item',
+                                    kind: monaco.languages.CompletionItemKind.Keyword,
+                                    detail: 'Unordered list item (alternative)',
+                                    insertText: '* ',
+                                    range: range,
+                                    sortText: '106'
+                                }
+                            );
+                        }
+
+                        // Quote
+                        if (isLineStart) {
+                            suggestions.push({
+                                label: '> Quote',
+                                kind: monaco.languages.CompletionItemKind.Keyword,
+                                detail: 'Blockquote',
+                                insertText: '> ',
+                                range: range,
+                                sortText: '107'
+                            });
+                        }
+
+                        // Code blocks
+                        suggestions.push(
+                            {
+                                label: '```code',
+                                kind: monaco.languages.CompletionItemKind.Snippet,
+                                detail: 'Code block',
+                                documentation: 'Insert a code block',
+                                insertText: '```${1:language}\n${2:code}\n```',
+                                insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                                range: range,
+                                sortText: '200'
+                            },
+                            {
+                                label: '```java[highlight]',
+                                kind: monaco.languages.CompletionItemKind.Snippet,
+                                detail: 'Code block with highlighting',
+                                documentation: 'Code block with syntax highlighting options',
+                                insertText: '```${1:java}[highlight: ${2|block,function,class,line-by-line,all,none|}]\n${3:code}\n```',
+                                insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                                range: range,
+                                sortText: '201'
+                            },
+                            {
+                                label: '```code[lines]',
+                                kind: monaco.languages.CompletionItemKind.Snippet,
+                                detail: 'Code block with line highlighting',
+                                documentation: 'Code block with specific lines highlighted',
+                                insertText: '```${1:language}[lines: "${2:1,3-5}"]\n${3:code}\n```',
+                                insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                                range: range,
+                                sortText: '202'
+                            }
+                        );
+
+                        // Media
+                        suggestions.push({
+                            label: '![image]',
+                            kind: monaco.languages.CompletionItemKind.Snippet,
+                            detail: 'Insert image or media',
+                            documentation: 'Insert an image or media file',
+                            insertText: '![${1:alt text}](${2:path/to/image.png})',
+                            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                            range: range,
+                            sortText: '203'
+                        });
+
+                        // Text formatting (bold first, then italic, then underline)
+                        suggestions.push(
+                            {
+                                label: '**bold**',
+                                kind: monaco.languages.CompletionItemKind.Snippet,
+                                detail: 'Bold text',
+                                insertText: '**${1:text}**',
+                                insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                                range: range,
+                                sortText: '300'
+                            },
+                            {
+                                label: '*italic*',
+                                kind: monaco.languages.CompletionItemKind.Snippet,
+                                detail: 'Italic text',
+                                insertText: '*${1:text}*',
+                                insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                                range: range,
+                                sortText: '301'
+                            },
+                            {
+                                label: '__underline__',
+                                kind: monaco.languages.CompletionItemKind.Snippet,
+                                detail: 'Underlined text',
+                                insertText: '__${1:text}__',
+                                insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                                range: range,
+                                sortText: '302'
+                            }
+                        );
+
+                        // Style delimiters
+                        suggestions.push({
+                            label: ':::{style}',
+                            kind: monaco.languages.CompletionItemKind.Snippet,
+                            detail: 'Styled block',
+                            documentation: 'Apply custom styles to content',
+                            insertText: ':::\n{${1:color: blue}}\n${2:content}\n:::',
+                            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                            range: range,
+                            sortText: '400'
+                        });
+
+                        // Sync fragments
+                        suggestions.push(
+                            {
+                                label: ':::[sync-fragments]',
+                                kind: monaco.languages.CompletionItemKind.Snippet,
+                                detail: 'Synchronized fragments',
+                                documentation: 'Create synchronized content fragments',
+                                insertText: ':::[sync-fragments]\n${1:fragment 1}\n[---]\n${2:fragment 2}\n:::[sync-fragments]',
+                                insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                                range: range,
+                                sortText: '500'
+                            },
+                            {
+                                label: ':::[sync-fragments keep]',
+                                kind: monaco.languages.CompletionItemKind.Snippet,
+                                detail: 'Synchronized fragments (keep)',
+                                documentation: 'Create synchronized fragments that keep previous content',
+                                insertText: ':::[sync-fragments keep]\n${1:fragment 1}\n[---]\n${2:fragment 2}\n:::[sync-fragments keep]',
+                                insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                                range: range,
+                                sortText: '501'
+                            }
+                        );
+
+                        return { suggestions: suggestions };
+                    }
+                });
+
+                // Register hover provider
+                monaco.languages.registerHoverProvider('slidedeckml', {
+                    provideHover: (model, position) => {
+                        const word = model.getWordAtPosition(position);
+                        const line = model.getLineContent(position.lineNumber);
+                        
+                        let hoverContent = null;
+
+                        // Detect and provide help for different elements
+                        if (line.trim() === '===') {
+                            hoverContent = {
+                                value: '**Slide Separator**\n\nSeparates slides in the presentation.'
+                            };
+                        } else if (line.match(/^#{1,3}\s/)) {
+                            const level = line.match(/^(#{1,3})/)[1].length;
+                            hoverContent = {
+                                value: `**Heading Level ${level}**\n\nCreates a level ${level} heading.`
+                            };
+                        } else if (line.match(/^[-*+]\s/)) {
+                            hoverContent = {
+                                value: '**Unordered List**\n\nCreates a bullet point in an unordered list.'
+                            };
+                        } else if (line.match(/^\d+\.\s/)) {
+                            hoverContent = {
+                                value: '**Ordered List**\n\nCreates a numbered item in an ordered list.'
+                            };
+                        } else if (line.match(/^>\s/)) {
+                            hoverContent = {
+                                value: '**Blockquote**\n\nCreates a quoted text block.'
+                            };
+                        } else if (line.includes('```')) {
+                            hoverContent = {
+                                value: '**Code Block**\n\nSyntax: \\`\\`\\`language[options]\\`\\`\\`\n\nOptions:\n- `highlight: block|function|class|line-by-line|all|none`\n- `lines: "1,3-5"`\n- `start: 10`'
+                            };
+                        } else if (line.includes(':::[sync-fragments')) {
+                            hoverContent = {
+                                value: '**Sync Fragments**\n\nCreate synchronized content that appears sequentially.\n\nUse `[---]` to separate fragments.\nUse `keep` to preserve previous fragments.'
+                            };
+                        } else if (line.includes(':::')) {
+                            hoverContent = {
+                                value: '**Style Delimiter**\n\nApply custom CSS styles to a block of content.\n\nExample: `{color: blue; font-size: 24px}`'
+                            };
+                        } else if (word && ['author', 'title', 'theme', 'logo', 'css', 'chalkboard'].includes(word.word)) {
+                            const docs = {
+                                'author': 'The author of the presentation',
+                                'title': 'The title of the presentation',
+                                'theme': 'The theme name (e.g., "dark", "light")',
+                                'logo': 'Path to the logo image file',
+                                'css': 'Path to custom CSS file',
+                                'chalkboard': 'Enable chalkboard plugin ("true"/"false")'
+                            };
+                            hoverContent = {
+                                value: `**${word.word}**\n\n${docs[word.word] || 'Metadata property'}`
+                            };
+                        }
+
+                        if (hoverContent) {
+                            return {
+                                contents: [hoverContent]
+                            };
+                        }
+
+                        return null;
+                    }
+                });
+
                 // Set language syntax highlighting
                 monaco.languages.setMonarchTokensProvider('slidedeckml', {
                     tokenizer: {

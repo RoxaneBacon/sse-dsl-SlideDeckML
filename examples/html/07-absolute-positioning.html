@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="SlideDeckML Team">
+    <meta name="title" content="Absolute Positioning Test">
+    <title>Absolute Positioning Test</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+    <style> 
+        
+        
+
+        /* Default Reveal.js overrides */
+        .reveal {
+            font-size: 32px; /* Reduced from default 40px */
+        }
+        
+        .reveal .slides {
+            text-align: left; /* Remove default centering */
+        }
+        
+        .reveal h1 {
+            font-size: 2em; /* Reduced from default 2.5em */
+        }
+        
+        .reveal h2 {
+            font-size: 1.3em; /* Reduced from default 1.8em */
+        }
+        
+        .reveal h3 {
+            font-size: 1em; /* Reduced from default 1.5em */
+        }
+   
+        /* Synchronized fragments styling */
+        .sync-container {
+            position: relative;
+            min-height: 50px;
+            font-size: 0.9em;
+        }
+        .sync-item {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .sync-item.active {
+            display: block;
+            opacity: 1;
+        }
+        .sync-item p {
+            margin: 0.3em 0;
+        }
+        .sync-item img {
+            max-width: 100%;
+            height: auto;
+        }
+        /* Keep mode: stack items vertically */
+        .sync-container[data-keep="true"] {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3em;
+        }
+        .sync-container[data-keep="true"] .sync-item {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="reveal">
+        <div class="slides">
+        <section data-slide-index="0">
+            <h1>Basic Absolute Positioning</h1>
+            <p>Regular flow content here</p>
+            <div style="position: absolute; z-index: 10; left: 150px; top: 100px; color: #e74c3c; font-size: 32px; font-weight: bold">
+            <p>Positioned Text</p>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>calque (z-index)</h1>
+            <p>Base layer content</p>
+            <div style="position: absolute; z-index: 1; left: 100px; top: 150px; background: #ecf0f1; padding: 15px">
+            <p>Layer 1 (z-index: 1)</p>
+            </div>
+            <div style="position: absolute; z-index: 5; left: 120px; top: 170px; background: #bdc3c7; padding: 15px">
+            <p>Layer 2 (z-index: 5)</p>
+            </div>
+            <div style="position: absolute; z-index: 10; left: 140px; top: 190px; background: #95a5a6; padding: 15px; color: white">
+            <p>Layer 3 (z-index: 10)</p>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>horizontal-margin and vertical-margin</h1>
+            <div style="position: absolute; left: 50px; top: 50px; color: #3498db; font-size: 24px">
+            <p>Top-left position</p>
+            </div>
+            <div style="position: absolute; left: 500px; top: 50px; color: #e74c3c; font-size: 24px">
+            <p>Top-right position</p>
+            </div>
+            <div style="position: absolute; left: 50px; top: 400px; color: #2ecc71; font-size: 24px">
+            <p>Bottom-left position</p>
+            </div>
+            <div style="position: absolute; left: 500px; top: 400px; color: #f39c12; font-size: 24px">
+            <p>Bottom-right position</p>
+            </div>
+        </section>
+        <section data-slide-index="6">
+            <h1>Positioned Images</h1>
+            <p>Regular content flows here</p>
+            <div style="position: absolute; z-index: 1; left: 100px; top: 50px">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMzAwIDIwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzM0OThkYiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik02OS4wNSA3Ni41M3YzNy42aC03LjAydi0zNy42em0xMy44IDM3LjZoLTYuNDJWODcuNDVoMy45M3ExLjI1IDAgMS42NCAxLjE3bC40MSAxLjk4cS43LS43OCAxLjQ3LTEuNDN0MS42NC0xLjEyIDEuODctLjc0IDIuMi0uMjdxMi41MiAwIDQuMTQgMS4zNiAxLjYzIDEuMzcgMi40NCAzLjYzLjYyLTEuMzMgMS41Ni0yLjI4LjkzLS45NCAyLjA1LTEuNTR0Mi4zOC0uODlxMS4yNi0uMjggMi41My0uMjggMi4yMSAwIDMuOTMuNjcgMS43Mi42OCAyLjg5IDEuOTh0MS43OCAzLjE3LjYxIDQuMjl2MTYuOThoLTYuNDJWOTcuMTVxMC0yLjU1LTEuMTItMy44My0xLjEyLTEuMjktMy4yOC0xLjI5LS45OSAwLTEuODMuMzQtLjg1LjM0LTEuNDguOTctLjY0LjY0LTEgMS42LS4zNy45Ni0uMzcgMi4yMXYxNi45OGgtNi40NVY5Ny4xNXEwLTIuNjgtMS4wOC0zLjktMS4wNy0xLjIyLTMuMTUtMS4yMi0xLjQxIDAtMi42Mi42OXQtMi4yNSAxLjg4em01MS4yMi02Ljg5di00LjVxLTIuNzguMTMtNC42OC40OC0xLjg5LjM1LTMuMDQuOS0xLjE0LjU1LTEuNjQgMS4yNy0uNDkuNzMtLjQ5IDEuNTkgMCAxLjY5IDEgMi40MnQyLjYxLjczcTEuOTggMCAzLjQyLS43MiAxLjQ1LS43MSAyLjgyLTIuMTdNMTIwLjUgOTMuMjNsLTEuMTQtMi4wNnE0LjYtNC4yMSAxMS4wNy00LjIxIDIuMzQgMCA0LjE5Ljc3IDEuODUuNzYgMy4xMiAyLjEzIDEuMjcgMS4zNiAxLjk0IDMuMjYuNjYgMS45LjY2IDQuMTZ2MTYuODVoLTIuOTFxLS45MSAwLTEuNDEtLjI3LS40OS0uMjgtLjc4LTEuMTFsLS41Ny0xLjkycS0xLjAxLjkxLTEuOTcgMS42LS45Ny42OS0yLjAxIDEuMTUtMS4wNC40Ny0yLjIyLjcydC0yLjYxLjI1cS0xLjY5IDAtMy4xMi0uNDYtMS40My0uNDUtMi40Ny0xLjM2dC0xLjYxLTIuMjdxLS41OC0xLjM1LS41OC0zLjE0IDAtMS4wMi4zNC0yLjAydDEuMTEtMS45MXEuNzYtLjkxIDEuOTktMS43MSAxLjIyLS44MSAzLTEuNDF0NC4xNS0uOTdxMi4zNi0uMzggNS40LS40NnYtMS41NnEwLTIuNjgtMS4xNC0zLjk2LTEuMTQtMS4yOS0zLjMtMS4yOS0xLjU2IDAtMi41OS4zNi0xLjAzLjM3LTEuODEuODItLjc4LjQ2LTEuNDEuODItLjY0LjM3LTEuNDIuMzctLjY4IDAtMS4xNC0uMzYtLjQ3LS4zNS0uNzYtLjgxbTM1LjYyIDYuOTFxMS4yIDAgMi4wOC0uMzIuODktLjMzIDEuNDctLjkuNTktLjU3Ljg4LTEuMzguMy0uOC4zLTEuNzcgMC0xLjk3LTEuMTgtMy4xM3QtMy41NS0xLjE2cS0yLjM2IDAtMy41NSAxLjE2LTEuMTggMS4xNi0xLjE4IDMuMTMgMCAuOTQuMyAxLjc1LjMuOC44OCAxLjM5LjU5LjU4IDEuNDguOTEuOS4zMiAyLjA3LjMybTcuMjYgMTUuMTlxMC0uNzgtLjQ3LTEuMjgtLjQ3LS40OS0xLjI4LS43Ny0uOC0uMjctMS44OC0uNHQtMi4yOS0uMTlxLTEuMjEtLjA3LTIuNS0uMTItMS4yOC0uMDUtMi41LS4yMS0xLjA3LjYtMS43MyAxLjQxLS42Ny44LS42NyAxLjg3IDAgLjcuMzUgMS4zMS4zNi42MSAxLjEyIDEuMDUuNzcuNDUgMS45OS42OSAxLjIyLjI1IDIuOTkuMjUgMS44IDAgMy4xLS4yNyAxLjMtLjI4IDIuMTQtLjc2Ljg1LS40OCAxLjI0LTEuMTR0LjM5LTEuNDRtLTEuMjgtMjYuOTdoNy42N3YyLjRxMCAxLjE0LTEuMzggMS40bC0yLjM5LjQ0cS41NSAxLjM4LjU1IDMuMDIgMCAxLjk3LS44IDMuNTctLjc5IDEuNi0yLjE5IDIuNzItMS40MSAxLjEyLTMuMzIgMS43M3QtNC4xMi42MXEtLjc4IDAtMS41MS0uMDgtLjcyLS4wOC0xLjQzLS4yMS0xLjI0Ljc2LTEuMjQgMS42OSAwIC44MS43NCAxLjE5Ljc0LjM3IDEuOTYuNTN0Mi43OC4xOXExLjU2LjA0IDMuMi4xN3QzLjIuNDZxMS41Ni4zMiAyLjc4IDEuMDMgMS4yMi43IDEuOTYgMS45MXQuNzQgMy4xcTAgMS43Ny0uODcgMy40NC0uODcgMS42Ni0yLjUyIDIuOTZ0LTQuMDYgMi4wOXEtMi40LjgtNS40Ny44LTMuMDEgMC01LjI1LS41OS0yLjI0LS41OC0zLjcyLTEuNTYtMS40OC0uOTctMi4yMS0yLjI1LS43My0xLjI3LS43My0yLjY1IDAtMS44NyAxLjEzLTMuMTMgMS4xNC0xLjI2IDMuMTEtMi4wMi0xLjA2LS41NC0xLjY5LTEuNDUtLjYyLS45MS0uNjItMi40IDAtLjU5LjIyLTEuMjN0LjY1LTEuMjZxLjQzLS42MyAxLjA4LTEuMTkuNjUtLjU1IDEuNTMtMS0yLjAzLTEuMDktMy4xOC0yLjkxLTEuMTYtMS44Mi0xLjE2LTQuMjYgMC0xLjk4Ljc5LTMuNTguOC0xLjYgMi4yMS0yLjczIDEuNDItMS4xMyAzLjM2LTEuNzMgMS45My0uNTkgNC4yMi0uNTkgMS43MiAwIDMuMjMuMzUgMS41LjM1IDIuNzUgMS4wMm0xNi44IDkuMzZoMTIuMTFxMC0xLjI0LS4zNS0yLjM1LS4zNS0xLjEtMS4wNS0xLjk0LS43LS44My0xLjc4LTEuMzF0LTIuNTEtLjQ4cS0yLjc4IDAtNC4zOCAxLjU5LTEuNiAxLjU4LTIuMDQgNC40OW0xNi4zOCAzLjg4aC0xNi41MXEuMTUgMi4wNS43MyAzLjU1LjU3IDEuNDkgMS41IDIuNDcuOTQuOTcgMi4yMyAxLjQ1IDEuMjguNDggMi44NC40OHQyLjY5LS4zNnExLjE0LS4zNiAxLjk4LS44MS44NS0uNDQgMS40OC0uOC42NC0uMzcgMS4yNC0uMzcuOCAwIDEuMTkuNmwxLjg1IDIuMzRxLTEuMDcgMS4yNS0yLjM5IDIuMDktMS4zMy44NS0yLjc3IDEuMzYtMS40NC41LTIuOTQuNzEtMS40OS4yMS0yLjkuMjEtMi43OCAwLTUuMTctLjkyLTIuMzktLjkzLTQuMTYtMi43My0xLjc3LTEuODEtMi43OC00LjQ4LTEuMDItMi42Ni0xLjAyLTYuMTcgMC0yLjczLjg5LTUuMTQuODgtMi40IDIuNTMtNC4xOHQ0LjAzLTIuODIgNS4zNy0xLjA0cTIuNTIgMCA0LjY1LjggMi4xNC44MSAzLjY3IDIuMzYgMS41MyAxLjU0IDIuNCAzLjc5Ljg4IDIuMjUuODggNS4xNCAwIDEuNDUtLjMyIDEuOTYtLjMxLjUxLTEuMTkuNTFtMzUuOTMgNy43Mmg2Ljc2djQuODFoLTIwLjh2LTQuODFoNy42MlY4Ny40cTAtMS4zLjA4LTIuNjhsLTUuNDEgNC41M3EtLjQ3LjM2LS45My40NS0uNDUuMDktLjg1LjAyLS40MS0uMDgtLjcyLS4yOC0uMzEtLjE5LS40Ny0uNDNsLTIuMDItMi43OCAxMS40Ni05Ljc1aDUuMjh6Ii8+PC9zdmc+" alt="Image 1">
+            </div>
+            <div style="position: absolute; z-index: 5; left: 450px; top: 200px">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNTAiIGhlaWdodD0iMTUwIiB2aWV3Qm94PSIwIDAgMjUwIDE1MCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U3NGMzYyIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik01Ny43MSA1NS43NDV2MzEuMDlINTEuOXYtMzEuMDl6bTExLjQxIDMxLjA5aC01LjMxdi0yMi4wNmgzLjI1cTEuMDMgMCAxLjM1Ljk3bC4zNSAxLjYzcS41OC0uNjQgMS4yMS0xLjE4LjY0LS41NCAxLjM2LS45Mi43Mi0uMzkgMS41NS0uNjIuODItLjIyIDEuODEtLjIyIDIuMDkgMCAzLjQzIDEuMTMgMS4zNCAxLjEyIDIuMDEgMi45OS41Mi0xLjA5IDEuMjktMS44OC43OC0uNzggMS43LTEuMjguOTItLjQ5IDEuOTctLjczIDEuMDQtLjIzIDIuMDktLjIzIDEuODMgMCAzLjI1LjU2IDEuNDIuNTUgMi4zOSAxLjYzLjk2IDEuMDcgMS40NyAyLjYyLjUgMS41NS41IDMuNTV2MTQuMDRoLTUuMzF2LTE0LjA0cTAtMi4xMS0uOTItMy4xNy0uOTMtMS4wNy0yLjcxLTEuMDctLjgyIDAtMS41Mi4yOC0uNjkuMjgtMS4yMi44MXQtLjgzIDEuMzJxLS4zLjgtLjMgMS44M3YxNC4wNGgtNS4zM3YtMTQuMDRxMC0yLjIxLS44OS0zLjIyLS45LTEuMDItMi42Mi0xLjAyLTEuMTYgMC0yLjE2LjU3dC0xLjg2IDEuNTZ6bTQyLjM2LTUuN3YtMy43MnEtMi4zLjExLTMuODcuNHQtMi41Mi43NHEtLjk0LjQ1LTEuMzUgMS4wNi0uNDEuNi0uNDEgMS4zMSAwIDEuMzkuODMgMiAuODMuNiAyLjE2LjYgMS42MyAwIDIuODMtLjU5IDEuMTktLjU5IDIuMzMtMS44bS0xMS4yMi0xMS41OS0uOTUtMS42OXEzLjgtMy40OSA5LjE2LTMuNDkgMS45MyAwIDMuNDYuNjQgMS41My42MyAyLjU4IDEuNzZ0MS42IDIuNy41NSAzLjQ0djEzLjkzaC0yLjQxcS0uNzUgMC0xLjE2LS4yMy0uNDEtLjIyLS42NC0uOTFsLS40OC0xLjU5cS0uODQuNzUtMS42MyAxLjMyLS44LjU3LTEuNjYuOTZ0LTEuODMuNTlxLS45OC4yLTIuMTcuMi0xLjM5IDAtMi41OC0uMzctMS4xOC0uMzgtMi4wNC0xLjEzdC0xLjMzLTEuODctLjQ3LTIuNnEwLS44NC4yOC0xLjY3LjI3LS44My45MS0xLjU4LjYzLS43NSAxLjY0LTEuNDJ0Mi40OS0xLjE2cTEuNDctLjQ5IDMuNDMtLjgxIDEuOTUtLjMxIDQuNDctLjM3di0xLjI5cTAtMi4yMi0uOTUtMy4yOC0uOTQtMS4wNy0yLjczLTEuMDctMS4yOSAwLTIuMTQuMzEtLjg1LjMtMS40OS42Ny0uNjUuMzgtMS4xNy42OC0uNTMuMy0xLjE4LjMtLjU1IDAtLjk0LS4yOXQtLjYyLS42OG0yOS40NSA1LjcycS45OSAwIDEuNzItLjI3LjczLS4yNiAxLjIyLS43NC40OC0uNDcuNzMtMS4xNC4yNC0uNjYuMjQtMS40NiAwLTEuNjMtLjk3LTIuNTktLjk4LS45Ni0yLjk0LS45NnQtMi45My45NnEtLjk4Ljk2LS45OCAyLjU5IDAgLjc3LjI0IDEuNDQuMjUuNjcuNzQgMS4xNS40OC40OSAxLjIyLjc1Ljc0LjI3IDEuNzEuMjdtNiAxMi41NnEwLS42NS0uMzktMS4wNS0uMzktLjQxLTEuMDUtLjY0LS42Ny0uMjItMS41Ni0uMzN0LTEuODktLjE2cS0xLS4wNi0yLjA3LS4xLTEuMDYtLjA0LTIuMDctLjE3LS44OC40OS0xLjQzIDEuMTZ0LS41NSAxLjU1cTAgLjU4LjI5IDEuMDguMjkuNTEuOTMuODcuNjMuMzcgMS42NC41NyAxLjAxLjIxIDIuNDcuMjEgMS40OSAwIDIuNTYtLjIzIDEuMDgtLjIyIDEuNzgtLjYyLjY5LS40IDEuMDItLjk1LjMyLS41NS4zMi0xLjE5bS0xLjA1LTIyLjNIMTQxdjEuOThxMCAuOTUtMS4xNCAxLjE2bC0xLjk4LjM3cS40NSAxLjE0LjQ1IDIuNDkgMCAxLjY0LS42NSAyLjk2LS42NiAxLjMyLTEuODIgMi4yNC0xLjE2LjkzLTIuNzQgMS40My0xLjU4LjUxLTMuNDEuNTEtLjY0IDAtMS4yNS0uMDYtLjYtLjA3LTEuMTgtLjE4LTEuMDMuNjMtMS4wMyAxLjQgMCAuNjcuNjEuOTh0MS42Mi40NHExLjAyLjEzIDIuMzEuMTZ0Mi42NC4xNCAyLjY0LjM4IDIuMy44NXExLjAyLjU4IDEuNjMgMS41OHQuNjEgMi41N3EwIDEuNDYtLjcyIDIuODMtLjcyIDEuMzgtMi4wOCAyLjQ2LTEuMzcgMS4wNy0zLjM2IDEuNzMtMS45OS42NS00LjUyLjY1LTIuNSAwLTQuMzUtLjQ4LTEuODUtLjQ5LTMuMDctMS4yOS0xLjIzLS44MS0xLjgzLTEuODYtLjYtMS4wNi0uNi0yLjE5IDAtMS41NS45My0yLjYuOTQtMS4wNCAyLjU3LTEuNjYtLjg4LS40NS0xLjM5LTEuMjEtLjUyLS43NS0uNTItMS45NyAwLS41LjE4LTEuMDMuMTgtLjUyLjU0LTEuMDQuMzUtLjUxLjg5LS45OC41NC0uNDYgMS4yNy0uODItMS42OC0uOTEtMi42My0yLjQxLS45Ni0xLjUxLS45Ni0zLjUzIDAtMS42My42Ni0yLjk1LjY1LTEuMzMgMS44Mi0yLjI2IDEuMTctLjk0IDIuNzgtMS40MyAxLjYtLjUgMy40OS0uNSAxLjQyIDAgMi42Ny4yOSAxLjI0LjI5IDIuMjguODVtMTMuODggNy43NGgxMC4wMnEwLTEuMDMtLjI5LTEuOTQtLjI5LS45Mi0uODctMS42LS41OC0uNjktMS40Ny0xLjA5dC0yLjA4LS40cS0yLjMgMC0zLjYyIDEuMzEtMS4zMiAxLjMyLTEuNjkgMy43Mm0xMy41NSAzLjIxaC0xMy42NXEuMTMgMS43LjYgMi45My40NyAxLjI0IDEuMjUgMi4wNC43Ny44MSAxLjgzIDEuMjEgMS4wNy40IDIuMzYuNHQyLjIyLS4zcS45NC0uMzEgMS42NC0uNjcuNy0uMzcgMS4yMi0uNjcuNTMtLjMgMS4wMi0uMy42NyAwIC45OS41bDEuNTMgMS45M3EtLjg4IDEuMDMtMS45OCAxLjczLTEuMDkuNy0yLjI5IDEuMTItMS4xOS40Mi0yLjQzLjU5LTEuMjMuMTctMi4zOS4xNy0yLjMxIDAtNC4yOC0uNzYtMS45OC0uNzYtMy40NC0yLjI2LTEuNDctMS40OS0yLjMtMy43LS44NC0yLjItLjg0LTUuMSAwLTIuMjYuNzMtNC4yNXQyLjEtMy40NnExLjM2LTEuNDcgMy4zMy0yLjMzIDEuOTYtLjg2IDQuNDQtLjg2IDIuMDggMCAzLjg1LjY2IDEuNzYuNjcgMy4wMyAxLjk1dDEuOTkgMy4xNC43MiA0LjI0cTAgMS4yMS0uMjYgMS42M3QtLjk5LjQybTI2LjE2IDUuNDFoNy45OHEuODYgMCAxLjM3LjQ5LjUuNDguNSAxLjI4djMuMThoLTIxLjMzdi0xLjc2cTAtLjU0LjIzLTEuMTN0LjcyLTEuMDdsOS40NC05LjQ2cTEuMTgtMS4yIDIuMTItMi4zLjkzLTEuMDkgMS41NS0yLjE3LjYzLTEuMDcuOTYtMi4xOHQuMzMtMi4zM3EwLTEuMTItLjMyLTEuOTd0LS45MS0xLjQzLTEuNDItLjg3LTEuODYtLjI5cS0uOTUgMC0xLjc1LjI3LS44MS4yNy0xLjQzLjc1LS42My40OC0xLjA2IDEuMTMtLjQzLjY0LS42NCAxLjQyLS4zNy45OS0uOTUgMS4zMXQtMS42Ny4xNWwtMi44LS40OXEuMzItMi4yNCAxLjI1LTMuOTMuOTItMS42OSAyLjMxLTIuODEgMS4zOS0xLjEzIDMuMTgtMS43IDEuOC0uNTcgMy44Ni0uNTcgMi4xNSAwIDMuOTQuNjMgMS43OC42NCAzLjA1IDEuOHQxLjk4IDIuNzlxLjcxIDEuNjQuNzEgMy42MyAwIDEuNzItLjUxIDMuMTktLjUgMS40Ni0xLjM1IDIuNzl0LTEuOTkgMi41OC0yLjM5IDIuNTRsLTcuMDEgNy4xNnExLjAxLS4zIDIuMDEtLjQ2IDEtLjE3IDEuOS0uMTciLz48L3N2Zz4=" alt="Image 2">
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>Positioned Lists</h1>
+            <p>Normal text at the top</p>
+            <div style="position: absolute; left: 150px; top: 100px; font-size: 20px; color: #9b59b6">
+            <ul>
+                <li>Positioned list</li>
+                <li>At custom coordinates</li>
+                <li>With styling</li>
+            </ul>
+            </div>
+            <div style="position: absolute; left: 450px; top: 100px; font-size: 20px; color: #e74c3c">
+            <ol>
+                <li>Ordered positioned list</li>
+                <li>On the right</li>
+                <li>With custom position</li>
+            </ol>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>Overlay Effect</h1>
+            <p>Base slide content</p>
+            <div style="position: absolute; z-index: 20; left: 250px; top: 200px; font-size: 48px; color: #e74c3c; font-weight: bold; text-shadow: 2px 2px 4px rgba(0">
+            <p>OVERLAY</p>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>Floating Boxes</h1>
+            <div style="position: absolute; z-index: 1; left: 100px; top: 100px; background: #3498db; color: white; padding: 20px; border-radius: 10px">
+            <h3>Blue Box</h3>
+            <p>Content in positioned box</p>
+            </div>
+            <div style="position: absolute; z-index: 5; left: 400px; top: 250px; background: #e74c3c; color: white; padding: 20px; border-radius: 10px">
+            <h3>Red Box</h3>
+            <p>Another positioned box</p>
+            </div>
+        </section>
+        <section data-slide-index="7">
+            <h1>Mixed Positioning</h1>
+            <div style="position: absolute; left: 50px; top: 50px">
+            <blockquote>Positioned quote at top-left</blockquote>
+            </div>
+            <div style="position: absolute; z-index: 10; left: 300px; top: 200px; background: #f39c12; padding: 15px; border-radius: 8px">
+            <p>Floating callout in the middle</p>
+            </div>
+            <div style="position: absolute; left: 550px; top: 400px">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMTUwIiB2aWV3Qm94PSIwIDAgMjAwIDE1MCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzJlY2M3MSIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik00Ni4yOTUgODQuMDloNC44OXExLjM1IDAgMi4yNy0uMzIuOTItLjMzIDEuNDctLjg3dC43OS0xLjI2LjI0LTEuNTNxMC0uODQtLjI3LTEuNTItLjI3LS42Ny0uODQtMS4xNS0uNTgtLjQ4LTEuNDktLjczdC0yLjE4LS4yNWgtNC44OHptNC4xMi0xOC41aC00LjEydjcuNTJoMy44NXEyLjQ4IDAgMy43NS0uOXQxLjI3LTIuODZxMC0yLjA0LTEuMTUtMi45dC0zLjYtLjg2bS04Ljk2LTMuNzVoOC45NnEyLjU2IDAgNC4zNy40OSAxLjgyLjQ4IDIuOTggMS4zOHQxLjcgMi4xOC41NCAyLjg4cTAgLjkyLS4yNyAxLjc2LS4yNy44My0uODMgMS41Ni0uNTcuNzMtMS40NCAxLjMzLS44OC41OS0yLjA4IDEgNS4zNiAxLjIxIDUuMzYgNS44IDAgMS42Ni0uNjMgMy4wNnQtMS44MyAyLjQycS0xLjIxIDEuMDItMi45NyAxLjU5LTEuNzcuNTgtNC4wNC41OGgtOS44MnptMzEuMTcgNy4yN3EyLjA1IDAgMy43NC42NyAxLjY4LjY3IDIuODggMS44OSAxLjE5IDEuMjIgMS44NCAyLjk5LjY1IDEuNzYuNjUgMy45NCAwIDIuMi0uNjUgMy45NnQtMS44NCAzLjAxcS0xLjIgMS4yNC0yLjg4IDEuOS0xLjY5LjY3LTMuNzQuNjctMi4wNyAwLTMuNzYtLjY3LTEuNjktLjY2LTIuODktMS45LTEuMi0xLjI1LTEuODUtMy4wMS0uNjYtMS43Ni0uNjYtMy45NiAwLTIuMTguNjYtMy45NC42NS0xLjc3IDEuODUtMi45OXQyLjg5LTEuODkgMy43Ni0uNjdtMCAxNS42MXEyLjMxIDAgMy40MS0xLjU1IDEuMTEtMS41NSAxLjExLTQuNTMgMC0yLjk5LTEuMTEtNC41Ni0xLjEtMS41Ni0zLjQxLTEuNTYtMi4zNCAwLTMuNDYgMS41Ny0xLjEzIDEuNTgtMS4xMyA0LjU1dDEuMTMgNC41MnExLjEyIDEuNTYgMy40NiAxLjU2bTE4LjY3IDMuNDRxLTIuNDEgMC0zLjctMS4zNnQtMS4yOS0zLjc1VjcyLjczaC0xLjg5cS0uMzYgMC0uNjEtLjIzLS4yNS0uMjQtLjI1LS43di0xLjc3bDIuOTctLjQ4LjkzLTUuMDRxLjA5LS4zNi4zNS0uNTYuMjUtLjIuNjQtLjJoMi4zMXY1LjgxaDQuOTN2My4xN2gtNC45M3YxMC4wMXEwIC44Ni40MiAxLjM1dDEuMTYuNDlxLjQyIDAgLjY5LS4xLjI4LS4xLjQ5LS4yMXQuMzctLjIxLjMyLS4xcS4yIDAgLjMzLjEuMTIuMS4yNy4zbDEuMzMgMi4xNnEtLjk3LjgxLTIuMjMgMS4yMi0xLjI2LjQyLTIuNjEuNDJtMTMuMzkgMHEtMi40MSAwLTMuNy0xLjM2dC0xLjI5LTMuNzVWNzIuNzNoLTEuODlxLS4zNiAwLS42MS0uMjMtLjI1LS4yNC0uMjUtLjd2LTEuNzdsMi45Ny0uNDguOTQtNS4wNHEuMDktLjM2LjM0LS41NnQuNjUtLjJoMi4zdjUuODFoNC45M3YzLjE3aC00LjkzdjEwLjAxcTAgLjg2LjQyIDEuMzUuNDMuNDkgMS4xNi40OS40MiAwIC43LS4xdC40OC0uMjFxLjIxLS4xMS4zNy0uMjF0LjMzLS4xcS4xOSAwIC4zMi4xdC4yNy4zbDEuMzMgMi4xNnEtLjk3LjgxLTIuMjMgMS4yMi0xLjI2LjQyLTIuNjEuNDJtMTUuNDEtMTkuMDVxMi4wNSAwIDMuNzMuNjcgMS42OS42NyAyLjg4IDEuODkgMS4yIDEuMjIgMS44NSAyLjk5LjY1IDEuNzYuNjUgMy45NCAwIDIuMi0uNjUgMy45NnQtMS44NSAzLjAxcS0xLjE5IDEuMjQtMi44OCAxLjktMS42OC42Ny0zLjczLjY3LTIuMDcgMC0zLjc2LS42Ny0xLjctLjY2LTIuODktMS45LTEuMi0xLjI1LTEuODYtMy4wMS0uNjUtMS43Ni0uNjUtMy45NiAwLTIuMTguNjUtMy45NC42Ni0xLjc3IDEuODYtMi45OSAxLjE5LTEuMjIgMi44OS0xLjg5IDEuNjktLjY3IDMuNzYtLjY3bTAgMTUuNjFxMi4zIDAgMy40MS0xLjU1dDEuMTEtNC41M3EwLTIuOTktMS4xMS00LjU2LTEuMTEtMS41Ni0zLjQxLTEuNTYtMi4zNCAwLTMuNDcgMS41Ny0xLjEyIDEuNTgtMS4xMiA0LjU1dDEuMTIgNC41MnExLjEzIDEuNTYgMy40NyAxLjU2bTE2Ljk1IDMuMTVoLTQuNDRWNjkuNGgyLjcycS44NiAwIDEuMTMuODFsLjI5IDEuMzdxLjQ4LS41NCAxLjAxLS45OS41NC0uNDUgMS4xNC0uNzcuNi0uMzMgMS4zLS41Mi42OS0uMTkgMS41Mi0uMTkgMS43NCAwIDIuODcuOTUgMS4xMi45NCAxLjY4IDIuNTEuNDMtLjkyIDEuMDgtMS41OC42NS0uNjUgMS40Mi0xLjA3Ljc4LS40MSAxLjY1LS42MXQxLjc1LS4ycTEuNTMgMCAyLjcyLjQ3dDIgMS4zNyAxLjIzIDIuMnEuNDMgMS4yOS40MyAyLjk3djExLjc1aC00LjQ1Vjc2LjEycTAtMS43Ny0uNzctMi42Ni0uNzgtLjg5LTIuMjctLjg5LS42OSAwLTEuMjcuMjMtLjU5LjI0LTEuMDMuNjh0LS42OSAxLjExcS0uMjUuNjYtLjI1IDEuNTN2MTEuNzVoLTQuNDdWNzYuMTJxMC0xLjg2LS43NC0yLjctLjc1LS44NS0yLjE5LS44NS0uOTcgMC0xLjgxLjQ4LS44NC40Ny0xLjU2IDEuM3oiLz48L3N2Zz4=" alt="Bottom Right">
+            </div>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            progress: true,
+            center: true,
+            backgroundTransition: 'fade',
+            plugins: [ RevealHighlight ]
+        });
+
+        // Auto-render LaTeX when slides are ready
+        Reveal.on('ready', function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        });
+
+        // Synchronized fragments handler
+        let currentFragmentIndex = -1;
+
+        Reveal.on('fragmentshown', event => {
+            currentFragmentIndex++;
+            updateSyncItems();
+        });
+
+        Reveal.on('fragmenthidden', event => {
+            currentFragmentIndex--;
+            updateSyncItems();
+        });
+
+        Reveal.on('slidechanged', event => {
+            // Detect the current fragment state by checking visible fragments
+            const currentSlide = Reveal.getCurrentSlide();
+            if (currentSlide) {
+                const fragments = currentSlide.querySelectorAll('.fragment');
+                let maxVisibleIndex = -1;
+                
+                fragments.forEach(fragment => {
+                    if (fragment.classList.contains('visible')) {
+                        const fragmentIndex = parseInt(fragment.getAttribute('data-fragment-index') || '0');
+                        maxVisibleIndex = Math.max(maxVisibleIndex, fragmentIndex);
+                    }
+                });
+                
+                currentFragmentIndex = maxVisibleIndex;
+            } else {
+                currentFragmentIndex = -1;
+            }
+            updateSyncItems();
+        });
+
+        function updateSyncItems() {
+            const currentSlide = Reveal.getCurrentSlide();
+            if (!currentSlide) return;
+
+            const syncContainers = currentSlide.querySelectorAll('.sync-container');
+            syncContainers.forEach(container => {
+                const keepMode = container.getAttribute('data-keep') === 'true';
+                const items = container.querySelectorAll('.sync-item');
+                
+                items.forEach(item => {
+                    const syncIndex = parseInt(item.getAttribute('data-sync-index') || '0');
+                    
+                    if (keepMode) {
+                        // In keep mode, show all items up to and including current index
+                        if (syncIndex <= currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    } else {
+                        // Default mode: show only the current item
+                        if (syncIndex === currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Initialize on load
+        Reveal.on('ready', () => {
+            updateSyncItems();
+        });
+    </script>
+</body>
+</html>

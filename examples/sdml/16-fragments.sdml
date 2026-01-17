@@ -1,0 +1,189 @@
+{
+    author: "SlideDeckML Team"
+    title: "Fragment Animations Demo"
+    theme: "black"
+}
+
+# Fragment Animations
+
+This presentation demonstrates **fragment animations** for incremental reveals.
+
+Use the simple `{animate: "effect"}` syntax!
+
+===
+
+# Basic Fragments
+
+::: {animate: "fade-in"}
+This text will fade in
+:::
+
+::: {animate: "fade-in"}
+This text will also fade in (on next step)
+:::
+
+::: {animate: "fade-in"}
+And this one too!
+:::
+
+===
+
+# Fragment Styles
+
+::: {animate: "fade-out"}
+This will fade out
+:::
+
+::: {animate: "fade-up"}
+This will slide up while fading in
+:::
+
+::: {animate: "highlight-red"}
+This will turn red
+:::
+
+::: {animate: "grow"}
+This will grow
+:::
+
+===
+
+# More Fragment Effects
+
+::: {animate: "fade-in-then-out"}
+Fade in, then out
+:::
+
+::: {animate: "fade-in-then-semi-out"}
+Fade in, then semi out
+:::
+
+::: {animate: "shrink"}
+This will shrink
+:::
+
+::: {animate: "strike"}
+This will be struck through
+:::
+
+===
+
+# Highlight Effects
+
+::: {animate: "highlight-blue"}
+Highlight blue
+:::
+
+::: {animate: "highlight-green"}
+Highlight green
+:::
+
+::: {animate: "highlight-current-red"}
+Highlight red, then back
+:::
+
+::: {animate: "semi-fade-out"}
+Semi fade out (50%)
+:::
+
+===
+
+# Nested Fragments
+
+::: {animate: "fade-in"}
+::: {animate: "highlight-red"}
+::: {animate: "semi-fade-out"}
+Fade in > Turn red > Semi fade out
+:::
+:::
+:::
+
+===
+
+# Multiple Effects
+
+You can combine multiple effects in one animation:
+
+::: {animate: "fade-up highlight-blue"}
+This fades up AND turns blue!
+:::
+
+::: {animate: "grow highlight-green"}
+This grows AND turns green!
+:::
+
+===
+
+# Custom Order
+
+::: {animate: "fade-in" index: 3}
+Appears last (index 3)
+:::
+
+::: {animate: "fade-in" index: 1}
+Appears first (index 1)
+:::
+
+::: {animate: "fade-in" index: 2}
+Appears second (index 2)
+:::
+
+===
+
+# Fragment Lists
+
+Unordered list with fragments:
+
+::: {animate: "fade-in"}
+- First item
+- Second item
+:::
+
+::: {animate: "fade-in"}
+- Third item
+- Fourth item
+:::
+
+===
+
+# Mixed Content
+
+::: {animate: "fade-in"}
+## This header appears first
+:::
+
+::: {animate: "highlight-blue"}
+This paragraph appears second and turns blue
+:::
+
+::: {animate: "fade-up"}
+![Demo Image](https://placehold.co/400x300)
+:::
+
+===
+
+# Code with Fragments
+
+::: {animate: "fade-in"}
+```javascript
+function hello() {
+    console.log("This code appears first");
+}
+```
+:::
+
+::: {animate: "highlight-green"}
+The code will appear, then this text turns green!
+:::
+
+===
+
+::: {text-align: 'center'; color: '#3498db'; font-size: '64px'}
+# Try It!
+:::
+
+::: {text-align: 'center'; font-size: '24px'; color: '#7f8c8d'}
+::: {animate: "fade-in"}
+Press **Space** or **Arrow keys** to step through fragments
+:::
+:::

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Developer Name">
+    <meta name="title" content="Technical Presentation">
+    <title>Technical Presentation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+    <style> 
+        
+        .reveal h1 {
+                color: #61dafb;
+                font-weight: 700;
+                font-family: 'Courier New', monospace;
+            }
+            .reveal h2 {
+                color: #98c379;
+                font-weight: 600;
+                font-family: 'Courier New', monospace;
+            }
+            .reveal h3 {
+                color: #c678dd;
+                font-weight: 500;
+            }
+            .header-banner {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 45px;
+                background-color: #1e1e1e;
+                border-bottom: 2px solid #61dafb;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                z-index: 1000;
+            }
+            .header-author {
+                color: #61dafb;
+                font-size: 14px;
+                font-weight: 500;
+                margin-left: 20px;
+                font-family: 'Courier New', monospace;
+            }
+            .header-logo {
+                height: 30px;
+                width: auto;
+                margin-right: 20px;
+            }
+            .reveal {
+                margin-top: 45px;
+            }
+            .reveal code {
+                background: #282c34;
+                color: #61dafb;
+                padding: 3px 8px;
+                border-radius: 4px;
+            }
+            .reveal pre {
+                background: #282c34;
+                border: 1px solid #61dafb;
+                border-radius: 8px;
+            }
+            .reveal strong {
+                color: #e06c75;
+            }
+
+        /* Default Reveal.js overrides */
+        .reveal {
+            font-size: 32px; /* Reduced from default 40px */
+        }
+        
+        .reveal .slides {
+            text-align: left; /* Remove default centering */
+        }
+        
+        .reveal h1 {
+            font-size: 2em; /* Reduced from default 2.5em */
+        }
+        
+        .reveal h2 {
+            font-size: 1.3em; /* Reduced from default 1.8em */
+        }
+        
+        .reveal h3 {
+            font-size: 1em; /* Reduced from default 1.5em */
+        }
+   
+        /* Synchronized fragments styling */
+        .sync-container {
+            position: relative;
+            min-height: 50px;
+            font-size: 0.9em;
+        }
+        .sync-item {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .sync-item.active {
+            display: block;
+            opacity: 1;
+        }
+        .sync-item p {
+            margin: 0.3em 0;
+        }
+        .sync-item img {
+            max-width: 100%;
+            height: auto;
+        }
+        /* Keep mode: stack items vertically */
+        .sync-container[data-keep="true"] {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3em;
+        }
+        .sync-container[data-keep="true"] .sync-item {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <header class="header-banner">
+        <div class="header-author">Developer Name</div>
+        
+    </header>
+    <div class="reveal">
+        <div class="slides">
+        <section data-slide-index="0">
+            <h1>Overview</h1>
+            <h2>What We&#39;ll Cover</h2>
+            <ol>
+                <li>Problem Statement</li>
+                <li>Technical Architecture</li>
+                <li>Implementation Details</li>
+                <li>Code Examples</li>
+                <li>Performance &amp; Optimization</li>
+                <li>Best Practices</li>
+            </ol>
+        </section>
+        <section data-slide-index="1">
+            <h1>Problem Statement</h1>
+            <h2>The Challenge</h2>
+            <p>Brief description of the technical problem</p>
+            <div style="background: #282c34; padding: 20px; border-radius: 10px; border-left: 4px solid #e06c75">
+            <h3>Key Issues</h3>
+            <ul>
+                <li>Issue 1: Description</li>
+                <li>Issue 2: Description</li>
+                <li>Issue 3: Description</li>
+            </ul>
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h1>Architecture</h1>
+            <h2>System Design</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em">
+            <h3>Components</h3>
+            <ul>
+                <li>Component A</li>
+                <li>Component B</li>
+                <li>Component C</li>
+                <li>Component D</li>
+            </ul>
+            <h3>Tech Stack</h3>
+            <ul>
+                <li>Language/Framework</li>
+                <li>Database</li>
+                <li>Infrastructure</li>
+                <li>Tools</li>
+            </ul>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>Implementation</h1>
+            <h2>Code Structure</h2>
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1|2|3|4|5|6|7|8|9|10">class Example {
+    constructor(config) {
+        this.config = config;
+    }
+    
+    process() {
+        // Implementation logic
+        return this.execute();
+    }
+}
+</code></pre>
+        </section>
+        <section data-slide-index="6">
+            <h1>Key Features</h1>
+            <h2>Technical Highlights</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em">
+            <div style="background: #282c34; padding: 20px; border-radius: 10px">
+            <h3>Performance</h3>
+            <ul>
+                <li>Fast execution</li>
+                <li>Low latency</li>
+                <li>Optimized queries</li>
+            </ul>
+            </div>
+            <div style="background: #282c34; padding: 20px; border-radius: 10px">
+            <h3>Scalability</h3>
+            <ul>
+                <li>Horizontal scaling</li>
+                <li>Load balancing</li>
+                <li>Auto-scaling</li>
+            </ul>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>Best Practices</h1>
+            <h2>Recommendations</h2>
+            <ol>
+                <li><strong>Code Quality</strong> - Maintain clean, readable code</li>
+                <li><strong>Testing</strong> - Comprehensive test coverage</li>
+                <li><strong>Documentation</strong> - Clear inline and external docs</li>
+                <li><strong>Security</strong> - Follow security guidelines</li>
+                <li><strong>Performance</strong> - Profile and optimize regularly</li>
+            </ol>
+        </section>
+        <section data-slide-index="3">
+            <div style="text-align: center">
+            <h1>Questions?</h1>
+            <h2>Let&#39;s Discuss</h2>
+            <p>[GitHub/Repository Link]</p>
+            <p>[Email/Contact]</p>
+            </div>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            progress: true,
+            center: true,
+            backgroundTransition: 'fade',
+            plugins: [ RevealHighlight ]
+        });
+
+        // Auto-render LaTeX when slides are ready
+        Reveal.on('ready', function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        });
+
+        // Synchronized fragments handler
+        let currentFragmentIndex = -1;
+
+        Reveal.on('fragmentshown', event => {
+            currentFragmentIndex++;
+            updateSyncItems();
+        });
+
+        Reveal.on('fragmenthidden', event => {
+            currentFragmentIndex--;
+            updateSyncItems();
+        });
+
+        Reveal.on('slidechanged', event => {
+            // Detect the current fragment state by checking visible fragments
+            const currentSlide = Reveal.getCurrentSlide();
+            if (currentSlide) {
+                const fragments = currentSlide.querySelectorAll('.fragment');
+                let maxVisibleIndex = -1;
+                
+                fragments.forEach(fragment => {
+                    if (fragment.classList.contains('visible')) {
+                        const fragmentIndex = parseInt(fragment.getAttribute('data-fragment-index') || '0');
+                        maxVisibleIndex = Math.max(maxVisibleIndex, fragmentIndex);
+                    }
+                });
+                
+                currentFragmentIndex = maxVisibleIndex;
+            } else {
+                currentFragmentIndex = -1;
+            }
+            updateSyncItems();
+        });
+
+        function updateSyncItems() {
+            const currentSlide = Reveal.getCurrentSlide();
+            if (!currentSlide) return;
+
+            const syncContainers = currentSlide.querySelectorAll('.sync-container');
+            syncContainers.forEach(container => {
+                const keepMode = container.getAttribute('data-keep') === 'true';
+                const items = container.querySelectorAll('.sync-item');
+                
+                items.forEach(item => {
+                    const syncIndex = parseInt(item.getAttribute('data-sync-index') || '0');
+                    
+                    if (keepMode) {
+                        // In keep mode, show all items up to and including current index
+                        if (syncIndex <= currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    } else {
+                        // Default mode: show only the current item
+                        if (syncIndex === currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Initialize on load
+        Reveal.on('ready', () => {
+            updateSyncItems();
+        });
+    </script>
+</body>
+</html>

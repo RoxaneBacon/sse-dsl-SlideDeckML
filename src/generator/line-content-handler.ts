@@ -7,12 +7,14 @@ import {
     isParagraph, 
     isQuote, 
     isMedia, 
-    isStyledElement, 
+    isStyledElement,
+    isFragmentElement,
     isCodeBlock, 
     isSyncFragments 
 } from "../language/generated/ast";
 import { ElementGenerator } from "./element-generator";
 import { StyleParser } from "./style-parser";
+import { FragmentParser } from "./fragment-parser";
 
 /**
  * Handles the generation of HTML for different types of line content
@@ -20,11 +22,20 @@ import { StyleParser } from "./style-parser";
 export class LineContentHandler {
     private elementGenerator: ElementGenerator;
     private styleParser: StyleParser;
+    private fragmentParser: FragmentParser;
     private lastCodeBlock: CodeBlock | null = null;
 
     constructor(elementGenerator: ElementGenerator, styleParser: StyleParser) {
         this.elementGenerator = elementGenerator;
         this.styleParser = styleParser;
+        this.fragmentParser = new FragmentParser();
+    }
+
+    /**
+     * Get the element generator
+     */
+    public getElementGenerator(): ElementGenerator {
+        return this.elementGenerator;
     }
 
     /**
@@ -32,10 +43,15 @@ export class LineContentHandler {
      * @param line The line content to process
      * @returns Generated HTML string
      */
-    public generateLine(line: LineContent): string {
-        // Handle styled elements first
+    public async generateLine(line: LineContent): Promise<string> {
+        // Handle fragment elements first
+        if (isFragmentElement(line)) {
+            return await this.handleFragmentElement(line);
+        }
+        
+        // Handle styled elements
         if (isStyledElement(line)) {
-            return this.handleStyledElement(line);
+            return await this.handleStyledElement(line);
         }
         
         // Handle regular unstyled elements
@@ -52,14 +68,14 @@ export class LineContentHandler {
             return this.elementGenerator.generateQuote(line);
         }
         if (isMedia(line)) {
-            return this.elementGenerator.generateMedia(line);
+            return await this.elementGenerator.generateMedia(line);
         }
         if (isCodeBlock(line)) {
             this.lastCodeBlock = line;
             return this.elementGenerator.generateCodeBlock(line);
         }
         if (isSyncFragments(line)) {
-            return this.elementGenerator.generateSyncFragments(line, this.lastCodeBlock);
+            return await this.elementGenerator.generateSyncFragments(line, this.lastCodeBlock);
         }
         if (isParagraph(line)) {
             return this.elementGenerator.generateParagraph(line);
@@ -72,14 +88,20 @@ export class LineContentHandler {
      * @param line The styled element
      * @returns Generated HTML string
      */
-    private handleStyledElement(line: any): string {
+    private async handleStyledElement(line: any): Promise<string> {
         const style = this.styleParser.parseStyle(line.style);
         const elements = line.elements || [];
         
         let containerHtml = `            <div${style}>\n`;
         
         for (const element of elements) {
-            if (isHeader(element)) {
+            if (isFragmentElement(element)) {
+                // Handle nested fragments
+                containerHtml += await this.handleFragmentElement(element) + '\n';
+            } else if (isStyledElement(element)) {
+                // Handle nested styled elements
+                containerHtml += await this.handleStyledElement(element) + '\n';
+            } else if (isHeader(element)) {
                 containerHtml += this.elementGenerator.generateHeading(element, '') + '\n';
             } else if (isUnorderedList(element)) {
                 containerHtml += this.elementGenerator.generatePointedList(element, '') + '\n';
@@ -88,12 +110,54 @@ export class LineContentHandler {
             } else if (isQuote(element)) {
                 containerHtml += this.elementGenerator.generateQuote(element, '') + '\n';
             } else if (isMedia(element)) {
-                containerHtml += this.elementGenerator.generateMedia(element, '') + '\n';
+                containerHtml += await this.elementGenerator.generateMedia(element, '') + '\n';
             } else if (isCodeBlock(element)) {
                 this.lastCodeBlock = element;
                 containerHtml += this.elementGenerator.generateCodeBlock(element, '') + '\n';
             } else if (isSyncFragments(element)) {
-                containerHtml += this.elementGenerator.generateSyncFragments(element, this.lastCodeBlock) + '\n';
+                containerHtml += await this.elementGenerator.generateSyncFragments(element, this.lastCodeBlock) + '\n';
+            } else if (isParagraph(element)) {
+                containerHtml += this.elementGenerator.generateParagraph(element, '') + '\n';
+            }
+        }
+        
+        containerHtml += `            </div>`;
+        return containerHtml;
+    }
+
+    /**
+     * Handle fragment element containing multiple child elements
+     * @param line The fragment element
+     * @returns Generated HTML string
+     */
+    private async handleFragmentElement(line: any): Promise<string> {
+        const fragmentAttrs = this.fragmentParser.parseFragment(line.fragment);
+        const elements = line.elements || [];
+        
+        let containerHtml = `            <div${fragmentAttrs.class}${fragmentAttrs.dataAttrs}>\n`;
+        
+        for (const element of elements) {
+            if (isFragmentElement(element)) {
+                // Handle nested fragments
+                containerHtml += await this.handleFragmentElement(element) + '\n';
+            } else if (isStyledElement(element)) {
+                // Handle nested styled elements
+                containerHtml += await this.handleStyledElement(element) + '\n';
+            } else if (isHeader(element)) {
+                containerHtml += this.elementGenerator.generateHeading(element, '') + '\n';
+            } else if (isUnorderedList(element)) {
+                containerHtml += this.elementGenerator.generatePointedList(element, '') + '\n';
+            } else if (isOrderedList(element)) {
+                containerHtml += this.elementGenerator.generateOrderedList(element, '') + '\n';
+            } else if (isQuote(element)) {
+                containerHtml += this.elementGenerator.generateQuote(element, '') + '\n';
+            } else if (isMedia(element)) {
+                containerHtml += await this.elementGenerator.generateMedia(element, '') + '\n';
+            } else if (isCodeBlock(element)) {
+                this.lastCodeBlock = element;
+                containerHtml += this.elementGenerator.generateCodeBlock(element, '') + '\n';
+            } else if (isSyncFragments(element)) {
+                containerHtml += await this.elementGenerator.generateSyncFragments(element, this.lastCodeBlock) + '\n';
             } else if (isParagraph(element)) {
                 containerHtml += this.elementGenerator.generateParagraph(element, '') + '\n';
             }

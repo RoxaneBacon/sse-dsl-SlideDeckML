@@ -1,0 +1,210 @@
+{
+    author: "SlideDeckML Team"
+    title: "Synchronized Fragments Test"
+}
+===
+# Sync with line-by-line (Replace Mode)
+
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start}
+
+```javascript [highlight:line-by-line]
+let x = 0;
+x = x + 5;
+x = x * 2;
+console.log(x);
+```
+
+:::[sync-fragments]
+x = 0
+[---]
+x = 5
+[---]
+x = 10
+[---]
+Output: 10
+:::[sync-fragments]
+
+:::
+
+===
+# Sync with line-by-line (Keep Mode)
+
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start}
+
+```python [highlight:line-by-line]
+count = 0
+count += 10
+count *= 3
+print(count)
+```
+
+:::[sync-fragments keep]
+count = 0
+[---]
+count = 10
+[---]
+count = 30
+[---]
+Output: 30
+:::[sync-fragments]
+
+:::
+
+===
+# Sync with block highlighting
+
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start}
+
+```java [highlight:block]
+String name = "Alice";
+int age = 25;
+
+String greeting = "Hello " + name;
+
+System.out.println(greeting);
+System.out.println("Age: " + age);
+```
+
+:::[sync-fragments]
+Variables initialized
+[---]
+Greeting created
+[---]
+Output printed
+:::[sync-fragments]
+
+:::
+
+===
+# Sync with function highlighting
+
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start}
+
+```typescript [highlight:function]
+function add(a: number, b: number): number {
+    return a + b;
+}
+
+function multiply(a: number, b: number): number {
+    return a * b;
+}
+```
+
+:::[sync-fragments keep]
+Addition function defined
+[---]
+Multiplication function defined
+:::[sync-fragments]
+
+:::
+
+===
+# Sync with class highlighting
+
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start}
+
+```python [highlight:class]
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    
+    def speak(self):
+        pass
+
+class Dog(Animal):
+    def speak(self):
+        return "Woof!"
+```
+
+:::[sync-fragments]
+Base class Animal
+[---]
+Derived class Dog
+:::[sync-fragments]
+
+:::
+
+===
+# Sync with Images (Replace Mode)
+
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start}
+
+```python [highlight:line-by-line]
+data = load_data()
+cleaned = process(data)
+result = analyze(cleaned)
+```
+
+:::[sync-fragments]
+![Raw Data](https://placehold.co/400x200/3498db/white?text=Raw+Data)
+[---]
+![Cleaned](https://placehold.co/400x200/2ecc71/white?text=Cleaned)
+[---]
+![Results](https://placehold.co/400x200/e74c3c/white?text=Results)
+:::[sync-fragments]
+
+:::
+
+===
+# Sync Mixed Content (Keep Mode)
+
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start}
+
+```java [highlight:line-by-line]
+User user = new User("Bob");
+user.setAge(30);
+user.setRole("Admin");
+System.out.println(user);
+```
+
+:::[sync-fragments keep]
+User: name="Bob"
+[---]
+Updated: age=30
+[---]
+Updated: role="Admin"
+[---]
+![User Object](https://placehold.co/300x150/9b59b6/white?text=User+Object)
+:::[sync-fragments]
+
+:::
+
+===
+# Sync with all highlighting
+
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start}
+
+```javascript [highlight:all]
+const total = calculateTotal(items);
+console.log("Total:", total);
+```
+
+:::[sync-fragments]
+Calculation complete
+[---]
+Total displayed
+:::[sync-fragments]
+
+:::
+
+===
+# Sync with manual line numbers
+
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start}
+
+```python [lines:'1|2|3-4']
+def process():
+    step1()
+    step2()
+    step3()
+```
+
+:::[sync-fragments keep]
+Function defined
+[---]
+Step 1 executed
+[---]
+Steps 2 and 3 executed
+:::[sync-fragments]
+
+:::

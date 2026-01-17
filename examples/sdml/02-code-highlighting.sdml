@@ -1,0 +1,140 @@
+{
+    author: "SlideDeckML Team"
+    title: "Code Highlighting Modes Test"
+}
+===
+# Highlight Mode: all
+
+Highlights all lines at once:
+
+```javascript [highlight:all]
+function greet(name) {
+    console.log("Hello, " + name);
+    return true;
+}
+```
+
+===
+# Highlight Mode: none
+
+No highlighting:
+
+```python [highlight:none]
+def calculate(x, y):
+    result = x + y
+    return result
+```
+
+===
+# Highlight Mode: line-by-line
+
+Reveals each line progressively:
+
+```typescript [highlight:line-by-line]
+interface User {
+    id: number;
+    name: string;
+}
+
+const user: User = {
+    id: 1,
+    name: "Alice"
+};
+```
+
+===
+# Highlight Mode: block
+
+Highlights code blocks separated by empty lines:
+
+```java [highlight:block]
+public class Calculator {
+    private int value;
+
+    public void add(int x) {
+        value += x;
+    }
+
+    public int getValue() {
+        return value;
+    }
+}
+```
+
+===
+# Highlight Mode: function
+
+Detects and highlights functions:
+
+```python [highlight:function]
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+```
+
+===
+# Highlight Mode: class
+
+Detects and highlights classes:
+
+```javascript [highlight:class]
+class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    introduce() {
+        return `I'm ${this.name}, ${this.age} years old`;
+    }
+}
+
+class Student extends Person {
+    constructor(name, age, grade) {
+        super(name, age);
+        this.grade = grade;
+    }
+}
+```
+
+===
+# Manual Line Numbers
+
+Specify exact lines to highlight:
+
+```python [lines:'1-2|4']
+# This is line 1
+# This is line 2
+# This is line 3
+# This is line 4
+# This is line 5
+```
+
+===
+# Start Offset
+
+Line numbers start from custom number:
+
+```javascript [start:10]
+function process() {
+    console.log("Starting at line 10");
+    return true;
+}
+```
+
+===
+# Plain Code
+
+No language, no highlighting:
+
+```
+This is plain text
+No syntax highlighting
+Just monospace font
+```

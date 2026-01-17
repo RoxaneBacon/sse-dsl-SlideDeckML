@@ -1,3 +1,5 @@
+import { ImageConverter } from "./image-converter";
+import * as path from 'path';
 
 /**
  * This module is responsible for generating HTML elements from the AST nodes.
@@ -6,6 +8,15 @@
  */
 export class ElementGenerator {
     textProcessor = new TextProcessor();
+    private sourceFilePath?: string;
+
+    /**
+     * Set the source file path for resolving relative image paths
+     * @param filePath Absolute path to the .sdml file
+     */
+    public setSourceFilePath(filePath: string): void {
+        this.sourceFilePath = filePath;
+    }
 
     /**
      * Generate a heading element
@@ -72,11 +83,11 @@ export class ElementGenerator {
     }
 
     /**
-     * Generate a media element (image or video)
+     * Generate a media element (image, video, or YouTube embed)
      * @param media The media AST node
      * @returns The HTML string for the media
      */
-    public generateMedia(media: any, style: string = ''): string {
+    public async generateMedia(media: any, style: string = ''): Promise<string> {
         const content = media.content;
         
         // Parse the media line: ![alt](url)
@@ -86,6 +97,12 @@ export class ElementGenerator {
         const alt = match[1];
         const url = match[2];
         
+        // Check if it's a YouTube link
+        const youtubeVideoId = this.extractYouTubeVideoId(url);
+        if (youtubeVideoId) {
+            return `            <iframe${style} width="560" height="315" src="https://www.youtube.com/embed/${youtubeVideoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        }
+        
         // Determine if it's a video based on file extension
         const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
         const isVideo = videoExtensions.some(ext => url.toLowerCase().endsWith(ext));
@@ -93,8 +110,37 @@ export class ElementGenerator {
         if (isVideo) {
             return `            <video controls${style}>\n                <source src="${url}" type="video/${this.getVideoType(url)}">\n                ${alt}\n            </video>`;
         } else {
-            return `            <img src="${url}" alt="${alt}"${style}>`;
+            // Convert image to base64
+            const basePath = this.sourceFilePath ? path.dirname(this.sourceFilePath) : undefined;
+            const base64Url = await ImageConverter.convertToBase64Async(url, basePath);
+            
+            return `            <img src="${base64Url}" alt="${alt}"${style}>`;
         }
+    }
+
+    /**
+     * Extract YouTube video ID from various YouTube URL formats
+     * @param url The YouTube URL
+     * @returns The video ID or null if not a YouTube URL
+     */
+    private extractYouTubeVideoId(url: string): string | null {
+        // Handle youtube.com/watch?v=VIDEO_ID
+        let match = url.match(/(?:youtube\.com\/watch\?v=|youtube\.com\/watch\?.*&v=)([a-zA-Z0-9_-]{11})/);
+        if (match) return match[1];
+        
+        // Handle youtu.be/VIDEO_ID
+        match = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+        if (match) return match[1];
+        
+        // Handle youtube.com/embed/VIDEO_ID
+        match = url.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/);
+        if (match) return match[1];
+        
+        // Handle youtube.com/v/VIDEO_ID
+        match = url.match(/youtube\.com\/v\/([a-zA-Z0-9_-]{11})/);
+        if (match) return match[1];
+        
+        return null;
     }
 
         /**
@@ -142,7 +188,7 @@ export class ElementGenerator {
             
             // Handle start offset
             if (attributes.start) {
-                dataAttrs += ` data-ln-start-from="${attributes.start}"`;
+                dataAttrs += ` data-line-numbers data-ln-start-from="${attributes.start}"`;
             }
         }
 
@@ -340,7 +386,7 @@ export class ElementGenerator {
      * @param lastCodeBlock The previous code block to sync with
      * @returns The HTML string for the synchronized fragments
      */
-    public generateSyncFragments(syncFragments: any, lastCodeBlock: any | null): string {
+    public async generateSyncFragments(syncFragments: any, lastCodeBlock: any | null): Promise<string> {
         if (!syncFragments.fragments || syncFragments.fragments.length === 0) {
             return '';
         }
@@ -352,7 +398,8 @@ export class ElementGenerator {
         // Generate container div with custom classes
         let html = `            <div class="sync-container"${keepAttr}>`;
         
-        syncFragments.fragments.forEach((fragment: any, index: number) => {
+        for (let index = 0; index < syncFragments.fragments.length; index++) {
+            const fragment = syncFragments.fragments[index];
             let content = '';
             
             // Check if it's media or text
@@ -362,7 +409,12 @@ export class ElementGenerator {
                 if (match) {
                     const alt = match[1] || '';
                     const url = match[2];
-                    content = `<img src="${url}" alt="${this.textProcessor.escapeHtml(alt)}" style="max-width: 100%; height: auto;" />`;
+                    
+                    // Convert image to base64
+                    const basePath = this.sourceFilePath ? path.dirname(this.sourceFilePath) : undefined;
+                    const base64Url = await ImageConverter.convertToBase64Async(url, basePath);
+                    
+                    content = `<img src="${base64Url}" alt="${this.textProcessor.escapeHtml(alt)}" style="max-width: 100%; height: auto;" />`;
                 }
             } else if (fragment.text) {
                 // Process text with inline formatting
@@ -371,7 +423,7 @@ export class ElementGenerator {
             
             // Add sync item with data-sync-index matching code highlight step
             html += `\n                <div class="sync-item" data-sync-index="${index - 1}">${content}</div>`;
-        });
+        }
         
         html += '\n            </div>';
         return html;

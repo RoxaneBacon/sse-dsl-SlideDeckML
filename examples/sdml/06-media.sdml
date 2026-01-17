@@ -1,0 +1,102 @@
+{
+    author: "SlideDeckML Team"
+    title: "Media Test"
+}
+===
+# Basic Images
+
+Simple image:
+
+![Demo Image](https://placehold.co/600x400/3498db/white?text=Demo+Image)
+
+===
+# Multiple Images
+
+![Image 1](https://placehold.co/300x200/e74c3c/white?text=Image+1)
+
+![Image 2](https://placehold.co/300x200/2ecc71/white?text=Image+2)
+
+![Image 3](https://placehold.co/300x200/f39c12/white?text=Image+3)
+
+===
+# Different Sizes
+
+Small:
+![Small](https://placehold.co/200x150/9b59b6/white?text=Small)
+
+Medium:
+![Medium](https://placehold.co/400x300/3498db/white?text=Medium)
+
+Large:
+![Large](https://placehold.co/800x400/e74c3c/white?text=Large)
+
+===
+# Styled Images
+
+::: {text-align: 'center'}
+![Centered](https://placehold.co/500x300/2ecc71/white?text=Centered)
+:::
+
+::: {width: '60%'; margin: '0 auto'; border: '4px solid #e74c3c'; border-radius: '10px'}
+![Bordered](https://placehold.co/700x400/f39c12/white?text=Bordered+Image)
+:::
+
+===
+# Images in Grid
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'; align-items: 'center'}
+![Left](https://placehold.co/400x300/3498db/white?text=Left)
+
+### Description
+This is a grid layout with an image on the left and text on the right
+:::
+
+===
+# Images in Flexbox
+
+::: {display: 'flex'; justify-content: 'space-between'; align-items: 'center'}
+![Flex 1](https://placehold.co/250x200/e74c3c/white?text=1)
+
+![Flex 2](https://placehold.co/250x200/2ecc71/white?text=2)
+
+![Flex 3](https://placehold.co/250x200/9b59b6/white?text=3)
+:::
+
+===
+# Image with Quote
+
+![Visual](https://placehold.co/600x350/3498db/white?text=Inspiration)
+
+> Images speak louder than words
+
+===
+# Basic Video
+
+Simple video:
+
+![Demo Video](https://www.w3schools.com/html/mov_bbb.mp4)
+
+===
+# Styled Video
+
+::: {width: '70%'; margin: '0 auto'}
+![Big Buck Bunny](https://www.w3schools.com/html/mov_bbb.mp4)
+:::
+
+===
+# Video with Description
+
+![Sample Video](https://www.w3schools.com/html/movie.mp4)
+
+This is an example of embedded video in the presentation
+
+===
+# Mixed Media
+
+Images and videos together:
+
+![Image](https://placehold.co/400x300/3498db/white?text=Image)
+
+![Video](https://www.w3schools.com/html/mov_bbb.mp4)
+
+![Youtube Video](https://www.youtube.com/watch?v=KJgsSFOSQv0)

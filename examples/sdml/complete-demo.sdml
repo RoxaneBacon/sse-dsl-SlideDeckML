@@ -1,0 +1,621 @@
+{
+    author: "SlideDeckML Team"
+    title: "Complete Feature Showcase"
+    theme: "black"
+    transition: "slide"
+    chalkboard: "true"
+    chalkboard-theme: "chalkboard"
+    chalkboard-buttons: "true"
+}
+===
+::: {text-align: 'center'; color: '#3498db'; font-size: '48px'; font-weight: 'bold'}
+# SlideDeckML
+:::
+
+::: {text-align: 'center'; font-size: '24px'; color: '#95a5a6'}
+Complete Feature Demonstration
+:::
+
+===
+# Table of Contents
+
+1. **Simple Markdown** - Headers, lists, quotes, paragraphs
+2. **Code Highlighting** - All 6 highlight modes
+3. **Synchronized Fragments** - Code execution visualization
+4. **LaTeX** - Mathematical equations
+5. **Styling** - Custom CSS and layouts
+6. **Media** - Images and positioning
+7. **Absolute Positioning** - calque, margins
+8. **Chalkboard** - Interactive drawing and annotations
+9. **Fragment Animations** - Incremental reveals and transitions
+10. **Slide Transitions** - Visual effects between slides
+
+===
+::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
+## Part 1: Simple Markdown
+:::
+
+===
+# Headers
+
+# This is H1
+
+## This is H2
+
+### This is H3
+
+===
+# Text Formatting
+
+Regular paragraph with **bold**, *italic*, and _underlined_ text.
+
+Combine them: **_bold italic_** and **_bold underline_**.
+
+===
+# Lists
+
+Unordered:
+- First item
+- Second item with **bold**
+- Third item with *italic*
+
+Ordered:
+1. Step one
+2. Step two with _underline_
+3. Step three
+
+===
+# Quotes
+
+> Simple quote
+
+> Quote with **bold** and *italic* text
+
+> Quote with _underlined_ text
+
+===
+::: {background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
+## Part 2: Code Highlighting
+:::
+
+===
+# Mode: all
+
+```javascript [highlight:all]
+function sum(a, b) {
+    return a + b;
+}
+```
+
+===
+# Mode: line-by-line
+
+```python [highlight:line-by-line]
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+```
+
+===
+# Mode: block
+
+```java [highlight:block]
+public class User {
+    private String name;
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+```
+
+===
+# Mode: function
+
+```typescript [highlight:function]
+function add(a: number, b: number): number {
+    return a + b;
+}
+
+function multiply(a: number, b: number): number {
+    return a * b;
+}
+```
+
+===
+# Mode: class
+
+```python [highlight:class]
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    
+    def speak(self):
+        pass
+
+class Dog(Animal):
+    def speak(self):
+        return "Woof!"
+```
+
+===
+# Manual Lines & Start
+
+```javascript [lines:'1-2|4']
+console.log("Line 1-2 highlighted");
+console.log("Together");
+console.log("Not highlighted");
+console.log("Line 4 highlighted");
+```
+
+```python [start:10]
+# Line numbers start at 10
+def process():
+    return True
+```
+
+===
+::: {background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
+## Part 3: Synchronized Fragments
+:::
+
+===
+# Sync: line-by-line (replace)
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'; align-items: 'start'}
+
+```javascript [highlight:line-by-line]
+let x = 0;
+x = x + 5;
+x = x * 2;
+console.log(x);
+```
+
+:::[sync-fragments]
+x = 0
+[---]
+x = 5
+[---]
+x = 10
+[---]
+Output: 10
+:::[sync-fragments]
+
+:::
+
+===
+# Sync: line-by-line (keep)
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'; align-items: 'start'}
+
+```python [highlight:line-by-line]
+count = 0
+count += 10
+count *= 3
+print(count)
+```
+
+:::[sync-fragments keep]
+count = 0
+[---]
+count = 10
+[---]
+count = 30
+[---]
+Output: 30
+:::[sync-fragments]
+
+:::
+
+===
+# Sync: with images
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'; align-items: 'start'}
+
+```python [highlight:line-by-line]
+data = load_data()
+cleaned = process(data)
+result = analyze(cleaned)
+```
+
+:::[sync-fragments]
+![Raw](https://placehold.co/400x200/3498db/white?text=Raw+Data)
+[---]
+![Cleaned](https://placehold.co/400x200/2ecc71/white?text=Cleaned)
+[---]
+![Results](https://placehold.co/400x200/e74c3c/white?text=Results)
+:::[sync-fragments]
+
+:::
+
+===
+# Sync: mixed content
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'; align-items: 'start'}
+
+```java [highlight:line-by-line]
+User user = new User("Alice");
+user.setAge(25);
+user.setRole("Admin");
+System.out.println(user);
+```
+
+:::[sync-fragments keep]
+User: name="Alice"
+[---]
+Updated: age=25
+[---]
+Updated: role="Admin"
+[---]
+![User](https://placehold.co/300x150/9b59b6/white?text=User+Object)
+:::[sync-fragments]
+
+:::
+
+===
+::: {background: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'; padding: '40px'; border-radius: '15px'; color: '#2c3e50'; text-align: 'center'}
+## Part 4: LaTeX
+:::
+
+===
+# LaTeX Equations
+
+Inline: $E = mc^2$
+
+Display:
+
+```latex
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+```
+
+===
+# Calculus
+
+```latex
+\int_{a}^{b} f(x) \, dx = F(b) - F(a)
+```
+
+```latex
+\lim_{x \to \infty} \frac{1}{x} = 0
+```
+
+===
+# Matrix
+
+```latex
+\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix}
+=
+\begin{pmatrix}
+ax + by \\
+cx + dy
+\end{pmatrix}
+```
+
+===
+::: {background: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
+## Part 5: Styling
+:::
+
+===
+# Text Styling
+
+::: {color: '#e74c3c'; font-size: '28px'; font-weight: 'bold'}
+Styled text with color and size
+:::
+
+::: {background: '#3498db'; color: 'white'; padding: '20px'; border-radius: '10px'}
+Box with background and padding
+:::
+
+===
+# Border Styles
+
+::: {border: '3px solid #2ecc71'; padding: '15px'; border-radius: '8px'}
+Content with border
+:::
+
+::: {border-left: '6px solid #f39c12'; padding-left: '20px'; background: '#ecf0f1'}
+Left accent border
+:::
+
+===
+# Grid Layout
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr 1fr'; gap: '1.5em'}
+### Column 1
+Content A
+
+### Column 2
+Content B
+
+### Column 3
+Content C
+:::
+
+===
+# Styled Multiple Elements
+
+::: {background: '#2c3e50'; color: '#ecf0f1'; padding: '25px'; border-radius: '12px'}
+## Dark Container
+
+This is styled content
+
+- Item one
+- Item two
+
+![Styled Image](https://placehold.co/300x200/34495e/ecf0f1?text=Dark)
+:::
+
+===
+::: {background: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'; padding: '40px'; border-radius: '15px'; color: '#2c3e50'; text-align: 'center'}
+## Part 6: Media
+:::
+
+===
+# Images
+
+![Demo](https://placehold.co/600x400/3498db/white?text=Demo+Image)
+
+===
+# Videos
+
+![Demo Video](https://www.w3schools.com/html/mov_bbb.mp4)
+
+===
+# Styled Images
+
+::: {width: '60%'; border: '5px solid #e74c3c'; border-radius: '15px'; box-shadow: '0 8px 16px rgba(0,0,0,0.3)'}
+![Styled](https://placehold.co/700x400/f39c12/white?text=Styled+Image)
+:::
+
+===
+# Image Grid
+
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'}
+![Left](https://placehold.co/400x300/3498db/white?text=Left)
+
+### Description
+Image with text in grid layout
+:::
+
+===
+::: {background: 'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)'; padding: '40px'; border-radius: '15px'; color: '#2c3e50'; text-align: 'center'}
+## Part 7: Absolute Positioning
+:::
+
+===
+# Positioned Elements
+
+Base content flows normally
+
+::: {calque: 10; horizontal-margin: 200; vertical-margin: 150; color: '#e74c3c'; font-size: '36px'; font-weight: 'bold'}
+OVERLAY
+:::
+
+::: {calque: 5; horizontal-margin: 450; vertical-margin: 300; background: '#3498db'; color: 'white'; padding: '15px'; border-radius: '8px'}
+Floating box
+:::
+
+===
+# Layered Content
+
+::: {calque: 1; horizontal-margin: 100; vertical-margin: 100; background: '#ecf0f1'; padding: '15px'}
+Layer 1 (z-index: 1)
+:::
+
+::: {calque: 5; horizontal-margin: 120; vertical-margin: 120; background: '#bdc3c7'; padding: '15px'}
+Layer 2 (z-index: 5)
+:::
+
+::: {calque: 10; horizontal-margin: 140; vertical-margin: 140; background: '#95a5a6'; padding: '15px'; color: 'white'}
+Layer 3 (z-index: 10)
+:::
+
+===
+# Positioned Images
+
+::: {calque: 1; horizontal-margin: 100; vertical-margin: 100}
+![Image 1](https://placehold.co/300x200/3498db/white?text=1)
+:::
+
+::: {calque: 5; horizontal-margin: 450; vertical-margin: 250}
+![Image 2](https://placehold.co/250x150/e74c3c/white?text=2)
+:::
+
+===
+::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
+## Part 8: Interactive Chalkboard
+:::
+
+===
+# Chalkboard Feature
+
+This presentation includes **interactive chalkboard** functionality!
+
+- Draw and annotate directly on slides
+- Toggle between presentation and drawing modes
+- Use keyboard shortcuts or buttons
+- Perfect for live presentations and teaching
+
+===
+# How to Use Chalkboard
+
+**Keyboard Shortcuts:**
+
+- Press **C** to toggle Chalkboard Mode (draw over slides)
+- Press **B** to toggle Notes Canvas (draw on black board)
+- Press **DEL** or **BACKSPACE** to clear drawings
+- Press **D** to download drawings as JSON
+
+**Mouse/Touch:**
+
+- Click the chalkboard buttons at the bottom of slides
+- Draw with mouse or touch input
+
+===
+# Chalkboard Modes
+
+**Chalkboard Mode (Press C):**
+- Draw directly over slide content
+- Annotate diagrams and code
+- Highlight important points
+
+**Notes Canvas (Press B):**
+- Opens a blank chalkboard for sketching
+- Great for explaining concepts from scratch
+- Like a traditional blackboard
+
+===
+# Try It Now!
+
+Press **C** to start drawing on this slide!
+
+You can:
+- Circle this text
+- Draw arrows
+- Add your own notes
+- Underline key points
+
+Press **DEL** to clear when done.
+
+===
+::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
+## Part 9: Fragment Animations
+:::
+
+===
+# Fragment Animations
+
+::: {animate: "fade-in"}
+Fragment animations let you **reveal content incrementally**
+:::
+
+::: {animate: "fade-up"}
+This text slides up while fading in
+:::
+
+::: {animate: "highlight-blue"}
+And this one highlights in blue!
+:::
+
+===
+# Various Fragment Effects
+
+::: {animate: "fade-out"}
+This will fade out
+:::
+
+::: {animate: "grow"}
+This will grow larger
+:::
+
+::: {animate: "shrink"}
+This will shrink
+:::
+
+::: {animate: "strike"}
+This gets struck through
+:::
+
+===
+# Nested Fragments
+
+::: {animate: "fade-in"}
+::: {animate: "highlight-red"}
+::: {animate: "semi-fade-out"}
+Fade in → Turn red → Semi fade out
+:::
+:::
+:::
+
+===
+# Custom Order
+
+::: {animate: "fade-in" index: 3}
+**Third**: This appears last
+:::
+
+::: {animate: "fade-in" index: 1}
+**First**: This appears first
+:::
+
+::: {animate: "fade-in" index: 2}
+**Second**: This appears in the middle
+:::
+
+===
+# Fragments with Lists
+
+::: {animate: "fade-in"}
+- First batch of items
+- Appears together
+:::
+
+::: {animate: "highlight-green"}
+- Second batch
+- Highlights in green
+:::
+
+===
+::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
+## Part 10: Slide Transitions
+:::
+
+===
+{transition: "fade"}
+
+# Slide Transitions
+
+This presentation uses the **"slide"** transition globally (set in metadata).
+
+But **individual slides** can override it!
+
+This slide uses the **fade** transition.
+
+===
+{transition: "zoom"}
+
+# Zoom Effect
+
+This slide **zooms in** from the center!
+
+Different transitions add visual variety to presentations.
+
+===
+{transition: "convex"}
+
+# More Transitions
+
+This uses the **convex** transition.
+
+Available: `none`, `fade`, `slide`, `convex`, `concave`, `zoom`
+
+===
+{transition: "fade-in slide-out"}
+
+# Mixed Transitions
+
+You can even use **different in/out transitions**!
+
+This slide: **fade-in slide-out**
+
+===
+::: {text-align: 'center'; color: '#3498db'; font-size: '64px'; font-weight: 'bold'}
+# Thank You!
+:::
+
+::: {text-align: 'center'; font-size: '28px'; color: '#7f8c8d'; margin-top: '30px'}
+SlideDeckML - All Features Demonstrated
+:::

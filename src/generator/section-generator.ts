@@ -1,4 +1,4 @@
-import { Block, Slide, Template } from "../language/generated/ast";
+import { Block, Slide } from "../language/generated/ast";
 import { LineContentHandler } from "./line-content-handler";
 
 /**
@@ -13,20 +13,41 @@ export class SectionGenerator {
     }
 
     /**
-     * Generate HTML for a slide or template section
-     * @param slideOrTemplate The slide or template to generate
-     * @param isTemplate Whether this is a template section
+     * Get the line content handler
+     */
+    public getLineContentHandler(): LineContentHandler {
+        return this.lineContentHandler;
+    }
+
+    /**
+     * Generate HTML for a slide section
+     * @param slide The slide to generate
      * @returns Generated HTML string
      */
-    public generateSection(slideOrTemplate: Slide | Template, isTemplate: boolean): string {
-        const contentHTML = slideOrTemplate.blocks
-            .map(block => this.generateBlock(block))
-            .join('\n');
+    public async generateSection(slide: Slide): Promise<string> {
+        const blockPromises = slide.blocks.map(block => this.generateBlock(block));
+        const contentHTML = (await Promise.all(blockPromises)).join('\n');
 
-        // Add data-slide-index attribute for regular slides (not template)
-        const dataAttribute = isTemplate ? '' : ` data-slide-index="${this.currentSlideIndex}"`;
+        // Parse transition if specified
+        let transitionAttr = '';
+        if (slide.transition) {
+            const transitionValue = this.parseTransition(slide.transition);
+            if (transitionValue) {
+                transitionAttr = ` data-transition="${transitionValue}"`;
+            }
+        }
 
-        return `        <section${dataAttribute}>\n${contentHTML}\n        </section>`;
+        return `        <section data-slide-index="${this.currentSlideIndex}"${transitionAttr}>\n${contentHTML}\n        </section>`;
+    }
+
+    /**
+     * Parse transition attribute
+     * @param transitionStr Transition string like {transition: "slide"} or {transition: "slide-in fade-out"}
+     * @returns Parsed transition value
+     */
+    private parseTransition(transitionStr: string): string {
+        const match = transitionStr.match(/\{transition:\s*["']([^"']+)["']\}/);
+        return match ? match[1] : '';
     }
 
     /**
@@ -34,11 +55,12 @@ export class SectionGenerator {
      * @param block The block to generate
      * @returns Generated HTML string
      */
-    private generateBlock(block: Block): string {
+    private async generateBlock(block: Block): Promise<string> {
         let html = '';
 
         if (block.lines.length > 0) {
-            html += block.lines.map(line => this.lineContentHandler.generateLine(line)).join('\n');
+            const linePromises = block.lines.map(line => this.lineContentHandler.generateLine(line));
+            html += (await Promise.all(linePromises)).join('\n');
         }
 
         return html;
