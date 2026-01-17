@@ -11,11 +11,14 @@
 7. [Listes](#listes)
 8. [Citations](#citations)
 9. [Médias (Images et Vidéos)](#médias-images-et-vidéos)
+9. [QR Code](#qr-code)
 10. [Blocs de code](#blocs-de-code)
 11. [Styles personnalisés](#styles-personnalisés)
 12. [Templates](#templates)
 13. [Fragments synchronisés](#fragments-synchronisés)
-14. [Exemples complets](#exemples-complets)
+14. [IDE Intégré](#ide-intégré)
+15. [Quiz Interactif](#quiz-interactif)
+16. [Exemples complets](#exemples-complets)
 
 ---
 
@@ -290,6 +293,18 @@ Syntaxe identique à Markdown pour insérer des images et vidéos.
 ## Vidéo de présentation
 
 ![Présentation du produit](https://example.com/video.mp4)
+```
+
+---
+
+## QR Code
+
+### Symbole : `![QR] "url"`
+
+### Exemple complet
+
+```sdml
+![QR] "https://github.com/RoxaneBacon/sse-dsl-SlideDeckML"
 ```
 
 ---
@@ -647,6 +662,97 @@ save(img)
 
 ---
 
+## IDE Intégré
+
+### Symbole : `,,,ide`
+
+L'IDE intégré permet d'inclure un éditeur de code exécutable directement dans vos slides.
+
+### Syntaxe
+
+````
+```sdml
+,,,ide python
+```
+code placeholder (optionnel)
+```
+output : "python-output",,,
+```
+
+output : "python-output"
+````
+
+### Langages supportés
+
+Python, JavaScript et SQL
+
+### Exemple complet avec positionnement
+
+Vous pouvez combiner l'éditeur monaco et la fenêtre d'output avec les styles personnalisés pour les placer précisément sur la slide :
+
+````
+```sdml
+::: {calque: 1, horizontal-margin: 0, vertical-margin: 50}
+,,,ide python
+```
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.plot(x, y, 'b-', linewidth=2)
+plt.title('Sinus Function')
+plt.show()
+```
+output : "python-output",,,
+:::
+
+::: {calque: 1, horizontal-margin: 500, vertical-margin: 200}
+output : "python-output"
+:::
+```
+````
+
+---
+
+## Quiz Interactif
+
+### Symbole : `:::quiz`
+
+Les quiz interactifs permettent de poser des questions au public en direct. Les réponses peuvent être collectées et visualisées avec des graphiques (bar chart ou pie chart).
+
+### Syntaxe
+
+```sdml
+:::quiz
+"Titre du Quiz"
+showJoinQrCode : true
+
+question : "Votre première question?"
+choice "id1" : "Choix 1"
+choice "id2" : "Choix 2"
+choice "id3" : "Choix 3"
+correct : "id1"
+visualization : barChart
+showResultsOnDemand : true
+
+question : "Deuxième question?"
+choice "a" : "Option A"
+choice "b" : "Option B"
+correct : "b"
+visualization : pieChart
+showResultsOnDemand : false
+:::
+```
+
+### Propriétés principales
+
+| Propriété | Type | Description |
+| --------- | ---- | ----------- |
+| `showJoinQrCode` | booléen | Affiche un QR code pour que les participants se joignent |
+| `visualization` | barChart \| pieChart | Type de graphique pour les résultats |
+| `showResultsOnDemand` | booléen | Afficher les résultats seulement à la demande de l'host|
+
+---
+
 ## Récapitulatif des symboles
 
 | Symbole               | Utilisation            | Exemple                           |
@@ -665,9 +771,12 @@ save(img)
 | `1.`, `2.`            | Liste ordonnée         | `1. Premier`                      |
 | `>`                   | Citation               | `> Citation`                      |
 | `![alt](url)`         | Image/Vidéo            | `![Logo](url)`                    |
+| `![QR] "url"`         | QR Code                | `![QR] "url"`                     |
 | ` ``` `               | Bloc de code           | ` ```javascript `                 |
 | `:::`                 | Styles personnalisés   | `::: {color: 'red'}`              |
 | `:::[sync-fragments]` | Fragments synchronisés | `:::[sync-fragments]`             |
+| `,,,ide`              | IDE Intégré            | `,,,ide python`                   |
+| `:::quiz`             | Quiz Interactif        | `:::quiz`                         |
 | `[---]`               | Séparateur de fragment | `[---]`                           |
 
 ---
