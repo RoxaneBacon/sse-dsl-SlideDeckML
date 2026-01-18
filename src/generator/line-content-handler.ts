@@ -9,6 +9,7 @@ import {
     isMedia,
     isStyledElement,
     isFragmentElement,
+    isNestedStyledElement,
     isCodeBlock,
     isSyncFragments,
     isEditor,
@@ -53,12 +54,17 @@ export class LineContentHandler {
      * @returns Generated HTML string
      */
     public async generateLine(line: LineContent): Promise<string> {
-        // Handle fragment elements first
+        // Handle fragment elements first (animations)
         if (isFragmentElement(line)) {
             return await this.handleFragmentElement(line);
         }
-        
-        // Handle styled elements
+
+        // Handle nested styled elements (::::)
+        if (isNestedStyledElement(line)) {
+            return await this.handleNestedStyledElement(line);
+        }
+
+        // Handle regular styled elements (:::)
         if (isStyledElement(line)) {
             return await this.handleStyledElement(line);
         }
@@ -98,13 +104,31 @@ export class LineContentHandler {
     /**
      * Handle styled element containing multiple child elements
      * @param line The styled element
+     * @param defaultWidth Optional default width to apply if no width is specified
      * @returns Generated HTML string
      */
-    private async handleStyledElement(line: any): Promise<string> {
-        const style = this.styleParser.parseStyle(line.style);
+    private async handleStyledElement(line: any, defaultWidth?: string): Promise<string> {
+        // Use new parseStyleAttributes to support both classes and inline styles
+        let attrs = this.styleParser.parseStyleAttributes(line.style);
         const elements = line.elements || [];
 
-        let containerHtml = `            <div${style}>\n`;
+        // If defaultWidth is provided and no width in current style, add it
+        if (defaultWidth) {
+            const hasWidth = line.style && /width\s*:/.test(line.style);
+            if (!hasWidth) {
+                // Add default width
+                const widthStyle = `width: ${defaultWidth}`;
+                if (attrs.inlineStyles) {
+                    // Insert width before the closing quote
+                    attrs.inlineStyles = attrs.inlineStyles.replace(/"$/, `; ${widthStyle}"`);
+                } else {
+                    attrs.inlineStyles = ` style="${widthStyle}"`;
+                }
+            }
+        }
+
+        // Apply both classes and inline styles to the container div
+        let containerHtml = `            <div${attrs.classes}${attrs.inlineStyles}>\n`;
 
         for (const element of elements) {
             if (isFragmentElement(element)) {
@@ -184,6 +208,70 @@ export class LineContentHandler {
             } else if (isOutput(element)) {
                 this.ideRuntime.enable();
                 containerHtml += this.ideGenerator.generateOutput(element, '') + '\n';
+            } else if (isParagraph(element)) {
+                containerHtml += this.elementGenerator.generateParagraph(element, '') + '\n';
+            }
+        }
+
+        containerHtml += `            </div>`;
+        return containerHtml;
+    }
+
+    /**
+     * Handle nested styled element containing child StyledElements and other elements
+     * Used for Reveal.js column layout with :::: delimiter
+     * @param line The nested styled element
+     * @returns Generated HTML string
+     */
+    private async handleNestedStyledElement(line: any): Promise<string> {
+        // Use parseStyleAttributes to support both classes and inline styles
+        let attrs = this.styleParser.parseStyleAttributes(line.style);
+        const elements = line.elements || [];
+
+        // If no display is specified in styles, add display: flex for column layout
+        const hasDisplay = line.style && /display\s*:/.test(line.style);
+        if (!hasDisplay) {
+            const displayStyle = 'display: flex';
+            if (attrs.inlineStyles) {
+                // Insert display before the closing quote
+                attrs.inlineStyles = attrs.inlineStyles.replace(/"$/, `; ${displayStyle}"`);
+            } else {
+                attrs.inlineStyles = ` style="${displayStyle}"`;
+            }
+        }
+
+        // Apply both classes and inline styles to the container div
+        let containerHtml = `            <div${attrs.classes}${attrs.inlineStyles}>\n`;
+
+        for (const element of elements) {
+            // Handle fragment elements (animations)
+            if (isFragmentElement(element)) {
+                containerHtml += await this.handleFragmentElement(element);
+                containerHtml += '\n';
+            }
+            // Handle nested StyledElement (:::)
+            else if (isStyledElement(element)) {
+                // Add default width: 100% to children without explicit width (for flex layout)
+                const defaultWidth = '100%';
+                containerHtml += await this.handleStyledElement(element, defaultWidth);
+                containerHtml += '\n';
+            }
+            // Handle other element types
+            else if (isHeader(element)) {
+                containerHtml += this.elementGenerator.generateHeading(element, '') + '\n';
+            } else if (isUnorderedList(element)) {
+                containerHtml += this.elementGenerator.generatePointedList(element, '') + '\n';
+            } else if (isOrderedList(element)) {
+                containerHtml += this.elementGenerator.generateOrderedList(element, '') + '\n';
+            } else if (isQuote(element)) {
+                containerHtml += this.elementGenerator.generateQuote(element, '') + '\n';
+            } else if (isMedia(element)) {
+                containerHtml += await this.elementGenerator.generateMedia(element, '') + '\n';
+            } else if (isCodeBlock(element)) {
+                this.lastCodeBlock = element;
+                containerHtml += this.elementGenerator.generateCodeBlock(element, '') + '\n';
+            } else if (isSyncFragments(element)) {
+                containerHtml += await this.elementGenerator.generateSyncFragments(element, this.lastCodeBlock) + '\n';
             } else if (isParagraph(element)) {
                 containerHtml += this.elementGenerator.generateParagraph(element, '') + '\n';
             }

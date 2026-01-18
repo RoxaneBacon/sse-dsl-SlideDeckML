@@ -1,0 +1,228 @@
+{
+    author: "SlideDeckML Team"
+    title: "Class Attributes"
+}
+===
+# Class Attributes
+
+CSS classes for Reveal.js and custom styling
+
+===
+# Pure Class Attribute
+
+::: {.r-fit-text}
+## This Text Will Fit Container
+Using Reveal.js built-in class
+:::
+
+===
+# Multiple Classes
+
+::: {.fragment .fade-in}
+This will fade in as a fragment when you advance
+:::
+
+::: {.fragment .fade-out}
+This will fade out
+:::
+
+===
+# Class with Inline Styles
+
+::: {.r-stretch; background: '#3498db'; padding: '20px'; color: 'white'}
+## Stretched Content
+Combined Reveal.js class with custom styles
+:::
+
+===
+# Custom Classes
+
+::: {.my-custom-class; background: '#2ecc71'; color: 'white'; padding: '25px'; border-radius: '10px'}
+### Custom Styled Box
+You can add your own class names for custom CSS
+:::
+
+===
+# Reveal.js Fragment Classes
+
+::: {.fragment .highlight-red}
+This fragment will be highlighted in red
+:::
+
+::: {.fragment .highlight-blue}
+This fragment will be highlighted in blue
+:::
+
+::: {.fragment .highlight-green}
+This fragment will be highlighted in green
+:::
+
+===
+# Multiple Custom Classes
+
+::: {.box .shadow .rounded; padding: '20px'}
+### Multiple Classes Applied
+- box
+- shadow
+- rounded
+
+(Add corresponding CSS in your theme)
+:::
+
+===
+# Class Names with Hyphens
+
+::: {.my-special-box; background: '#9b59b6'; color: 'white'; padding: '20px'}
+### Hyphenated Class Name
+Classes with hyphens work perfectly
+:::
+
+===
+# Class Names with Underscores
+
+::: {.my_underscore_class; background: '#e67e22'; color: 'white'; padding: '20px'}
+### Underscored Class Name
+Classes with underscores also work
+:::
+
+===
+# Reveal.js Stack Classes
+
+::: {.r-stack}
+![Layer 1](https://placehold.co/400x300/3498db/white?text=Background)
+:::
+
+===
+# Reveal.js Hstack Class
+
+::: {.r-hstack}
+### Item 1
+### Item 2
+### Item 3
+:::
+
+===
+# Combined: Class + Transform
+
+::: {.my-rotated-box; rotate: 5; scale: 1.1; background: '#e74c3c'; color: 'white'; padding: '25px'; border-radius: '8px'}
+### Rotation + Class
+Combining class attributes with transform abstractions
+:::
+
+===
+# Combined: Class + Layout
+
+:::: {.grid-container; padding: '20px'}
+::: {.column; width: '50%'}
+### Column 1
+With class attribute
+:::
+
+::: {.column; width: '50%'}
+### Column 2
+And layout shortcut
+:::
+::::
+
+===
+# Complex Combination
+
+:::: {.featured-box .animated; background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; color: 'white'; padding: '30px'; border-radius: '15px'}
+::: {.column; width: '33%'}
+### Feature A
+First feature
+:::
+
+::: {.column; width: '33%'}
+### Feature B
+Second feature
+:::
+
+::: {.column; width: '34%'}
+### Feature C
+Third feature
+:::
+::::
+
+===
+# Reveal.js Auto-animate
+
+::: {.fragment .fade-up}
+Content that fades up
+:::
+
+::: {.fragment .fade-down}
+Content that fades down
+:::
+
+::: {.fragment .fade-left}
+Content that fades from left
+:::
+
+::: {.fragment .fade-right}
+Content that fades from right
+:::
+
+===
+# Reveal.js Grow/Shrink
+
+::: {.fragment .grow}
+This will grow
+:::
+
+::: {.fragment .shrink}
+This will shrink
+:::
+
+===
+# Class for Container Styling
+
+::: {.container; max-width: '800px'; margin: '0 auto'; background: '#ecf0f1'; padding: '30px'; border-radius: '10px'}
+### Centered Container
+Content in a max-width container
+
+This pattern is useful for limiting content width on large screens
+:::
+
+===
+# Class + Full Abstractions
+
+:::: {.demo-box .featured; rotate: -2; scale: 1.05; transparency: 10; background: '#34495e'; color: 'white'; padding: '30px'; border-radius: '12px'}
+::: {.column; width: '50%'}
+### Left Side
+All features combined:
+- Classes
+- Transforms
+- Layout
+- Transparency
+:::
+
+::: {.column; width: '50%'}
+### Right Side
+This demonstrates the full power of the abstraction system
+:::
+::::
+
+===
+# Practical: Alert Box
+
+::: {.alert .alert-info; background: '#d1ecf1'; color: '#0c5460'; padding: '20px'; border: '1px solid #bee5eb'; border-radius: '5px'; border-left: '5px solid #17a2b8'}
+**Info:** This is an informational alert box
+:::
+
+::: {.alert .alert-warning; background: '#fff3cd'; color: '#856404'; padding: '20px'; border: '1px solid #ffeaa7'; border-radius: '5px'; border-left: '5px solid #ffc107'}
+**Warning:** This is a warning alert box
+:::
+
+::: {.alert .alert-danger; background: '#f8d7da'; color: '#721c24'; padding: '20px'; border: '1px solid #f5c6cb'; border-radius: '5px'; border-left: '5px solid #dc3545'}
+**Error:** This is an error alert box
+:::
+
+===
+# End
+
+Classes provide flexibility for:
+- Reveal.js animations
+- Custom CSS styling
+- Semantic markup
+- Reusable components

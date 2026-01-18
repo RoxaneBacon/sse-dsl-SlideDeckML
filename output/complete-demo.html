@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="SlideDeckML Team">
+    <meta name="title" content="Complete Feature Showcase">
+    <title>Complete Feature Showcase</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <!-- Font Awesome (required for chalkboard) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom controls plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/style.css">
+    <!-- Chalkboard plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/editor/editor.main.css">
+    
+    <!-- Poll plugin -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/poll/style.css">
+    
+    <style>
+        
+        /* Poll/Quiz responsive styling */
+        .reveal .slides section {
+            padding: 20px 0 !important;
+        }
+
+        .poll {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15em;
+            max-width: 700px;
+            margin: 0.12em auto 0.1em auto;
+        }
+
+        .poll button {
+            font-size: 0.7em !important;
+            padding: 0.35em 0.7em !important;
+            margin: 0 !important;
+            white-space: normal;
+            text-align: left;
+            width: 100%;
+        }
+
+        .reveal section h2 {
+            text-align: center;
+        }
+
+        .reveal section h3 {
+            font-size: 1em;
+            margin: 0.2em 0 1.0em 0;
+            text-align: center;
+        }
+
+        .results {
+            font-size: 0.85em;
+            margin-top: 0.5em !important;
+            text-align: center;
+        }
+
+        .results canvas {
+            max-height: 250px;
+        }
+
+        .qr-code-container {
+            text-align: center;
+            margin: 2em auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-code-container .qr-code {
+            display: inline-block;
+            margin: 1em auto;
+        }
+
+        .qr-code img,
+        .qr-code-container img {
+            margin: 0 auto;
+            display: block !important;
+        }
+
+        .qr-code-container p {
+            font-size: 0.9em;
+            font-style: italic;
+            margin-top: 1em;
+        }
+
+        .toggle-results-btn {
+            background-color: #2a76dd;
+            color: white;
+            border: none;
+            padding: 0.25em 0.8em;
+            font-size: 0.65em;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 1.0em auto;
+            display: block;
+        }
+
+        .toggle-results-btn:hover {
+            background-color: #1e5bb8;
+        }
+
+        .results canvas {
+            margin: 0.5em auto;
+            display: block;
+        }
+
+        /* Hide show results button for guests */
+        body.guest-mode .toggle-results-btn {
+            display: none !important;
+        }
+        
+
+        
+
+        /* Default Reveal.js overrides */
+        .reveal {
+            font-size: 32px; /* Reduced from default 40px */
+        }
+
+        .reveal .slides {
+            text-align: left; /* Remove default centering */
+        }
+
+        .reveal h1 {
+            font-size: 2em; /* Reduced from default 2.5em */
+        }
+
+        .reveal h2 {
+            font-size: 1.3em; /* Reduced from default 1.8em */
+        }
+
+        .reveal h3 {
+            font-size: 1em; /* Reduced from default 1.5em */
+        }
+
+        /* Reveal.js columns layout */
+        .columns {
+            display: flex;
+            gap: 1em;
+            align-items: flex-start;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+   
+        /* Synchronized fragments styling */
+        .sync-container {
+            position: relative;
+            min-height: 50px;
+            font-size: 0.9em;
+        }
+        .sync-item {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .sync-item.active {
+            display: block;
+            opacity: 1;
+        }
+        .sync-item p {
+            margin: 0.3em 0;
+        }
+        .sync-item img {
+            max-width: 100%;
+            height: auto;
+        }
+        /* Keep mode: stack items vertically */
+        .sync-container[data-keep="true"] {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3em;
+        }
+        .sync-container[data-keep="true"] .sync-item {
+            position: relative;
+        }
+
+        .ide-editor-container, .ide-output-container {
+            display: inline-block;
+            vertical-align: top;
+            margin: 0.5em;
+            position: relative;
+        }
+
+        [style*="position: absolute"] > .ide-editor-container,
+        [style*="position: absolute"] > .ide-output-container {
+            margin: 0;
+        }
+        .monaco-editor-wrapper {
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .run-button {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #007acc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            padding: 8px 16px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .run-button:hover {
+            background: #005a9e;
+        }
+        .output-header {
+            border-radius: 4px 4px 0 0;
+        }
+        .output-content {
+            border-radius: 4px;
+            border: 1px solid #3c3c3c;
+            overflow-y: auto;
+            overflow-x: auto;
+            max-height: 350px;
+        }
+        .output-content:empty::before {
+            content: 'Output';
+            color: #6c6c6c;
+            font-style: italic;
+        }
+        section:not([style*="position: absolute"]) .ide-editor-container,
+        section:not([style*="position: absolute"]) .ide-output-container {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="reveal">
+        <div class="slides">
+        <section data-slide-index="1">
+            <div style="text-align: center; color: #3498db; font-size: 48px; font-weight: bold">
+            <h1>SlideDeckML</h1>
+            </div>
+            <div style="text-align: center; font-size: 24px; color: #95a5a6">
+            <p>Complete Feature Demonstration</p>
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h1>Table of Contents</h1>
+            <ol>
+                <li><strong>Simple Markdown</strong> - Headers, lists, quotes, paragraphs</li>
+                <li><strong>Code Highlighting</strong> - All 6 highlight modes</li>
+                <li><strong>Synchronized Fragments</strong> - Code execution visualization</li>
+                <li><strong>LaTeX</strong> - Mathematical equations</li>
+                <li><strong>Styling</strong> - Custom CSS and layouts</li>
+                <li><strong>Style Abstractions</strong> - Transforms, columns, classes</li>
+                <li><strong>Media</strong> - Images and positioning</li>
+                <li><strong>Absolute Positioning</strong> - calque, margins</li>
+                <li><strong>Chalkboard</strong> - Interactive drawing and annotations</li>
+                <li><strong>QR Code</strong> - Generate custom QR codes</li>
+                <li><strong>Integrated IDE</strong> - Compile and run Python / Javascript / SQL</li>
+                <li><strong>Interactive Quiz</strong> - Interactive question and answer</li>
+                <li><strong>Fragment Animations</strong> - Incremental reveals and transitions</li>
+                <li><strong>Slide Transitions</strong> - Visual effects between slides</li>
+            </ol>
+        </section>
+        <section data-slide-index="2">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 15px; color: white; text-align: center">
+            <h2>Part 1: Simple Markdown</h2>
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h1>Headers</h1>
+            <h1>This is H1</h1>
+            <h2>This is H2</h2>
+            <h3>This is H3</h3>
+        </section>
+        <section data-slide-index="1">
+            <h1>Text Formatting</h1>
+            <p>Regular paragraph with <strong>bold</strong>, <em>italic</em>, and <em>underlined</em> text.</p>
+            <p>Combine them: <strong><em>bold italic</em></strong> and <strong><em>bold underline</em></strong>.</p>
+        </section>
+        <section data-slide-index="1">
+            <h1>Lists</h1>
+            <p>Unordered:</p>
+            <ul>
+                <li>First item</li>
+                <li>Second item with <strong>bold</strong></li>
+                <li>Third item with <em>italic</em></li>
+            </ul>
+            <p>Ordered:</p>
+            <ol>
+                <li>Step one</li>
+                <li>Step two with <em>underline</em></li>
+                <li>Step three</li>
+            </ol>
+        </section>
+        <section data-slide-index="1">
+            <h1>Quotes</h1>
+            <blockquote>Simple quote</blockquote>
+            <blockquote>Quote with <strong>bold</strong> and <em>italic</em> text</blockquote>
+            <blockquote>Quote with <em>underlined</em> text</blockquote>
+        </section>
+        <section data-slide-index="6">
+            <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 40px; border-radius: 15px; color: white; text-align: center">
+            <h2>Part 2: Code Highlighting</h2>
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h1>Mode: all</h1>
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1-3">function sum(a, b) {
+    return a + b;
+}
+</code></pre>
+        </section>
+        <section data-slide-index="1">
+            <h1>Mode: line-by-line</h1>
+            <pre><code class="language-python" data-trim data-noescape data-line-numbers="1|2|3|4">def factorial(n):
+    if n &lt;= 1:
+        return 1
+    return n * factorial(n - 1)
+</code></pre>
+        </section>
+        <section data-slide-index="1">
+            <h1>Mode: block</h1>
+            <pre><code class="language-java" data-trim data-noescape data-line-numbers="1-2|4-6|8-11">public class User {
+    private String name;
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+</code></pre>
+        </section>
+        <section data-slide-index="1">
+            <h1>Mode: function</h1>
+            <pre><code class="language-typescript" data-trim data-noescape data-line-numbers="1-3|5-7">function add(a: number, b: number): number {
+    return a + b;
+}
+
+function multiply(a: number, b: number): number {
+    return a * b;
+}
+</code></pre>
+        </section>
+        <section data-slide-index="1">
+            <h1>Mode: class</h1>
+            <pre><code class="language-python" data-trim data-noescape data-line-numbers="1-7|8-10">class Animal:
+    def __init__(self, name):
+        self.name = name
+    
+    def speak(self):
+        pass
+
+class Dog(Animal):
+    def speak(self):
+        return &quot;Woof!&quot;
+</code></pre>
+        </section>
+        <section data-slide-index="1">
+            <h1>Manual Lines &amp; Start</h1>
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1-2|4">console.log(&quot;Line 1-2 highlighted&quot;);
+console.log(&quot;Together&quot;);
+console.log(&quot;Not highlighted&quot;);
+console.log(&quot;Line 4 highlighted&quot;);
+</code></pre>
+            <pre><code class="language-python" data-trim data-noescape data-line-numbers data-ln-start-from="10"># Line numbers start at 10
+def process():
+    return True
+</code></pre>
+        </section>
+        <section data-slide-index="12">
+            <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 40px; border-radius: 15px; color: white; text-align: center">
+            <h2>Part 3: Synchronized Fragments</h2>
+            </div>
+        </section>
+        <section data-slide-index="31">
+            <h1>Sync: line-by-line (replace)</h1>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start">
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1|2|3|4">let x = 0;
+x = x + 5;
+x = x * 2;
+console.log(x);
+</code></pre>
+            <div class="sync-container">
+                <div class="sync-item" data-sync-index="-1"><p>x = 0</p></div>
+                <div class="sync-item" data-sync-index="0"><p>x = 5</p></div>
+                <div class="sync-item" data-sync-index="1"><p>x = 10</p></div>
+                <div class="sync-item" data-sync-index="2"><p>Output: 10</p></div>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="31">
+            <h1>Sync: line-by-line (keep)</h1>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start">
+            <pre><code class="language-python" data-trim data-noescape data-line-numbers="1|2|3|4">count = 0
+count += 10
+count *= 3
+print(count)
+</code></pre>
+            <div class="sync-container" data-keep="true">
+                <div class="sync-item" data-sync-index="-1"><p>count = 0</p></div>
+                <div class="sync-item" data-sync-index="0"><p>count = 10</p></div>
+                <div class="sync-item" data-sync-index="1"><p>count = 30</p></div>
+                <div class="sync-item" data-sync-index="2"><p>Output: 30</p></div>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="74">
+            <h1>Sync: with images</h1>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start">
+            <pre><code class="language-python" data-trim data-noescape data-line-numbers="1|2|3">data = load_data()
+cleaned = process(data)
+result = analyze(cleaned)
+</code></pre>
+            <div class="sync-container">
+                <div class="sync-item" data-sync-index="-1"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgNDAwIDIwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzM0OThkYiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik04OS43MDUgOTguOGg0LjcxcTIuMTIgMCAzLjcxLS41NCAxLjU4LS41MyAyLjYtMS40NyAxLjAyLS45MyAxLjUzLTIuMjIuNS0xLjI5LjUtMi44MyAwLTMuMDgtMi4wMy00LjczdC02LjItMS42NWgtNC44MnptMTMuOTUgNi4yNyAxMC4xMyAxNC45NWgtNi44cS0xLjkzIDAtMi44LTEuNTFsLTguNTEtMTIuOTdxLS40OC0uNzItMS4wNS0xLjAzLS41OC0uMzEtMS43LS4zMWgtMy4yMnYxNS44MmgtNy41M1Y3OS41M2gxMi4zNXE0LjExIDAgNy4wNy44NiAyLjk1Ljg1IDQuODQgMi4zOXQyLjc5IDMuNjhxLjg5IDIuMTQuODkgNC43MiAwIDIuMDQtLjYgMy44NnQtMS43MyAzLjMxcS0xLjE0IDEuNDgtMi44IDIuNi0xLjY3IDEuMTItMy44IDEuNzcuNzMuNDIgMS4zNS45OS42MS41NyAxLjEyIDEuMzZtMjguNjEgNy41M3YtNC44NHEtMi45OS4xNC01LjA0LjUxLTIuMDQuMzgtMy4yNy45Ny0xLjI0LjU5LTEuNzcgMS4zNy0uNTMuNzktLjUzIDEuNzEgMCAxLjgyIDEuMDggMi42IDEuMDguNzkgMi44MS43OSAyLjEzIDAgMy42OC0uNzcgMS41Ni0uNzcgMy4wNC0yLjM0bS0xNC42MS0xNS4wOS0xLjI0LTIuMjFxNC45Ni00LjU0IDExLjkzLTQuNTQgMi41MiAwIDQuNTEuODMgMS45OS44MiAzLjM2IDIuMjl0Mi4wOSAzLjUycS43MSAyLjA0LjcxIDQuNDh2MTguMTRoLTMuMTRxLS45OCAwLTEuNTEtLjI5LS41My0uMy0uODQtMS4xOWwtLjYxLTIuMDhxLTEuMS45OC0yLjEzIDEuNzMtMS4wNC43NC0yLjE2IDEuMjQtMS4xMi41MS0yLjM5Ljc3LTEuMjguMjctMi44Mi4yNy0xLjgyIDAtMy4zNi0uNDl0LTIuNjYtMS40Ny0xLjczLTIuNDRxLS42Mi0xLjQ1LS42Mi0zLjM5IDAtMS4wOS4zNy0yLjE3LjM2LTEuMDcgMS4xOS0yLjA1LjgyLS45OCAyLjE0LTEuODUgMS4zMS0uODcgMy4yMy0xLjUxIDEuOTItLjY1IDQuNDctMS4wNSAyLjU1LS40MSA1LjgyLS40OXYtMS42OHEwLTIuODktMS4yMy00LjI3LTEuMjMtMS4zOS0zLjU2LTEuMzktMS42OCAwLTIuNzguMzktMS4xMS4zOS0xLjk1Ljg4dC0xLjUyLjg5cS0uNjkuMzktMS41My4zOS0uNzMgMC0xLjIzLS4zOC0uNTEtLjM4LS44MS0uODhtNjMuNjEtNi4yMmg1LjI3bC05LjEzIDI4LjczaC01LjU1cS0uOTUgMC0xLjMxLTEuMjNsLTUuMTUtMTYuNjFxLS4yNi0uODQtLjQ3LTEuNjYtLjIxLS44My0uMzUtMS42Ny0uMTYuODQtLjM3IDEuNy0uMjEuODUtLjQ3IDEuNjlsLTUuMjMgMTYuNTVxLS4zNCAxLjIzLTEuNDkgMS4yM2gtNS4zMmwtOS4xLTI4LjczaDUuNTJxLjc2IDAgMS4yOS4zNy41My4zNi43LjkybDQuMTEgMTUuMzRxLjMxIDEuMjYuNTUgMi40Ny4yNCAxLjIuNDEgMi40MS4zLTEuMjEuNjUtMi40MS4zNS0xLjIxLjc1LTIuNDdsNC43Ni0xNS40cS4xNi0uNTYuNjUtLjkydDEuMTktLjM2aDMuMDZxLjcyIDAgMS4yNC4zNnQuNjkuOTJsNC42MiAxNS40cS4zNiAxLjI2LjY4IDIuNDguMzMgMS4yMi42MyAyLjQyLjM3LTIuMzggMS4wNC00LjlsNC4yMy0xNS4zNHEuMTktLjU2LjctLjkyLjUtLjM3IDEuMi0uMzdtNTkuODQgOC40OXEwIDQuNDUtMS40OSA4LjE3LTEuNDggMy43My00LjE3IDYuNDEtMi42OSAyLjY5LTYuNDcgNC4xOC0zLjc4IDEuNDgtOC40IDEuNDhoLTE1LjQyVjc5LjUzaDE1LjQycTQuNjIgMCA4LjQgMS41dDYuNDcgNC4xN3EyLjY5IDIuNjggNC4xNyA2LjQgMS40OSAzLjcyIDEuNDkgOC4xOG0tNy43MyAwcTAtMy4zNC0uODgtNS45OC0uODgtMi42NS0yLjU1LTQuNDgtMS42Ny0xLjg0LTQuMDMtMi44Mi0yLjM3LS45OC01LjM0LS45OGgtNy44NnYyOC41MWg3Ljg2cTIuOTcgMCA1LjM0LS45OCAyLjM2LS45OCA0LjAzLTIuODIgMS42Ny0xLjgzIDIuNTUtNC40OC44OC0yLjY0Ljg4LTUuOTdtMjguNDUgMTIuODJ2LTQuODRxLTMgLjE0LTUuMDQuNTEtMi4wNS4zOC0zLjI4Ljk3dC0xLjc2IDEuMzdxLS41My43OS0uNTMgMS43MSAwIDEuODIgMS4wNyAyLjYgMS4wOC43OSAyLjgyLjc5IDIuMTMgMCAzLjY4LS43N3QzLjA0LTIuMzRtLTE0LjYyLTE1LjA5LTEuMjMtMi4yMXE0Ljk2LTQuNTQgMTEuOTMtNC41NCAyLjUyIDAgNC41MS44MyAxLjk4LjgyIDMuMzYgMi4yOSAxLjM3IDEuNDcgMi4wOCAzLjUyLjcyIDIuMDQuNzIgNC40OHYxOC4xNGgtMy4xNHEtLjk4IDAtMS41MS0uMjktLjUzLS4zLS44NC0xLjE5bC0uNjItMi4wOHEtMS4wOS45OC0yLjEzIDEuNzMtMS4wMy43NC0yLjE1IDEuMjQtMS4xMi41MS0yLjQuNzctMS4yNy4yNy0yLjgxLjI3LTEuODIgMC0zLjM2LS40OXQtMi42Ni0xLjQ3LTEuNzQtMi40NHEtLjYxLTEuNDUtLjYxLTMuMzkgMC0xLjA5LjM2LTIuMTcuMzctMS4wNyAxLjE5LTIuMDUuODMtLjk4IDIuMTQtMS44NSAxLjMyLS44NyAzLjI0LTEuNTEgMS45Mi0uNjUgNC40Ni0xLjA1IDIuNTUtLjQxIDUuODMtLjQ5di0xLjY4cTAtMi44OS0xLjIzLTQuMjctMS4yNC0xLjM5LTMuNTYtMS4zOS0xLjY4IDAtMi43OS4zOS0xLjEuMzktMS45NC44OHQtMS41My44OXEtLjY4LjM5LTEuNTIuMzktLjczIDAtMS4yNC0uMzgtLjUtLjM4LS44MS0uODhtMzcuNDQgMjIuOTZxLTMuNzUgMC01Ljc2LTIuMTItMi0yLjExLTItNS44M1Y5Ni40N2gtMi45NHEtLjU2IDAtLjk1LS4zNi0uMzktLjM3LS4zOS0xLjA5di0yLjc1bDQuNjItLjc1IDEuNDUtNy44NHEuMTQtLjU2LjU0LS44Ny4zOS0uMzEgMS0uMzFoMy41OXY5LjA0aDcuNjd2NC45M2gtNy42N3YxNS41N3EwIDEuMzQuNjYgMi4xLjY1Ljc2IDEuOC43Ni42NSAwIDEuMDgtLjE2LjQzLS4xNS43Ni0uMzIuMzItLjE3LjU3LS4zMi4yNS0uMTYuNS0uMTYuMzEgMCAuNTEuMTYuMTkuMTUuNDIuNDZsMi4wNyAzLjM2cS0xLjUxIDEuMjYtMy40NyAxLjktMS45Ni42NS00LjA2LjY1bTI2LjQzLTcuODd2LTQuODRxLTMgLjE0LTUuMDQuNTEtMi4wNC4zOC0zLjI4Ljk3LTEuMjMuNTktMS43NiAxLjM3LS41My43OS0uNTMgMS43MSAwIDEuODIgMS4wOCAyLjYgMS4wNy43OSAyLjgxLjc5IDIuMTMgMCAzLjY4LS43NyAxLjU2LS43NyAzLjA0LTIuMzRtLTE0LjYyLTE1LjA5LTEuMjMtMi4yMXE0Ljk2LTQuNTQgMTEuOTMtNC41NCAyLjUyIDAgNC41MS44MyAxLjk5LjgyIDMuMzYgMi4yOXQyLjA4IDMuNTJxLjcyIDIuMDQuNzIgNC40OHYxOC4xNGgtMy4xNHEtLjk4IDAtMS41MS0uMjktLjUzLS4zLS44NC0xLjE5bC0uNjItMi4wOHEtMS4wOS45OC0yLjEyIDEuNzMtMS4wNC43NC0yLjE2IDEuMjQtMS4xMi41MS0yLjM5Ljc3LTEuMjguMjctMi44Mi4yNy0xLjgyIDAtMy4zNi0uNDl0LTIuNjYtMS40Ny0xLjczLTIuNDRxLS42Mi0xLjQ1LS42Mi0zLjM5IDAtMS4wOS4zNi0yLjE3LjM3LTEuMDcgMS4xOS0yLjA1LjgzLS45OCAyLjE1LTEuODUgMS4zMS0uODcgMy4yMy0xLjUxIDEuOTItLjY1IDQuNDctMS4wNSAyLjU0LS40MSA1LjgyLS40OXYtMS42OHEwLTIuODktMS4yMy00LjI3LTEuMjMtMS4zOS0zLjU2LTEuMzktMS42OCAwLTIuNzguMzktMS4xMS4zOS0xLjk1Ljg4dC0xLjUzLjg5cS0uNjguMzktMS41Mi4zOS0uNzMgMC0xLjIzLS4zOC0uNTEtLjM4LS44Mi0uODgiLz48L3N2Zz4=" alt="Raw" style="max-width: 100%; height: auto;" /></div>
+                <div class="sync-item" data-sync-index="0"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgNDAwIDIwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzJlY2M3MSIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xMTguMjQ1IDExMy4ycS43NCAwIDEuMzEuNTdsMy41NSAzLjg1cS0yLjk1IDMuNjUtNy4yNiA1LjU5LTQuMyAxLjk1LTEwLjMzIDEuOTUtNS4zOSAwLTkuNy0xLjg1LTQuMy0xLjg0LTcuMzUtNS4xMnQtNC42OC03Ljg0cS0xLjYyLTQuNTYtMS42Mi05Ljk1IDAtNS40NiAxLjc0LTEwdDQuOTEtNy44MnEzLjE3LTMuMjkgNy41NS01LjExIDQuMzktMS44MyA5LjcyLTEuODMgNS4yOSAwIDkuNCAxLjc1IDQuMSAxLjc0IDYuOTggNC41NWwtMy4wMSA0LjE5cS0uMjcuNC0uNjkuN3QtMS4xNi4zcS0uNSAwLTEuMDQtLjI4LS41My0uMjktMS4xNy0uNy0uNjMtLjQyLTEuNDctLjkzLS44NC0uNS0xLjk1LS45Mi0xLjEtLjQyLTIuNTYtLjctMS40Ni0uMjktMy4zNi0uMjktMy4yNSAwLTUuOTUgMS4xNnQtNC42NCAzLjM1LTMuMDIgNS4zNnEtMS4wNyAzLjE3LTEuMDcgNy4yMiAwIDQuMDkgMS4xNiA3LjI3IDEuMTUgMy4xOCAzLjEzIDUuMzZ0NC42NiAzLjMzcTIuNjggMS4xNiA1Ljc2IDEuMTYgMS44NCAwIDMuMzMtLjJ0Mi43NS0uNjQgMi4zOC0xLjEycTEuMTItLjY5IDIuMjMtMS42OS4zMy0uMzEuNy0uNDl0Ljc3LS4xOG05Ljg1LTM4LjM2aDguMjd2NDkuNzhoLTguMjd6bTIzLjA4IDI4LjY0aDE1LjYxcTAtMS42MS0uNDUtMy4wM3QtMS4zNi0yLjVxLS45LTEuMDctMi4yOS0xLjY5dC0zLjI0LS42MnEtMy41OCAwLTUuNjQgMi4wNS0yLjA2IDIuMDQtMi42MyA1Ljc5bTIxLjExIDQuOTloLTIxLjI4cS4yIDIuNjUuOTQgNC41OC43NCAxLjkyIDEuOTQgMy4xOCAxLjIxIDEuMjUgMi44NyAxLjg3dDMuNjcuNjIgMy40Ni0uNDdxMS40Ni0uNDYgMi41NS0xLjAzdDEuOTEtMS4wNCAxLjU5LS40N3ExLjA0IDAgMS41NC43N2wyLjM4IDMuMDFxLTEuMzcgMS42MS0zLjA4IDIuN3QtMy41NyAxLjc0cS0xLjg2LjY2LTMuNzkuOTItMS45Mi4yNy0zLjczLjI3LTMuNTkgMC02LjY3LTEuMTl0LTUuMzYtMy41MXEtMi4yOC0yLjMzLTMuNTgtNS43Ny0xLjMxLTMuNDMtMS4zMS03Ljk1IDAtMy41MiAxLjE0LTYuNjJ0My4yNy01LjM5cTIuMTItMi4zIDUuMTktMy42NCAzLjA2LTEuMzQgNi45Mi0xLjM0IDMuMjUgMCA1Ljk5IDEuMDQgMi43NSAxLjA0IDQuNzMgMy4wMyAxLjk3IDIgMy4xIDQuODkgMS4xMiAyLjkgMS4xMiA2LjYyIDAgMS44OC0uNCAyLjUzLS40MS42NS0xLjU0LjY1bTI2LjI5IDcuMjd2LTUuNzlxLTMuNTguMTYtNi4wMy42Mi0yLjQ0LjQ1LTMuOTIgMS4xNS0xLjQ3LjcxLTIuMTEgMS42NC0uNjMuOTQtLjYzIDIuMDUgMCAyLjE3IDEuMjkgMy4xMXQzLjM2Ljk0cTIuNTUgMCA0LjQxLS45MnQzLjYzLTIuOG0tMTcuNDgtMTguMDUtMS40OC0yLjY1cTUuOTMtNS40MyAxNC4yNy01LjQzIDMuMDIgMCA1LjQuOTkgMi4zNy45OSA0LjAyIDIuNzUgMS42NCAxLjc2IDIuNDkgNC4yLjg2IDIuNDUuODYgNS4zNnYyMS43MWgtMy43NnEtMS4xNyAwLTEuOC0uMzUtLjY0LS4zNS0xLjAxLTEuNDNsLS43NC0yLjQ3cS0xLjMgMS4xNy0yLjU0IDIuMDYtMS4yNC44OC0yLjU4IDEuNDktMS4zNC42LTIuODcuOTItMS41Mi4zMi0zLjM2LjMyLTIuMTggMC00LjAyLS41OS0xLjg1LS41OS0zLjE5LTEuNzZ0LTIuMDctMi45MXEtLjc0LTEuNzUtLjc0LTQuMDYgMC0xLjMuNDQtMi41OS40My0xLjI5IDEuNDItMi40Ny45OS0xLjE3IDIuNTYtMi4yMSAxLjU4LTEuMDQgMy44Ny0xLjgxIDIuMy0uNzcgNS4zNC0xLjI1IDMuMDUtLjQ5IDYuOTctLjU5di0yLjAxcTAtMy40NS0xLjQ3LTUuMTEtMS40OC0xLjY2LTQuMjYtMS42Ni0yLjAxIDAtMy4zMy40N3QtMi4zMyAxLjA2cS0xIC41OS0xLjgyIDEuMDUtLjgyLjQ3LTEuODMuNDctLjg3IDAtMS40Ny0uNDUtLjYxLS40NS0uOTctMS4wNW00MC41LTUuOTMuNTcgMi43MXExLjA0LTEuMDQgMi4xOS0xLjkzIDEuMTYtLjg4IDIuNDUtMS41dDIuNzYtLjk4cTEuNDctLjM1IDMuMjItLjM1IDIuODEgMCA0Ljk5Ljk2IDIuMTguOTUgMy42MyAyLjY4IDEuNDYgMS43MiAyLjIxIDQuMTIuNzYgMi4zOS43NiA1LjI3djIxLjg4aC04LjI4di0yMS44OHEwLTMuMTQtMS40NC00Ljg3dC00LjM5LTEuNzNxLTIuMTQgMC00LjAyLjk4LTEuODcuOTctMy41NSAyLjY0djI0Ljg2aC04LjI3VjkwLjI1aDUuMDZxMS42IDAgMi4xMSAxLjUxbTM3LjE1IDExLjcyaDE1LjYxcTAtMS42MS0uNDUtMy4wM3QtMS4zNi0yLjVxLS45LTEuMDctMi4yOS0xLjY5dC0zLjI0LS42MnEtMy41OCAwLTUuNjQgMi4wNS0yLjA2IDIuMDQtMi42MyA1Ljc5bTIxLjEgNC45OWgtMjEuMjdxLjIgMi42NS45NCA0LjU4Ljc0IDEuOTIgMS45NCAzLjE4IDEuMjEgMS4yNSAyLjg3IDEuODcgMS42NS42MiAzLjY2LjYydDMuNDctLjQ3cTEuNDYtLjQ2IDIuNTUtMS4wM3QxLjkxLTEuMDQgMS41OS0uNDdxMS4wNCAwIDEuNTQuNzdsMi4zOCAzLjAxcS0xLjM4IDEuNjEtMy4wOCAyLjctMS43MSAxLjA5LTMuNTcgMS43NC0xLjg2LjY2LTMuNzkuOTItMS45Mi4yNy0zLjczLjI3LTMuNTkgMC02LjY3LTEuMTl0LTUuMzYtMy41MXEtMi4yOC0yLjMzLTMuNTgtNS43Ny0xLjMxLTMuNDMtMS4zMS03Ljk1IDAtMy41MiAxLjE0LTYuNjJ0My4yNy01LjM5cTIuMTItMi4zIDUuMTktMy42NCAzLjA2LTEuMzQgNi45Mi0xLjM0IDMuMjUgMCA1Ljk5IDEuMDQgMi43NSAxLjA0IDQuNzMgMy4wMyAxLjk3IDIgMy4wOSA0Ljg5IDEuMTMgMi45IDEuMTMgNi42MiAwIDEuODgtLjQxIDIuNTMtLjQuNjUtMS41NC42NW0yOS43MiA1Ljk3Vjk5LjAzcS0xLjQxLTEuNzEtMy4wNy0yLjQyLTEuNjYtLjctMy41Ni0uNy0xLjg4IDAtMy4zOS43LTEuNTEuNzEtMi41OCAyLjEzdC0xLjY0IDMuNjJxLS41NyAyLjE5LS41NyA1LjE3IDAgMy4wMi40OSA1LjExLjQ4IDIuMSAxLjM5IDMuNDIuOSAxLjMyIDIuMjEgMS45MSAxLjMuNTkgMi45MS41OSAyLjU4IDAgNC4zOS0xLjA4IDEuODEtMS4wNyAzLjQyLTMuMDRtMC0zOS42aDguMjd2NDkuNzhoLTUuMDZxLTEuNjQgMC0yLjA3LTEuNTFsLS43MS0zLjMxcS0yLjA3IDIuMzctNC43NyAzLjg1LTIuNyAxLjQ3LTYuMjggMS40Ny0yLjgyIDAtNS4xNi0xLjE3LTIuMzUtMS4xNy00LjA0LTMuNHQtMi42MS01LjUxLS45Mi03LjUxcTAtMy44MSAxLjA0LTcuMSAxLjA0LTMuMjggMi45OC01LjY5dDQuNjYtMy43N3EyLjcxLTEuMzYgNi4wOS0xLjM2IDIuODggMCA0LjkzLjkxIDIuMDQuOSAzLjY1IDIuNDR6Ii8+PC9zdmc+" alt="Cleaned" style="max-width: 100%; height: auto;" /></div>
+                <div class="sync-item" data-sync-index="1"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgNDAwIDIwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U3NGMzYyIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik05Mi43OSA5OS4xMzVoNi4zcTIuODUgMCA0Ljk2LS43MSAyLjEyLS43MSAzLjQ5LTEuOTcgMS4zNy0xLjI1IDIuMDUtMi45OC42Ny0xLjcyLjY3LTMuNzkgMC00LjEyLTIuNzItNi4zM3QtOC4zLTIuMjFoLTYuNDV6bTE4LjY3IDguNDEgMTMuNTggMjAuMDJoLTkuMTJxLTIuNTggMC0zLjc1LTIuMDJsLTExLjQtMTcuMzdxLS42My0uOTctMS40LTEuMzgtLjc3LS40Mi0yLjI3LS40MmgtNC4zMXYyMS4xOUg4Mi43di01NC4yM2gxNi41NHE1LjUxIDAgOS40NiAxLjE1IDMuOTYgMS4xNCA2LjQ5IDMuMiAyLjUzIDIuMDcgMy43MyA0Ljk0dDEuMiA2LjMxcTAgMi43NC0uOCA1LjE4LS44MSAyLjQ0LTIuMzMgNC40My0xLjUyIDEuOTgtMy43NSAzLjQ4dC01LjA4IDIuMzZxLjk4LjU3IDEuOCAxLjM0LjgzLjc3IDEuNSAxLjgybTI1LjMxLTMuNjRoMTcuNDhxMC0xLjgtLjUxLTMuNC0uNS0xLjU5LTEuNTItMi43OS0xLjAxLTEuMi0yLjU3LTEuODktMS41NS0uNy0zLjYxLS43LTQuMDIgMC02LjMyIDIuMjktMi4zMSAyLjI5LTIuOTUgNi40OW0yMy42MyA1LjU5aC0yMy44MXEuMjIgMi45NiAxLjA1IDUuMTEuODIgMi4xNiAyLjE3IDMuNTcgMS4zNSAxLjQgMy4yMSAyLjEgMS44NS42OSA0LjEuNjl0My44OC0uNTNxMS42NC0uNTIgMi44NS0xLjE2IDEuMjItLjYzIDIuMTQtMS4xNi45Mi0uNTIgMS43OC0uNTIgMS4xNyAwIDEuNzMuODZsMi42NiAzLjM3cS0xLjU0IDEuOC0zLjQ1IDMuMDJ0LTMuOTkgMS45NS00LjI0IDEuMDMtNC4xOC4zcS00LjAxIDAtNy40Ni0xLjMzdC02LTMuOTRxLTIuNTUtMi42LTQuMDItNi40NS0xLjQ2LTMuODQtMS40Ni04LjkgMC0zLjk0IDEuMjgtNy40MSAxLjI3LTMuNDcgMy42NS02LjA0IDIuMzgtMi41NiA1LjgxLTQuMDYgMy40NC0xLjUgNy43NS0xLjUgMy42NCAwIDYuNzEgMS4xNiAzLjA4IDEuMTYgNS4yOSAzLjM5dDMuNDcgNS40OHExLjI1IDMuMjQgMS4yNSA3LjQgMCAyLjEtLjQ1IDIuODMtLjQ1Ljc0LTEuNzIuNzRtMzQuNjktMTYuMjQtMi4xIDMuMzRxLS4zOC41OS0uNzkuODQtLjQxLjI0LTEuMDUuMjQtLjY4IDAtMS40NS0uMzctLjc2LS4zOC0xLjc4LS44NS0xLjAxLS40Ni0yLjMtLjg0LTEuMy0uMzctMy4wNi0uMzctMi43NCAwLTQuMjkgMS4xNi0xLjU2IDEuMTYtMS41NiAzLjAzIDAgMS4yNC44MSAyLjA5LjguODQgMi4xMyAxLjQ4IDEuMzQuNjMgMy4wMiAxLjE0IDEuNjkuNTEgMy40MyAxLjExIDEuNzUuNiAzLjQ0IDEuMzcgMS42OC43NiAzLjAxIDEuOTUgMS4zNCAxLjE4IDIuMTQgMi44My44MSAxLjY1LjgxIDMuOTcgMCAyLjc4LTEgNS4xMi0uOTkgMi4zNS0yLjk0IDQuMDUtMS45NSAxLjcxLTQuODIgMi42Ni0yLjg3Ljk2LTYuNjIuOTYtMS45OCAwLTMuODgtLjM2LTEuODktLjM1LTMuNjQtLjk5LTEuNzQtLjY0LTMuMjItMS41dC0yLjYxLTEuODhsMi4xNC0zLjUycS40MS0uNjQuOTgtLjk4LjU2LS4zMyAxLjQyLS4zM3QxLjYzLjQ5cS43Ny40OCAxLjc4IDEuMDUgMS4wMi41NiAyLjM4IDEuMDQgMS4zNy40OSAzLjQ3LjQ5IDEuNjUgMCAyLjgzLS4zOSAxLjE5LS4zOSAxLjk1LTEuMDMuNzctLjY0IDEuMTMtMS40OC4zNi0uODUuMzYtMS43NSAwLTEuMzUtLjgxLTIuMjF0LTIuMTQtMS41LTMuMDQtMS4xNHEtMS43LS41MS0zLjQ4LTEuMTF0LTMuNDktMS40MXEtMS43MS0uOC0zLjA0LTIuMDR0LTIuMTQtMy4wNHEtLjgtMS44LS44LTQuMzUgMC0yLjM2Ljk0LTQuNS45My0yLjE0IDIuNzUtMy43M3Q0LjU0LTIuNTVxMi43Mi0uOTUgNi4yOC0uOTUgMy45OCAwIDcuMjQgMS4zMXQ1LjQ0IDMuNDVtMzEuMjctNC4xN2g5LjI2djM4LjQ4aC01LjY2cS0xLjg0IDAtMi4zMi0xLjY5bC0uNjQtMy4wN3EtMi4zNiAyLjQtNS4yMSAzLjg4dC02LjcyIDEuNDhxLTMuMTUgMC01LjU3LTEuMDctMi40MS0xLjA3LTQuMDYtMy4wMnQtMi41LTQuNjNxLS44NC0yLjY4LS44NC01Ljkxdi0yNC40NWg5LjI2djI0LjQ1cTAgMy41MyAxLjYzIDUuNDZ0NC45IDEuOTNxMi40IDAgNC41LTEuMDd0My45Ny0yLjk0em0xOC41My0xNy4yNWg5LjI2djU1LjczaC05LjI2em0zMS4zNSA1Ni4zM3EtNS4wMyAwLTcuNzEtMi44M3QtMi42OC03Ljgydi0yMS40OWgtMy45NHEtLjc1IDAtMS4yNy0uNDgtLjUzLS40OS0uNTMtMS40N3YtMy42N2w2LjE5LTEuMDEgMS45NS0xMC41cS4xOS0uNzUuNzEtMS4xNy41My0uNDEgMS4zNS0uNDFoNC44djEyLjExaDEwLjI4djYuNmgtMTAuMjh2MjAuODVxMCAxLjguODggMi44MS44OCAxLjAyIDIuNDIgMS4wMi44NiAwIDEuNDQtLjIxLjU5LS4yIDEuMDItLjQzLjQzLS4yMi43Ny0uNDMuMzMtLjIxLjY3LS4yMS40MSAwIC42OC4yMS4yNi4yMS41Ni42MmwyLjc3IDQuNXEtMi4wMiAxLjY4LTQuNjUgMi41NS0yLjYyLjg2LTUuNDMuODZtNDAuNjUtMzQuOTEtMi4xIDMuMzRxLS4zOC41OS0uNzkuODQtLjQxLjI0LTEuMDUuMjQtLjY4IDAtMS40NS0uMzctLjc2LS4zOC0xLjc4LS44NS0xLjAxLS40Ni0yLjMtLjg0LTEuMy0uMzctMy4wNi0uMzctMi43NCAwLTQuMjkgMS4xNi0xLjU2IDEuMTYtMS41NiAzLjAzIDAgMS4yNC44MSAyLjA5LjguODQgMi4xMyAxLjQ4IDEuMzQuNjMgMy4wMiAxLjE0IDEuNjkuNTEgMy40MyAxLjExIDEuNzUuNiAzLjQ0IDEuMzcgMS42OC43NiAzLjAxIDEuOTUgMS4zNCAxLjE4IDIuMTQgMi44My44MSAxLjY1LjgxIDMuOTcgMCAyLjc4LTEgNS4xMi0uOTkgMi4zNS0yLjk0IDQuMDUtMS45NSAxLjcxLTQuODIgMi42Ni0yLjg3Ljk2LTYuNjIuOTYtMS45OCAwLTMuODgtLjM2LTEuODktLjM1LTMuNjQtLjk5LTEuNzQtLjY0LTMuMjItMS41dC0yLjYxLTEuODhsMi4xNC0zLjUycS40MS0uNjQuOTgtLjk4LjU2LS4zMyAxLjQyLS4zM3QxLjYzLjQ5cS43Ny40OCAxLjc4IDEuMDUgMS4wMi41NiAyLjM4IDEuMDQgMS4zNy40OSAzLjQ3LjQ5IDEuNjUgMCAyLjgzLS4zOSAxLjE5LS4zOSAxLjk1LTEuMDMuNzctLjY0IDEuMTMtMS40OC4zNi0uODUuMzYtMS43NSAwLTEuMzUtLjgxLTIuMjF0LTIuMTQtMS41LTMuMDQtMS4xNHEtMS43LS41MS0zLjQ4LTEuMTF0LTMuNDktMS40MXEtMS43MS0uOC0zLjA0LTIuMDR0LTIuMTQtMy4wNHEtLjgtMS44LS44LTQuMzUgMC0yLjM2Ljk0LTQuNS45My0yLjE0IDIuNzUtMy43M3Q0LjU0LTIuNTVxMi43Mi0uOTUgNi4yOC0uOTUgMy45OCAwIDcuMjQgMS4zMXQ1LjQ0IDMuNDUiLz48L3N2Zz4=" alt="Results" style="max-width: 100%; height: auto;" /></div>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="71">
+            <h1>Sync: mixed content</h1>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start">
+            <pre><code class="language-java" data-trim data-noescape data-line-numbers="1|2|3|4">User user = new User(&quot;Alice&quot;);
+user.setAge(25);
+user.setRole(&quot;Admin&quot;);
+System.out.println(user);
+</code></pre>
+            <div class="sync-container" data-keep="true">
+                <div class="sync-item" data-sync-index="-1"><p>User: name=&quot;Alice&quot;</p></div>
+                <div class="sync-item" data-sync-index="0"><p>Updated: age=25</p></div>
+                <div class="sync-item" data-sync-index="1"><p>Updated: role=&quot;Admin&quot;</p></div>
+                <div class="sync-item" data-sync-index="2"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMTUwIiB2aWV3Qm94PSIwIDAgMzAwIDE1MCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzliNTliNiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik03MC41NyA4MC44OHExLjMzIDAgMi4zNy0uNDQgMS4wNS0uNDQgMS43Ni0xLjI0dDEuMS0xLjk0cS4zOC0xLjE0LjM4LTIuNTVWNTkuOTloNC41N3YxNC43MnEwIDIuMTktLjcgNC4wNS0uNzEgMS44Ny0yLjAzIDMuMjItMS4zMSAxLjM1LTMuMiAyLjExLTEuODkuNzUtNC4yNS43NS0yLjM4IDAtNC4yNy0uNzUtMS44OC0uNzYtMy4yLTIuMTF0LTIuMDMtMy4yMnEtLjctMS44Ni0uNy00LjA1VjU5Ljk5aDQuNTd2MTQuN3EwIDEuNDEuMzggMi41NS4zOSAxLjE0IDEuMTEgMS45NXQxLjc3IDEuMjVxMS4wNC40NCAyLjM3LjQ0bTI2LjI4LTExLjg3LS45NSAxLjUycS0uMTcuMjctLjM2LjM4LS4xOC4xMS0uNDcuMTEtLjMxIDAtLjY2LS4xN3QtLjgxLS4zOHEtLjQ1LS4yMS0xLjA0LS4zOHQtMS4zOS0uMTdxLTEuMjQgMC0xLjk0LjUyLS43MS41My0uNzEgMS4zOCAwIC41Ni4zNy45NC4zNi4zOS45Ny42Ny42LjI5IDEuMzYuNTIuNzcuMjMgMS41Ni41Ljc5LjI4IDEuNTYuNjMuNzYuMzQgMS4zNi44OC42MS41My45NyAxLjI4LjM3Ljc1LjM3IDEuOCAwIDEuMjYtLjQ1IDIuMzMtLjQ1IDEuMDYtMS4zNCAxLjgzLS44OC43Ny0yLjE4IDEuMjEtMS4zLjQzLTMgLjQzLS45IDAtMS43Ni0uMTZ0LTEuNjUtLjQ1LTEuNDYtLjY4LTEuMTgtLjg1bC45Ny0xLjZxLjE4LS4yOS40NC0uNDQuMjUtLjE1LjY0LS4xNXQuNzQuMjIuODEuNDdxLjQ2LjI2IDEuMDguNDh0MS41Ny4yMnEuNzUgMCAxLjI5LS4xOC41My0uMTguODgtLjQ3LjM1LS4yOC41MS0uNjcuMTYtLjM4LjE2LS43OSAwLS42MS0uMzYtMS0uMzctLjM5LS45Ny0uNjgtLjYxLS4yOS0xLjM4LS41MnQtMS41OC0uNS0xLjU4LS42NHEtLjc4LS4zNi0xLjM4LS45Mi0uNi0uNTctLjk3LTEuMzgtLjM2LS44Mi0uMzYtMS45NyAwLTEuMDcuNDItMi4wNC40My0uOTcgMS4yNS0xLjY5LjgzLS43MyAyLjA2LTEuMTZ0Mi44NS0uNDNxMS44IDAgMy4yOC41OSAxLjQ4LjYgMi40NiAxLjU2bTYuNjcgNC44M2g3LjkycTAtLjgxLS4yMy0xLjU0LS4yMy0uNzItLjY5LTEuMjYtLjQ2LS41NS0xLjE3LS44Ni0uNy0uMzItMS42NC0uMzItMS44MSAwLTIuODYgMS4wNHQtMS4zMyAyLjk0bTEwLjcxIDIuNTRoLTEwLjhxLjEgMS4zNC40OCAyLjMyLjM3Ljk3Ljk4IDEuNjF0MS40Ni45NXEuODQuMzIgMS44Ni4zMnQxLjc2LS4yNCAxLjI5LS41My45Ny0uNTJxLjQxLS4yNC44MS0uMjQuNTIgMCAuNzguMzlsMS4yIDEuNTNxLS42OS44MS0xLjU2IDEuMzctLjg3LjU1LTEuODEuODh0LTEuOTIuNDctMS45LjE0cS0xLjgyIDAtMy4zOC0uNjEtMS41Ni0uNi0yLjcyLTEuNzgtMS4xNi0xLjE5LTEuODItMi45M3QtLjY2LTQuMDRxMC0xLjc4LjU4LTMuMzUuNTctMS41OCAxLjY1LTIuNzR0Mi42NC0xLjg0cTEuNTUtLjY4IDMuNTEtLjY4IDEuNjUgMCAzLjA0LjUyIDEuNC41MyAyLjQgMS41NHQxLjU3IDIuNDguNTcgMy4zNnEwIC45NS0uMiAxLjI4LS4yMS4zNC0uNzguMzRtNy44My04LjIuMjYgMS45N3EuODEtMS41NiAxLjk0LTIuNDUgMS4xMi0uOSAyLjY1LS45IDEuMiAwIDEuOTQuNTNsLS4yOCAzLjE1cS0uMDguMy0uMjQuNDN0LS40NC4xM3EtLjI1IDAtLjc1LS4wOS0uNS0uMDgtLjk4LS4wOC0uNyAwLTEuMjQuMi0uNTUuMjEtLjk4LjU5dC0uNzYuOTJxLS4zNC41NS0uNjIgMS4yNXYxMC43NGgtNC4yVjY3LjEzaDIuNDZxLjY1IDAgLjkuMjMuMjYuMjMuMzQuODJtNDEuMzUgNC4xcTAgMi43LS45IDUuMDEtLjg5IDIuMy0yLjUyIDMuOTh0LTMuOTMgMi42M3EtMi4yOS45NC01LjEuOTQtMi43OSAwLTUuMDgtLjk0LTIuMy0uOTUtMy45NC0yLjYzdC0yLjU0LTMuOThxLS45LTIuMzEtLjktNS4wMXQuOS01LjAxcS45LTIuMyAyLjU0LTMuOTggMS42NC0xLjY5IDMuOTQtMi42MyAyLjI5LS45NCA1LjA4LS45NCAxLjg3IDAgMy41Mi40M3QzLjAzIDEuMjJxMS4zNy43OSAyLjQ3IDEuOTJ0MS44NiAyLjUzcS43NyAxLjM5IDEuMTcgMy4wMi40IDEuNjQuNCAzLjQ0bS00LjY4IDBxMC0yLjAyLS41NC0zLjYzLS41NS0xLjYxLTEuNTUtMi43M3QtMi40NC0xLjcycS0xLjQ0LS41OS0zLjI0LS41OXQtMy4yNC41OXEtMS40My42LTIuNDQgMS43Mi0xLjAyIDEuMTItMS41NiAyLjczdC0uNTQgMy42My41NCAzLjYzcS41NCAxLjYgMS41NiAyLjcyIDEuMDEgMS4xMSAyLjQ0IDEuNzEgMS40NC41OSAzLjI0LjU5dDMuMjQtLjU5cTEuNDQtLjYgMi40NC0xLjcxIDEtMS4xMiAxLjU1LTIuNzIuNTQtMS42MS41NC0zLjYzbTEyLjI0LS4wNXY3LjgycS43Mi44NiAxLjU2IDEuMjJ0MS43Ny4zNnEuOTcgMCAxLjc1LS4zNS43Ny0uMzUgMS4zMS0xLjA5LjU1LS43NC44NC0xLjg4LjI5LTEuMTUuMjktMi43NSAwLTIuODctLjk2LTQuMTYtLjk1LTEuMjgtMi43My0xLjI4LTEuMjEgMC0yLjExLjU1dC0xLjcyIDEuNTZtMC0xMi45MnY5Ljk2cTEuMDYtMS4xMSAyLjM0LTEuNzZ0Mi45My0uNjVxMS41MSAwIDIuNzMuNTkgMS4yMi42IDIuMDcgMS43MS44NiAxLjExIDEuMzIgMi42OXQuNDYgMy41NnEwIDIuMTItLjUzIDMuODYtLjUyIDEuNzMtMS41IDIuOTYtLjk4IDEuMjQtMi4zNiAxLjkxLTEuMzcuNjktMy4wNi42OS0uODEgMC0xLjQ3LS4xNy0uNjctLjE2LTEuMjMtLjQ1dC0xLjAzLS43cS0uNDYtLjQyLS44OS0uOTNsLS4xOSAxLjE3cS0uMS40NS0uMzUuNjMtLjI0LjE5LS42Ny4xOWgtMi43N1Y1OS4zMXptMTUuMjMgNy44Mmg0LjIydjE4LjA0cTAgMS4xMy0uMyAyLjE0LS4zIDEtLjk1IDEuNzYtLjY1Ljc1LTEuNzIgMS4xOS0xLjA2LjQzLTIuNTkuNDMtLjU5IDAtMS4xLS4wOC0uNTEtLjA3LTEuMDYtLjI0bC4xNS0yLjI2cS4wNi0uMzQuMjgtLjQ0LjIyLS4wOS44NS0uMDl0MS4wNi0uMTMuNjktLjQxcS4yNS0uMjguMzYtLjc0LjExLS40NS4xMS0xLjEzem00LjgtNS4wOXEwIC41NS0uMjIgMS4wMi0uMjIuNDgtLjU5Ljg0LS4zNy4zNS0uODcuNTctLjUuMjEtMS4wNi4yMS0uNTQgMC0xLjAyLS4yMS0uNDgtLjIyLS44My0uNTctLjM2LS4zNi0uNTctLjg0LS4yMS0uNDctLjIxLTEuMDIgMC0uNTYuMjEtMS4wNXQuNTctLjg1cS4zNS0uMzYuODMtLjU3dDEuMDItLjIxcS41NiAwIDEuMDYuMjF0Ljg3LjU3LjU5Ljg1LjIyIDEuMDVtNy4wMiAxMS44aDcuOTJxMC0uODEtLjIzLTEuNTQtLjIzLS43Mi0uNjktMS4yNi0uNDYtLjU1LTEuMTYtLjg2LS43MS0uMzItMS42NC0uMzItMS44MiAwLTIuODcgMS4wNC0xLjA0IDEuMDQtMS4zMyAyLjk0bTEwLjcxIDIuNTRoLTEwLjhxLjExIDEuMzQuNDggMi4zMi4zNy45Ny45OSAxLjYxLjYxLjY0IDEuNDUuOTUuODQuMzIgMS44Ni4zMnQxLjc2LS4yNCAxLjI5LS41My45Ny0uNTJxLjQyLS4yNC44MS0uMjQuNTMgMCAuNzguMzlsMS4yMSAxLjUzcS0uNy44MS0xLjU3IDEuMzctLjg2LjU1LTEuODEuODgtLjk0LjMzLTEuOTIuNDd0LTEuODkuMTRxLTEuODIgMC0zLjM5LS42MS0xLjU2LS42LTIuNzItMS43OC0xLjE1LTEuMTktMS44Mi0yLjkzLS42Ni0xLjc0LS42Ni00LjA0IDAtMS43OC41OC0zLjM1LjU4LTEuNTggMS42Ni0yLjc0dDIuNjMtMS44NHExLjU2LS42OCAzLjUxLS42OCAxLjY1IDAgMy4wNS41MiAxLjM5LjUzIDIuMzkgMS41NCAxLjAxIDEuMDEgMS41OCAyLjQ4LjU2IDEuNDcuNTYgMy4zNiAwIC45NS0uMiAxLjI4LS4yLjM0LS43OC4zNG0xNy43My03LjA5LTEuMTEgMS41M3EtLjE4LjIzLS4zNi4zN3QtLjUyLjE0cS0uMzIgMC0uNjMtLjItLjMtLjE5LS43My0uNDQtLjQyLS4yNS0xLjAxLS40NC0uNTktLjItMS40NS0uMi0xLjExIDAtMS45NC40LS44NC40LTEuMzkgMS4xNXQtLjgyIDEuODEtLjI3IDIuNHEwIDEuNC4yOSAyLjQ5LjMgMS4wOC44NiAxLjgydDEuMzYgMS4xM3EuOC4zOCAxLjguMzggMS4wMSAwIDEuNjMtLjI1LjYyLS4yNCAxLjA0LS41NC40My0uMy43NC0uNTUuMzItLjI0LjcxLS4yNC41MSAwIC43Ni4zOWwxLjIxIDEuNTNxLS43LjgxLTEuNTEgMS4zNy0uODIuNTUtMS42OS44OC0uODguMzMtMS44MS40Ny0uOTIuMTQtMS44NC4xNC0xLjYyIDAtMy4wNC0uNjEtMS40My0uNi0yLjUtMS43Ni0xLjA3LTEuMTUtMS42OS0yLjgzLS42My0xLjY3LS42My0zLjgyIDAtMS45Mi41Ni0zLjU2LjU1LTEuNjQgMS42Mi0yLjg0IDEuMDctMS4xOSAyLjY1LTEuODd0My42NC0uNjhxMS45NiAwIDMuNDMuNjIgMS40Ny42MyAyLjY0IDEuODFtOC42IDE1LjU1cS0yLjI4IDAtMy40OS0xLjI4LTEuMjItMS4yOS0xLjIyLTMuNTV2LTkuNzRoLTEuNzhxLS4zNCAwLS41OC0uMjJ0LS4yNC0uNjZ2LTEuNjdsMi44MS0uNDYuODgtNC43NnEuMDktLjM0LjMyLS41Mi4yNC0uMTkuNjItLjE5aDIuMTd2NS40OWg0LjY2djIuOTloLTQuNjZ2OS40NXEwIC44Mi40IDEuMjh0MS4xLjQ2cS4zOSAwIC42NS0uMDkuMjctLjEuNDYtLjIuMi0uMS4zNS0uMi4xNS0uMDkuMzEtLjA5LjE4IDAgLjMuMDkuMTIuMS4yNi4yOGwxLjI1IDIuMDRxLS45MS43Ny0yLjEgMS4xNnQtMi40Ny4zOSIvPjwvc3ZnPg==" alt="User" style="max-width: 100%; height: auto;" /></div>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="12">
+            <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 40px; border-radius: 15px; color: #2c3e50; text-align: center">
+            <h2>Part 4: LaTeX</h2>
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h1>LaTeX Equations</h1>
+            <p>Inline: $E = mc^2$</p>
+            <p>Display:</p>
+            <div class="latex-block">
+                $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h1>Calculus</h1>
+            <div class="latex-block">
+                $$\int_{a}^{b} f(x) \, dx = F(b) - F(a)$$
+            </div>
+            <div class="latex-block">
+                $$\lim_{x \to \infty} \frac{1}{x} = 0$$
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h1>Matrix</h1>
+            <div class="latex-block">
+                $$\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix}
+=
+\begin{pmatrix}
+ax + by \\
+cx + dy
+\end{pmatrix}$$
+            </div>
+        </section>
+        <section data-slide-index="15">
+            <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 40px; border-radius: 15px; color: white; text-align: center">
+            <h2>Part 5: Styling</h2>
+            </div>
+        </section>
+        <section data-slide-index="15">
+            <h1>Text Styling</h1>
+            <div style="color: #e74c3c; font-size: 28px; font-weight: bold">
+            <p>Styled text with color and size</p>
+            </div>
+            <div style="background: #3498db; color: white; padding: 20px; border-radius: 10px">
+            <p>Box with background and padding</p>
+            </div>
+        </section>
+        <section data-slide-index="15">
+            <h1>Border Styles</h1>
+            <div style="border: 3px solid #2ecc71; padding: 15px; border-radius: 8px">
+            <p>Content with border</p>
+            </div>
+            <div style="border-left: 6px solid #f39c12; padding-left: 20px; background: #ecf0f1">
+            <p>Left accent border</p>
+            </div>
+        </section>
+        <section data-slide-index="70">
+            <h1>Styled Multiple Elements</h1>
+            <div style="background: #2c3e50; color: #ecf0f1; padding: 25px; border-radius: 12px">
+            <h2>Dark Container</h2>
+            <p>This is styled content</p>
+            <ul>
+                <li>Item one</li>
+                <li>Item two</li>
+            </ul>
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMzAwIDIwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzM0NDk1ZSIvPjxwYXRoIGZpbGw9IiNlY2YwZjEiIGQ9Ik0xMTYuMzQgMTAwLjUwNXEwIDYuNTktMi4yIDEyLjExLTIuMTkgNS41Mi02LjE4IDkuNTEtMy45OCAzLjk4LTkuNTkgNi4xOC01LjYgMi4yLTEyLjQ1IDIuMkg2My4wNnYtNjAuMDFoMjIuODZxNi44NSAwIDEyLjQ1IDIuMjIgNS42MSAyLjIyIDkuNTkgNi4xOCAzLjk5IDMuOTcgNi4xOCA5LjQ5IDIuMiA1LjUyIDIuMiAxMi4xMm0tMTEuNDUgMHEwLTQuOTQtMS4zMS04Ljg2LTEuMy0zLjkzLTMuNzctNi42NC0yLjQ3LTIuNzItNS45OC00LjE4LTMuNTEtMS40NS03LjkxLTEuNDVINzQuMjZ2NDIuMjVoMTEuNjZxNC40IDAgNy45MS0xLjQ1IDMuNTEtMS40NiA1Ljk4LTQuMTcgMi40Ny0yLjcyIDMuNzctNi42NCAxLjMxLTMuOTMgMS4zMS04Ljg2bTQyLjE2IDE5di03LjE4cS00LjQ0LjIxLTcuNDcuNzd0LTQuODUgMS40M3EtMS44My44Ny0yLjYyIDIuMDQtLjc4IDEuMTYtLjc4IDIuNTMgMCAyLjcgMS41OSAzLjg2IDEuNiAxLjE2IDQuMTcgMS4xNiAzLjE2IDAgNS40Ni0xLjE0dDQuNS0zLjQ3bS0yMS42Ni0yMi4zNy0xLjgyLTMuMjdxNy4zNC02LjczIDE3LjY3LTYuNzMgMy43NCAwIDYuNjkgMS4yMyAyLjk0IDEuMjIgNC45OCAzLjQgMi4wMyAyLjE4IDMuMDkgNS4yMXQxLjA2IDYuNjR2MjYuODloLTQuNjVxLTEuNDUgMC0yLjI0LS40NC0uNzktLjQzLTEuMjUtMS43NmwtLjkxLTMuMDdxLTEuNjIgMS40NS0zLjE2IDIuNTUtMS41MyAxLjEtMy4xOSAxLjg1dC0zLjU1IDEuMTQtNC4xNy4zOXEtMi43IDAtNC45OC0uNzItMi4yOC0uNzMtMy45NC0yLjE4dC0yLjU4LTMuNjFxLS45MS0yLjE2LS45MS01LjAyIDAtMS42Mi41NC0zLjIydDEuNzYtMy4wNXExLjIzLTEuNDUgMy4xOC0yLjc0dDQuNzktMi4yNHEyLjg1LS45NSA2LjYyLTEuNTYgMy43OC0uNiA4LjYzLS43MnYtMi40OXEwLTQuMjgtMS44Mi02LjMzLTEuODMtMi4wNS01LjI3LTIuMDUtMi40OSAwLTQuMTMuNTh0LTIuODkgMS4zcS0xLjI0LjczLTIuMjYgMS4zMS0xLjAxLjU4LTIuMjYuNTgtMS4wOCAwLTEuODMtLjU2LS43NC0uNTYtMS4yLTEuMzFtNTAuMzQtNi42NC42MiA0LjgycTItMy44MiA0LjczLTYgMi43NC0yLjE4IDYuNDgtMi4xOCAyLjk0IDAgNC43MyAxLjI5bC0uNjYgNy42OHEtLjIxLjc0LS42MSAxLjA1LS4zOS4zMi0xLjA1LjMyLS42MyAwLTEuODUtLjIxLTEuMjMtLjIxLTIuMzktLjIxLTEuNyAwLTMuMDMuNXQtMi4zOCAxLjQzcS0xLjA2LjkzLTEuODcgMi4yNnQtMS41MiAzLjAzdjI2LjIzaC0xMC4yNXYtNDIuNThoNi4wMnExLjU4IDAgMi4yLjU2dC44MyAyLjAxbTIxLjkxLTIxLjY2aDEwLjI1djM1LjMyaDEuOTFxMS4wNCAwIDEuNjQtLjI3dDEuMjMtMS4xbDEwLjU4LTEzLjA3cS42Ni0uODggMS40Ny0xLjMzLjgxLS40NiAyLjEtLjQ2aDkuMzhsLTEzLjI0IDE1LjgxcS0xLjQxIDEuODctMy4wNyAyLjg3Ljg3LjYyIDEuNTUgMS40NS42OS44MyAxLjMxIDEuNzhsMTQuMTkgMjAuNjdoLTkuMjVxLTEuMiAwLTIuMDgtLjM5LS44Ny0uNC0xLjQ1LTEuNDRsLTEwLjg3LTE2LjE0cS0uNTgtLjk1LTEuMjEtMS4yNC0uNjItLjMtMS44Ni0uM2gtMi4zM3YxOS41MWgtMTAuMjV6Ii8+PC9zdmc+" alt="Styled Image">
+            </div>
+        </section>
+        <section data-slide-index="15">
+            <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 40px; border-radius: 15px; color: white; text-align: center">
+            <h2>Part 6: Style Abstractions</h2>
+            </div>
+        </section>
+        <section data-slide-index="15">
+            <h1>Transform: Rotate</h1>
+            <div style="transform: rotate(15deg); background: #3498db; color: white; padding: 20px; border-radius: 10px">
+            <p>This box is rotated 15 degrees! </p>
+            </div>
+            <div style="transform: rotate(-10deg); background: #e74c3c; color: white; padding: 20px; border-radius: 10px">
+            <p>This box is rotated -10 degrees!</p>
+            </div>
+        </section>
+        <section data-slide-index="15">
+            <h1>Transform: Scale</h1>
+            <div style="transform: scale(1.3); color: #2ecc71; font-weight: bold">
+            <p>Scaled up 1.3x</p>
+            </div>
+            <div style="transform: scale(0.8); color: #f39c12">
+            <p>Scaled down 0.8x</p>
+            </div>
+        </section>
+        <section data-slide-index="15">
+            <h1>Transform: Translate</h1>
+            <div style="transform: translateX(100px) translateY(50px); color: #9b59b6; font-size: 24px">
+            <p>Translated 100px right and 50px down</p>
+            </div>
+        </section>
+        <section data-slide-index="15">
+            <h1>Transform: Multiple</h1>
+            <div style="transform: rotate(5deg) scale(1.2) translateX(50px); background: #34495e; color: white; padding: 25px; border-radius: 10px">
+            <h3>All Transforms Combined!</h3>
+            <ul>
+                <li>Rotated 5°</li>
+                <li>Scaled 1.2x</li>
+                <li>Translated 50px right</li>
+            </ul>
+            </div>
+        </section>
+        <section data-slide-index="15">
+            <h1>Transform: Transparency</h1>
+            <div style="opacity: 0.3; background: #e74c3c; padding: 30px; color: white; font-size: 24px">
+            <p>70% opaque (30% transparent)</p>
+            </div>
+            <div style="opacity: 0.6; background: #3498db; padding: 30px; color: white; font-size: 24px">
+            <p>40% opaque (60% transparent)</p>
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h1>Layout: Columns Shorthand</h1>
+            <p>Old way:</p>
+            <pre><code data-trim data-noescape>{display: &#39;grid&#39;; grid-template-columns: &#39;1fr 1fr&#39;; gap: &#39;2em&#39;}
+</code></pre>
+            <p>New way: </p>
+            <pre><code data-trim data-noescape>{columns: 2; gap: 30}
+</code></pre>
+            <p>Both produce the same result!</p>
+        </section>
+        <section data-slide-index="62">
+            <h1>Layout: Two Columns</h1>
+            <div style="display: flex">
+            <div style="width: 100%">
+            <h3>Left Column</h3>
+            <p>Simple nested column syntax - no need for columns: 2!</p>
+            </div>
+            <div style="width: 100%">
+            <h3>Right Column</h3>
+            <p>Much cleaner and easier to read!</p>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="62">
+            <h1>Nested Columns: Basic</h1>
+            <div class="columns" style="display: flex">
+            <div class="column" style="flex: none; width: 50%">
+            <h3>Left</h3>
+            <p>Standard Reveal.js columns</p>
+            </div>
+            <div class="column" style="flex: none; width: 50%">
+            <h3>Right</h3>
+            <p>Using `::::` delimiter</p>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="62">
+            <h1>Nested Columns: Asymmetric</h1>
+            <div class="columns" style="display: flex">
+            <div class="column" style="flex: none; width: 30%">
+            <h3>Narrow</h3>
+            <p>30% width</p>
+            </div>
+            <div class="column" style="flex: none; width: 70%">
+            <h3>Wide</h3>
+            <p>70% width - perfect for content + sidebar layouts</p>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="62">
+            <h1>Nested Columns: Styled</h1>
+            <div class="columns" style="background: #ecf0f1; padding: 20px; border-radius: 10px; display: flex">
+            <div class="column" style="flex: none; width: 50%; background: #3498db; color: white; padding: 15px; border-radius: 5px">
+            <h3>Blue Column</h3>
+            <p>Individual styling</p>
+            </div>
+            <div class="column" style="flex: none; width: 50%; background: #e74c3c; color: white; padding: 15px; border-radius: 5px">
+            <h3>Red Column</h3>
+            <p>Different colors</p>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="62">
+            <h1>All Abstractions Together!</h1>
+            <div class="columns" style="transform: rotate(2deg) scale(1.05); opacity: 0.1; background: #34495e; color: white; padding: 25px; display: flex">
+            <div class="column" style="flex: none; width: 50%">
+            <h3>Multi-Level</h3>
+            <p>All abstractions combined:</p>
+            <ul>
+                <li>Transforms (rotate, scale, transparency)</li>
+                <li>Nested columns</li>
+                <li>Custom styling</li>
+            </ul>
+            </div>
+            <div class="column" style="flex: none; width: 50%">
+            <h3>Full Power</h3>
+            <ul>
+                <li>Transforms ✓</li>
+                <li>Layouts ✓</li>
+                <li>Classes ✓</li>
+                <li>Nested ✓</li>
+            </ul>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="16">
+            <div style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); padding: 40px; border-radius: 15px; color: #2c3e50; text-align: center">
+            <h2>Part 7: Media</h2>
+            </div>
+        </section>
+        <section data-slide-index="73">
+            <h1>Images</h1>
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgNjAwIDQwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzM0OThkYiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xNjMuNzcgMTk0LjIycTAgNS4wOS0xLjY5IDkuMzUtMS43IDQuMjUtNC43NyA3LjMzLTMuMDcgMy4wNy03LjM5IDQuNzYtNC4zMiAxLjctOS42IDEuN2gtMTcuNjN2LTQ2LjI3aDE3LjYzcTUuMjggMCA5LjYgMS43MXQ3LjM5IDQuNzdxMy4wNyAzLjA1IDQuNzcgNy4zMSAxLjY5IDQuMjYgMS42OSA5LjM0bS04LjgzIDBxMC0zLjgtMS4wMS02LjgzLTEtMy4wMi0yLjkxLTUuMTItMS45LTIuMDktNC42MS0zLjIxLTIuNy0xLjEyLTYuMDktMS4xMmgtOC45OXYzMi41N2g4Ljk5cTMuMzkgMCA2LjA5LTEuMTIgMi43MS0xLjEyIDQuNjEtMy4yMSAxLjkxLTIuMSAyLjkxLTUuMTIgMS4wMS0zLjAzIDEuMDEtNi44NG0yMS40MSAyLjk1aDE0LjkxcTAtMS41NC0uNDMtMi45dC0xLjMtMi4zOHEtLjg2LTEuMDMtMi4xOS0xLjYydC0zLjA5LS41OXEtMy40MiAwLTUuMzkgMS45NXQtMi41MSA1LjU0bTIwLjE2IDQuNzdoLTIwLjMycS4xOSAyLjUyLjkgNC4zNi43IDEuODQgMS44NSAzLjA0dDIuNzQgMS44cTEuNTguNTkgMy41LjU5dDMuMzEtLjQ1cTEuNC0uNDUgMi40NC0uOTkgMS4wNC0uNTUgMS44Mi0uOTkuNzgtLjQ1IDEuNTItLjQ1Ljk5IDAgMS40Ny43M2wyLjI3IDIuODhxLTEuMzEgMS41NC0yLjk0IDIuNTh0LTMuNDEgMS42NnEtMS43Ny42My0zLjYxLjg4LTEuODQuMjYtMy41Ny4yNi0zLjQzIDAtNi4zNy0xLjE0LTIuOTQtMS4xMy01LjEyLTMuMzYtMi4xOC0yLjIyLTMuNDItNS41LTEuMjUtMy4yOC0xLjI1LTcuNiAwLTMuMzYgMS4wOS02LjMyIDEuMDgtMi45NiAzLjEyLTUuMTUgMi4wMy0yLjE5IDQuOTYtMy40NyAyLjkyLTEuMjggNi42LTEuMjggMy4xMSAwIDUuNzMuOTkgMi42My45OSA0LjUxIDIuODkgMS44OSAxLjkxIDIuOTYgNC42OCAxLjA4IDIuNzYgMS4wOCA2LjMyIDAgMS43OS0uMzkgMi40MS0uMzguNjMtMS40Ny42M20xNS42OCAxNS40MmgtNy45di0zMi44M2g0LjgzcTEuNTMgMCAyLjAxIDEuNDRsLjUyIDIuNDNxLjg2LS45NiAxLjgtMS43Ni45NS0uOCAyLjAyLTEuMzggMS4wNy0uNTcgMi4zLS45MSAxLjI0LS4zMyAyLjcxLS4zMyAzLjEgMCA1LjEgMS42OHQyLjk5IDQuNDZxLjc3LTEuNjMgMS45Mi0yLjggMS4xNi0xLjE3IDIuNTMtMS45IDEuMzgtLjc0IDIuOTMtMS4wOXQzLjEyLS4zNXEyLjcyIDAgNC44My44M3QzLjU1IDIuNDMgMi4yIDMuOXEuNzUgMi4zMS43NSA1LjI4djIwLjloLTcuOTF2LTIwLjlxMC0zLjEzLTEuMzctNC43Mi0xLjM4LTEuNTgtNC4wMy0xLjU4LTEuMjIgMC0yLjI2LjQyLTEuMDQuNDEtMS44MiAxLjItLjc5Ljc4LTEuMjQgMS45Ni0uNDQgMS4xOS0uNDQgMi43MnYyMC45aC03Ljk0di0yMC45cTAtMy4yOS0xLjMzLTQuOC0xLjMzLTEuNS0zLjg5LTEuNS0xLjcyIDAtMy4yMS44NXQtMi43NyAyLjMyem02MC4yMi0zMy4zNHEzLjY1IDAgNi42NCAxLjE4IDMgMS4xOCA1LjEyIDMuMzYgMi4xMyAyLjE4IDMuMjggNS4zMSAxLjE2IDMuMTQgMS4xNiA3LjAxIDAgMy45LTEuMTYgNy4wNC0xLjE1IDMuMTQtMy4yOCA1LjM0LTIuMTIgMi4yMS01LjEyIDMuNC0yLjk5IDEuMTgtNi42NCAxLjE4LTMuNjggMC02LjY4LTEuMTgtMy4wMS0xLjE5LTUuMTQtMy40LTIuMTMtMi4yLTMuMy01LjM0LTEuMTYtMy4xNC0xLjE2LTcuMDQgMC0zLjg3IDEuMTYtNy4wMSAxLjE3LTMuMTMgMy4zLTUuMzF0NS4xNC0zLjM2cTMtMS4xOCA2LjY4LTEuMThtMCAyNy43NHE0LjEgMCA2LjA3LTIuNzV0MS45Ny04LjA3cTAtNS4zMS0xLjk3LTguMDktMS45Ny0yLjc5LTYuMDctMi43OS00LjE2IDAtNi4xNiAyLjh0LTIgOC4wOCAyIDguMDUgNi4xNiAyLjc3bTQ3LjY4LTQwLjY3djQ2LjI3aC04LjY0di00Ni4yN3ptMTcgNDYuMjdoLTcuOTF2LTMyLjgzaDQuODNxMS41NCAwIDIuMDIgMS40NGwuNTEgMi40M3EuODctLjk2IDEuODEtMS43NnQyLjAyLTEuMzhxMS4wNy0uNTcgMi4zLS45MSAxLjIzLS4zMyAyLjctLjMzIDMuMTEgMCA1LjExIDEuNjh0Mi45OSA0LjQ2cS43Ny0xLjYzIDEuOTItMi44dDIuNTMtMS45cTEuMzctLjc0IDIuOTMtMS4wOSAxLjU1LS4zNSAzLjEyLS4zNSAyLjcyIDAgNC44My44M3QzLjU1IDIuNDMgMi4xOSAzLjlxLjc1IDIuMzEuNzUgNS4yOHYyMC45aC03Ljl2LTIwLjlxMC0zLjEzLTEuMzgtNC43Mi0xLjM3LTEuNTgtNC4wMy0xLjU4LTEuMjEgMC0yLjI1LjQyLTEuMDQuNDEtMS44MyAxLjItLjc4Ljc4LTEuMjMgMS45Ni0uNDUgMS4xOS0uNDUgMi43MnYyMC45aC03Ljkzdi0yMC45cTAtMy4yOS0xLjMzLTQuOC0xLjMzLTEuNS0zLjg5LTEuNS0xLjczIDAtMy4yMi44NS0xLjQ4Ljg1LTIuNzYgMi4zMnptNjMuMDQtOC40OHYtNS41NHEtMy40My4xNi01Ljc2LjYtMi4zNC40My0zLjc1IDEuMXQtMi4wMSAxLjU3cS0uNjEuODktLjYxIDEuOTUgMCAyLjA4IDEuMjMgMi45OCAxLjIzLjg5IDMuMjIuODkgMi40MyAwIDQuMi0uODggMS43OC0uODggMy40OC0yLjY3bS0xNi43MS0xNy4yNS0xLjQxLTIuNTNxNS42Ny01LjE4IDEzLjY0LTUuMTggMi44OCAwIDUuMTUuOTQgMi4yNy45NSAzLjg0IDIuNjN0Mi4zOCA0LjAxcS44MiAyLjM0LjgyIDUuMTJ2MjAuNzRoLTMuNTlxLTEuMTIgMC0xLjcyLS4zNC0uNjEtLjMzLS45Ni0xLjM2bC0uNzEtMi4zNnEtMS4yNSAxLjEyLTIuNDMgMS45Ni0xLjE4Ljg1LTIuNDYgMS40My0xLjI4LjU3LTIuNzQuODgtMS40Ni4zLTMuMjIuMy0yLjA4IDAtMy44NC0uNTZ0LTMuMDQtMS42OC0xLjk4LTIuNzhxLS43LTEuNjctLjctMy44NyAwLTEuMjUuNDEtMi40OC40Mi0xLjI0IDEuMzYtMi4zNi45NS0xLjEyIDIuNDUtMi4xMXQzLjctMS43M3EyLjE5LS43MyA1LjEtMS4yIDIuOTEtLjQ2IDYuNjYtLjU2di0xLjkycTAtMy4yOS0xLjQxLTQuODgtMS40MS0xLjU4LTQuMDctMS41OC0xLjkyIDAtMy4xOC40NXQtMi4yMiAxLjAxLTEuNzUgMXEtLjc4LjQ1LTEuNzQuNDUtLjgzIDAtMS40MS0uNDN0LS45My0xLjAxbTQzLjg0IDguNTFxMS40NyAwIDIuNTYtLjR0MS44MS0xLjEgMS4wOS0xLjdxLjM3LS45OS4zNy0yLjE3IDAtMi40My0xLjQ2LTMuODYtMS40Ni0xLjQyLTQuMzctMS40MnQtNC4zNyAxLjQycS0xLjQ1IDEuNDMtMS40NSAzLjg2IDAgMS4xNS4zNyAyLjE0LjM2Ljk5IDEuMDggMS43MXQxLjgzIDEuMTJxMS4xLjQgMi41NC40bTguOTMgMTguNjlxMC0uOTYtLjU4LTEuNTctLjU3LS42LTEuNTYtLjk0LTEtLjM0LTIuMzItLjUtMS4zMy0uMTYtMi44Mi0uMjR0LTMuMDctLjE0cS0xLjU5LS4wNi0zLjA5LS4yNi0xLjMxLjc0LTIuMTMgMS43My0uODEuOTktLjgxIDIuMzEgMCAuODYuNDMgMS42MXQxLjM3IDEuM3EuOTUuNTQgMi40NS44NSAxLjUxLjMgMy42OC4zIDIuMjEgMCAzLjgxLS4zNCAxLjYtLjMzIDIuNjQtLjkyIDEuMDQtLjYgMS41Mi0xLjQxLjQ4LS44Mi40OC0xLjc4bS0xLjU3LTMzLjE4aDkuNDR2Mi45NHEwIDEuNDEtMS42OSAxLjczbC0yLjk1LjU0cS42NyAxLjcuNjcgMy43MiAwIDIuNDMtLjk3IDQuNC0uOTggMS45Ni0yLjcxIDMuMzQtMS43MiAxLjM4LTQuMDggMi4xMy0yLjM1Ljc1LTUuMDcuNzUtLjk2IDAtMS44NS0uMS0uOS0uMDktMS43Ni0uMjUtMS41NC45My0xLjU0IDIuMDggMCAuOTkuOTEgMS40NS45MS40NyAyLjQyLjY2IDEuNS4xOSAzLjQyLjI0dDMuOTQuMjFxMi4wMS4xNiAzLjkzLjU2dDMuNDMgMS4yNnExLjUuODcgMi40MSAyLjM1LjkyIDEuNDkuOTIgMy44MyAwIDIuMTctMS4wOCA0LjIyLTEuMDcgMi4wNS0zLjEgMy42NXQtNC45OSAyLjU4cS0yLjk2Ljk3LTYuNzQuOTctMy43MSAwLTYuNDYtLjcydC00LjU4LTEuOTJxLTEuODItMS4yLTIuNzItMi43Ny0uODktMS41Ni0uODktMy4yNiAwLTIuMyAxLjM5LTMuODYgMS4zOS0xLjU1IDMuODItMi40OC0xLjMxLS42Ny0yLjA4LTEuNzl0LS43Ny0yLjk0cTAtLjc0LjI4LTEuNTIuMjctLjc5LjgtMS41NS41Mi0uNzcgMS4zMi0xLjQ2dDEuODktMS4yM3EtMi40OS0xLjM1LTMuOTItMy41OS0xLjQyLTIuMjQtMS40Mi01LjI0IDAtMi40NC45Ny00LjQuOTgtMS45NyAyLjcyLTMuMzYgMS43NS0xLjQgNC4xMy0yLjEzIDIuMzktLjc0IDUuMi0uNzQgMi4xMSAwIDMuOTcuNDMgMS44Ni40NCAzLjM5IDEuMjdtMjAuNjcgMTEuNTJoMTQuOTJxMC0xLjU0LS40NC0yLjktLjQzLTEuMzYtMS4yOS0yLjM4LS44Ny0xLjAzLTIuMTktMS42Mi0xLjMzLS41OS0zLjA5LS41OS0zLjQzIDAtNS4zOSAxLjk1LTEuOTcgMS45NS0yLjUyIDUuNTRtMjAuMTYgNC43N2gtMjAuMzJxLjIgMi41Mi45IDQuMzZ0MS44NiAzLjA0cTEuMTUgMS4yIDIuNzMgMS44IDEuNTkuNTkgMy41MS41OXQzLjMxLS40NSAyLjQzLS45OXExLjA0LS41NSAxLjgyLS45OS43OS0uNDUgMS41Mi0uNDUgMSAwIDEuNDguNzNsMi4yNyAyLjg4cS0xLjMxIDEuNTQtMi45NSAyLjU4LTEuNjMgMS4wNC0zLjQgMS42Ni0xLjc4LjYzLTMuNjIuODgtMS44NC4yNi0zLjU3LjI2LTMuNDIgMC02LjM3LTEuMTQtMi45NC0xLjEzLTUuMTItMy4zNi0yLjE3LTIuMjItMy40Mi01LjV0LTEuMjUtNy42cTAtMy4zNiAxLjA5LTYuMzJ0My4xMi01LjE1IDQuOTYtMy40NyA2LjYxLTEuMjhxMy4xIDAgNS43My45OSAyLjYyLjk5IDQuNTEgMi44OSAxLjg5IDEuOTEgMi45NiA0LjY4IDEuMDcgMi43NiAxLjA3IDYuMzIgMCAxLjc5LS4zOCAyLjQxLS4zOS42My0xLjQ4LjYzIi8+PC9zdmc+" alt="Demo">
+        </section>
+        <section data-slide-index="16">
+            <h1>Videos</h1>
+            <video controls>
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                Demo Video
+            </video>
+        </section>
+        <section data-slide-index="68">
+            <h1>Styled Images</h1>
+            <div style="flex: none; width: 60%; border: 5px solid #e74c3c; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.3)">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3MDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgNzAwIDQwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2YzOWMxMiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Im0xNzQuNjkgMTcyLjM0LTIuNDggNC43cS0uNDQuNzgtLjk0IDEuMTN0LTEuMjQuMzVxLS43OCAwLTEuNjktLjU3LS45LS41OC0yLjE2LTEuMjh0LTIuOTQtMS4yOHEtMS42OS0uNTctMy45OC0uNTctMi4wNyAwLTMuNjMuNS0xLjU1LjUtMi42IDEuMzktMS4wNi44OC0xLjU4IDIuMTItLjUxIDEuMjQtLjUxIDIuNzIgMCAxLjg5IDEuMDUgMy4xNXQyLjc5IDIuMTRxMS43NC44OSAzLjk2IDEuNTkgMi4yMi43MSA0LjU1IDEuNSAyLjMzLjggNC41NSAxLjg1IDIuMjIgMS4wNiAzLjk2IDIuNjd0Mi44IDMuOTRxMS4wNSAyLjMzIDEuMDUgNS42NiAwIDMuNjMtMS4yNCA2Ljc5dC0zLjYyIDUuNTFxLTIuMzkgMi4zNS01LjgzIDMuN3QtNy44OCAxLjM1cS0yLjU2IDAtNS4wMy0uNS0yLjQ4LS41LTQuNzYtMS40Mi0yLjI3LS45My00LjI3LTIuMjItMi0xLjMtMy41NS0yLjg5bDIuOTItNC43N3EuMzctLjUyLjk2LS44N3QxLjI2LS4zNXEuOTIgMCAyIC43NiAxLjA3Ljc2IDIuNTUgMS42OCAxLjQ4LjkzIDMuNDYgMS42OCAxLjk4Ljc2IDQuNzUuNzYgNC4yNiAwIDYuNTktMi4wMSAyLjMzLTIuMDIgMi4zMy01Ljc5IDAtMi4xMS0xLjA1LTMuNDUtMS4wNi0xLjMzLTIuOC0yLjIzLTEuNzQtLjkxLTMuOTYtMS41NHQtNC41MS0xLjM3LTQuNTEtMS43N3EtMi4yMi0xLjA0LTMuOTYtMi43MS0xLjc0LTEuNjYtMi44LTQuMTYtMS4wNS0yLjUtMS4wNS02LjE2IDAtMi45MiAxLjE2LTUuNyAxLjE3LTIuNzcgMy4zOS00LjkyIDIuMjItMi4xNCA1LjQ4LTMuNDQgMy4yNS0xLjI5IDcuNDctMS4yOSA0Ljc0IDAgOC43MyAxLjQ4IDQgMS40OCA2LjgxIDQuMTRtMjAuODMgNDkuMDZxLTQuOTYgMC03LjYtMi43OS0yLjY1LTIuOC0yLjY1LTcuNzJ2LTIxLjJoLTMuODhxLS43NCAwLTEuMjYtLjQ4dC0uNTItMS40NHYtMy42M2w2LjExLTEgMS45Mi0xMC4zNnEuMTgtLjc0LjctMS4xNC41Mi0uNDEgMS4zMy0uNDFoNC43NHYxMS45NWgxMC4xNHY2LjUxaC0xMC4xNHYyMC41OHEwIDEuNzcuODcgMi43N3QyLjM5IDFxLjg1IDAgMS40Mi0uMi41Ny0uMjEgMS0uNDN0Ljc2LS40M3EuMzMtLjIuNjYtLjIuNDEgMCAuNjcuMi4yNi4yMS41Ni42MmwyLjczIDQuNDRxLTEuOTkgMS42Ni00LjU4IDIuNTF0LTUuMzcuODVtNDIuMDMtMzguNTVoNy4zM2wtMjAuNjggNDguMzlxLS40MS45Ny0xLjA2IDEuNDctLjY1LjQ5LTEuOTguNDloLTYuODFsNy4xMS0xNS4yNC0xNS4zNi0zNS4xMWg4LjAzcTEuMDcgMCAxLjY4LjUyLjYyLjUxLjkxIDEuMThsOC4wNyAxOS42OHEuNCAxIC42OCAydC41NCAyLjA0cS4zMy0xLjA0LjY2LTIuMDYuMzQtMS4wMS43NC0yLjAxbDcuNjMtMTkuNjVxLjI5LS43NC45OC0xLjIyLjY4LS40OCAxLjUzLS40OG0xMS45OS0xNy4wMmg5LjE0djU0Ljk4aC05LjE0em0yNS40OSAzMS42M2gxNy4yNXEwLTEuNzctLjUtMy4zNS0uNS0xLjU3LTEuNS0yLjc1LTEtMS4xOS0yLjU0LTEuODctMS41My0uNjgtMy41Ny0uNjgtMy45NiAwLTYuMjMgMi4yNS0yLjI4IDIuMjYtMi45MSA2LjRtMjMuMzEgNS41MmgtMjMuNDlxLjIyIDIuOTIgMS4wMyA1LjA1LjgyIDIuMTIgMi4xNSAzLjUxdDMuMTYgMi4wN3ExLjg0LjY5IDQuMDYuNjl0My44Mi0uNTJxMS42MS0uNTIgMi44Mi0xLjE1IDEuMi0uNjMgMi4xMS0xLjE0LjktLjUyIDEuNzUtLjUyIDEuMTUgMCAxLjcxLjg1bDIuNjIgMy4zM3EtMS41MSAxLjc4LTMuNCAyLjk4dC0zLjk0IDEuOTJxLTIuMDYuNzItNC4xOCAxLjAyLTIuMTMuMjktNC4xMy4yOS0zLjk2IDAtNy4zNi0xLjMxLTMuNDEtMS4zMS01LjkyLTMuODgtMi41Mi0yLjU3LTMuOTYtNi4zNy0xLjQ0LTMuNzktMS40NC04Ljc4IDAtMy44OSAxLjI1LTcuMzEgMS4yNi0zLjQyIDMuNjEtNS45NiAyLjM1LTIuNTMgNS43NC00LjAxIDMuMzgtMS40OCA3LjY0LTEuNDggMy41OSAwIDYuNjIgMS4xNCAzLjAzIDEuMTUgNS4yMiAzLjM1IDIuMTggMi4yIDMuNDIgNS40dDEuMjQgNy4zMXEwIDIuMDctLjQ0IDIuNzktLjQ1LjczLTEuNzEuNzNtMzIuODIgNi41OHYtMTcuMDJxLTEuNTUtMS44OC0zLjM4LTIuNjZ0LTMuOTQtLjc4cS0yLjA4IDAtMy43NC43OC0xLjY3Ljc4LTIuODUgMi4zNXQtMS44MSAzLjk5cS0uNjMgMi40My0uNjMgNS43MiAwIDMuMzMuNTMgNS42NC41NCAyLjMyIDEuNTQgMy43OHQyLjQ0IDIuMTFxMS40NS42NCAzLjIyLjY0IDIuODUgMCA0Ljg1LTEuMTh0My43Ny0zLjM3bTAtNDMuNzNoOS4xNHY1NC45OGgtNS41OXEtMS44MSAwLTIuMjktMS42NmwtLjc4LTMuNjdxLTIuMjkgMi42My01LjI3IDQuMjYtMi45OCAxLjYyLTYuOTQgMS42Mi0zLjEgMC01LjY5LTEuMjl0LTQuNDYtMy43NnEtMS44Ny0yLjQ2LTIuODktNi4wOC0xLjAyLTMuNjMtMS4wMi04LjI5IDAtNC4yMiAxLjE1LTcuODQgMS4xNS0zLjYzIDMuMjktNi4yOSAyLjE1LTIuNjcgNS4xNS00LjE3IDIuOTktMS40OSA2LjczLTEuNDkgMy4xOCAwIDUuNDQuOTkgMi4yNiAxIDQuMDMgMi43MXptNDcuNTggMS40OHY1My41aC05Ljk5di01My41em0xOS42NSA1My41aC05LjE0di0zNy45Nmg1LjU5cTEuNzggMCAyLjMzIDEuNjZsLjU5IDIuODJxMS0xLjExIDIuMDktMi4wNHQyLjMzLTEuNTlxMS4yNC0uNjcgMi42Ny0xLjA2IDEuNDItLjM4IDMuMTItLjM4IDMuNTkgMCA1LjkxIDEuOTQgMi4zMSAxLjk0IDMuNDYgNS4xNi44OC0xLjg5IDIuMjItMy4yNCAxLjMzLTEuMzUgMi45Mi0yLjJ0My4zOC0xLjI2cTEuOC0uNCAzLjYxLS40IDMuMTUgMCA1LjU5Ljk2dDQuMTEgMi44MXExLjY2IDEuODUgMi41MyA0LjUxLjg3IDIuNjcuODcgNi4xMXYyNC4xNmgtOS4xNHYtMjQuMTZxMC0zLjYzLTEuNTktNS40NnQtNC42Ni0xLjgzcS0xLjQxIDAtMi42MS40OHQtMi4xMSAxLjM5LTEuNDIgMi4yN3EtLjUyIDEuMzctLjUyIDMuMTV2MjQuMTZoLTkuMTh2LTI0LjE2cTAtMy44MS0xLjUzLTUuNTUtMS41NC0xLjc0LTQuNS0xLjc0LTIgMC0zLjcyLjk4dC0zLjIgMi42OHptNzIuODktOS44di02LjQxcS0zLjk2LjE5LTYuNjYuNjl0LTQuMzMgMS4yOHEtMS42My43Ny0yLjMzIDEuODEtLjcgMS4wMy0uNyAyLjI2IDAgMi40IDEuNDIgMy40NCAxLjQzIDEuMDMgMy43MiAxLjAzIDIuODEgMCA0Ljg3LTEuMDIgMi4wNS0xLjAxIDQuMDEtMy4wOG0tMTkuMzEtMTkuOTUtMS42My0yLjkycTYuNTUtNS45OSAxNS43Ni01Ljk5IDMuMzMgMCA1Ljk2IDEuMDl0NC40NCAzLjAzIDIuNzUgNC42NHEuOTUgMi43Ljk1IDUuOTJ2MjMuOThoLTQuMTVxLTEuMjkgMC0xLjk5LS4zOS0uNzEtLjM5LTEuMTEtMS41N2wtLjgyLTIuNzRxLTEuNDQgMS4zLTIuODEgMi4yOHQtMi44NSAxLjY0cS0xLjQ4LjY3LTMuMTYgMS4wMi0xLjY5LjM1LTMuNzIuMzUtMi40MSAwLTQuNDQtLjY1LTIuMDQtLjY0LTMuNTItMS45NC0xLjQ4LTEuMjktMi4yOS0zLjIyLS44MS0xLjkyLS44MS00LjQ3IDAtMS40NS40OC0yLjg3LjQ4LTEuNDMgMS41Ny0yLjcyIDEuMDktMS4zIDIuODMtMi40NCAxLjc0LTEuMTUgNC4yNy0yIDIuNTQtLjg1IDUuOTEtMS4zOSAzLjM2LS41MyA3LjY5LS42NXYtMi4yMnEwLTMuODEtMS42My01LjY0LTEuNjItMS44My00LjctMS44My0yLjIyIDAtMy42OC41MnQtMi41NyAxLjE2cS0xLjExLjY1LTIuMDIgMS4xNy0uOS41Mi0yLjAxLjUyLS45NiAwLTEuNjMtLjV0LTEuMDctMS4xN201MC42OSA5Ljg0cTEuNyAwIDIuOTYtLjQ2dDIuMDktMS4yN3EuODMtLjgyIDEuMjYtMS45Ny40Mi0xLjE0LjQyLTIuNTEgMC0yLjgxLTEuNjgtNC40Ni0xLjY5LTEuNjUtNS4wNS0xLjY1LTMuMzcgMC01LjA1IDEuNjUtMS42OSAxLjY1LTEuNjkgNC40NiAwIDEuMzMuNDMgMi40OC40MiAxLjE0IDEuMjYgMS45OC44My44MyAyLjExIDEuMjkgMS4yNy40NiAyLjk0LjQ2bTEwLjMyIDIxLjYxcTAtMS4xMS0uNjctMS44MS0uNjYtLjctMS44MS0xLjA5dC0yLjY4LS41OHEtMS41NC0uMTgtMy4yNi0uMjctMS43Mi0uMS0zLjU1LS4xN3QtMy41Ny0uM3EtMS41Mi44Ni0yLjQ2IDItLjk0IDEuMTUtLjk0IDIuNjcgMCAxIC41IDEuODYuNS44NyAxLjU5IDEuNXQyLjgzLjk4IDQuMjUuMzVxMi41NiAwIDQuNDEtLjM4IDEuODUtLjM5IDMuMDUtMS4wOCAxLjItLjY4IDEuNzYtMS42Mi41NS0uOTUuNTUtMi4wNm0tMS44MS0zOC4zN2gxMC45MXYzLjQxcTAgMS42My0xLjk2IDJsLTMuNC42MnEuNzcgMS45Ny43NyA0LjMgMCAyLjgxLTEuMTIgNS4wOC0xLjEzIDIuMjgtMy4xMyAzLjg3dC00LjcyIDIuNDYtNS44Ni44N3EtMS4xMSAwLTIuMTUtLjExLTEuMDMtLjExLTIuMDMtLjMtMS43OCAxLjA4LTEuNzggMi40MSAwIDEuMTUgMS4wNSAxLjY4IDEuMDYuNTQgMi44Ljc2dDMuOTYuMjhxMi4yMi4wNSA0LjU1LjI0IDIuMzMuMTggNC41NS42NSAyLjIyLjQ2IDMuOTYgMS40NnQyLjc5IDIuNzJxMS4wNiAxLjcyIDEuMDYgNC40MiAwIDIuNTEtMS4yNCA0Ljg4dC0zLjU5IDQuMjItNS43NyAyLjk4cS0zLjQzIDEuMTMtNy43OSAxLjEzLTQuMjkgMC03LjQ4LS44NC0zLjE4LS44My01LjI5LTIuMjItMi4xMS0xLjM4LTMuMTQtMy4yLTEuMDQtMS44MS0xLjA0LTMuNzcgMC0yLjY2IDEuNjEtNC40NiAxLjYxLTEuNzkgNC40Mi0yLjg3LTEuNTEtLjc3LTIuNC0yLjA3LS44OS0xLjI5LS44OS0zLjQgMC0uODUuMzEtMS43Ni4zMi0uOTEuOTMtMS43OS42MS0uODkgMS41My0xLjY5LjkzLS43OSAyLjE5LTEuNDItMi44OS0xLjU2LTQuNTQtNC4xNS0xLjY0LTIuNTktMS42NC02LjA2IDAtMi44MiAxLjEzLTUuMDkgMS4xMy0yLjI4IDMuMTQtMy44OSAyLjAyLTEuNjEgNC43Ny0yLjQ2IDIuNzYtLjg1IDYuMDItLjg1IDIuNDQgMCA0LjU5LjUgMi4xNC41IDMuOTIgMS40Nm0yMy45IDEzLjMyaDE3LjI0cTAtMS43Ny0uNS0zLjM1LS41LTEuNTctMS41LTIuNzUtMS0xLjE5LTIuNTMtMS44Ny0xLjU0LS42OC0zLjU3LS42OC0zLjk2IDAtNi4yNCAyLjI1LTIuMjcgMi4yNi0yLjkgNi40bTIzLjMxIDUuNTJoLTIzLjVxLjIzIDIuOTIgMS4wNCA1LjA1LjgxIDIuMTIgMi4xNSAzLjUxIDEuMzMgMS4zOSAzLjE2IDIuMDcgMS44My42OSA0LjA1LjY5dDMuODMtLjUyIDIuODEtMS4xNXExLjIxLS42MyAyLjExLTEuMTQuOTEtLjUyIDEuNzYtLjUyIDEuMTUgMCAxLjcuODVsMi42MyAzLjMzcS0xLjUyIDEuNzgtMy40MSAyLjk4LTEuODggMS4yLTMuOTQgMS45Mi0yLjA1LjcyLTQuMTggMS4wMi0yLjEyLjI5LTQuMTIuMjktMy45NiAwLTcuMzctMS4zMS0zLjQtMS4zMS01LjkyLTMuODgtMi41MS0yLjU3LTMuOTUtNi4zNy0xLjQ1LTMuNzktMS40NS04Ljc4IDAtMy44OSAxLjI2LTcuMzF0My42MS01Ljk2cTIuMzUtMi41MyA1LjczLTQuMDEgMy4zOS0xLjQ4IDcuNjQtMS40OCAzLjU5IDAgNi42MyAxLjE0IDMuMDMgMS4xNSA1LjIxIDMuMzUgMi4xOSAyLjIgMy40MyA1LjR0MS4yNCA3LjMxcTAgMi4wNy0uNDUgMi43OS0uNDQuNzMtMS43LjczIi8+PC9zdmc+" alt="Styled">
+            </div>
+        </section>
+        <section data-slide-index="69">
+            <h1>Image Grid</h1>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgNDAwIDMwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzM0OThkYiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xMDMuNTM1IDE4NC4xMTVoMzkuMDJ2MTQuOTloLTU3LjE3di05Ny42MWgxOC4xNXptNjIuNTEtMjcuNmgzMS40NXEwLTMuMjQtLjkxLTYuMTF0LTIuNzMtNS4wMy00LjYyLTMuNDFxLTIuODEtMS4yNS02LjUyLTEuMjUtNy4yMiAwLTExLjM3IDQuMTJ0LTUuMyAxMS42OG00Mi41MiAxMC4wNWgtNDIuODZxLjQxIDUuMzQgMS44OSA5LjIyIDEuNDkgMy44OCAzLjkyIDYuNDF0NS43NyAzLjc4IDcuMzkgMS4yNSA2Ljk5LS45NXEyLjkzLS45NCA1LjEzLTIuMDkgMi4xOS0xLjE1IDMuODQtMi4wOSAxLjY2LS45NSAzLjIxLS45NSAyLjA5IDAgMy4xIDEuNTZsNC44IDYuMDdxLTIuNzcgMy4yNC02LjIxIDUuNDQtMy40NSAyLjE5LTcuMTkgMy41MS0zLjc1IDEuMzEtNy42MyAxLjg1dC03LjUzLjU0cS03LjIyIDAtMTMuNDMtMi4zOS02LjIxLTIuNC0xMC44LTcuMDl0LTcuMjItMTEuNjEtMi42My0xNi4wM3EwLTcuMDkgMi4yOS0xMy4zMyAyLjMtNi4yNSA2LjU4LTEwLjg3IDQuMjktNC42MyAxMC40Ny03LjMzIDYuMTctMi43IDEzLjkzLTIuNyA2LjU1IDAgMTIuMDkgMi4xIDUuNTMgMi4wOSA5LjUxIDYuMTEgMy45OSA0LjAxIDYuMjUgOS44NXQyLjI2IDEzLjMzcTAgMy43OC0uODEgNS4xLS44MSAxLjMxLTMuMTEgMS4zMW0zNy45NCAzMi41NGgtMTYuNjd2LTU2LjdsLTYuMDEtLjk1cS0xLjk2LS40LTMuMTQtMS4zOHQtMS4xOC0yLjh2LTYuODJoMTAuMzN2LTUuMTNxMC01Ljk0IDEuNzktMTAuNjYgMS43OC00LjczIDUuMTMtOC4wNCAzLjM0LTMuMyA4LjEzLTUuMDYgNC43OS0xLjc1IDEwLjgtMS43NSA0Ljc5IDAgOC45MSAxLjI4bC0uMzQgOC4zN3EtLjA3Ljk0LS41NCAxLjUyLS40Ny41Ny0xLjI1Ljg4LS43Ny4zLTEuNzguNC0xLjAyLjEtMi4xNi4xLTIuOTggMC01LjMuNjQtMi4zMy42NC0zLjk1IDIuMjN0LTIuNDcgNC4xOXEtLjg0IDIuNTktLjg0IDYuNDR2NC41OWgxOC4wMnYxMS44OGgtMTcuNDh6bTQ5Ljk1IDEuMDhxLTkuMDUgMC0xMy44Ny01LjEtNC44My01LjA5LTQuODMtMTQuMDd2LTM4LjY4aC03LjA5cS0xLjM1IDAtMi4yOS0uODgtLjk1LS44Ny0uOTUtMi42M3YtNi42MWwxMS4xNC0xLjgzIDMuNTEtMTguOXEuMzQtMS4zNSAxLjI4LTIuMDkuOTUtLjc0IDIuNDMtLjc0aDguNjR2MjEuOGgxOC41djExLjg4aC0xOC41djM3LjUzcTAgMy4yNCAxLjU5IDUuMDYgMS41OSAxLjgzIDQuMzUgMS44MyAxLjU2IDAgMi42LS4zNyAxLjA1LS4zOCAxLjgzLS43OC43Ny0uNDEgMS4zOC0uNzh0MS4yMS0uMzdxLjc1IDAgMS4yMi4zN3QxLjAxIDEuMTJsNSA4LjFxLTMuNjUgMy4wMy04LjM3IDQuNTktNC43MyAxLjU1LTkuNzkgMS41NSIvPjwvc3ZnPg==" alt="Left">
+            <h3>Description</h3>
+            <p>Image with text in grid layout</p>
+            </div>
+        </section>
+        <section data-slide-index="16">
+            <div style="background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); padding: 40px; border-radius: 15px; color: #2c3e50; text-align: center">
+            <h2>Part 8: Absolute Positioning</h2>
+            </div>
+        </section>
+        <section data-slide-index="16">
+            <h1>Positioned Elements</h1>
+            <p>Base content flows normally</p>
+            <div style="position: absolute; z-index: 10; left: 200px; top: 150px; color: #e74c3c; font-size: 36px; font-weight: bold">
+            <p>OVERLAY</p>
+            </div>
+            <div style="position: absolute; z-index: 5; left: 450px; top: 300px; background: #3498db; color: white; padding: 15px; border-radius: 8px">
+            <p>Floating box</p>
+            </div>
+        </section>
+        <section data-slide-index="16">
+            <h1>Layered Content</h1>
+            <div style="position: absolute; z-index: 1; left: 100px; top: 100px; background: #ecf0f1; padding: 15px">
+            <p>Layer 1 (z-index: 1)</p>
+            </div>
+            <div style="position: absolute; z-index: 5; left: 120px; top: 120px; background: #bdc3c7; padding: 15px">
+            <p>Layer 2 (z-index: 5)</p>
+            </div>
+            <div style="position: absolute; z-index: 10; left: 140px; top: 140px; background: #95a5a6; padding: 15px; color: white">
+            <p>Layer 3 (z-index: 10)</p>
+            </div>
+        </section>
+        <section data-slide-index="72">
+            <h1>Positioned Images</h1>
+            <div style="position: absolute; z-index: 1; left: 100px; top: 100px">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMzAwIDIwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzM0OThkYiIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xNTkuNiAxMjYuOTVoMTN2OS4yNWgtNDB2LTkuMjVoMTQuNjVWODQuOHEwLTIuNS4xNS01LjE1bC0xMC40IDguN3EtLjkuNy0xLjc4Ljg3LS44Ny4xOC0xLjY0LjAzLS43OC0uMTUtMS4zOC0uNTMtLjYtLjM3LS45LS44MmwtMy45LTUuMzUgMjIuMDUtMTguNzVoMTAuMTV6Ii8+PC9zdmc+" alt="Image 1">
+            </div>
+            <div style="position: absolute; z-index: 5; left: 450px; top: 250px">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNTAiIGhlaWdodD0iMTUwIiB2aWV3Qm94PSIwIDAgMjUwIDE1MCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U3NGMzYyIvPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xMjYuNDMgOTMuNzhoMTMuOTFxMS41IDAgMi4zOC44NS44OC44NC44OCAyLjIzdjUuNTVoLTM3LjJ2LTMuMDdxMC0uOTQuMzktMS45Ny40LTEuMDQgMS4yNi0xLjg2bDE2LjQ2LTE2LjVxMi4wNi0yLjEgMy43LTQuMDEgMS42My0xLjkxIDIuNzItMy43OSAxLjA4LTEuODcgMS42Ni0zLjgxLjU5LTEuOTMuNTktNC4wNiAwLTEuOTUtLjU3LTMuNDQtLjU2LTEuNDgtMS41OS0yLjQ5dC0yLjQ4LTEuNTJxLTEuNDQtLjUtMy4yNC0uNS0xLjY1IDAtMy4wNi40Ni0xLjQuNDctMi40OSAxLjMyLTEuMDkuODQtMS44NCAxLjk3LS43NSAxLjEyLTEuMTIgMi40Ny0uNjQgMS43My0xLjY1IDIuMjktMS4wMi41Ni0yLjkzLjI2bC00Ljg3LS44NnEuNTYtMy45IDIuMTctNi44NSAxLjYxLTIuOTQgNC4wMy00LjkxdDUuNTUtMi45NnEzLjE0LS45OSA2LjczLS45OSAzLjc1IDAgNi44NyAxLjEgMy4xMSAxLjExIDUuMzIgMy4xMyAyLjIxIDIuMDMgMy40NSA0Ljg4dDEuMjQgNi4zM3EwIDMtLjg4IDUuNTYtLjg4IDIuNTUtMi4zNiA0Ljg3LTEuNDkgMi4zMi0zLjQ3IDQuNS0xLjk5IDIuMTgtNC4xNyA0LjQzTDExOS42IDk0Ljg3cTEuNzYtLjUyIDMuNTEtLjggMS43NC0uMjkgMy4zMi0uMjkiLz48L3N2Zz4=" alt="Image 2">
+            </div>
+        </section>
+        <section data-slide-index="16">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 15px; color: white; text-align: center">
+            <h2>Part 9: Interactive Chalkboard</h2>
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h1>Chalkboard Feature</h1>
+            <p>This presentation includes <strong>interactive chalkboard</strong> functionality!</p>
+            <ul>
+                <li>Draw and annotate directly on slides</li>
+                <li>Toggle between presentation and drawing modes</li>
+                <li>Use keyboard shortcuts or buttons</li>
+                <li>Perfect for live presentations and teaching</li>
+            </ul>
+        </section>
+        <section data-slide-index="1">
+            <h1>How to Use Chalkboard</h1>
+            <p><strong>Keyboard Shortcuts:</strong></p>
+            <ul>
+                <li>Press <strong>C</strong> to toggle Chalkboard Mode (draw over slides)</li>
+                <li>Press <strong>B</strong> to toggle Notes Canvas (draw on black board)</li>
+                <li>Press <strong>DEL</strong> or <strong>BACKSPACE</strong> to clear drawings</li>
+                <li>Press <strong>D</strong> to download drawings as JSON</li>
+            </ul>
+            <p><strong>Mouse/Touch:</strong></p>
+            <ul>
+                <li>Click the chalkboard buttons at the bottom of slides</li>
+                <li>Draw with mouse or touch input</li>
+            </ul>
+        </section>
+        <section data-slide-index="1">
+            <h1>Chalkboard Modes</h1>
+            <p><strong>Chalkboard Mode (Press C):</strong></p>
+            <ul>
+                <li>Draw directly over slide content</li>
+                <li>Annotate diagrams and code</li>
+                <li>Highlight important points</li>
+            </ul>
+            <p><strong>Notes Canvas (Press B):</strong></p>
+            <ul>
+                <li>Opens a blank chalkboard for sketching</li>
+                <li>Great for explaining concepts from scratch</li>
+                <li>Like a traditional blackboard</li>
+            </ul>
+        </section>
+        <section data-slide-index="1">
+            <h1>Try It Now!</h1>
+            <p>Press <strong>C</strong> to start drawing on this slide!</p>
+            <p>You can:</p>
+            <ul>
+                <li>Circle this text</li>
+                <li>Draw arrows</li>
+                <li>Add your own notes</li>
+                <li>Underline key points</li>
+            </ul>
+            <p>Press <strong>DEL</strong> to clear when done.</p>
+        </section>
+        <section data-slide-index="20">
+            <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 40px; border-radius: 15px; color: white; text-align: center">
+            <h2>Part 9: QR Code</h2>
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h1>Simple QR Code</h1>
+            <p>Visit our GitHub repository:</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fgithub.com%2FRoxaneBacon%2Fsse-dsl-SlideDeckML" alt="QR Code" class="qr-code-standalone">
+        </section>
+        <section data-slide-index="21">
+            <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 40px; border-radius: 15px; color: white; text-align: center">
+            <h2>Part 10: Integrated IDE</h2>
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h1>Integrated IDE Feature</h1>
+            <p>This presentation includes <strong>integrated IDE</strong> functionality!</p>
+            <ul>
+                <li>Compile and run Python / JavaScript / SQL</li>
+                <li>Monaco editor with VS Code-like syntax highlighting</li>
+                <li>Customize editor and output positions for better layout</li>
+                <li>Perfect for live coding demonstrations</li>
+            </ul>
+        </section>
+        <section data-slide-index="22">
+            <div style="position: absolute; z-index: 1; left: 0px; top: 50px">
+            <div class="ide-editor-container">
+                <button class="run-button" data-editor-id="editor-0">▶ Run</button>
+                <div id="editor-0"
+                     class="monaco-editor-wrapper"
+                     data-language="python"
+                     data-output-id="python-output"
+                     data-initial-code="def fibonacci(n):&#10;    if n &lt;= 1:&#10;        return n&#10;    return fibonacci(n-1) + fibonacci(n-2)&#10;&#10;print(fibonacci(5))    &#10;"
+                     style="width: 500px; height: 350px; border: 1px solid #ccc;"></div>
+            </div>
+            </div>
+            <div style="position: absolute; z-index: 1; left: 0px; top: 420px">
+            <div class="ide-output-container">
+                <div id="python-output" class="output-content" style="width: 500px; box-sizing: border-box; background: #1e1e1e; color: #d4d4d4; padding: 12px; margin: 0; min-height: 100px; max-height: 350px; overflow-y: auto; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.4; white-space: pre-wrap;"></div>
+            </div>
+            </div>
+            <div style="position: absolute; z-index: 1; left: 570px; top: 100px">
+            <h3>Python editor with output at bottom for small exemples</h3>
+            </div>
+        </section>
+        <section data-slide-index="22">
+            <h3>Side to side for better graphical view</h3>
+            <div style="position: absolute; z-index: 1; left: -50px; top: 200px">
+            <div class="ide-editor-container">
+                <button class="run-button" data-editor-id="editor-1">▶ Run</button>
+                <div id="editor-1"
+                     class="monaco-editor-wrapper"
+                     data-language="python"
+                     data-output-id="python-output-2"
+                     data-initial-code="#!/usr/bin/env python3&#10;import matplotlib.pyplot as plt&#10;import numpy as np&#10;&#10;x = np.linspace(0, 10, 100)&#10;y = np.sin(x)&#10;&#10;plt.plot(x, y, &#39;b-&#39;, linewidth=2)&#10;plt.title(&#39;Simple Sinus&#39;)&#10;plt.xlabel(&#39;x&#39;)&#10;plt.ylabel(&#39;sin(x)&#39;)&#10;plt.grid(True, alpha=0.3)&#10;plt.show()&#10;"
+                     style="width: 500px; height: 350px; border: 1px solid #ccc;"></div>
+            </div>
+            </div>
+            <div style="position: absolute; z-index: 1; left: 500px; top: 200px">
+            <div class="ide-output-container">
+                <div id="python-output-2" class="output-content" style="width: 500px; box-sizing: border-box; background: #1e1e1e; color: #d4d4d4; padding: 12px; margin: 0; min-height: 100px; max-height: 350px; overflow-y: auto; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.4; white-space: pre-wrap;"></div>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="22">
+            <h3>Handle Javascript and SQL too !</h3>
+            <div style="position: absolute; z-index: 1; left: -50px; top: 130px">
+            <div class="ide-editor-container">
+                <button class="run-button" data-editor-id="editor-2">▶ Run</button>
+                <div id="editor-2"
+                     class="monaco-editor-wrapper"
+                     data-language="javascript"
+                     data-output-id="javascript-output"
+                     data-initial-code="#!/usr/bin/env node&#10;&#10;function fibonacci(n) {&#10;  if (n &lt;= 1) return n;&#10;  return fibonacci(n - 1) + fibonacci(n - 2);&#10;}&#10;&#10;for (let i = 0; i &lt; 5; i++) {&#10;  console.log(`F(${i}) = ${fibonacci(i)}`);&#10;}&#10;"
+                     style="width: 500px; height: 350px; border: 1px solid #ccc;"></div>
+            </div>
+            </div>
+            <div style="position: absolute; z-index: 1; left: -50px; top: 500px">
+            <div class="ide-output-container">
+                <div id="javascript-output" class="output-content" style="width: 500px; box-sizing: border-box; background: #1e1e1e; color: #d4d4d4; padding: 12px; margin: 0; min-height: 100px; max-height: 350px; overflow-y: auto; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.4; white-space: pre-wrap;"></div>
+            </div>
+            </div>
+            <div style="position: absolute; z-index: 1; left: 500px; top: 130px">
+            <div class="ide-editor-container">
+                <button class="run-button" data-editor-id="editor-3">▶ Run</button>
+                <div id="editor-3"
+                     class="monaco-editor-wrapper"
+                     data-language="sql"
+                     data-output-id="sql-output"
+                     data-initial-code="CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(50));&#10;INSERT INTO users (id, name) VALUES (1, &#39;Alice&#39;);&#10;SELECT * FROM users;&#10;"
+                     style="width: 500px; height: 350px; border: 1px solid #ccc;"></div>
+            </div>
+            </div>
+            <div style="position: absolute; z-index: 1; left: 500px; top: 500px">
+            <div class="ide-output-container">
+                <div id="sql-output" class="output-content" style="width: 500px; box-sizing: border-box; background: #1e1e1e; color: #d4d4d4; padding: 12px; margin: 0; min-height: 100px; max-height: 350px; overflow-y: auto; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.4; white-space: pre-wrap;"></div>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="22">
+            <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 40px; border-radius: 15px; color: white; text-align: center">
+            <h2>Part 11: Interactive Quiz</h2>
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h1>How to setup the quiz</h1>
+            <p><strong>Start the quiz server</strong></p>
+            <pre><code class="language-typescript" data-trim data-noescape>npm run start
+</code></pre>
+            <p><strong>Expose your server to participants</strong></p>
+            <pre><code class="language-typescript" data-trim data-noescape>npx http-server -p 3000 -a 0.0.0.0
+</code></pre>
+        </section>
+        <section data-slide-index="0">
+        <section>
+            <h2>Software Performance Workshop Quiz</h2>
+            <div class="qr-code-container">
+                <img class="qr-code" alt="QR Code to join" />
+                <p>Scan to join and participate</p>
+            </div>
+        </section>
+        <section>
+            <h3>What is the average time complexity of QuickSort?</h3>
+            <div class="poll" data-poll="poll-0" data-auto-show-results="false">
+                <button data-value="n">O(n)</button>
+                <button data-value="nlogn">O(n log n)</button>
+                <button data-value="n2">O(n²)</button>
+                <button data-value="logn">O(log n)</button>
+            </div>
+            <button class="toggle-results-btn" data-poll="poll-0">Show Results</button>
+            <div class="results" data-poll="poll-0" data-visualization="barChart" data-is-quiz="true" style="display: none;">
+                <p><strong>Results:</strong> <span class="voters" data-poll="poll-0">0</span> votes</p>
+                <canvas id="chart-poll-0" width="400" height="300"></canvas>
+                <div style="display: none;">
+                    <p data-correct="false">O(n): <span data-value="n">0</span></p>
+                    <p data-correct="true">O(n log n): <span data-value="nlogn">0</span></p>
+                    <p data-correct="false">O(n²): <span data-value="n2">0</span></p>
+                    <p data-correct="false">O(log n): <span data-value="logn">0</span></p>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>Which sorting algorithm is most efficient for nearly sorted data?</h3>
+            <div class="poll" data-poll="poll-1" data-auto-show-results="true">
+                <button data-value="bubble">Bubble Sort</button>
+                <button data-value="insertion">Insertion Sort</button>
+                <button data-value="merge">Merge Sort</button>
+                <button data-value="quick">Quick Sort</button>
+            </div>
+            <div class="results" data-poll="poll-1" data-visualization="pieChart" data-is-quiz="true" style="display: none;">
+                <p><strong>Results:</strong> <span class="voters" data-poll="poll-1">0</span> votes</p>
+                <canvas id="chart-poll-1" width="400" height="300"></canvas>
+                <div style="display: none;">
+                    <p data-correct="false">Bubble Sort: <span data-value="bubble">0</span></p>
+                    <p data-correct="true">Insertion Sort: <span data-value="insertion">0</span></p>
+                    <p data-correct="false">Merge Sort: <span data-value="merge">0</span></p>
+                    <p data-correct="false">Quick Sort: <span data-value="quick">0</span></p>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>What is the space complexity of Merge Sort?</h3>
+            <div class="poll" data-poll="poll-2" data-auto-show-results="false">
+                <button data-value="o1">O(1)</button>
+                <button data-value="ologn">O(log n)</button>
+                <button data-value="on">O(n)</button>
+                <button data-value="on2">O(n²)</button>
+            </div>
+            <button class="toggle-results-btn" data-poll="poll-2">Show Results</button>
+            <div class="results" data-poll="poll-2" data-visualization="barChart" data-is-quiz="true" style="display: none;">
+                <p><strong>Results:</strong> <span class="voters" data-poll="poll-2">0</span> votes</p>
+                <canvas id="chart-poll-2" width="400" height="300"></canvas>
+                <div style="display: none;">
+                    <p data-correct="false">O(1): <span data-value="o1">0</span></p>
+                    <p data-correct="false">O(log n): <span data-value="ologn">0</span></p>
+                    <p data-correct="true">O(n): <span data-value="on">0</span></p>
+                    <p data-correct="false">O(n²): <span data-value="on2">0</span></p>
+                </div>
+            </div>
+        </section>
+
+        </section>
+        <section data-slide-index="23">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 15px; color: white; text-align: center">
+            <h2>Part 12: Fragment Animations</h2>
+            </div>
+        </section>
+        <section data-slide-index="23">
+            <h1>Fragment Animations</h1>
+            <div class="fragment fade-in">
+            <p>Fragment animations let you <strong>reveal content incrementally</strong></p>
+            </div>
+            <div class="fragment fade-up">
+            <p>This text slides up while fading in</p>
+            </div>
+            <div class="fragment highlight-blue">
+            <p>And this one highlights in blue!</p>
+            </div>
+        </section>
+        <section data-slide-index="23">
+            <h1>Various Fragment Effects</h1>
+            <div class="fragment fade-out">
+            <p>This will fade out</p>
+            </div>
+            <div class="fragment grow">
+            <p>This will grow larger</p>
+            </div>
+            <div class="fragment shrink">
+            <p>This will shrink</p>
+            </div>
+            <div class="fragment strike">
+            <p>This gets struck through</p>
+            </div>
+        </section>
+        <section data-slide-index="62">
+            <h1>Nested Fragments</h1>
+            <div class="fragment fade-in">
+            <div class="fragment highlight-red">
+            <div class="fragment semi-fade-out">
+            <p>Fade in → Turn red → Semi fade out</p>
+            </div>
+            </div>
+            </div>
+        </section>
+        <section data-slide-index="23">
+            <h1>Custom Order</h1>
+            <div class="fragment fade-in" data-fragment-index="3">
+            <p><strong>Third</strong>: This appears last</p>
+            </div>
+            <div class="fragment fade-in" data-fragment-index="1">
+            <p><strong>First</strong>: This appears first</p>
+            </div>
+            <div class="fragment fade-in" data-fragment-index="2">
+            <p><strong>Second</strong>: This appears in the middle</p>
+            </div>
+        </section>
+        <section data-slide-index="23">
+            <h1>Fragments with Lists</h1>
+            <div class="fragment fade-in">
+            <ul>
+                <li>First batch of items</li>
+                <li>Appears together</li>
+            </ul>
+            </div>
+            <div class="fragment highlight-green">
+            <ul>
+                <li>Second batch</li>
+                <li>Highlights in green</li>
+            </ul>
+            </div>
+        </section>
+        <section data-slide-index="23">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 15px; color: white; text-align: center">
+            <h2>Part 13: Slide Transitions</h2>
+            </div>
+        </section>
+        <section data-slide-index="1" data-transition="fade">
+            <h1>Slide Transitions</h1>
+            <p>This presentation uses the <strong>&quot;slide&quot;</strong> transition globally (set in metadata).</p>
+            <p>But <strong>individual slides</strong> can override it!</p>
+            <p>This slide uses the <strong>fade</strong> transition.</p>
+        </section>
+        <section data-slide-index="1" data-transition="zoom">
+            <h1>Zoom Effect</h1>
+            <p>This slide <strong>zooms in</strong> from the center!</p>
+            <p>Different transitions add visual variety to presentations.</p>
+        </section>
+        <section data-slide-index="1" data-transition="convex">
+            <h1>More Transitions</h1>
+            <p>This uses the <strong>convex</strong> transition.</p>
+            <p>Available: `none`, `fade`, `slide`, `convex`, `concave`, `zoom`</p>
+        </section>
+        <section data-slide-index="1" data-transition="fade-in slide-out">
+            <h1>Mixed Transitions</h1>
+            <p>You can even use <strong>different in/out transitions</strong>!</p>
+            <p>This slide: <strong>fade-in slide-out</strong></p>
+        </section>
+        <section data-slide-index="27">
+            <div style="text-align: center; color: #3498db; font-size: 64px; font-weight: bold">
+            <h1>Thank You!</h1>
+            </div>
+            <div style="text-align: center; font-size: 28px; color: #7f8c8d; margin-top: 30px">
+            <p>SlideDeckML - All Features Demonstrated</p>
+            </div>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Font Awesome (required for chalkboard) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <!-- Custom controls plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/plugin.js"></script>
+    <!-- Chalkboard plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/plugin.js"></script>
+        <!-- Pyodide -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+
+    <!-- SQL.js for SQL execution -->
+    <script src="https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/sql-wasm.js"></script>
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Socket.io (must be before Monaco) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+    
+    <!-- ResizeObserver polyfill for older browsers/mobile -->
+    <script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.1/dist/ResizeObserver.js"></script>
+    
+        <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+    <!-- Seminar plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/seminar/plugin.js"></script>
+    <!-- Poll plugin requires seminar plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/poll/plugin.js"></script>
+    
+    <script>
+                require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' }});
+
+        window.monacoEditors = {};
+
+        if (!window.ResizeObserver && typeof ResizeObserver !== 'undefined') {
+            window.ResizeObserver = ResizeObserver;
+        }
+
+        require(['vs/editor/editor.main'], function() {
+            document.querySelectorAll('.monaco-editor-wrapper').forEach(editorElement => {
+                const editorId = editorElement.id;
+                const language = editorElement.getAttribute('data-language') || 'python';
+                const initialCode = editorElement.getAttribute('data-initial-code') || '# Write your ' + language + ' code here\n';
+
+                // Unescape HTML entities from the attribute
+                const textarea = document.createElement('textarea');
+                textarea.innerHTML = initialCode;
+                const unescapedCode = textarea.value;
+
+                window.monacoEditors[editorId] = monaco.editor.create(editorElement, {
+                    value: unescapedCode,
+                    language: language,
+                    theme: 'vs-dark',
+                    minimap: { enabled: false },
+                    fontSize: 14,
+                    lineNumbers: 'on',
+                    automaticLayout: true
+                });
+            });
+
+            document.querySelectorAll('.run-button').forEach(button => {
+                button.addEventListener('click', async function() {
+                    const editorId = this.getAttribute('data-editor-id');
+                    const editor = window.monacoEditors[editorId];
+
+                    if (!editor) {
+                        console.error('Editor not found:', editorId);
+                        return;
+                    }
+
+                    const code = editor.getValue();
+                    const editorElement = document.getElementById(editorId);
+                    const language = editorElement.getAttribute('data-language');
+                    const outputId = editorElement.getAttribute('data-output-id');
+                    const outputElement = document.getElementById(outputId);
+
+                    if (!outputElement) {
+                        console.error('Output element not found:', outputId);
+                        return;
+                    }
+
+                    if (language === 'python') {
+                        await runPythonCode(code, outputElement);
+                    } else if (language === 'javascript') {
+                        runJavaScriptCode(code, outputElement);
+                    } else if (language === 'sql') {
+                        await runSQLCode(code, outputElement);
+                    }
+                });
+            });
+        });
+
+        async function runPythonCode(code, outputElement) {
+            try {
+                if (!window.pyodideReady) {
+                    outputElement.textContent = 'Loading Pyodide...\n';
+
+                    if (!window.pyodideLoading) {
+                        window.pyodideLoading = loadPyodide({
+                            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+                        }).then(async pyodide => {
+                            // Load common packages
+                            await pyodide.loadPackage(['numpy', 'matplotlib']);
+                            window.pyodide = pyodide;
+                            window.pyodideReady = true;
+                            return pyodide;
+                        });
+                    }
+
+                    await window.pyodideLoading;
+                }
+
+                const pyodide = window.pyodide;
+
+                pyodide.runPython(`
+import sys
+from io import StringIO, BytesIO
+import matplotlib
+import matplotlib.pyplot as plt
+import base64
+
+matplotlib.use('Agg')
+
+sys.stdout = StringIO()
+
+plt.close('all')
+                `);
+
+                await pyodide.runPythonAsync(code);
+
+                const textOutput = pyodide.runPython('sys.stdout.getvalue()');
+
+                const figures = pyodide.runPython(`
+import matplotlib.pyplot as plt
+figures_data = []
+for i in plt.get_fignums():
+    fig = plt.figure(i)
+    buf = BytesIO()
+    fig.savefig(buf, format='png', bbox_inches='tight', dpi=100)
+    buf.seek(0)
+    img_base64 = base64.b64encode(buf.read()).decode('utf-8')
+    figures_data.append(img_base64)
+    buf.close()
+figures_data
+                `);
+
+                outputElement.innerHTML = '';
+                outputElement.style.color = '#d4d4d4';
+
+                if (textOutput) {
+                    const textNode = document.createTextNode(textOutput);
+                    outputElement.appendChild(textNode);
+                }
+
+                if (figures && figures.length > 0) {
+                    figures.forEach(imgData => {
+                        const img = document.createElement('img');
+                        img.src = 'data:image/png;base64,' + imgData;
+                        img.style.maxWidth = '100%';
+                        img.style.height = 'auto';
+                        img.style.display = 'block';
+                        img.style.margin = '10px 0';
+                        outputElement.appendChild(img);
+                    });
+                } else if (!textOutput) {
+                    outputElement.textContent = '(No output)';
+                }
+
+            } catch (error) {
+                outputElement.textContent = 'Error: ' + error.message;
+                outputElement.style.color = '#ff6b6b';
+            }
+        }
+
+        function runJavaScriptCode(code, outputElement) {
+            try {
+                const logs = [];
+                const originalLog = console.log;
+                console.log = (...args) => {
+                    logs.push(args.map(a => String(a)).join(' '));
+                    originalLog.apply(console, args);
+                };
+
+                const result = eval(code);
+                console.log = originalLog;
+
+                let output = logs.join('\n');
+                if (result !== undefined && logs.length === 0) {
+                    output = String(result);
+                }
+                outputElement.textContent = output || '(No output)';
+                outputElement.style.color = '#d4d4d4';
+
+            } catch (error) {
+                outputElement.textContent = 'Error: ' + error.message;
+                outputElement.style.color = '#ff6b6b';
+            }
+        }
+
+        async function runSQLCode(code, outputElement) {
+            try {
+                if (!window.sqlReady) {
+                    outputElement.textContent = 'Loading SQL.js...\n';
+
+                    if (!window.sqlLoading) {
+                        window.sqlLoading = initSqlJs({
+                            locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/${file}`
+                        }).then(SQL => {
+                            window.SQL = SQL;
+                            window.sqlReady = true;
+                            return SQL;
+                        });
+                    }
+
+                    await window.sqlLoading;
+                }
+
+                const SQL = window.SQL;
+
+                const db = new SQL.Database();
+
+                const statements = code.trim().split(';').filter(stmt => stmt.trim());
+
+                outputElement.innerHTML = '';
+                outputElement.style.color = '#d4d4d4';
+
+                let hasResults = false;
+
+                for (let i = 0; i < statements.length; i++) {
+                    const stmt = statements[i].trim();
+                    if (!stmt) continue;
+
+                    try {
+                        const results = db.exec(stmt);
+
+                        if (results.length > 0) {
+                            hasResults = true;
+                            results.forEach(result => {
+                                const table = formatSQLResults(result);
+                                outputElement.appendChild(table);
+                            });
+                        } else if (stmt.toUpperCase().startsWith('SELECT')) {
+                            hasResults = true;
+                            const emptyMsg = document.createElement('div');
+                            emptyMsg.textContent = 'Query returned 0 rows';
+                            emptyMsg.style.marginBottom = '10px';
+                            outputElement.appendChild(emptyMsg);
+                        } else {
+                            hasResults = true;
+                            const successMsg = document.createElement('div');
+                            successMsg.textContent = 'Query executed successfully';
+                            successMsg.style.marginBottom = '10px';
+                            successMsg.style.color = '#4CAF50';
+                            outputElement.appendChild(successMsg);
+                        }
+                    } catch (stmtError) {
+                        hasResults = true;
+                        const errorMsg = document.createElement('div');
+                        errorMsg.textContent = 'Error: ' + stmtError.message;
+                        errorMsg.style.color = '#ff6b6b';
+                        errorMsg.style.marginBottom = '10px';
+                        outputElement.appendChild(errorMsg);
+                    }
+                }
+
+                if (!hasResults) {
+                    outputElement.textContent = '(No output)';
+                }
+
+                db.close();
+
+            } catch (error) {
+                outputElement.textContent = 'Error: ' + error.message;
+                outputElement.style.color = '#ff6b6b';
+            }
+        }
+
+        function formatSQLResults(result) {
+            const table = document.createElement('table');
+            table.style.borderCollapse = 'collapse';
+            table.style.marginBottom = '10px';
+            table.style.width = '100%';
+            table.style.fontSize = '0.9em';
+
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            result.columns.forEach(col => {
+                const th = document.createElement('th');
+                th.textContent = col;
+                th.style.border = '1px solid #555';
+                th.style.padding = '8px';
+                th.style.backgroundColor = '#2d2d2d';
+                th.style.textAlign = 'left';
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            const tbody = document.createElement('tbody');
+            result.values.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.textContent = cell !== null ? cell : 'NULL';
+                    td.style.border = '1px solid #555';
+                    td.style.padding = '8px';
+                    if (cell === null) {
+                        td.style.fontStyle = 'italic';
+                        td.style.color = '#888';
+                    }
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+
+            return table;
+        }
+
+        const originalUrl = window.location.href;
+        const guestParam = new URL(originalUrl).searchParams.get('guest');
+        
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            progress: true,
+            center: true,
+            backgroundTransition: 'fade',
+            
+            seminar: {
+                server: window.location.protocol + '//' + window.location.hostname + ':4433',
+                venue: 'slidedeckml',
+                room: 'slidedeckml-room',
+                hash: '$2a$05$hhgakVn1DWBfgfSwMihABeYToIBEiQGJ.ONa.HWEiNGNI6mxFCy8S',
+                autoJoin: false
+            },
+            
+            plugins: [ RevealHighlight, RevealChalkboard, RevealCustomControls, RevealSeminar, RevealPoll ],
+            chalkboard: {
+          "theme": "chalkboard",
+          "boardmarkerWidth": 3,
+          "chalkWidth": 7,
+          "chalkEffect": 1,
+          "readOnly": false,
+          "buttons": true,
+          "transition": 800
+}
+        });
+
+        // Auto-render LaTeX when slides are ready
+        Reveal.on('ready', function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        });
+
+        if (guestParam === 'true') {
+            Reveal.on('slidechanged', function() {
+                const currentUrl = new URL(window.location.href);
+                if (!currentUrl.searchParams.has('guest')) {
+                    currentUrl.searchParams.set('guest', 'true');
+                    window.history.replaceState({}, '', currentUrl.toString());
+                }
+            });
+        }
+
+        // Synchronized fragments handler
+        let currentFragmentIndex = -1;
+
+        Reveal.on('fragmentshown', event => {
+            currentFragmentIndex++;
+            updateSyncItems();
+        });
+
+        Reveal.on('fragmenthidden', event => {
+            currentFragmentIndex--;
+            updateSyncItems();
+        });
+
+        Reveal.on('slidechanged', event => {
+            // Detect the current fragment state by checking visible fragments
+            const currentSlide = Reveal.getCurrentSlide();
+            if (currentSlide) {
+                const fragments = currentSlide.querySelectorAll('.fragment');
+                let maxVisibleIndex = -1;
+                
+                fragments.forEach(fragment => {
+                    if (fragment.classList.contains('visible')) {
+                        const fragmentIndex = parseInt(fragment.getAttribute('data-fragment-index') || '0');
+                        maxVisibleIndex = Math.max(maxVisibleIndex, fragmentIndex);
+                    }
+                });
+                
+                currentFragmentIndex = maxVisibleIndex;
+            } else {
+                currentFragmentIndex = -1;
+            }
+            updateSyncItems();
+        });
+
+        function updateSyncItems() {
+            const currentSlide = Reveal.getCurrentSlide();
+            if (!currentSlide) return;
+
+            const syncContainers = currentSlide.querySelectorAll('.sync-container');
+            syncContainers.forEach(container => {
+                const keepMode = container.getAttribute('data-keep') === 'true';
+                const items = container.querySelectorAll('.sync-item');
+                
+                items.forEach(item => {
+                    const syncIndex = parseInt(item.getAttribute('data-sync-index') || '0');
+                    
+                    if (keepMode) {
+                        // In keep mode, show all items up to and including current index
+                        if (syncIndex <= currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    } else {
+                        // Default mode: show only the current item
+                        if (syncIndex === currentFragmentIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Initialize on load
+        Reveal.on('ready', () => {
+            updateSyncItems();
+        });
+
+        
+        // Detect guest mode and apply CSS class early
+        const urlParams = new URLSearchParams(window.location.search);
+        const isGuest = urlParams.get('guest') === 'true';
+        if (isGuest) {
+            document.body.classList.add('guest-mode');
+        }
+
+        // Join seminar room (host or participant)
+        Reveal.on('ready', function() {
+            console.log('Current URL:', window.location.href);
+            console.log('isGuest:', isGuest);
+            console.log('RevealSeminar available:', typeof RevealSeminar !== 'undefined');
+
+            if (isGuest) {
+                console.log('Joining as GUEST/PARTICIPANT without password');
+                RevealSeminar.join_room();
+            } else {
+                console.log('Joining as HOST with password');
+                RevealSeminar.open_or_join_room('123456');
+            }
+        });
+
+        // Generate QR code once and set it for all quiz/poll
+        Reveal.on('ready', function() {
+            let url = window.location.href;
+            if (url.startsWith('file://')) {
+                const hostname = window.location.hostname || 'localhost';
+                const port = 3000;
+                const pathname = window.location.pathname;
+                const pathMatch = pathname.match(/sse-dsl-SlideDeckML(.+)/) || pathname.match(/([^/]+.html)$/);
+                const path = pathMatch ? (pathMatch[1] || '/' + pathMatch[0]) : 'index.html';
+                url = 'http://' + hostname + ':' + port + path;
+            }
+
+            const baseUrl = url.split('?')[0];
+            const guestUrl = baseUrl + '?guest=true';
+
+            const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(guestUrl);
+            document.querySelectorAll('img.qr-code').forEach(function(img) {
+                img.src = qrUrl;
+            });
+        });
+
+        // Store chart instances
+        const chartInstances = {};
+
+        // Toggle results button handler (host only)
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('toggle-results-btn')) {
+                const pollId = e.target.dataset.poll;
+                const pollDiv = document.querySelector('.poll[data-poll="' + pollId + '"]');
+                const resultsDiv = document.querySelector('.results[data-poll="' + pollId + '"]');
+
+                if (resultsDiv.style.display === 'none') {
+                    if (pollDiv) pollDiv.style.display = 'none';
+                    resultsDiv.style.display = 'block';
+                    e.target.textContent = 'Hide Results';
+                    updateChart(pollId);
+                } else {
+                    if (pollDiv) pollDiv.style.display = 'flex';
+                    resultsDiv.style.display = 'none';
+                    e.target.textContent = 'Show Results';
+                }
+            }
+        });
+
+        // Auto-show results when voting (for showResultsOnDemand: false, host only)
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('.poll[data-auto-show-results="true"] button')) {
+                const pollDiv = e.target.closest('.poll');
+                const pollId = pollDiv.dataset.poll;
+                const resultsDiv = document.querySelector('.results[data-poll="' + pollId + '"]');
+
+                // Wait a bit for the vote to be registered
+                setTimeout(function() {
+                    pollDiv.style.display = 'none';
+                    resultsDiv.style.display = 'block';
+                    updateChart(pollId);
+                }, 500);
+            }
+        });
+
+        // Listen for vote updates from the poll plugin (host only)
+        if (!isGuest) {
+            Reveal.on('received', function(event) {
+                if (event.content && event.content.type === 'poll') {
+                    // A vote was received, update all visible charts
+                    document.querySelectorAll('.results').forEach(function(resultsDiv) {
+                        const displayStyle = window.getComputedStyle(resultsDiv).display;
+                        if (displayStyle !== 'none') {
+                            const pollId = resultsDiv.dataset.poll;
+                            setTimeout(function() {
+                                updateChart(pollId);
+                            }, 300); // Small delay to let the poll plugin update the data
+                        }
+                    });
+                }
+            });
+
+            // Refresh charts periodically when visible (host only)
+            setInterval(function() {
+                document.querySelectorAll('.results').forEach(function(resultsDiv) {
+                    const displayStyle = window.getComputedStyle(resultsDiv).display;
+                    if (displayStyle !== 'none') {
+                        const pollId = resultsDiv.dataset.poll;
+                        updateChart(pollId);
+                    }
+                });
+            }, 1000); // Check every seconds for updates
+        }
+
+        // Update or create chart for a poll
+        function updateChart(pollId) {
+            const resultsDiv = document.querySelector('.results[data-poll="' + pollId + '"]');
+            const visualization = resultsDiv.dataset.visualization;
+            const isQuiz = resultsDiv.dataset.isQuiz === 'true';
+            const canvas = document.querySelector('#chart-' + pollId);
+
+            // Get data from results spans
+            const valueSpans = resultsDiv.querySelectorAll('span[data-value]');
+            const labels = [];
+            const data = [];
+            const defaultColors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'];
+            const colors = [];
+
+            valueSpans.forEach(function(span, index) {
+                const parentP = span.parentElement;
+                const label = parentP.textContent.split(':')[0].trim();
+                const value = parseInt(span.textContent) || 0;
+                labels.push(label);
+                data.push(value);
+
+                // Determine color based on quiz/poll and correct/incorrect
+                if (isQuiz) {
+                    const isCorrect = parentP.dataset.correct === 'true';
+                    colors.push(isCorrect ? '#4CAF50' : '#F44336'); // Green for correct, red for incorrect
+                } else {
+                    colors.push(defaultColors[index % defaultColors.length]);
+                }
+            });
+
+            // Destroy existing chart if it exists
+            if (chartInstances[pollId]) {
+                chartInstances[pollId].destroy();
+            }
+
+            // Create new chart
+            const ctx = canvas.getContext('2d');
+            const chartType = visualization === 'pieChart' ? 'pie' : 'bar';
+
+            chartInstances[pollId] = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Votes',
+                        data: data,
+                        backgroundColor: colors,
+                        borderColor: colors.map(c => c + 'CC'),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: chartType === 'pie',
+                            position: 'bottom'
+                        }
+                    },
+                    scales: chartType === 'bar' ? {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    } : {}
+                }
+            });
+        }
+        
+    </script>
+</body>
+</html>

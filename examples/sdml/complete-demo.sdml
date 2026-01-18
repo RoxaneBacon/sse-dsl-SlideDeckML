@@ -24,14 +24,15 @@ Complete Feature Demonstration
 3. **Synchronized Fragments** - Code execution visualization
 4. **LaTeX** - Mathematical equations
 5. **Styling** - Custom CSS and layouts
-6. **Media** - Images and positioning
-7. **Absolute Positioning** - calque, margins
-8. **Chalkboard** - Interactive drawing and annotations
-9. **QR Code** Generate custom QR codes
-10. **Integrated IDE** - Compile and run Python / Javascript / SQL
-11. **Interactive Quiz** - Interactive question and answer
-12. **Fragment Animations** - Incremental reveals and transitions
-13. **Slide Transitions** - Visual effects between slides
+6. **Style Abstractions** - Transforms, columns, classes
+7. **Media** - Images and positioning
+8. **Absolute Positioning** - calque, margins
+9. **Chalkboard** - Interactive drawing and annotations
+10. **QR Code** - Generate custom QR codes
+11. **Integrated IDE** - Compile and run Python / Javascript / SQL
+12. **Interactive Quiz** - Interactive question and answer
+13. **Fragment Animations** - Incremental reveals and transitions
+14. **Slide Transitions** - Visual effects between slides
 
 ===
 ::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
@@ -170,8 +171,8 @@ def process():
 ===
 # Sync: line-by-line (replace)
 
-::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'; align-items: 'start'}
-
+::: {columns: 2; gap: 30; align-items: 'start'}
+ 
 ```javascript [highlight:line-by-line]
 let x = 0;
 x = x + 5;
@@ -194,7 +195,7 @@ Output: 10
 ===
 # Sync: line-by-line (keep)
 
-::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'; align-items: 'start'}
+::: {columns: 2; gap: 30; align-items: 'start'}
 
 ```python [highlight:line-by-line]
 count = 0
@@ -218,7 +219,7 @@ Output: 30
 ===
 # Sync: with images
 
-::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'; align-items: 'start'}
+::: {columns: 2; gap: 30; align-items: 'start'}
 
 ```python [highlight:line-by-line]
 data = load_data()
@@ -239,7 +240,7 @@ result = analyze(cleaned)
 ===
 # Sync: mixed content
 
-::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'; align-items: 'start'}
+::: {columns: 2; gap: 30; align-items: 'start'}
 
 ```java [highlight:line-by-line]
 User user = new User("Alice");
@@ -334,20 +335,6 @@ Left accent border
 :::
 
 ===
-# Grid Layout
-
-::: {display: 'grid'; grid-template-columns: '1fr 1fr 1fr'; gap: '1.5em'}
-### Column 1
-Content A
-
-### Column 2
-Content B
-
-### Column 3
-Content C
-:::
-
-===
 # Styled Multiple Elements
 
 ::: {background: '#2c3e50'; color: '#ecf0f1'; padding: '25px'; border-radius: '12px'}
@@ -362,8 +349,160 @@ This is styled content
 :::
 
 ===
+::: {background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
+## Part 6: Style Abstractions
+:::
+
+===
+# Transform: Rotate
+
+::: {rotate: 15; background: '#3498db'; color: 'white'; padding: '20px'; border-radius: '10px'}
+This box is rotated 15 degrees! 
+:::
+
+::: {rotate: -10; background: '#e74c3c'; color: 'white'; padding: '20px'; border-radius: '10px'}
+This box is rotated -10 degrees!
+:::
+
+===
+# Transform: Scale
+
+::: {scale: 1.3; color: '#2ecc71'; font-weight: 'bold'}
+Scaled up 1.3x
+:::
+
+::: {scale: 0.8; color: '#f39c12'}
+Scaled down 0.8x
+:::
+
+===
+# Transform: Translate
+
+::: {translate-x: 100; translate-y: 50; color: '#9b59b6'; font-size: '24px'}
+Translated 100px right and 50px down
+:::
+
+===
+# Transform: Multiple
+
+::: {rotate: 5; scale: 1.2; translate-x: 50; background: '#34495e'; color: 'white'; padding: '25px'; border-radius: '10px'}
+### All Transforms Combined!
+- Rotated 5°
+- Scaled 1.2x
+- Translated 50px right
+:::
+
+===
+# Transform: Transparency
+
+::: {transparency: 30; background: '#e74c3c'; padding: '30px'; color: 'white'; font-size: '24px'}
+70% opaque (30% transparent)
+:::
+
+::: {transparency: 60; background: '#3498db'; padding: '30px'; color: 'white'; font-size: '24px'}
+40% opaque (60% transparent)
+:::
+
+===
+# Layout: Columns Shorthand
+
+Old way:
+```
+{display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'}
+```
+
+New way: 
+```
+{columns: 2; gap: 30}
+```
+
+Both produce the same result!
+
+===
+# Layout: Two Columns
+
+::::
+:::
+### Left Column
+Simple nested column syntax - no need for columns: 2!
+:::
+
+:::
+### Right Column
+Much cleaner and easier to read!
+:::
+::::
+
+===
+# Nested Columns: Basic
+
+:::: {.columns}
+::: {.column; width: '50%'}
+### Left
+Standard Reveal.js columns
+:::
+
+::: {.column; width: '50%'}
+### Right
+Using `::::` delimiter
+:::
+::::
+
+===
+# Nested Columns: Asymmetric
+
+:::: {.columns}
+::: {.column; width: '30%'}
+### Narrow
+30% width
+:::
+
+::: {.column; width: '70%'}
+### Wide
+70% width - perfect for content + sidebar layouts
+:::
+::::
+
+===
+# Nested Columns: Styled
+
+:::: {.columns; background: '#ecf0f1'; padding: '20px'; border-radius: '10px'}
+::: {.column; width: '50%'; background: '#3498db'; color: 'white'; padding: '15px'; border-radius: '5px'}
+### Blue Column
+Individual styling
+:::
+
+::: {.column; width: '50%'; background: '#e74c3c'; color: 'white'; padding: '15px'; border-radius: '5px'}
+### Red Column
+Different colors
+:::
+::::
+
+===
+# All Abstractions Together!
+
+:::: {.columns; rotate: 2; scale: 1.05; transparency: 10; background: '#34495e'; color: 'white'; padding: '25px'}
+::: {.column; width: '50%'}
+### Multi-Level
+All abstractions combined:
+
+- Transforms (rotate, scale, transparency)
+- Nested columns
+- Custom styling
+:::
+
+::: {.column; width: '50%'}
+### Full Power
+- Transforms ✓
+- Layouts ✓
+- Classes ✓
+- Nested ✓
+:::
+::::
+
+===
 ::: {background: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'; padding: '40px'; border-radius: '15px'; color: '#2c3e50'; text-align: 'center'}
-## Part 6: Media
+## Part 7: Media
 :::
 
 ===
@@ -386,16 +525,20 @@ This is styled content
 ===
 # Image Grid
 
-::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'}
-![Left](https://placehold.co/400x300/3498db/white?text=Left)
-
-### Description
-Image with text in grid layout
+::::
 :::
+![Left](https://placehold.co/400x300/3498db/white?text=Left)
+:::
+
+:::
+### Description
+Image with text in nested column layout
+:::
+::::
 
 ===
 ::: {background: 'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)'; padding: '40px'; border-radius: '15px'; color: '#2c3e50'; text-align: 'center'}
-## Part 7: Absolute Positioning
+## Part 8: Absolute Positioning
 :::
 
 ===
@@ -439,7 +582,7 @@ Layer 3 (z-index: 10)
 
 ===
 ::: {background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; padding: '40px'; border-radius: '15px'; color: 'white'; text-align: 'center'}
-## Part 8: Interactive Chalkboard
+## Part 9: Interactive Chalkboard
 :::
 
 ===

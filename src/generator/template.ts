@@ -213,6 +213,18 @@ export class TemplateGenerator {
         .reveal h3 {
             font-size: 1em; /* Reduced from default 1.5em */
         }
+
+        /* Reveal.js columns layout */
+        .columns {
+            display: flex;
+            gap: 1em;
+            align-items: flex-start;
+        }
+
+        .column {
+            flex: 1;
+        }
+
    ${this.useSyncFragments ? `
         /* Synchronized fragments styling */
         .sync-container {

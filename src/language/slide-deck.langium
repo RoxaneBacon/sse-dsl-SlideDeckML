@@ -23,7 +23,7 @@ Block:
     Quiz | lines+=LineContent+;
 
 LineContent:
-    FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments | Editor | Output | QrCode;
+    FragmentElement | NestedStyledElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments | Editor | Output | QrCode;
 
 CodeBlock:
     content=CODE_BLOCK;
@@ -37,8 +37,11 @@ FragmentItem:
 FragmentElement:
     STYLE_DELIMITER fragment=FRAGMENT_ATTRS elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments | Editor | Output | QrCode)+ STYLE_DELIMITER;
 
+NestedStyledElement:
+    NESTED_STYLE_DELIMITER (style=STYLE_ATTRS)? elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments | Editor | Output | QrCode)+ NESTED_STYLE_DELIMITER;
+
 StyledElement:
-    STYLE_DELIMITER style=STYLE_ATTRS elements+=(FragmentElement | StyledElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments | Editor | Output | QrCode)+ STYLE_DELIMITER;
+    STYLE_DELIMITER (style=STYLE_ATTRS)? elements+=(FragmentElement | Header | UnorderedList | OrderedList | Quote | Media | Paragraph | CodeBlock | SyncFragments | Editor | Output | QrCode)+ STYLE_DELIMITER;
 
 UnorderedList:
     items+=UnorderedListItem+;
@@ -122,6 +125,9 @@ terminal STYLE_ATTRS returns string:
 
 terminal IDE_START: /,,,ide/;
 terminal IDE_DELIMITER: /,,,/;
+
+terminal NESTED_STYLE_DELIMITER: /::::/;
+
 terminal STYLE_DELIMITER: /:::/;
 
 terminal SLIDE_SEPARATOR: /===[\t ]*\r?\n/;

@@ -15,12 +15,13 @@ class SlideDeckMLTokenBuilder extends DefaultTokenBuilder {
         const paragraphToken = tokens.find((t: any) => t.name === 'PARAGRAPH_TEXT');
         if (paragraphToken) {
             // Mark all other tokens as having higher priority than PARAGRAPH_TEXT
-            paragraphToken.LONGER_ALT = tokens.filter((t: any) => 
+            paragraphToken.LONGER_ALT = tokens.filter((t: any) =>
                 t.name === 'HEADER_LEVEL' ||
                 t.name === 'LIST_MARKER' ||
                 t.name === '>' ||
                 t.name === 'MEDIA_LINE' ||
                 t.name === 'CODE_BLOCK' ||
+                t.name === 'NESTED_STYLE_DELIMITER' ||  // Must be before STYLE_DELIMITER
                 t.name === 'STYLE_DELIMITER' ||
                 t.name === 'STYLE_ATTRS' ||
                 t.name === 'TRANSITION_ATTR' ||
