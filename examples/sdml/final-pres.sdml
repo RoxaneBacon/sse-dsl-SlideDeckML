@@ -515,8 +515,45 @@ output : "sql-output"
 :::
 
 ===
+# Feature 10: Live Preview with Monaco Editor
 
-# Feature 10: Interactive quiz
+Real-time editing and preview for instant feedback!
+
+::: {animate: "fade-in"}
+**Start the development server**
+```bash
+slidedeckml dev my-presentation.sdml
+```
+:::
+
+::: {animate: "fade-in"}
+**Features:**
+- Split-pane editor with live preview
+- Monaco Editor (VS Code's editor engine)
+- Instant compilation on every keystroke
+- Automatic slide synchronization
+- Syntax highlighting and IntelliSense
+- Error messages with detailed feedback
+:::
+
+===
+# Live Preview in Action
+
+Watch the magic happen as you type!
+
+![Live Preview Demo](./assets/Exemple_preview.mp4)
+
+::: {animate: "fade-up"; margin-top: '20px'}
+**Perfect for:**
+- Rapid prototyping
+- Learning the DSL syntax
+- Debugging presentation issues
+- Interactive workshops
+:::
+
+===
+
+# Feature 11: Interactive quiz
 
 **Start the quiz server**
 ```typescript
@@ -562,7 +599,7 @@ showResultsOnDemand : true
 :::
 
 ===
-# Feature 11: Professional Templates
+# Feature 12: Professional Templates
 
 Choose from 5 pre-built templates to get started instantly
 
