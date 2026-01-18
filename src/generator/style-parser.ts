@@ -124,6 +124,9 @@ export class StyleParser {
 
             styles.push(...layoutStyles);
 
+            // Check if width is specified (for Reveal.js column fix)
+            const hasWidth = parsedPairs.some(p => p.key === 'width');
+
             // Process remaining pairs (exclude consumed keys from transforms and layouts)
             const processedStyles = parsedPairs
                 .filter(p => !transformConsumed.includes(p.key) && !layoutConsumed.includes(p.key))
@@ -154,6 +157,11 @@ export class StyleParser {
             // If absolute positioning keywords were used, add position: absolute
             if (hasAbsoluteKeywords) {
                 styles.push('position: absolute');
+            }
+
+            // If width is specified, add flex: none to override Reveal.js default flex: 1
+            if (hasWidth) {
+                styles.push('flex: none');
             }
 
             styles.push(...processedStyles);
