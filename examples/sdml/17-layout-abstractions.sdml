@@ -1,0 +1,281 @@
+{
+    author: "SlideDeckML Team"
+    title: "Layout Abstractions"
+}
+===
+# Layout Abstractions
+
+Simplified syntax for grid layouts
+
+===
+# Two Column Layout
+
+::: {columns: 2; gap: 30}
+### Left Column
+This is content on the left side of the slide
+
+### Right Column
+This is content on the right side of the slide
+:::
+
+===
+# Three Column Layout
+
+::: {columns: 3; gap: 20}
+### Column 1
+First column content
+
+### Column 2
+Second column content
+
+### Column 3
+Third column content
+:::
+
+===
+# Four Column Layout
+
+::: {columns: 4; gap: 15}
+### A
+First
+
+### B
+Second
+
+### C
+Third
+
+### D
+Fourth
+:::
+
+===
+# Columns Without Gap
+
+::: {columns: 2}
+### No Gap Left
+Content without spacing
+
+### No Gap Right
+More content
+:::
+
+===
+# Gap Without Explicit Columns
+
+Manual grid with gap shortcut:
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: 25}
+### Manual Left
+Using explicit grid
+
+### Manual Right
+With gap shortcut
+:::
+
+===
+# Two Columns with Images
+
+::: {columns: 2; gap: 30}
+![Image 1](https://placehold.co/400x300/3498db/white?text=Image+1)
+
+![Image 2](https://placehold.co/400x300/e74c3c/white?text=Image+2)
+:::
+
+===
+# Three Columns with Images
+
+::: {columns: 3; gap: 20}
+![Pic 1](https://placehold.co/300x200/3498db/white?text=1)
+
+![Pic 2](https://placehold.co/300x200/2ecc71/white?text=2)
+
+![Pic 3](https://placehold.co/300x200/f39c12/white?text=3)
+:::
+
+===
+# Mixed Content Columns
+
+::: {columns: 2; gap: 35}
+### Text Column
+
+Some explanatory text:
+- Point one
+- Point two
+- Point three
+
+![Visual](https://placehold.co/400x300/9b59b6/white?text=Visual)
+:::
+
+===
+# Styled Columns
+
+::: {columns: 2; gap: 25; background: '#ecf0f1'; padding: '20px'; border-radius: '10px'}
+### Styled Left
+Content in a styled grid container
+
+### Styled Right
+With background and padding
+:::
+
+===
+# Columns with Lists
+
+::: {columns: 3; gap: 20}
+### Features
+- Feature A
+- Feature B
+- Feature C
+
+### Benefits
+- Benefit 1
+- Benefit 2
+- Benefit 3
+
+### Pricing
+- Plan 1
+- Plan 2
+- Plan 3
+:::
+
+===
+# Compare: Old vs New Syntax
+
+**Old way** (explicit grid):
+```
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'}
+:::
+```
+
+**New way** (shorthand):
+```
+::: {columns: 2; gap: 30}
+:::
+```
+
+Both produce identical output!
+
+===
+# Old Syntax Still Works
+
+This uses the old explicit syntax:
+::: {display: 'grid'; grid-template-columns: '1fr 1fr'; gap: '2em'}
+### Traditional Left
+Using explicit CSS grid properties
+
+### Traditional Right
+Backward compatibility maintained
+:::
+
+===
+# Columns + Other Styles
+
+::: {columns: 2; gap: 30; border: '3px solid #3498db'; padding: '25px'; border-radius: '12px'}
+### Box 1
+Columns with borders and padding
+
+### Box 2
+Creates a nice visual container
+:::
+
+===
+# Columns with Code
+
+::: {columns: 2; gap: 35}
+### JavaScript Example
+
+```javascript
+function example() {
+    return "Hello";
+}
+```
+
+### Python Example
+
+```python
+def example():
+    return "Hello"
+```
+:::
+
+===
+# Complex Grid Example
+
+::: {columns: 3; gap: 20; background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; color: 'white'; padding: '30px'; border-radius: '15px'}
+### Feature 1
+Description of the first major feature
+
+### Feature 2
+Description of the second major feature
+
+### Feature 3
+Description of the third major feature
+:::
+
+===
+# Narrow Gap
+
+::: {columns: 4; gap: 10}
+![A](https://placehold.co/200x150/e74c3c/white?text=A)
+![B](https://placehold.co/200x150/3498db/white?text=B)
+![C](https://placehold.co/200x150/2ecc71/white?text=C)
+![D](https://placehold.co/200x150/f39c12/white?text=D)
+:::
+
+===
+# Wide Gap
+
+::: {columns: 2; gap: 50}
+### Wide Left
+More breathing room between columns
+
+### Wide Right
+Creates visual separation
+:::
+
+===
+# Practical Use Case: Comparison
+
+::: {columns: 2; gap: 40}
+### Before
+- Old approach
+- More code
+- Harder to read
+- Error-prone
+
+### After
+- New shorthand
+- Less code
+- Clearer intent
+- Easier maintenance
+:::
+
+===
+# Five Columns
+
+::: {columns: 5; gap: 10; font-size: '18px'}
+### 1
+First
+
+### 2
+Second
+
+### 3
+Third
+
+### 4
+Fourth
+
+### 5
+Fifth
+:::
+
+===
+# Columns + Transforms
+
+::: {columns: 2; gap: 30; rotate: 2; scale: 1.05; background: '#f39c12'; padding: '25px'; border-radius: '10px'}
+### Column A
+Combining layout and transform abstractions!
+
+### Column B
+The best of both worlds
+:::
