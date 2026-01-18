@@ -1,4 +1,5 @@
 import { ImageConverter } from "./image-converter";
+import { VideoAssetManager } from "./video-asset-manager";
 import * as path from 'path';
 
 /**
@@ -9,6 +10,7 @@ import * as path from 'path';
 export class ElementGenerator {
     textProcessor = new TextProcessor();
     private sourceFilePath?: string;
+    private videoAssetManager = new VideoAssetManager();
 
     /**
      * Set the source file path for resolving relative image paths
@@ -16,6 +18,15 @@ export class ElementGenerator {
      */
     public setSourceFilePath(filePath: string): void {
         this.sourceFilePath = filePath;
+        this.videoAssetManager.setSourceFilePath(filePath);
+    }
+
+    /**
+     * Set the output HTML file path for video asset management
+     * @param htmlPath Absolute path to the output HTML file
+     */
+    public setOutputHtmlPath(htmlPath: string): void {
+        this.videoAssetManager.setOutputHtmlPath(htmlPath);
     }
 
     /**
@@ -108,7 +119,9 @@ export class ElementGenerator {
         const isVideo = videoExtensions.some(ext => url.toLowerCase().endsWith(ext));
         
         if (isVideo) {
-            return `            <video controls${style}>\n                <source src="${url}" type="video/${this.getVideoType(url)}">\n                ${alt}\n            </video>`;
+            // Process video path - copy to assets folder if local file
+            const processedVideoUrl = await this.videoAssetManager.processVideoPath(url);
+            return `            <video controls${style}>\n                <source src="${processedVideoUrl}" type="video/${this.getVideoType(url)}">\n                ${alt}\n            </video>`;
         } else {
             // Convert image to base64
             const basePath = this.sourceFilePath ? path.dirname(this.sourceFilePath) : undefined;
