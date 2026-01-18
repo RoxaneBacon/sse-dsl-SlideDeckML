@@ -799,6 +799,10 @@ showResultsOnDemand : false
 
 ## Conseils et bonnes pratiques
 
+### Preview disponible
+
+Une preview de vos slides est disponible afin de vous aider à créer en tout simpliciter, pour cela il suffit de suivre cette documentation [juste ici](./DEV_MODE.md)
+
 ### 1. Organisation
 
 - **Une idée par slide** : ne surchargez pas vos slides
