@@ -421,10 +421,10 @@ Both produce the same result!
 ===
 # Layout: Two Columns
 
-:::: {columns: 2; gap: 30}
+::::
 :::
 ### Left Column
-This uses the new shorthand syntax for grid layouts 
+Simple nested column syntax - no need for columns: 2!
 :::
 
 :::
@@ -474,7 +474,7 @@ Individual styling
 
 ::: {.column; width: '50%'; background: '#e74c3c'; color: 'white'; padding: '15px'; border-radius: '5px'}
 ### Red Column
-Different colorsgvg
+Different colors
 :::
 ::::
 
@@ -482,12 +482,13 @@ Different colorsgvg
 # All Abstractions Together!
 
 :::: {.columns; rotate: 2; scale: 1.05; transparency: 10; background: '#34495e'; color: 'white'; padding: '25px'}
-::: {.column; columns: 2; gap: 15; width: '50%'}
+::: {.column; width: '50%'}
 ### Multi-Level
-Nested columns inside!
+All abstractions combined:
 
-Content 1
-Content 2
+- Transforms (rotate, scale, transparency)
+- Nested columns
+- Custom styling
 :::
 
 ::: {.column; width: '50%'}
@@ -524,12 +525,16 @@ Content 2
 ===
 # Image Grid
 
-::: {columns: 2; gap: 30}
-![Left](https://placehold.co/400x300/3498db/white?text=Left)
-
-### Description
-Image with text in grid layout
+::::
 :::
+![Left](https://placehold.co/400x300/3498db/white?text=Left)
+:::
+
+:::
+### Description
+Image with text in nested column layout
+:::
+::::
 
 ===
 ::: {background: 'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)'; padding: '40px'; border-radius: '15px'; color: '#2c3e50'; text-align: 'center'}
