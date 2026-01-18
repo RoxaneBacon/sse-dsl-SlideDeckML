@@ -29,9 +29,10 @@ export class HtmlGenerator {
      * Generate complete HTML presentation from SlideDeckML AST
      * @param presentation The presentation AST
      * @param sourceFilePath Absolute path to the source .sdml file (for resolving relative image paths)
+     * @param outputHtmlPath Absolute path to the output HTML file (for managing video assets)
      * @returns Complete HTML document string
      */
-    public async generateHTML(presentation: Presentation, sourceFilePath?: string): Promise<string> {
+    public async generateHTML(presentation: Presentation, sourceFilePath?: string, outputHtmlPath?: string): Promise<string> {
         if (presentation.metadata) {
             this.templateGenerator.setMetadata(presentation.metadata);
         }
@@ -40,6 +41,11 @@ export class HtmlGenerator {
         if (sourceFilePath) {
             this.templateGenerator.setSourceFilePath(sourceFilePath);
             this.setSourceFilePath(sourceFilePath);
+        }
+
+        // Set output HTML path for video asset management
+        if (outputHtmlPath) {
+            this.setOutputHtmlPath(outputHtmlPath);
         }
 
         // Detect feature usage in the presentation
@@ -120,5 +126,15 @@ export class HtmlGenerator {
         const lineContentHandler = this.sectionGenerator.getLineContentHandler();
         const elementGenerator = lineContentHandler.getElementGenerator();
         elementGenerator.setSourceFilePath(sourceFilePath);
+    }
+
+    /**
+     * Set the output HTML file path for video asset management
+     * @param outputHtmlPath Absolute path to the output HTML file
+     */
+    private setOutputHtmlPath(outputHtmlPath: string): void {
+        const lineContentHandler = this.sectionGenerator.getLineContentHandler();
+        const elementGenerator = lineContentHandler.getElementGenerator();
+        elementGenerator.setOutputHtmlPath(outputHtmlPath);
     }
 }

@@ -2,7 +2,11 @@
     author: "Roxane, Baptiste L., Baptiste R., Theo V."
     title: "SlideDeckML: A Modern DSL for Beautiful Presentations"
     theme: "white"
+<<<<<<< HEAD
     logo : "./assets/logo.png"
+=======
+    logo : "./final-pres-assets/logo.png"
+>>>>>>> main
     css: ".reveal h1 {
                 color: #0055A4;
                 font-weight: 700;
@@ -541,7 +545,11 @@ slidedeckml dev my-presentation.sdml
 
 Watch the magic happen as you type!
 
+<<<<<<< HEAD
 ![Live Preview Demo](./assets/Exemple_preview.mp4)
+=======
+![Live Preview Demo](./final-pres-assets/Exemple_preview.mp4)
+>>>>>>> main
 
 ::: {animate: "fade-up"; margin-top: '20px'}
 **Perfect for:**
