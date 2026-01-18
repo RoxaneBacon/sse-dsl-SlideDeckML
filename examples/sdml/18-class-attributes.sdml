@@ -112,27 +112,37 @@ Combining class attributes with transform abstractions
 ===
 # Combined: Class + Layout
 
-::: {.grid-container; columns: 2; gap: 30; padding: '20px'}
+:::: {.grid-container; padding: '20px'}
+::: {.column; width: '50%'}
 ### Column 1
 With class attribute
+:::
 
+::: {.column; width: '50%'}
 ### Column 2
 And layout shortcut
 :::
+::::
 
 ===
 # Complex Combination
 
-::: {.featured-box .animated; columns: 3; gap: 20; background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; color: 'white'; padding: '30px'; border-radius: '15px'}
+:::: {.featured-box .animated; background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; color: 'white'; padding: '30px'; border-radius: '15px'}
+::: {.column; width: '33%'}
 ### Feature A
 First feature
+:::
 
+::: {.column; width: '33%'}
 ### Feature B
 Second feature
+:::
 
+::: {.column; width: '34%'}
 ### Feature C
 Third feature
 :::
+::::
 
 ===
 # Reveal.js Auto-animate
@@ -177,17 +187,21 @@ This pattern is useful for limiting content width on large screens
 ===
 # Class + Full Abstractions
 
-::: {.demo-box .featured; rotate: -2; scale: 1.05; transparency: 10; columns: 2; gap: 25; background: '#34495e'; color: 'white'; padding: '30px'; border-radius: '12px'}
+:::: {.demo-box .featured; rotate: -2; scale: 1.05; transparency: 10; background: '#34495e'; color: 'white'; padding: '30px'; border-radius: '12px'}
+::: {.column; width: '50%'}
 ### Left Side
 All features combined:
 - Classes
 - Transforms
 - Layout
 - Transparency
+:::
 
+::: {.column; width: '50%'}
 ### Right Side
 This demonstrates the full power of the abstraction system
 :::
+::::
 
 ===
 # Practical: Alert Box

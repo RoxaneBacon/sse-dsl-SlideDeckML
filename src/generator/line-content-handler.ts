@@ -104,12 +104,28 @@ export class LineContentHandler {
     /**
      * Handle styled element containing multiple child elements
      * @param line The styled element
+     * @param defaultWidth Optional default width to apply if no width is specified
      * @returns Generated HTML string
      */
-    private async handleStyledElement(line: any): Promise<string> {
+    private async handleStyledElement(line: any, defaultWidth?: string): Promise<string> {
         // Use new parseStyleAttributes to support both classes and inline styles
-        const attrs = this.styleParser.parseStyleAttributes(line.style);
+        let attrs = this.styleParser.parseStyleAttributes(line.style);
         const elements = line.elements || [];
+
+        // If defaultWidth is provided and no width in current style, add it
+        if (defaultWidth) {
+            const hasWidth = line.style && /width\s*:/.test(line.style);
+            if (!hasWidth) {
+                // Add default width
+                const widthStyle = `width: ${defaultWidth}`;
+                if (attrs.inlineStyles) {
+                    // Insert width before the closing quote
+                    attrs.inlineStyles = attrs.inlineStyles.replace(/"$/, `; ${widthStyle}"`);
+                } else {
+                    attrs.inlineStyles = ` style="${widthStyle}"`;
+                }
+            }
+        }
 
         // Apply both classes and inline styles to the container div
         let containerHtml = `            <div${attrs.classes}${attrs.inlineStyles}>\n`;
@@ -209,8 +225,20 @@ export class LineContentHandler {
      */
     private async handleNestedStyledElement(line: any): Promise<string> {
         // Use parseStyleAttributes to support both classes and inline styles
-        const attrs = this.styleParser.parseStyleAttributes(line.style);
+        let attrs = this.styleParser.parseStyleAttributes(line.style);
         const elements = line.elements || [];
+
+        // If no display is specified in styles, add display: flex for column layout
+        const hasDisplay = line.style && /display\s*:/.test(line.style);
+        if (!hasDisplay) {
+            const displayStyle = 'display: flex';
+            if (attrs.inlineStyles) {
+                // Insert display before the closing quote
+                attrs.inlineStyles = attrs.inlineStyles.replace(/"$/, `; ${displayStyle}"`);
+            } else {
+                attrs.inlineStyles = ` style="${displayStyle}"`;
+            }
+        }
 
         // Apply both classes and inline styles to the container div
         let containerHtml = `            <div${attrs.classes}${attrs.inlineStyles}>\n`;
@@ -223,7 +251,9 @@ export class LineContentHandler {
             }
             // Handle nested StyledElement (:::)
             else if (isStyledElement(element)) {
-                containerHtml += await this.handleStyledElement(element);
+                // Add default width: 100% to children without explicit width (for flex layout)
+                const defaultWidth = '100%';
+                containerHtml += await this.handleStyledElement(element, defaultWidth);
                 containerHtml += '\n';
             }
             // Handle other element types

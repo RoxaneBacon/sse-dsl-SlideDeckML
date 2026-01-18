@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Alex Rivera">
+    <meta name="title" content="Building Scalable Microservices">
+    <title>Building Scalable Microservices</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    
+    
+    
+    
+    <style>
+        
+
+        .reveal h1 {
+                color: #61dafb;
+                font-weight: 700;
+                font-family: 'Courier New', monospace;
+            }
+            .reveal h2 {
+                color: #98c379;
+                font-weight: 600;
+                font-family: 'Courier New', monospace;
+            }
+            .reveal h3 {
+                color: #c678dd;
+                font-weight: 500;
+            }
+            .header-banner {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 45px;
+                background-color: #1e1e1e;
+                border-bottom: 2px solid #61dafb;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                z-index: 1000;
+            }
+            .header-author {
+                color: #61dafb;
+                font-size: 14px;
+                font-weight: 500;
+                margin-left: 20px;
+                font-family: 'Courier New', monospace;
+            }
+            .header-logo {
+                height: 30px;
+                width: auto;
+                margin-right: 20px;
+            }
+            .reveal {
+                margin-top: 45px;
+            }
+            .reveal code {
+                background: #282c34;
+                color: #61dafb;
+                padding: 3px 8px;
+                border-radius: 4px;
+            }
+            .reveal pre {
+                background: #282c34;
+                border: 1px solid #61dafb;
+                border-radius: 8px;
+            }
+            .reveal strong {
+                color: #e06c75;
+            }
+
+        /* Default Reveal.js overrides */
+        .reveal {
+            font-size: 32px; /* Reduced from default 40px */
+        }
+
+        .reveal .slides {
+            text-align: left; /* Remove default centering */
+        }
+
+        .reveal h1 {
+            font-size: 2em; /* Reduced from default 2.5em */
+        }
+
+        .reveal h2 {
+            font-size: 1.3em; /* Reduced from default 1.8em */
+        }
+
+        .reveal h3 {
+            font-size: 1em; /* Reduced from default 1.5em */
+        }
+
+        /* Reveal.js columns layout */
+        .columns {
+            display: flex;
+            gap: 1em;
+            align-items: flex-start;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+   
+
+    </style>
+</head>
+<body>
+    <header class="header-banner">
+        <div class="header-author">Alex Rivera</div>
+        
+    </header>
+    <div class="reveal">
+        <div class="slides">
+        <section data-slide-index="0">
+            <div style="text-align: center">
+            <h1>Building Scalable Microservices</h1>
+            <h2>Architecture Patterns &amp; Best Practices</h2>
+            <p>Alex Rivera</p>
+            <p>Senior Software Architect</p>
+            <p>TechConf 2025</p>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>Overview</h1>
+            <h2>What We&#39;ll Cover</h2>
+            <ol>
+                <li>Problem Statement</li>
+                <li>Microservices Architecture</li>
+                <li>Implementation Details</li>
+                <li>Code Examples</li>
+                <li>Performance &amp; Scaling</li>
+                <li>Best Practices</li>
+            </ol>
+        </section>
+        <section data-slide-index="1">
+            <h1>Problem Statement</h1>
+            <h2>The Challenge</h2>
+            <p>Moving from monolithic architecture to distributed microservices while maintaining performance and reliability</p>
+            <div style="background: #282c34; padding: 20px; border-radius: 10px; border-left: 4px solid #e06c75">
+            <h3>Key Issues</h3>
+            <ul>
+                <li>Tight coupling in monolithic system</li>
+                <li>Difficulty scaling individual components</li>
+                <li>Long deployment cycles</li>
+                <li>Single point of failure</li>
+            </ul>
+            </div>
+        </section>
+        <section data-slide-index="1">
+            <h1>Architecture</h1>
+            <h2>System Design</h2>
+            <div style="gap: 2empx; display: grid; grid-template-columns: 1fr 1fr">
+            <h3>Core Services</h3>
+            <ul>
+                <li>User Service</li>
+                <li>Order Service</li>
+                <li>Payment Service</li>
+                <li>Notification Service</li>
+            </ul>
+            <h3>Tech Stack</h3>
+            <ul>
+                <li>Node.js / Express</li>
+                <li>PostgreSQL / Redis</li>
+                <li>Docker / Kubernetes</li>
+                <li>RabbitMQ / Kafka</li>
+            </ul>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>Service Communication</h1>
+            <h2>API Gateway Pattern</h2>
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1|2|3|4|5|6|7|8|9|10|11|12">class APIGateway {
+    constructor(services) {
+        this.services = services;
+        this.loadBalancer = new LoadBalancer();
+    }
+    
+    async route(request) {
+        const service = this.services[request.path];
+        const instance = this.loadBalancer.getNext(service);
+        return await instance.handle(request);
+    }
+}
+</code></pre>
+        </section>
+        <section data-slide-index="0">
+            <h1>Service Implementation</h1>
+            <h2>Microservice Structure</h2>
+            <pre><code class="language-typescript" data-trim data-noescape data-line-numbers="1-5|7-9|11-13|15-20">interface Service {
+    name: string;
+    port: number;
+    health: () =&gt; Promise&lt;boolean&gt;;
+}
+
+class OrderService implements Service {
+    name = &#39;order-service&#39;;
+    port = 3001;
+    
+    async health() {
+        return this.database.isConnected();
+    }
+    
+    async createOrder(data: OrderData) {
+        const order = await this.repository.create(data);
+        await this.eventBus.publish(&#39;order.created&#39;, order);
+        return order;
+    }
+}
+</code></pre>
+        </section>
+        <section data-slide-index="3">
+            <h1>Event-Driven Architecture</h1>
+            <h2>Asynchronous Communication</h2>
+            <div style="gap: 2empx; display: grid; grid-template-columns: 1fr 1fr">
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1|2|3|4|5|6">// Publisher
+eventBus.publish(&#39;order.created&#39;, {
+    orderId: &#39;12345&#39;,
+    userId: &#39;user-001&#39;,
+    amount: 99.99
+});
+</code></pre>
+            <pre><code class="language-javascript" data-trim data-noescape data-line-numbers="1|2|3|4|5|6|7">// Subscriber
+eventBus.subscribe(&#39;order.created&#39;, 
+    async (event) =&gt; {
+        await sendConfirmationEmail(event);
+        await updateInventory(event);
+    }
+);
+</code></pre>
+            </div>
+        </section>
+        <section data-slide-index="3">
+            <h1>Scaling Strategy</h1>
+            <h2>Horizontal Scaling</h2>
+            <div style="gap: 2empx; display: grid; grid-template-columns: 1fr 1fr">
+            <h3>Load Balancing</h3>
+            <ul>
+                <li>Round-robin distribution</li>
+                <li>Health checks</li>
+                <li>Auto-scaling based on CPU/memory</li>
+            </ul>
+            <h3>Containerization</h3>
+            <ul>
+                <li>Docker containers</li>
+                <li>Kubernetes orchestration</li>
+                <li>Rolling deployments</li>
+            </ul>
+            </div>
+        </section>
+        <section data-slide-index="0">
+            <h1>Monitoring &amp; Observability</h1>
+            <h2>Essential Tools</h2>
+            <pre><code class="language-yaml" data-trim data-noescape># Prometheus + Grafana
+metrics:
+  - request_count
+  - response_time
+  - error_rate
+  - active_connections
+
+alerts:
+  - high_error_rate: &gt; 5%
+  - slow_response: &gt; 500ms
+  - service_down: health_check_failed
+</code></pre>
+        </section>
+        <section data-slide-index="0">
+            <h1>Best Practices</h1>
+            <h2>Key Recommendations</h2>
+            <ol>
+                <li><strong>Single Responsibility</strong> - Each service does one thing well</li>
+                <li><strong>API Versioning</strong> - Maintain backward compatibility</li>
+                <li><strong>Circuit Breakers</strong> - Prevent cascade failures</li>
+                <li><strong>Distributed Tracing</strong> - Track requests across services</li>
+                <li><strong>Database per Service</strong> - Avoid shared databases</li>
+                <li><strong>Automated Testing</strong> - Unit, integration, and E2E tests</li>
+            </ol>
+        </section>
+        <section data-slide-index="0">
+            <h1>Results</h1>
+            <h2>Performance Improvements</h2>
+            <ul>
+                <li><strong>Deployment Time</strong>: 2 hours → 15 minutes</li>
+                <li><strong>Scaling</strong>: Manual → Automatic (30 seconds)</li>
+                <li><strong>Availability</strong>: 99.5% → 99.95%</li>
+                <li><strong>Development Speed</strong>: 3x faster feature delivery</li>
+            </ul>
+        </section>
+        <section data-slide-index="6">
+            <div style="text-align: center">
+            <h1>Questions?</h1>
+            <h2>Let&#39;s Discuss</h2>
+            <p>GitHub: github.com/alexrivera/microservices-demo</p>
+            <p>alex.rivera@techcorp.com</p>
+            </div>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    
+    
+    
+    
+    
+    <script>
+        
+        
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            progress: true,
+            center: true,
+            backgroundTransition: 'fade',
+            
+            plugins: [ RevealHighlight ]
+        });
+
+        
+    </script>
+</body>
+</html>

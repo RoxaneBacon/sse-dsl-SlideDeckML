@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="SlideDeckML Team">
+    <meta name="title" content="Slide Transitions Demo">
+    <title>Slide Transitions Demo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    
+    
+    
+    
+    <style>
+        
+
+        
+
+        /* Default Reveal.js overrides */
+        .reveal {
+            font-size: 32px; /* Reduced from default 40px */
+        }
+
+        .reveal .slides {
+            text-align: left; /* Remove default centering */
+        }
+
+        .reveal h1 {
+            font-size: 2em; /* Reduced from default 2.5em */
+        }
+
+        .reveal h2 {
+            font-size: 1.3em; /* Reduced from default 1.8em */
+        }
+
+        .reveal h3 {
+            font-size: 1em; /* Reduced from default 1.5em */
+        }
+
+        /* Reveal.js columns layout */
+        .columns {
+            display: flex;
+            gap: 1em;
+            align-items: flex-start;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+   
+
+    </style>
+</head>
+<body>
+    
+    <div class="reveal">
+        <div class="slides">
+        <section data-slide-index="0">
+            <h1>Slide Transitions</h1>
+            <p>This presentation demonstrates <strong>different slide transitions</strong>.</p>
+            <p>The global transition is set to <strong>&quot;slide&quot;</strong> in the metadata.</p>
+        </section>
+        <section data-slide-index="0" data-transition="fade">
+            <h1>Fade Transition</h1>
+            <p>This slide uses the <strong>fade</strong> transition.</p>
+            <p>Content smoothly fades in and out.</p>
+        </section>
+        <section data-slide-index="0" data-transition="convex">
+            <h1>Convex Transition</h1>
+            <p>This slide uses the <strong>convex</strong> transition.</p>
+            <p>Slides at a convex angle.</p>
+        </section>
+        <section data-slide-index="0" data-transition="concave">
+            <h1>Concave Transition</h1>
+            <p>This slide uses the <strong>concave</strong> transition.</p>
+            <p>Slides at a concave angle.</p>
+        </section>
+        <section data-slide-index="0" data-transition="zoom">
+            <h1>Zoom Transition</h1>
+            <p>This slide uses the <strong>zoom</strong> transition.</p>
+            <p>The incoming slide grows from the center!</p>
+        </section>
+        <section data-slide-index="0" data-transition="none">
+            <h1>No Transition</h1>
+            <p>This slide uses <strong>no transition</strong>.</p>
+            <p>It appears instantly.</p>
+        </section>
+        <section data-slide-index="0" data-transition="slide-in fade-out">
+            <h1>Mixed Transitions (In)</h1>
+            <p>This slide uses <strong>slide-in fade-out</strong>.</p>
+            <p>It slides in but fades out when leaving.</p>
+        </section>
+        <section data-slide-index="0" data-transition="fade-in slide-out">
+            <h1>Mixed Transitions (Out)</h1>
+            <p>This slide uses <strong>fade-in slide-out</strong>.</p>
+            <p>It fades in but slides out when leaving.</p>
+        </section>
+        <section data-slide-index="0" data-transition="fade-in zoom-out">
+            <h1>Creative Combinations</h1>
+            <p>This slide uses <strong>fade-in zoom-out</strong>.</p>
+            <p>Fades in, then zooms out!</p>
+        </section>
+        <section data-slide-index="0">
+            <h1>Back to Default</h1>
+            <p>This slide returns to the <strong>default &quot;slide&quot;</strong> transition set in metadata.</p>
+            <p>No transition attribute specified = uses global setting.</p>
+        </section>
+        <section data-slide-index="10">
+            <div style="text-align: center; color: #3498db; font-size: 64px">
+            <h1>Available Transitions</h1>
+            </div>
+            <div style="text-align: center; font-size: 20px">
+            <p><strong>Basic:</strong> none, fade, slide, convex, concave, zoom</p>
+            <p><strong>Mixed:</strong> slide-in fade-out, fade-in slide-out, etc.</p>
+            </div>
+        </section>
+        <section data-slide-index="10">
+            <div style="text-align: center; color: #3498db">
+            <h1>Thank You!</h1>
+            </div>
+            <div style="text-align: center; font-size: 18px; color: #7f8c8d">
+            <p>Navigate through slides to see different transitions</p>
+            </div>
+        </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    
+    
+    
+    
+    
+    <script>
+        
+        
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            progress: true,
+            center: true,
+            backgroundTransition: 'fade',
+            
+            plugins: [ RevealHighlight ]
+        });
+
+        
+    </script>
+</body>
+</html>
