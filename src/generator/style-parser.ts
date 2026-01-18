@@ -19,8 +19,8 @@ export class StyleParser {
             const styles: string[] = [];
             let hasAbsoluteKeywords = false;
             
-            // Split by semicolon or comma
-            const pairs = content.split(/[;,]/).map(pair => pair.trim()).filter(pair => pair.length > 0);
+            // Split by semicolon or comma, but not inside parentheses
+            const pairs = this.smartSplit(content).map(pair => pair.trim()).filter(pair => pair.length > 0);
             
             const processedStyles = pairs.map(pair => {
                 const colonIndex = pair.indexOf(':');
@@ -56,5 +56,62 @@ export class StyleParser {
         } catch (e) {
             return '';
         }
+    }
+
+    /**
+     * Split CSS properties by semicolon or comma, but not inside parentheses
+     * This handles cases like linear-gradient(135deg, #667eea 0%, #764ba2 100%)
+     * and box-shadow with multiple shadows: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06)
+     * 
+     * Strategy: Split only on semicolons, or on commas that are followed by a property name (word followed by colon)
+     * @param content CSS properties string
+     * @returns Array of property pairs
+     */
+    private smartSplit(content: string): string[] {
+        const result: string[] = [];
+        let current = '';
+        let depth = 0;
+        
+        for (let i = 0; i < content.length; i++) {
+            const char = content[i];
+            
+            if (char === '(') {
+                depth++;
+                current += char;
+            } else if (char === ')') {
+                depth--;
+                current += char;
+            } else if (char === ';' && depth === 0) {
+                // Always split on semicolon if we're not inside parentheses
+                if (current.trim()) {
+                    result.push(current.trim());
+                }
+                current = '';
+            } else if (char === ',' && depth === 0) {
+                // Only split on comma if the next part looks like a property (has a colon for key:value)
+                // Look ahead to see if this comma separates properties or is part of a value
+                const remaining = content.substring(i + 1).trim();
+                // Check if remaining starts with word characters followed by colon
+                if (/^[a-zA-Z-]+\s*:/.test(remaining)) {
+                    // This comma separates properties
+                    if (current.trim()) {
+                        result.push(current.trim());
+                    }
+                    current = '';
+                } else {
+                    // This comma is part of the value (like in box-shadow or transform)
+                    current += char;
+                }
+            } else {
+                current += char;
+            }
+        }
+        
+        // Add the last property
+        if (current.trim()) {
+            result.push(current.trim());
+        }
+        
+        return result;
     }
 }

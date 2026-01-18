@@ -1,0 +1,63 @@
+{ 
+    author: "Workshop Instructor" 
+    title: "Performance Workshop"
+}
+
+===
+
+# Welcome to the Workshop
+
+Today we'll explore software performance optimization
+
+===
+
+# How to setup the quiz
+
+**Start the quiz server**
+```typescript
+npm run start
+```
+
+**Expose your server to participants**
+```typescript
+npx http-server -p 3000 -a 0.0.0.0
+```
+
+===
+
+:::quiz
+"Software Performance Workshop Quiz"
+showJoinQrCode : true
+
+question : "What is the average time complexity of QuickSort?"
+choice "n" : "O(n)"
+choice "nlogn" : "O(n log n)"
+choice "n2" : "O(n²)"
+choice "logn" : "O(log n)"
+correct : "nlogn"
+showResultsOnDemand : true
+visualization : barChart
+
+question : "Which sorting algorithm is most efficient for nearly sorted data?"
+choice "bubble" : "Bubble Sort"
+choice "insertion" : "Insertion Sort"
+choice "merge" : "Merge Sort"
+choice "quick" : "Quick Sort"
+correct : "insertion"
+showResultsOnDemand : false
+visualization : pieChart
+
+question : "What is the space complexity of Merge Sort?"
+choice "o1" : "O(1)"
+choice "ologn" : "O(log n)"
+choice "on" : "O(n)"
+choice "on2" : "O(n²)"
+correct : "on"
+showResultsOnDemand : true
+:::
+
+===
+
+# Thank You!
+
+Your feedback helps us improve our workshops

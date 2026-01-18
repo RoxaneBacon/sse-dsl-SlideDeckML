@@ -10,6 +10,7 @@ import {createSlideDeckMlServices} from "../language/slide-deck-module";
 import {NodeFileSystem} from "langium/node";
 import {URI} from "vscode-uri";
 import { DevServer } from '../dev-server/server';
+import { InteractiveElementDetector } from '../generator/interactive-element-detector';
 
 const program = new Command();
 
@@ -118,6 +119,11 @@ async function compile(inputFile: string, outputFile: string): Promise<void> {
 
     // Extract AST
     const presentation = document.parseResult.value as Presentation;
+
+    // Check for interactive elements and inform user
+    if (InteractiveElementDetector.hasInteractiveElements(presentation)) {
+        console.log('Quiz/Poll detected - remember to start the server with: npm run quiz-server and to expose your port for participants to join.');
+    }
 
     // Generate HTML
     const htmlGenerator = new HtmlGenerator();
