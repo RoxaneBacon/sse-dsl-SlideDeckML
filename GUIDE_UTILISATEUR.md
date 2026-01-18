@@ -1,0 +1,867 @@
+# Guide Utilisateur SlideDeckML
+
+## Table des matières
+
+1. [Introduction](#introduction)
+2. [Structure de base](#structure-de-base)
+3. [Métadonnées](#métadonnées)
+4. [Séparateurs](#séparateurs)
+5. [Titres et En-têtes](#titres-et-en-têtes)
+6. [Formatage de texte](#formatage-de-texte)
+7. [Listes](#listes)
+8. [Citations](#citations)
+9. [Médias (Images et Vidéos)](#médias-images-et-vidéos)
+9. [QR Code](#qr-code)
+10. [Blocs de code](#blocs-de-code)
+11. [Styles personnalisés](#styles-personnalisés)
+12. [Templates](#templates)
+13. [Fragments synchronisés](#fragments-synchronisés)
+14. [IDE Intégré](#ide-intégré)
+15. [Quiz Interactif](#quiz-interactif)
+16. [Exemples complets](#exemples-complets)
+
+---
+
+## Introduction
+
+**SlideDeckML** est un langage dédié (DSL) pour créer des présentations de manière simple et intuitive. Ce guide vous explique tous les symboles et leur utilisation avec des exemples pratiques.
+
+---
+
+## Structure de base
+
+Une présentation SlideDeckML se compose de deux parties :
+
+```
+{métadonnées}
+===
+{slides}
+```
+
+### Exemple minimal
+
+```sdml
+{
+    author: "Votre Nom"
+    title: "Ma Présentation"
+}
+===
+# Première slide
+
+Contenu de votre slide
+```
+
+---
+
+## Métadonnées
+
+### Symbole : `{ }`
+
+Les métadonnées définissent les informations générales de votre présentation. Elles doivent être placées **au tout début** du fichier.
+
+### Propriétés disponibles
+
+| Propriété                      | Obligatoire | Description                                                 |
+| ------------------------------ | ----------- | ----------------------------------------------------------- |
+| `author`                       | Oui         | Nom de l'auteur                                             |
+| `title`                        | Oui         | Titre de la présentation                                    |
+| `theme`                        | Non         | Thème visuel (ex: "dark", "light")                          |
+| `logo`                         | Non         | URL du logo                                                 |
+| `css`                          | Non         | URL d'une feuille de style personnalisée                    |
+| `transition`                   | Non         | Transition souhaitée au travers des slides                  |
+| `chalkboard`                   | Non         | Activer le tableau blanc (ex: "true", "false")              |
+| `chalkboard-theme`             | Non         | Thème du tableau blanc (ex: "chalkboard", "whiteboard")     |
+| `chalkboard-boardmarker-width` | Non         | Largeur du marqueur pour tableau blanc                      |
+| `chalkboard-chalk-width`       | Non         | Largeur de la craie                                         |
+| `chalkboard-chalk-effect`      | Non         | Effet de la craie (ex: "0.5", "1.0")                        |
+| `chalkboard-src`               | Non         | Source de données du tableau blanc                          |
+| `chalkboard-readonly`          | Non         | Mode lecture seule (ex: "true", "false")                    |
+| `chalkboard-buttons`           | Non         | Afficher les boutons du tableau blanc (ex: "true", "false") |
+| `chalkboard-transition`        | Non         | Durée de transition du tableau blanc                        |
+
+### Exemple
+
+```sdml
+{
+    author: "Baptiste Pellerin"
+    title: "SlideDeckML - Guide Complet"
+    theme: "dark"
+    logo: "https://example.com/logo.png"
+    css: "h1{ color: blue}"
+}
+```
+
+---
+
+## Séparateur de slides
+
+Ce symbole sépare les différentes slides de votre présentation. Chaque slide est indépendante.
+
+```sdml
+# Slide 1
+
+Contenu de la première slide
+
+===
+
+# Slide 2
+
+Contenu de la deuxième slide
+```
+
+---
+
+## Titres et En-têtes
+
+### Symboles : `#`, `##`, `###`
+
+Les titres utilisent le symbole `#` (similaire à Markdown).
+
+| Symbole | Niveau | Utilisation                 |
+| ------- | ------ | --------------------------- |
+| `#`     | H1     | Titre principal de la slide |
+| `##`    | H2     | Titre de section            |
+| `###`   | H3     | Titre de sous-section       |
+
+### Exemple
+
+```sdml
+# Titre Principal (H1)
+
+## Sous-titre (H2)
+
+### Section (H3)
+
+Paragraphe normal
+```
+
+**Rendu :**
+
+<h1 style="font-size: 2em;">Titre Principal (H1)</h1>
+<h2 style="font-size: 1.5em;">Sous-titre (H2)</h2>
+<h3 style="font-size: 1.2em;">Section (H3)</h3>
+
+Paragraphe normal
+
+---
+
+## Formatage de texte
+
+### Symboles de formatage inline
+
+| Symbole     | Effet          | Exemple         | Résultat         |
+| ----------- | -------------- | --------------- | ---------------- |
+| `**texte**` | Gras           | `**Important**` | **Important**    |
+| `*texte*`   | Italique       | `*Emphase*`     | _Emphase_        |
+| `_texte_`   | Italique (alt) | `_Souligner_`   | _Souligner_      |
+| `__texte__` | Souligné       | `__Attention__` | <u>Attention</u> |
+
+### Exemple de combinaisons
+
+```sdml
+# Formatage de texte
+
+Vous pouvez **combiner *plusieurs* __formats__** ensemble !
+
+**Texte en gras** pour l'emphase forte
+
+*Texte en italique* pour l'emphase subtile
+
+__Texte souligné__ pour marquer l'importance
+
+Texte **gras et _italique_** en même temps
+```
+
+---
+
+## Listes
+
+### Listes non ordonnées
+
+Symboles : `-`, `*`, `+`
+
+Tous ces symboles créent des puces. Ils sont interchangeables.
+
+```sdml
+- Premier élément
+- Deuxième élément
+- Troisième élément
+
+* Alternative avec astérisque
+* Deuxième puce
+
++ Alternative avec plus
++ Deuxième puce
+```
+
+**Rendu :**
+
+- Premier élément
+- Deuxième élément
+- Troisième élément
+
+### Listes ordonnées
+
+Symbole : `1.`, `2.`, etc.
+
+```sdml
+1. Première étape
+2. Deuxième étape
+3. Troisième étape
+```
+
+**Rendu :**
+
+1. Première étape
+2. Deuxième étape
+3. Troisième étape
+
+### Exemple complet
+
+```sdml
+# Guide d'installation
+
+## Prérequis
+
+- Node.js version 18+
+- npm ou yarn
+- Un éditeur de code
+
+## Étapes d'installation
+
+1. Cloner le repository
+2. Installer les dépendances
+3. Lancer le projet
+```
+
+---
+
+## Citations
+
+### Symbole : `>`
+
+Utilisé pour mettre en évidence des citations ou des remarques importantes.
+
+```sdml
+> Ceci est une citation importante
+> qui peut s'étendre sur plusieurs lignes
+
+> "La simplicité est la sophistication suprême" - Leonardo da Vinci
+```
+
+**Rendu :**
+
+> Ceci est une citation importante
+
+---
+
+## Médias (Images et Vidéos)
+
+### Symbole : `![description](url)`
+
+Syntaxe identique à Markdown pour insérer des images et vidéos.
+
+### Images
+
+```sdml
+![Logo SlideDeckML](https://via.placeholder.com/600x400/4CAF50/FFFFFF?text=Logo)
+
+![Photo avec description](https://example.com/image.png)
+```
+
+### Vidéos
+
+```sdml
+![Vidéo de démonstration](https://www.w3schools.com/html/mov_bbb.mp4)
+```
+
+### Exemple complet
+
+```sdml
+# Galerie Multimédia
+
+## Notre Logo
+
+![Logo de l'entreprise](https://via.placeholder.com/400x200)
+
+## Vidéo de présentation
+
+![Présentation du produit](https://example.com/video.mp4)
+```
+
+---
+
+## QR Code
+
+### Symbole : `![QR] "url"`
+
+### Exemple complet
+
+```sdml
+![QR] "https://github.com/RoxaneBacon/sse-dsl-SlideDeckML"
+```
+
+---
+
+## Blocs de code
+
+### Symbole : ` ``` `
+
+Les blocs de code permettent d'afficher du code avec coloration syntaxique.
+
+### Syntaxe de base
+
+````sdml
+```javascript
+function hello() {
+    console.log("Hello World!");
+}
+```
+````
+
+### Options avancées
+
+#### 1. Langage de programmation
+
+````sdml
+```python
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n-1)
+```
+````
+
+#### 2. Numéros de ligne personnalisés
+
+````sdml
+```typescript [lines:'1,2-3']
+interface User {
+    id: number;
+    name: string;
+}
+```
+````
+
+#### 3. Numérotation à partir d'un nombre
+
+````sdml
+```java [start:10]
+public class Example {
+    private int value;
+}
+```
+````
+
+#### 4. Modes de surlignage
+
+| Mode           | Description                                   | Syntaxe                    |
+| -------------- | --------------------------------------------- | -------------------------- |
+| `line-by-line` | Surligne ligne par ligne                      | `[highlight:line-by-line]` |
+| `block`        | Surligne par blocs (séparés par lignes vides) | `[highlight:block]`        |
+| `function`     | Surligne par fonction                         | `[highlight:function]`     |
+| `class`        | Surligne par classe                           | `[highlight:class]`        |
+| `all`          | Tout surligner                                | `[highlight:all]`          |
+| `none`         | Aucun surlignage                              | `[highlight:none]`         |
+
+### Exemples
+
+````sdml
+# Démo de Code
+
+## JavaScript avec surlignage ligne par ligne
+
+```javascript [highlight:line-by-line]
+function greet(name) {
+    console.log('Hello ' + name);
+    return true;
+}
+```
+
+## Python avec numéros de ligne
+
+```python [lines:'1,2-4']
+def calculate(a, b):
+    result = a + b
+    print(f"Result: {result}")
+    return result
+```
+
+## TypeScript avec début personnalisé
+
+```typescript [start:'42']
+interface Config {
+    apiUrl: string;
+    timeout: number;
+}
+```
+
+## Code sans coloration
+
+```
+Texte brut sans
+coloration syntaxique
+```
+````
+
+---
+
+## Styles personnalisés
+
+### Symbole : `:::`
+
+Les délimiteurs `:::` permettent d'appliquer des styles CSS personnalisés à n'importe quel contenu.
+
+### Syntaxe
+
+```sdml
+::: {propriété: 'valeur', propriété: 'valeur'}
+Contenu stylisé
+:::
+```
+
+### Propriétés CSS courantes
+
+| Propriété          | Exemple                | Description          |
+| ------------------ | ---------------------- | -------------------- |
+| `color`            | `'#FF0000'` ou `'red'` | Couleur du texte     |
+| `background-color` | `'#EFEFEF'`            | Couleur de fond      |
+| `font-size`        | `'24px'`               | Taille de police     |
+| `font-weight`      | `'bold'`               | Épaisseur de police  |
+| `text-align`       | `'center'`             | Alignement du texte  |
+| `padding`          | `'20px'`               | Espacement intérieur |
+| `margin`           | `'10px'`               | Espacement extérieur |
+| `border`           | `'2px solid blue'`     | Bordure              |
+| `border-radius`    | `'10px'`               | Coins arrondis       |
+| `width`            | `'50%'`                | Largeur              |
+
+### Exemples
+
+#### Texte centré et coloré
+
+```sdml
+::: {color: '#2c3e50', text-align: 'center'}
+# Titre centré en bleu foncé
+:::
+```
+
+#### Encadré avec fond
+
+```sdml
+::: {background-color: '#f39c12', padding: '15px', border-radius: '8px'}
+Ceci est un paragraphe important avec un fond orange et des coins arrondis
+:::
+```
+
+#### Liste stylisée
+
+```sdml
+::: {color: '#e74c3c', font-size: '20px'}
+- Élément rouge
+- Deuxième élément
+- Troisième élément
+:::
+```
+
+#### Image stylisée
+
+```sdml
+::: {width: '50%', border: '3px solid #9b59b6', border-radius: '10px'}
+![Image avec bordure](https://via.placeholder.com/600x400)
+:::
+```
+
+#### Citation avec style personnalisé
+
+````
+```
+```sdml
+::: {background: '#ecf0f1', border-left: '4px solid #3498db', padding: '15px', font-style: 'italic'}
+> Citation importante avec bordure bleue à gauche
+:::
+```sdml
+```
+===
+::: {text-align: 'center', color: '#8e44ad', border-bottom: '3px solid #8e44ad', padding-bottom: '10px'}
+## Titre avec bordure inférieure
+:::
+
+::: {background-color: '#f8f9fa', padding: '20px', border-radius: '10px', margin: '20px 0'}
+Paragraphe dans un encadré gris clair avec coins arrondis
+:::
+
+::: {display: 'grid', grid-template-columns: '1fr 1fr', gap: '20px'}
+![Image 1](https://via.placeholder.com/300)
+![Image 2](https://via.placeholder.com/300)
+:::
+````
+
+---
+
+## Templates de présentation
+
+SlideDeckML propose des **templates de présentation** prêts à l'emploi dans le dossier `examples/templates/`. Ce sont des fichiers `.sdml` complets que vous pouvez copier et personnaliser pour différents types de présentations.
+
+### Templates disponibles
+
+| Template       | Usage                          | Caractéristiques                           |
+| -------------- | ------------------------------ | ------------------------------------------ |
+| **Academic**   | Cours universitaires, thèses   | Header avec gradient, structure académique |
+| **Business**   | Présentations d'entreprise     | Style corporate, métriques financières     |
+| **Technical**  | Talks techniques, code reviews | Thème sombre, optimisé pour le code        |
+| **Conference** | Conférences professionnelles   | Design moderne et épuré                    |
+| **Minimal**    | Présentations simples          | Style minimaliste et léger                 |
+
+### Comment utiliser un template
+
+1. Copiez le fichier template désiré depuis `examples/templates/`
+2. Modifiez les métadonnées (author, title, etc.)
+3. Remplacez le contenu des slides par votre contenu
+4. Compilez le fichier
+
+### Exemple - Utilisation du template Academic
+
+```sdml
+{
+    author: "Dr. Marie Dupont"
+    title: "Introduction aux Algorithmes"
+    theme: "white"
+    css: "... (styles du template academic) ..."
+}
+===
+# Introduction
+
+Bienvenue dans ce cours sur les algorithmes
+
+===
+# Chapitre 1
+
+Les structures de données fondamentales
+```
+
+### Éléments récurrents avec styles absolus
+
+Si vous voulez ajouter un élément qui apparaît sur chaque slide (logo, pied de page), utilisez le positionnement absolu avec CSS :
+
+```sdml
+===
+::: {position: 'fixed'; bottom: '20px'; right: '20px'; font-size: '14px'; color: '#666'}
+© 2026 - Mon Entreprise
+:::
+
+# Ma première slide
+
+Contenu...
+
+===
+::: {position: 'fixed'; bottom: '20px'; right: '20px'; font-size: '14px'; color: '#666'}
+© 2026 - Mon Entreprise
+:::
+
+# Ma deuxième slide
+
+Contenu...
+```
+
+---
+
+## Fragments synchronisés
+
+### Symbole : `:::[sync-fragments]`
+
+Les fragments synchronisés permettent de faire évoluer du contenu en parallèle avec un bloc de code (par exemple, montrer l'évolution d'une variable).
+
+### Deux modes disponibles
+
+| Mode   | Syntaxe                    | Comportement                        |
+| ------ | -------------------------- | ----------------------------------- |
+| Normal | `:::[sync-fragments]`      | Remplace le fragment à chaque étape |
+| Keep   | `:::[sync-fragments keep]` | Accumule les fragments              |
+
+### Symbole de séparation : `[---]`
+
+Sépare les différents fragments.
+
+### Exemple - Mode Normal (Remplacement)
+
+````
+```sdml
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em;}
+```
+```javascript [highlight:line-by-line]
+let x = 0;
+x = x + 5;
+x = x * 2;
+console.log(x);
+```
+
+:::[sync-fragments]
+x = 0
+[---]
+x = 5
+[---]
+x = 10
+[---]
+Output: 10
+:::[sync-fragments]
+
+:::
+```
+````
+
+**Comportement :**
+
+- Étape 1 : affiche "x = 0"
+- Étape 2 : **remplace** par "x = 5"
+- Étape 3 : **remplace** par "x = 10"
+- Étape 4 : **remplace** par "Output: 10"
+
+### Exemple - Mode Keep (Accumulation)
+
+````
+```sdml
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em;}
+
+```javascript [highlight:line-by-line]
+let x = 0;
+x = x + 5;
+x = x * 2;
+console.log(x);
+```
+
+:::[sync-fragments keep]
+x = 0
+[---]
+x = 5
+[---]
+x = 10
+[---]
+Output: 10
+:::[sync-fragments]
+
+:::
+```
+````
+
+**Comportement :**
+
+- Étape 1 : affiche "x = 0"
+- Étape 2 : affiche "x = 0" **ET** "x = 5"
+- Étape 3 : affiche "x = 0", "x = 5" **ET** "x = 10"
+- Étape 4 : affiche tout + "Output: 10"
+
+### Exemple avec images
+
+````
+```sdml
+::: {display: grid; grid-template-columns: 1fr 1fr; gap: 2em;}
+
+```python [highlight:line-by-line]
+img = load_image()
+img = apply_filter(img)
+img = resize(img)
+save(img)
+```
+
+:::[sync-fragments]
+![Image originale](img1.jpg)
+[---]
+![Avec filtre](img2.jpg)
+[---]
+![Redimensionnée](img3.jpg)
+[---]
+![Sauvegardée](img4.jpg)
+:::[sync-fragments]
+
+:::
+```
+````
+
+---
+
+## IDE Intégré
+
+### Symbole : `,,,ide`
+
+L'IDE intégré permet d'inclure un éditeur de code exécutable directement dans vos slides.
+
+### Syntaxe
+
+````
+```sdml
+,,,ide python
+```
+code placeholder (optionnel)
+```
+output : "python-output",,,
+```
+
+output : "python-output"
+````
+
+### Langages supportés
+
+Python, JavaScript et SQL
+
+### Exemple complet avec positionnement
+
+Vous pouvez combiner l'éditeur monaco et la fenêtre d'output avec les styles personnalisés pour les placer précisément sur la slide :
+
+````
+```sdml
+::: {calque: 1, horizontal-margin: 0, vertical-margin: 50}
+,,,ide python
+```
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.plot(x, y, 'b-', linewidth=2)
+plt.title('Sinus Function')
+plt.show()
+```
+output : "python-output",,,
+:::
+
+::: {calque: 1, horizontal-margin: 500, vertical-margin: 200}
+output : "python-output"
+:::
+```
+````
+
+---
+
+## Quiz Interactif
+
+### Symbole : `:::quiz`
+
+Les quiz interactifs permettent de poser des questions au public en direct. Les réponses peuvent être collectées et visualisées avec des graphiques (bar chart ou pie chart).
+
+### Syntaxe
+
+```sdml
+:::quiz
+"Titre du Quiz"
+showJoinQrCode : true
+
+question : "Votre première question?"
+choice "id1" : "Choix 1"
+choice "id2" : "Choix 2"
+choice "id3" : "Choix 3"
+correct : "id1"
+visualization : barChart
+showResultsOnDemand : true
+
+question : "Deuxième question?"
+choice "a" : "Option A"
+choice "b" : "Option B"
+correct : "b"
+visualization : pieChart
+showResultsOnDemand : false
+:::
+```
+
+### Propriétés principales
+
+| Propriété | Type | Description |
+| --------- | ---- | ----------- |
+| `showJoinQrCode` | booléen | Affiche un QR code pour que les participants se joignent |
+| `visualization` | barChart \| pieChart | Type de graphique pour les résultats |
+| `showResultsOnDemand` | booléen | Afficher les résultats seulement à la demande de l'host|
+
+---
+
+## Récapitulatif des symboles
+
+| Symbole               | Utilisation            | Exemple                           |
+| --------------------- | ---------------------- | --------------------------------- |
+| `{ }`                 | Métadonnées            | `{author: "Nom", title: "Titre"}` |
+| `===`                 | Séparateur de slides   | `===`                             |
+| `#`                   | Titre H1               | `# Mon Titre`                     |
+| `##`                  | Titre H2               | `## Sous-titre`                   |
+| `###`                 | Titre H3               | `### Section`                     |
+| `**texte**`           | Gras                   | `**Important**`                   |
+| `*texte*`             | Italique               | `*Emphase*`                       |
+| `_texte_`             | Italique (alt)         | `_Texte_`                         |
+| `__texte__`           | Souligné               | `__Attention__`                   |
+| `-`, `*`, `+`         | Liste non ordonnée     | `- Élément`                       |
+| `1.`, `2.`            | Liste ordonnée         | `1. Premier`                      |
+| `>`                   | Citation               | `> Citation`                      |
+| `![alt](url)`         | Image/Vidéo            | `![Logo](url)`                    |
+| `![QR] "url"`         | QR Code                | `![QR] "url"`                     |
+| ` ``` `               | Bloc de code           | ` ```javascript `                 |
+| `:::`                 | Styles personnalisés   | `::: {color: 'red'}`              |
+| `:::[sync-fragments]` | Fragments synchronisés | `:::[sync-fragments]`             |
+| `,,,ide`              | IDE Intégré            | `,,,ide python`                   |
+| `:::quiz`             | Quiz Interactif        | `:::quiz`                         |
+| `[---]`               | Séparateur de fragment | `[---]`                           |
+
+---
+
+## Conseils et bonnes pratiques
+
+### Preview disponible
+
+Une preview de vos slides est disponible afin de vous aider à créer en tout simpliciter, pour cela il suffit de suivre cette documentation [juste ici](./DEV_MODE.md)
+
+### 1. Organisation
+
+- **Une idée par slide** : ne surchargez pas vos slides
+- **Utilisez les templates** pour les éléments récurrents
+- **Structurez avec des titres** hiérarchiques
+
+### 2. Formatage
+
+- **Soyez cohérent** dans vos choix de formatage
+- **Utilisez le gras** pour les mots-clés importants
+- **Les listes** rendent le contenu plus lisible
+
+### 3. Code
+
+- **Spécifiez le langage** pour une meilleure coloration
+- **Utilisez les fragments synchronisés** pour les explications pas à pas
+- **Limitez la longueur** des blocs de code (10-15 lignes max)
+
+### 4. Styles
+
+- **Restez simple** : trop de styles nuisent à la lisibilité
+- **Utilisez une palette cohérente** de couleurs
+- **Testez la lisibilité** (contraste texte/fond)
+
+### 5. Médias
+
+- **Optimisez la taille** des images
+- **Utilisez des URLs absolues** pour les ressources externes
+- **Ajoutez toujours une description** dans `![description](url)`
+
+---
+
+## Pour aller plus loin
+
+Consultez les exemples fournis dans le dossier `examples/sdml/` :
+
+- `01-simple-markdown.sdml` - Markdown de base (titres, listes, formatage)
+- `02-code-highlighting.sdml` - Blocs de code avec coloration syntaxique
+- `03-code-sync.sdml` - Fragments synchronisés avec le code
+- `04-latex.sdml` - Formules mathématiques LaTeX
+- `05-styling.sdml` - Styles CSS personnalisés
+- `06-media.sdml` - Images et vidéos
+- `07-absolute-positioning.sdml` - Positionnement absolu
+- `08-template-academic.sdml` - Template académique complet
+- `13-chalkboard-simple.sdml` - Fonctionnalité tableau blanc
+- `16-fragments.sdml` - Animations de fragments
+- `17-transitions.sdml` - Transitions entre slides
+- `complete-demo.sdml` - Démonstration complète de toutes les fonctionnalités
+
+### Templates prêts à l'emploi
+
+Dans `examples/templates/`, vous trouverez des templates complets :
+
+- `academic/` - Template pour présentations académiques
+- `business/` - Template pour présentations d'entreprise
+- `technical/` - Template pour talks techniques
+- `conference/` - Template pour conférences
+- `minimal/` - Template minimaliste
+
+---
+
+**Bonne création de présentations avec SlideDeckML !**
